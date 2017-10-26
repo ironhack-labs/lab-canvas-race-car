@@ -78,19 +78,44 @@ window.onload = function() {
     var img = new Image();
       imgScale = 640/480;
       img.onload = function() {
-        ctx.drawImage(img, 131, 90, 30*imgScale,30);
+        ctx.drawImage(img, 131, 90,30*imgScale,30);
       };
       img.src = 'images/car.png';
 
-
+// var car= {
+//   x: 131,
+//   y:90,
+//   moveLeft : function() {this.y -= 5},
+//   moveLeft : function() {this.y -= 5},
+// }
+//
+// document.onkeydown = function (e){
+//   switch (e.keyCode){
+//     case 16: car.moveLeft();
+//     break;
+//     case 17: car.moveRight();
+//     break;
+//   }
+//   updateCanvas();
+// }
+//
+// function draw(car){
+//   var img = new Image();
+//   img_onload = function(){
+//     ctx.drawImage(img, car.x, car.y, 200, 200);
+//   }
+//   img.src="images/car.png";
+// }
+//
+// function updateCanvas(){
+//   ctx.clearRect(0,0,1500,1700);
+//   draw(car);
+// }
+//
+//
 
 
 }
-
-
-
-
-// #b1bdd1 gris
 
 
 
