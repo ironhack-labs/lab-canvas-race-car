@@ -36,3 +36,7 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#startGameb {
+  border: 1px solid black;
+}
