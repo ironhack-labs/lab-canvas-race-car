@@ -33,8 +33,16 @@ body button {
 }
 
 #game-board {
+  margin-top: 30px;
+  width: 500px;
+  height: 500px;
     float: left;
     padding: 20px 0px;
+    display: flex;
+    align-items: flex-end;
+      justify-content: center;
 }
 
-#road
+#road{
+
+}
