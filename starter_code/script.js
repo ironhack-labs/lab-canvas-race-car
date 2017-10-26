@@ -28,6 +28,12 @@ window.onload = function() {
     ctx.lineWidth = 5;
     ctx.strokeStyle = "white";
     ctx.stroke ();
+
+ var img = new Image();
+  img.onload = function() {
+    ctx.drawImage(img, 260, 400, 100, 150);
+  };
+  img.src = './images/car.png';
    }
    draw ()
 }
