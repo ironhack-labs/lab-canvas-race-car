@@ -36,3 +36,10 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#canvasss{
+  height:800px;
+  width:800px;
+  border: 1px solid black;
+
+}
