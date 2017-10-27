@@ -14,9 +14,11 @@ $(document).ready(function() {
   $("#start-button").on('click', function() {
     $('.game-intro').css('display', 'none');
 
+    var myObstacles = [];
     var canvas = document.getElementById("car-game");
     var ctx = canvas.getContext('2d');
 
+function paintBoard (){
     ctx.fillStyle = "grey";
     ctx.fillRect(0, 0, 700, 550);
 
@@ -35,22 +37,25 @@ $(document).ready(function() {
     ctx.moveTo(350, 0);
     ctx.lineTo(350, 550);
     ctx.stroke();
-
+};
     var car = {
-      x: 25,
-      y: 25,
-      moveUp:    function() { this.y -= 25 },
-      moveDown:  function() { this.y += 25 },
-      moveLeft:  function() { this.x -= 25 },
-      moveRight: function() { this.x += 25 },
+      x: 320,
+      y: 350,
+      moveLeft:  function() {
+        if (this.x > 85)
+          this.x -= 15 },
+      moveRight: function() {
+        if (this.x < 560)
+        this.x += 15 },
+
     }
 
     function draw(car) {
       var img = new Image();
       img.onload = function() {
-         ctx.drawImage(img, car.x, car.y, 50, 50);
+         ctx.drawImage(img, car.x, car.y, 60, 110);
       }
-      img.src = "images/car.png";
+      img.src = "./images/car.png";
     }
 
 
@@ -63,13 +68,16 @@ $(document).ready(function() {
     }
 
     function updateCanvas() {
-      ctx.clearRect(0,0,1500,1700);
-      ctx.fillText("Car_x: " + car.x, 580,40);
-      ctx.fillText("Car_y: " + car.y, 580,60);
+      ctx.clearRect(0,0,700,550);
+      ctx.fillText("Car x: " + car.x, 0,40);
+      ctx.fillText("Car y: " + car.y, 100,60);
+      paintBoard()
       draw(car)
     }
 
-    updateCanvas()
 
-};
-}
+    updateCanvas();
+
+
+});
+})
