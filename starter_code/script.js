@@ -1,9 +1,9 @@
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
+window.onload = function () {
+  document.getElementById("start-button").onclick = function () {
     startGame();
- };
+  };
 
-  
+
   function startGame() {
     var canvas = document.getElementById('canv');
     var ctx = canvas.getContext('2d');
@@ -23,19 +23,17 @@ window.onload = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'rgb(255, 255, 255)';
     ctx.lineWidth = '5'
-    ctx.moveTo(250,700);
+    ctx.moveTo(250, 700);
     ctx.lineTo(250, 0);
     ctx.stroke();
 
-    
-    
-    function draw() {
-      var img = new Image();
-      img.onload = function() { 
-         ctx.drawImage(img, this.x, this.y, 50, 50); 
-      }
-      img.src = "../images/car.png";
+    draw(ctx)
+  }
+  function draw(ctx) {
+    var img = new Image();
+    img.onload = function () {
+      ctx.drawImage(img, 226, 580, 50, 85);
     }
-    
+    img.src = "./images/car.png";
   }
 };
