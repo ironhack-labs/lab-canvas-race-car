@@ -3,9 +3,14 @@ body {
   text-align: center;
 }
 
+main {
+  width: 1000px;
+  overflow: auto;
+}
+
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 0% 5%;
 }
 
 .game-intro p {
