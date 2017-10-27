@@ -1,24 +1,24 @@
 // Board constructor function
 function Board() {
-    var canvas = document.getElementById('board');
-    var ctx = canvas.getContext('2d');
+    this.canvas = document.getElementById('board');
+    this.ctx = this.canvas.getContext('2d');
 
-    ctx.fillStyle ='grey';
-    ctx.fillRect(0, 0 , 600, 1200);
+    this.ctx.fillStyle ='grey';
+    this.ctx.fillRect(0, 0 , 600, 600);
 
-    ctx.fillStyle = 'green';
-    ctx.fillRect(0, 0, 40, 1200);
-    ctx.fillRect(560, 0, 40, 1200);
+    this.ctx.fillStyle = 'green';
+    this.ctx.fillRect(0, 0, 40, 600);
+    this.ctx.fillRect(560, 0, 40, 600);
 
-    ctx.fillStyle = 'white';
-    ctx.fillRect(60, 0, 20, 1200);
-    ctx.fillRect(520, 0, 20, 1200);
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect(60, 0, 20, 600);
+    this.ctx.fillRect(520, 0, 20, 600);
 
-    ctx.lineWidth = 10;
-    ctx.strokeStyle = 'white';
-    ctx.beginPath();
-    ctx.setLineDash([50, 60]);
-    ctx.moveTo(300, 0);
-    ctx.lineTo(300, 1200);
-    ctx.stroke();
+    this.ctx.lineWidth = 10;
+    this.ctx.strokeStyle = 'white';
+    this.ctx.beginPath();
+    this.ctx.setLineDash([50, 60]);
+    this.ctx.moveTo(300, 0);
+    this.ctx.lineTo(300, 600);
+    this.ctx.stroke();
 }
