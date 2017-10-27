@@ -1,20 +1,35 @@
 window.onload = function() {
+
+  var canvas = document.getElementById('road-board');
+  var ctx = canvas.getContext('2d');
+  var road = new Road([300, 600], [20, 10, 30, 5, 10], ["gray", "white", "green"]);
+  var car = new Car((road.size[0] / 2) - 20, 120, 40, 20);
+  console.log(road);
+
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
 
+  window.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        car.moveLeft();
+        break;
+      case 39:
+        car.moveRigth();
+        break;
+      default:
+    }
+    updateCanvas();
+  };
+
   function startGame() {
-    var canvas = document.getElementById('road-board');
-    var ctx = canvas.getContext('2d');
-    var road = new Road([300, 600], [20, 10, 30, 5, 10], ["gray", "white", "green"]);
     console.log(road);
-    drawRoad(ctx,road);
-    drawCar(ctx,road);
+    drawRoad();
+    drawCar();
   }
 
-  function drawRoad(ctx,road) {
-
-
+  function drawRoad() {
     // Draw road
     ctx.fillStyle = road.colors[0];
     ctx.fillRect(0, 0, road.size[0], road.size[1]);
@@ -22,7 +37,7 @@ window.onload = function() {
     // Draw off road
     ctx.fillStyle = road.colors[2];
     ctx.fillRect(0, 0, road.elements[0], road.size[1]);
-    ctx.fillRect(road.size[0] - road.elements[0], 0, road.size[0], road.size[1]);
+    ctx.fillRect(road.size[0] - road.elements[0], 0, road.elements[0], road.size[1]);
 
     // Draw limits
     ctx.fillStyle = road.colors[1];
@@ -42,14 +57,23 @@ window.onload = function() {
 
   }
 
-  function drawCar(ctx,road) {
+  function drawCar() {
     var carImage = new Image();
-
     carImage.onload = function() {
-      ctx.drawImage(carImage, (road.size[0]/2)-40, (road.size[1]-510), 80, 50);
+      ctx.drawImage(carImage, car.x, car.y, car.width, car.height);
     };
     carImage.src = "./images/car.png";
   }
+
+  function clearCanvas() {
+    drawRoad();
+  }
+
+  function updateCanvas() {
+    clearCanvas();
+    drawCar();
+  }
+
 
 };
 
