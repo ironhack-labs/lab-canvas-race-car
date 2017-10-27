@@ -1,5 +1,9 @@
 window.onload = function() {
 
+    function startGame() {
+
+    }
+    
     var board = new Board();
     var car = new Car();
     car.setCarImage(board);
@@ -8,7 +12,8 @@ window.onload = function() {
         startGame();
     };
 
-    function startGame() {
-
-    }
+    document.onkeydown = function(event) {
+        car.move(event.keyCode);
+        car.setCarImage(board);
+    };
 };
