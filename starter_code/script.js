@@ -7,6 +7,7 @@ window.onload = function() {
   var obstacle = [];
   img.src = car.imgSrc;
   car.img = img; // Set source path
+  console.log(car);
 
   document.getElementById('start-button').onclick = function() {
     startGame();
@@ -21,6 +22,10 @@ window.onload = function() {
       if (car.x + car.speed < carretera.canvasWidth - 30){ // Size Car
         car.x +=car.speed;
       }
+    } else if (e.keyCode == 38){
+        car.y -= car.speed;
+    } else if (e.keyCode == 40){
+        car.y += car.speed;
     }
   };
 
@@ -74,9 +79,7 @@ window.onload = function() {
        clearInterval(timer1);
        clearInterval(timer2);
        console.log('choque');
-       console.log(obstacle);
-       console.log(car);
-       explode();
+       //explode();
     }
   }
   function runRoad(context){
@@ -119,11 +122,11 @@ window.onload = function() {
   }
 
   function explode(){
-
-      //  car.imgSrc = 'images/'+car.boom[0];
-      //  img.src= 'images/'+car.boom[0];
-      //  car.img = img;
-      //  paintCar(carretera.getCanvas(),car.img,31,63);
-
+      car.imgSrc = 'images/'+car.boom[0];
+      img.src= car.imgSrc;
+      car.img = img;
+      console.log(car);
+      paintCar(carretera.getCanvas(),car.img,31,63);
+      paintAll();
   };
 };
