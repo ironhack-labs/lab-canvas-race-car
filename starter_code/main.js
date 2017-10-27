@@ -1,5 +1,5 @@
 var Car = function(speed){
-  this.speed = 10;
+  this.speed = 20;
   this.x = 210;
   this.y = 412;
   this.points = 0;
