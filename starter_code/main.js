@@ -56,7 +56,6 @@ function Obstacle(){
   this.width = Math.round(Math.random()* (250 -100 +1) + 100);
   this.height = 40; // All 40 height
   this.x = Math.round(Math.random()* (350));// width 0-350
-  console.log("obstacle "+this.x);
   this.y = -40;
   this.color = '#FFFFFF';
 };

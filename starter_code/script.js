@@ -7,7 +7,6 @@ window.onload = function() {
   var obstacle = [];
   img.src = car.imgSrc;
   car.img = img; // Set source path
-  console.log(car);
 
   document.getElementById('start-button').onclick = function() {
     startGame();
@@ -34,16 +33,12 @@ window.onload = function() {
     var ctx = canvas.getContext('2d');
     carretera.canvas = ctx;
     paintAll();
-    console.log("Estoy cargando setinterval");
     timer1 = setInterval(paintAll,10);
     timer2 = setInterval(insertObstacle,2000);
-    console.log("INTERVALS "+carretera.interval+" "+obstacle.interval);
   }
 
   function insertObstacle(){
     obstacle.push( new Obstacle() );
-    console.log('Entro en accioN!');
-    console.log(obstacle);
   }
   function paintAll(){
     runRoad(carretera.getCanvas());
@@ -56,13 +51,11 @@ window.onload = function() {
       context.fillRect(obstacle[x].x,obstacle[x].y,obstacle[x].width,obstacle[x].height);
       obstacle[x].goDown();
       if (obstacle[x].y+obstacle[x].height >= car.y){
-        console.log('checking colision');
         checkColision(car,obstacle[x]);
       }
       if (obstacle[x].y > 480){
         obstacle.shift();
         car.addPoints();
-        console.log('ganados 10 puntos');
       }
     }
   }
@@ -78,7 +71,6 @@ window.onload = function() {
    obstacle.height + obstacle.y > car.y){
        clearInterval(timer1);
        clearInterval(timer2);
-       console.log('choque');
        //explode();
     }
   }
@@ -125,7 +117,6 @@ window.onload = function() {
       car.imgSrc = 'images/'+car.boom[0];
       img.src= car.imgSrc;
       car.img = img;
-      console.log(car);
       paintCar(carretera.getCanvas(),car.img,31,63);
       paintAll();
   };
