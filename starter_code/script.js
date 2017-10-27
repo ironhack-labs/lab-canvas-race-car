@@ -1,17 +1,52 @@
 window.onload = function() {
+  var car = new Car(10);
+
+  var img = new Image();   // Create new img element 158x319px
+  img.src = car.imgSrc;
+  car.img = img; // Set source path
   document.getElementById('start-button').onclick = function() {
     startGame();
   };
 
+  document.onkeydown = function(e) {
+    if (e.keyCode == 37){ // To LEFT
+      if (car.x - car.speed > 0){
+        car.x -=car.speed;
+        paintAll();
+      }
+    } else if (e.keyCode == 39){ // To RIGHT
+      if (car.x +car.speed < car.width){
+        car.x +=car.speed;
+        paintAll();
+      }
+    }
+  };
   function startGame() {
     var canvas = document.getElementById('race');
     var ctx = canvas.getContext('2d');
-    paintRoad(ctx);
-    paintLines(ctx);
+    car.canvas = ctx;
+    paintAll();
+    // runRoad(ctx);
+    // paintCar(ctx,car.img,car.x,car.y); // 210 value
+  }
+
+  function paintAll(){
+    runRoad(car.canvas);
+    paintCar(car.canvas,car.img,car.x,car.y);
+  }
+
+  function clear(context){
+    context.clearRect(0, 0, 450, 490); // Initial width, height
   }
 
   function runRoad(context){
+    clear(context);
+    paintRoad(context);
+    paintLines(context);
+  }
 
+  function paintCar(context,image,x,y){
+    context.drawImage(image, x, y, 31, 63); // drawImage(image, x, y, width, height)
   }
   function paintRoad(context){
     // Green #1b8100 - GRAY #808080
@@ -23,8 +58,8 @@ window.onload = function() {
     context.lineWidth = 10;
     context.strokeRect(60,-20,330,530);
   }
+
   function paintLines(context,mov){
-    
     for (var x = 0; x < 500 ; x+=40){
       context.fillStyle = '#FFFFFF';
       context.fillRect(223,0+x,4,20); // Initial (223,0)
