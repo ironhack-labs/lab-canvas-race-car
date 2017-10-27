@@ -1,13 +1,34 @@
-var Car = function(speed){
+function Carretera(){
+  this.canvas;
+  this.canvasWidth = 450;
+  this.canvasHeigth = 490;
+};
+
+Carretera.prototype.getCanvas = function(){
+  return this.canvas;
+};
+
+Carretera.prototype.getCanvasHeight = function(){
+  return this.canvasHeigth;
+};
+
+Carretera.prototype.getCanvasWidth = function(){
+  return this.canvasWidth;
+};
+
+Car.prototype = Object.create(Carretera.prototype);
+Car.prototype.constructor = Car;
+
+function Car(speed){
   this.speed = 20;
   this.x = 210;
   this.y = 412;
   this.points = 0;
   this.img;
   this.imgSrc = 'images/car.png';
-  this.canvas;
-  this.width = 450;
-  this.heigth = 490;
+  this.boom = ['boom00.png','boom01.png','boom02.png',
+               'boom03.png','boom04.png','boom05.png',
+               'boom06.png','boom07.png','boom08,png'];
 };
 
 Car.prototype.addPoints = function(){
@@ -25,4 +46,18 @@ Car.prototype.moveLeft = function(){
 
 Car.prototype.moveRight = function(){
   this.x += 10;
+};
+
+Obstacle.prototype = Object.create(Carretera.prototype);
+Obstacle.prototype.constructor = Obstacle;
+function Obstacle(){
+  this.width = Math.round(Math.random()* (250 -100 +1) + 100);
+  this.height = 40; // All 5 height
+  this.x = 40;//Math.round(Math.random()* (200));
+  this.y = 10;
+  this.color = '#FFFFFF';
+};
+
+Obstacle.prototype.goDown = function(){
+  this.y +=1;
 };

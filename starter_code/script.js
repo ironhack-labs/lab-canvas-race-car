@@ -1,9 +1,12 @@
 window.onload = function() {
   var cont = 0;
+  var carretera = new Carretera();
   var car = new Car(10);
   var img = new Image();   // Create new img element 158x319px
+  var obstacle = [];
   img.src = car.imgSrc;
   car.img = img; // Set source path
+
   document.getElementById('start-button').onclick = function() {
     startGame();
   };
@@ -12,12 +15,10 @@ window.onload = function() {
     if (e.keyCode == 37){ // To LEFT
       if (car.x - car.speed > 0){
         car.x -=car.speed;
-        //paintAll();
       }
     } else if (e.keyCode == 39){ // To RIGHT
-      if (car.x +car.speed < car.width - 30){ // Size Car
+      if (car.x + car.speed < carretera.canvasWidth - 30){ // Size Car
         car.x +=car.speed;
-        //paintAll();
       }
     }
   };
@@ -25,26 +26,63 @@ window.onload = function() {
   function startGame() {
     var canvas = document.getElementById('race');
     var ctx = canvas.getContext('2d');
-    car.canvas = ctx;
+    carretera.canvas = ctx;
     paintAll();
     setInterval(paintAll,10);
+    setInterval(insertObstacle,4000);
   }
 
+  function insertObstacle(){
+    obstacle.push( new Obstacle() );
+    console.log("Entro en accioN!");
+    console.log(obstacle);
+  }
   function paintAll(){
-    runRoad(car.canvas);
-    paintCar(car.canvas,car.img,car.x,car.y);
+    runRoad(carretera.getCanvas());
+    paintCar(carretera.getCanvas(),car.img,car.x,car.y);
   }
-
+  function paintObstacles(context){
+    for (var x = 0 ; x < obstacle.length ; x++){
+      context.fillStyle = '#000000';
+      context.fillRect(obstacle[x].x,obstacle[x].y,obstacle[x].width,obstacle[x].height);
+      obstacle[x].goDown();
+      checkColisionX(car,obstacle[x]);
+      //console.log(obstacle[x].width,obstacle[x].height);
+      if (obstacle[x].y > 480){
+        obstacle.shift();
+      }
+    }
+  }
   function clear(context){
-    context.clearRect(0, 0, 450, 490); // Initial width, height
+    context.clearRect(0, 0, carretera.getCanvasWidth(), carretera.getCanvasHeight()); // Initial width, height
   }
 
+  function checkColisionX(car,obstacle){
+    var a,b;
+    for (x = car.x ; x < car.x+158 ; x++){
+      for (y = obstacle.x ; y < obstacle.x+obstacle.width ; y++){
+        if (x == y){
+          checkColisionY(car,obstacle);
+        }
+      }
+    }
+  }
+  function checkColisionY(car,obstacle){
+    for (h = car.y ; h < car.y+319 ; h++){
+      for (s = obstacle.y ; s < obstacle.y+obstacle.height ; s++){
+        if (h == s){
+           alert('COLISION!');
+        }
+      }
+    }
+  }
   function runRoad(context){
     if (cont == 30)
       cont = -10;
     clear(context);
     paintRoad(context);
     paintLines(context,cont);
+    paintObstacles(context);
     cont++;
     //window.requestAnimationFrame(runRoad(context));
   }
