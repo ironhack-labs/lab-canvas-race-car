@@ -54,7 +54,7 @@ function Obstacle(){
   this.width = Math.round(Math.random()* (250 -100 +1) + 100);
   this.height = 40; // All 5 height
   this.x = 40;//Math.round(Math.random()* (200));
-  this.y = 10;
+  this.y = -40;
   this.color = '#FFFFFF';
 };
 

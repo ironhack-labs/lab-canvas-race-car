@@ -40,6 +40,7 @@ window.onload = function() {
   function paintAll(){
     runRoad(carretera.getCanvas());
     paintCar(carretera.getCanvas(),car.img,car.x,car.y);
+    paintScore(carretera.getCanvas());
   }
   function paintObstacles(context){
     for (var x = 0 ; x < obstacle.length ; x++){
@@ -50,6 +51,8 @@ window.onload = function() {
       //console.log(obstacle[x].width,obstacle[x].height);
       if (obstacle[x].y > 480){
         obstacle.shift();
+        car.addPoints();
+        console.log('ganados 10 puntos');
       }
     }
   }
@@ -71,7 +74,7 @@ window.onload = function() {
     for (h = car.y ; h < car.y+319 ; h++){
       for (s = obstacle.y ; s < obstacle.y+obstacle.height ; s++){
         if (h == s){
-           alert('COLISION!');
+           alert("Has conseguido "+car.points);
         }
       }
     }
@@ -106,5 +109,12 @@ window.onload = function() {
       context.fillStyle = '#FFFFFF';
       context.fillRect(223,0+x,4,20); // Initial (223,0)
     }
+  }
+  function paintScore(context){
+    context.fillStyle = '#000000';
+    context.fillRect(350,30,430,40);
+    context.font = "15px Arial";
+    context.fillStyle = 'yellow';
+    context.fillText(car.points+" POINTS",365,55);
   }
 };
