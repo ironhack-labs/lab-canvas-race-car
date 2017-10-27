@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.canvasRoad {
+  height: 650px;
+  width: 450px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
