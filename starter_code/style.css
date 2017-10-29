@@ -32,7 +32,8 @@ body button {
   margin-bottom: 20px;
 }
 
-#game-board {
+canvas {
     float: left;
     padding: 20px 0px;
+    background-color: black;
 }
