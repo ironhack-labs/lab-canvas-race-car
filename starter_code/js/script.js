@@ -11,4 +11,6 @@ function startGame() {
   ctx = canvas.getContext('2d');
   road = new Road();
   road.render();
+  car = new Car();
+  car.render();
  }
