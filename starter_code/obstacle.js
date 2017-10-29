@@ -1,5 +1,5 @@
 var Obstacle = function() {
-  this.x = 300 * Math.random();
+  this.x = (300 * Math.random()) + 60;
   this.speed = 10;
   this.y = 0;
 };

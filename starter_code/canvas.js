@@ -3,9 +3,9 @@ function Canvas () {
   this.ctx = canvas.getContext("2d");
 }
 
-Canvas.prototype.startGame = function (car) { //obstacles, etc
+Canvas.prototype.startGame = function (car, obstacles) { //obstacles, etc
   this.car = car;
-  // this.obstacles = obstacles;
+  this.obstacles = obstacles;
 };
 
 Canvas.prototype.drawRoad = function () {
@@ -36,15 +36,32 @@ Canvas.prototype.drawCar = function() {
   }.bind(this);
 };
 
-// Canvas.prototype.drawObstacles = function(){
-//    this.obstacles.getObstacles().forEach(function (obstacle) {
-//      this.ctx.drawImage(img, obstacle.x, obstacle.y, 100*imgScale, 100);
-//    }.bind(this))
+Canvas.prototype.drawObstacles = function(){
+  this.width = 100;
+  this.height = 50;
+  this.obstacles.getObstacles().forEach(function (obstacle) {
+    this.ctx.fillStyle = "red";
+    this.ctx.fillRect(obstacle.x, obstacle.y, this.width, this.height);
+  }.bind(this));
+};
+// function Obstacle(width, height, color, x, y) {
+//     this.width = width;
+//     this.height = height;
+//     this.x = x;
+//     this.y = y;
+//     this.speedX = 0;
+//     this.speedY = 0;
+//     this.update = function(){
+//        ctx = myGameArea.context;
+//        ctx.fillStyle = color;
+//        ctx.fillRect(this.x, this.y, this.width, this.height);
+//    };
 // };
+
 
 Canvas.prototype.updateCanvas = function () {
   this.ctx.clearRect(0,0,1500,1700);
   this.drawRoad();
   this.drawCar();
-  // this.drawObstacles();
+  this.drawObstacles();
 };
