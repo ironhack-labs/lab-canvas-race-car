@@ -18,7 +18,7 @@ Road.prototype.render = function() {
   this.ctx.lineWidth = 6;
   this.ctx.strokeStyle = 'white';
   this.ctx.beginPath();
-  this.ctx.setLineDash([50, 60]);
+  this.ctx.setLineDash([30, 40]);
   this.ctx.moveTo(150, 0);
   this.ctx.lineTo(150, 450);
   this.ctx.stroke();
