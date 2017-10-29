@@ -2,7 +2,7 @@ function Obstacles () {
   this.items = [];
 
   setInterval(this.updateObstacles.bind(this), 300);
-  setInterval(this.createObstacle.bind(this), 2000);
+  setInterval(this.createObstacle.bind(this), 3000);
 }
 
 Obstacles.prototype.updateObstacles = function () {
