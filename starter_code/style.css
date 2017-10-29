@@ -32,7 +32,15 @@ body button {
   margin-bottom: 20px;
 }
 
-#game-board {
-    float: left;
-    padding: 20px 0px;
+.game-board {
+  float: left;
+  padding: 20px 0px;
+}
+
+.is-visible {
+  opacity: 1;
+}
+
+.img-car {
+  width: 20%;
 }
