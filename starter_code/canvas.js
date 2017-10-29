@@ -44,23 +44,9 @@ Canvas.prototype.drawObstacles = function(){
     this.ctx.fillRect(obstacle.x, obstacle.y, this.width, this.height);
   }.bind(this));
 };
-// function Obstacle(width, height, color, x, y) {
-//     this.width = width;
-//     this.height = height;
-//     this.x = x;
-//     this.y = y;
-//     this.speedX = 0;
-//     this.speedY = 0;
-//     this.update = function(){
-//        ctx = myGameArea.context;
-//        ctx.fillStyle = color;
-//        ctx.fillRect(this.x, this.y, this.width, this.height);
-//    };
-// };
-
 
 Canvas.prototype.updateCanvas = function () {
-  this.ctx.clearRect(0,0,1500,1700);
+  this.ctx.clearRect(0,0,500,600);
   this.drawRoad();
   this.drawCar();
   this.drawObstacles();

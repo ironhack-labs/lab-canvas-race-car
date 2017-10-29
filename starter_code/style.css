@@ -35,11 +35,6 @@ body button {
 .game-board {
   float: left;
   padding: 20px 0px;
-  /*height: 800px;
-  width: 400px;*/
-  /*background-color: green;
-  opacity: 0;
-  transition: opacity 0.6s;*/
 }
 
 .is-visible {
