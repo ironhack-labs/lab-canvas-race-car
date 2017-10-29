@@ -58,6 +58,16 @@
 		"sC": 0,
 		"tS": 0
 		},
+	"\/js\/Obstacle.js": {
+		"ft": 64,
+		"ma": 0,
+		"mi": 0,
+		"oA": 1,
+		"oAP": "\/js\/Obstacle-min.js",
+		"oF": 1,
+		"sC": 0,
+		"tS": 0
+		},
 	"\/js\/Road.js": {
 		"ft": 64,
 		"ma": 0,

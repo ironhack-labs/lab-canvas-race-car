@@ -3,6 +3,7 @@ function Car(x, y) {
     this.height = this.width * 2;
     this.x = x ? x : canvas.width / 2 - this.width / 2;
     this.y = y ? y : canvas.height - this.height - 20;
+    this.points = 0;
 }
 
 Car.prototype.setCarImage = function() {
