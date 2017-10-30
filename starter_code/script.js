@@ -40,7 +40,7 @@ window.onload = function() {
     drawRoad();
     drawLine();
     drawCar();
-  }
+  };
 
   function startGame() {
     createBoard();
@@ -48,12 +48,12 @@ window.onload = function() {
 
   document.onkeydown = function(e) {
     if (e.keyCode == 37) { // Move to the left
-      if (car.x > 80) {
+      if (car.x > 80) { // Only moves inside the road
         car.moveLeft();
       }
     }
     if (e.keyCode == 39) { // Move to the rigth
-      if (car.x < 500){
+      if (car.x < 470){ // Only moves inside the road
         car.moveRigth();
       }
     }
@@ -63,4 +63,9 @@ window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
+
+  function clearCanvas (){
+    ctx.clearRect (0, 0, 700, 650);
+  };
+
 };
