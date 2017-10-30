@@ -1,4 +1,5 @@
 body {
+  margin-top: 2em;
   padding: 0;
   text-align: center;
 }
@@ -32,7 +33,7 @@ body button {
   margin-bottom: 20px;
 }
 
-#game-board {
+canvas {
     float: left;
-    padding: 20px 0px;
+    background-color: black;
 }
