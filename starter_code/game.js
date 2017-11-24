@@ -8,7 +8,13 @@ function Game(canvasId, width, height) {
   this.height = height;
   // this.obstacle = ""; // new Obstacle(this.canvas, 0,0,width, height);
   this.obstacles = [];
-  setInterval(this.addObstacle(this), 5000);
+  setInterval(this.addObstacle.bind(this), 3000);
+
+  // setInterval(function() {
+  //   // alert("hola");
+  //   // debugger
+  //   this.addObstacle.bind(this);
+  // }, 3000);
 }
 
 Game.prototype.isReady = function() {
@@ -21,8 +27,6 @@ Game.prototype.addObstacle = function() {
   var width = Math.floor(Math.random() * (this.width / 2));
   var height = 10;
   this.obstacles.push(new Obstacle(this.canvas, posX, posY, width, height));
-  //  this.obstacles.push(new Bar(this.canvas, 10, 100));
-
 };
 
 Game.prototype.clear = function() {
@@ -36,7 +40,6 @@ Game.prototype.draw = function() {
     for (var i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].draw();
     }
-    // this.obstacle.draw();
     this.car.draw();
   }
 
