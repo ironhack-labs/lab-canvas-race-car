@@ -6,8 +6,6 @@ function Obstacle(canvas,x,y, width, height) {
   this.y = y;
   this.width = width;
   this.height = height;
-
-
 }
 
 Obstacle.prototype.draw = function() {
@@ -15,6 +13,6 @@ Obstacle.prototype.draw = function() {
   this.ctx.save();
   this.ctx.fillStyle = "red";
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  this.y +=1;
+  this.y +=3;
   this.ctx.restore();
 };

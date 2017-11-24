@@ -6,15 +6,9 @@ function Game(canvasId, width, height) {
   this.y = 0;
   this.width = width;
   this.height = height;
-  // this.obstacle = ""; // new Obstacle(this.canvas, 0,0,width, height);
   this.obstacles = [];
-  setInterval(this.addObstacle.bind(this), 3000);
-
-  // setInterval(function() {
-  //   // alert("hola");
-  //   // debugger
-  //   this.addObstacle.bind(this);
-  // }, 3000);
+  this.intervl =setInterval(this.addObstacle.bind(this), 3000);
+  this.points=0;
 }
 
 Game.prototype.isReady = function() {
@@ -37,15 +31,43 @@ Game.prototype.draw = function() {
   this.clear();
   if (this.isReady()) {
     this.paintRoad();
-    for (var i = 0; i < this.obstacles.length; i++) {
-      this.obstacles[i].draw();
-    }
+    this.drawScore();
     this.car.draw();
+    for (var i = 0; i < this.obstacles.length; i++) {
+      // debugger
+      if (this.obstacles[i].y > 500) {
+        this.obstacles.splice(i, 1);
+      } else {
+        this.obstacles[i].draw();
+        this.crashFront(i);
+      }
+    }
+
   }
 
   window.requestAnimationFrame(this.draw.bind(this));
 };
 
+Game.prototype.drawScore = function () {
+    // points = (Math.floor(this.frames/5));
+    this.points++;
+    this.ctx.font = '18px serif';
+    this.ctx.fillStyle = 'black';
+    this.ctx.fillText('Score: '+this.points, 350, 50);
+};
+
+Game.prototype.crashFront = function(i) {
+  if (this.car.y === this.obstacles[i].y) {
+    if ((this.car.x + this.car.width) > this.obstacles[i].x ){
+      if((this.car.x) < (this.obstacles[i].x + this.obstacles[i].width)){
+        alert("crush");
+        clearInterval(this.intervl);
+        this.obstacles=[];
+        this.points=0;
+      }
+    }
+  }
+};
 Game.prototype.paintRoad = function() {
 
   this.ctx.fillStyle = "rgb(62, 162, 1)";
