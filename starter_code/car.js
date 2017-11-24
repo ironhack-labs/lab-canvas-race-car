@@ -2,7 +2,7 @@ var RIGHT_KEY = 39;
 var LEFT_KEY = 37;
 
 function Car(canvasId, sprite) {
-  this.canvas = document.getElementById(canvasId);
+  this.canvas = canvasId;
   this.ctx = this.canvas.getContext('2d');
   this.sprite = new Image();
   this.sprite.src = sprite;
@@ -21,7 +21,7 @@ function Car(canvasId, sprite) {
     // this.height = this.sprite.frameHeight * this.sprite.scale;
   }).bind(this);
 
-  this.x = 150;
+  this.x = 120;
   this.y = 450;
   this.speed=5;
 
@@ -50,6 +50,7 @@ Car.prototype.moveToLeft = function () {
 
 
 Car.prototype.draw = function() {
+  // this.ctx.save();
   if (this.isReady()) {
     this.ctx.drawImage(
       this.sprite,
@@ -64,8 +65,9 @@ Car.prototype.draw = function() {
     );
     window.requestAnimationFrame(this.draw.bind(this));
   }
+  // this.ctx.restore();
 };
 
 
-var car = new Car("canvasBoard", "./images/car.png");
-car.draw();
+// var car = new Car("canvasBoard", "./images/car.png");
+// car.draw();

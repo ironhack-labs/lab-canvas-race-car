@@ -3,9 +3,8 @@ window.onload = function() {
     startGame();
   };
 
-  function startGame() {
-    // debugger
-    // var car=new Car("canvasBoard","./images/car.png");
-    // car.draw();
+  function startGame(canvasId) {
+
+
   }
 };
