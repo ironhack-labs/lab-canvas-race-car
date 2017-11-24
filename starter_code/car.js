@@ -6,7 +6,7 @@ function Car(canvasId, sprite) {
   this.ctx = this.canvas.getContext('2d');
   this.sprite = new Image();
   this.sprite.src = sprite;
-  this.sprite.isReady = true;
+  this.sprite.isReady = false;
   this.sprite.scale = 0.3;
   this.sprite.onload = (function() {
     this.sprite.isReady = true;

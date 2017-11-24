@@ -1,23 +1,29 @@
 function Game(canvasId, width, height) {
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext('2d');
-
+  this.car = new Car(this.canvas, "./images/car.png");
   this.x = 0;
   this.y = 0;
   this.width = width;
   this.height = height;
-  debugger
-  this.obstacle = new Obstacle(this.canvas, width, height);
-  this.car = new Car(this.canvas, "./images/car.png");
+  // this.obstacle = ""; // new Obstacle(this.canvas, 0,0,width, height);
+  this.obstacles = [];
+  setInterval(this.addObstacle(this), 5000);
 }
 
 Game.prototype.isReady = function() {
   return this.car.isReady();
 };
 
-// Game.prototype.addObstacle = function() {
-//   this.obstacles.push(new Bar(this.canvas, 10, 100));
-// };
+Game.prototype.addObstacle = function() {
+  var posX = Math.floor(Math.random() * this.width);
+  var posY = 0;
+  var width = Math.floor(Math.random() * (this.width / 2));
+  var height = 10;
+  this.obstacles.push(new Obstacle(this.canvas, posX, posY, width, height));
+  //  this.obstacles.push(new Bar(this.canvas, 10, 100));
+
+};
 
 Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -26,11 +32,11 @@ Game.prototype.clear = function() {
 Game.prototype.draw = function() {
   this.clear();
   if (this.isReady()) {
-    // for (var i = 0; i < this.bars.length; i++) {
-    //   this.bars[i].draw();
-    // }
     this.paintRoad();
-    this.obstacle.draw();
+    for (var i = 0; i < this.obstacles.length; i++) {
+      this.obstacles[i].draw();
+    }
+    // this.obstacle.draw();
     this.car.draw();
   }
 
