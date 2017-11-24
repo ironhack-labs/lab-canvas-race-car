@@ -4,6 +4,8 @@ window.onload = function() {
   };
 
   function startGame() {
-
+    // debugger
+    // var car=new Car("canvasBoard","./images/car.png");
+    // car.draw();
   }
 };
