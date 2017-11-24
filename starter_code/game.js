@@ -1,13 +1,41 @@
 function Game(canvasId, width, height) {
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext('2d');
-  this.car = new Car(this.canvas, "./images/car.png");
 
   this.x = 0;
   this.y = 0;
   this.width = width;
   this.height = height;
+  debugger
+  this.obstacle = new Obstacle(this.canvas, width, height);
+  this.car = new Car(this.canvas, "./images/car.png");
 }
+
+Game.prototype.isReady = function() {
+  return this.car.isReady();
+};
+
+// Game.prototype.addObstacle = function() {
+//   this.obstacles.push(new Bar(this.canvas, 10, 100));
+// };
+
+Game.prototype.clear = function() {
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+};
+
+Game.prototype.draw = function() {
+  this.clear();
+  if (this.isReady()) {
+    // for (var i = 0; i < this.bars.length; i++) {
+    //   this.bars[i].draw();
+    // }
+    this.paintRoad();
+    this.obstacle.draw();
+    this.car.draw();
+  }
+
+  window.requestAnimationFrame(this.draw.bind(this));
+};
 
 Game.prototype.paintRoad = function() {
 
@@ -22,26 +50,4 @@ Game.prototype.paintRoad = function() {
   for (var i = 0; i < this.height; i += 120) {
     this.ctx.fillRect(225, i, 15, 60);
   }
-};
-
-
-Game.prototype.isReady = function() {
-  return this.car.isReady();
-};
-
-Game.prototype.clear = function() {
-  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-};
-
-Game.prototype.draw = function() {
-  this.clear();
-  if (this.isReady()) {
-    // for (var i = 0; i < this.bars.length; i++) {
-    //   this.bars[i].draw();
-    // }
-    this.paintRoad();
-    this.car.draw();
-  }
-
-  window.requestAnimationFrame(this.draw.bind(this));
 };
