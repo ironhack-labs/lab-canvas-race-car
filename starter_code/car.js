@@ -21,7 +21,7 @@ function Car(canvasId, sprite) {
     // this.height = this.sprite.frameHeight * this.sprite.scale;
   }).bind(this);
 
-  this.x = 120;
+  this.x = 220;
   this.y = 450;
   this.speed=5;
 
@@ -35,8 +35,10 @@ Car.prototype.isReady = function() {
 Car.prototype.onKeyDown = function () {
 // debugger
   if (event.keyCode == RIGHT_KEY) {
+    if(this.x<400)
     this.moveToRight();
   }else if (event.keyCode == LEFT_KEY) {
+    if(this.x>0)
     this.moveToLeft();
   }
 };

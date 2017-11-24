@@ -3,8 +3,9 @@ window.onload = function() {
     startGame();
   };
 
-  function startGame(canvasId) {
-
+  function startGame() {
+    var game = new Game("canvasBoard",450,550);
+    game.draw();
 
   }
 };
