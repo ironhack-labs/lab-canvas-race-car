@@ -9,17 +9,22 @@ function Car(canvas, sprite) {
     // Initial position
     this.x = 125;
     this.y = 450;
+    this.scale = 0.3;
+    this.speed = 10;
+
     this.sprite = new Image();
     this.sprite.src = sprite;
     this.sprite.onload = (function() {
         this.sprite.isReady = true;
+        this.width = Math.floor(this.sprite.width * this.scale);
+        this.height = Math.floor(this.sprite.height * this.scale);
       }).bind(this);
 }
 
 Car.prototype.draw = function() {
     if (this.isReady()) {
         this.ctx.save();
-        this.ctx.drawImage(this.sprite, this.x, this.y, 50, 100);
+        this.ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height);
         this.ctx.save();
     }
 }
@@ -52,17 +57,21 @@ Car.prototype.onKeyUp = function(event) {
 }
 
 Car.prototype.moveLeft = function() {
-    this.x -= 10;
+    // car 50x100
+    // green road x = 0 - 20
+    // green road right x = 280 - 300
+    //if()
+    this.x -= this.speed;
 }
 
 Car.prototype.moveRight = function() {
-    this.x += 10;
+    this.x += this.speed;
 }
 
 Car.prototype.moveUp = function() {
-    this.y -= 5;
+    this.y -= this.speed;
 }
 
 Car.prototype.moveDown = function() {
-    this.y += 5;
+    this.y += this.speed;
 }
