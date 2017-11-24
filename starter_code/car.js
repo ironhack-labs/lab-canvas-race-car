@@ -60,12 +60,15 @@ Car.prototype.moveLeft = function() {
     // car 50x100
     // green road x = 0 - 20
     // green road right x = 280 - 300
-    //if()
-    this.x -= this.speed;
+    if(this.x > 20) {
+        this.x -= this.speed;
+    }
 }
 
 Car.prototype.moveRight = function() {
-    this.x += this.speed;
+    if(this.x < (280 - this.width)) {
+        this.x += this.speed;
+    }
 }
 
 Car.prototype.moveUp = function() {
