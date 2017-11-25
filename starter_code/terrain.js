@@ -25,7 +25,7 @@ Canvas.prototype.drawRect = function(x, y, width, height, color) {
 
 Canvas.prototype.draw = function() {
   this.drawRect(0, 0, 400, 700, "#088A08"); //verde
-  this.drawRect(30, 0, 340, 700, "#848484"); // gris
+  this.drawRect(30, 0, 340, 700, "#848484"); //gris
   this.drawRect(37, 0, 325, 700, "#FFFFFF"); //blanco
   this.drawRect(45, 0, 309, 700, "#848484"); //gris
 
@@ -42,6 +42,3 @@ Canvas.prototype.draw = function() {
   this.drawRect(200, 530, 8, 30, "#FFFFFF");
 
 };
-
-var canvas = new Canvas("canvas");
-canvas.draw();
