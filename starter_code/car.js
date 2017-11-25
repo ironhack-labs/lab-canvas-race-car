@@ -56,7 +56,7 @@ Car.prototype.draw = function() {
       this.width,
       this.height
     );
-    window.requestAnimationFrame(this.draw.bind(this));
+    // window.requestAnimationFrame(this.draw.bind(this));
   }
 };
 

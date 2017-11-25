@@ -42,7 +42,6 @@ Game.prototype.draw = function() {
         this.crashFront(i);
       }
     }
-
   }
 
   window.requestAnimationFrame(this.draw.bind(this));
@@ -68,8 +67,8 @@ Game.prototype.crashFront = function(i) {
     }
   }
 };
-Game.prototype.paintRoad = function() {
 
+Game.prototype.paintRoad = function() {
   this.ctx.fillStyle = "rgb(62, 162, 1)";
   this.ctx.fillRect(0, 0, 25, this.height);
   this.ctx.fillRect(this.width - 25, 0, 25, this.height);
