@@ -3,7 +3,9 @@ window.onload = function() {
     startGame();
   };
 
-  function startGame() {
-
+  function startGame(ctx) {
+    road.draw(ctx);
   }
+
+
 };
