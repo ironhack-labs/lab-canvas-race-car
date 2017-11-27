@@ -5,14 +5,18 @@ window.onload = function() {
 
   function startGame() {
 var game = new Game();
-game.canvasInit();
-game.roadInit();
+game.playGame();
   }
 };
 
 function Game() {
 var ctx ;
 }
+Game.prototype.playGame = function () {
+  this.canvasInit();
+  this.roadInit();
+  this.carInit();
+};
 
 Game.prototype.canvasInit = function () {
 
@@ -25,4 +29,10 @@ Game.prototype.canvasInit = function () {
 Game.prototype.roadInit = function () {
   var road = new Road();
   road.draw(this.ctx);
+};
+
+Game.prototype.carInit = function () {
+  var car = new Car();
+  car.draw(this.ctx);
+
 };
