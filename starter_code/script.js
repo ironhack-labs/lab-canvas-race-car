@@ -8,7 +8,8 @@ window.onload = function() {
     var canvas = new RaceCanvas();
     document.getElementById('game-canvas').setAttribute("width",canvas.width);
     document.getElementById('game-canvas').setAttribute("height",canvas.height);
+    var car = new RaceCar(canvas.width/2 -25,canvas.height - 120);
     canvas.createCanvas();
-    canvas.createCar();
+    canvas.createCar(canvas.width/2 -25,canvas.height - 120);
   }
 };

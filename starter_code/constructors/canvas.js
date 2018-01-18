@@ -23,11 +23,11 @@ RaceCanvas.prototype.createCanvas = function(){
   this.ctx.stroke();
 }
 
-RaceCanvas.prototype.createCar = function(){
+RaceCanvas.prototype.createCar = function(x,y){
   var that = this;
   var img = new Image();
-  img.onload = function() {
-    that.ctx.drawImage(img, that.width/2 -25,that.height - 120,50,100);
+  img.onload = function() {
+    that.ctx.drawImage(img,x,y,50,100);
   };
   img.src = 'images/car.png'; 
 }
