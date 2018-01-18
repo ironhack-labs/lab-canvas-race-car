@@ -17,3 +17,5 @@ Car.prototype.render = function(delta){
     ctx.fillRect(this.pos.X, this.pos.Y, 100, 200);
  }
  
+
+ 

@@ -31,22 +31,37 @@ window.onload = function () {
     ctx.setLineDash([30, 20]);
     ctx.moveTo(200, 570);
     ctx.lineTo(200, 30);
-    ctx.stroke()
+    ctx.stroke();
+    var render = function(){
+      then = now;
+      now = Date.now();
+      delta = now - then;
+      
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+
+
+
     $(document).keydown(function (e) {
       switch (e.keyCode) {
         case 39: // izquierda
           console.log("DD")
-          d++*(200);
+          d++;
 
           break;
         case 37: // derecha
           s++;
           break;
       }
+      var img2 = ctx.createImageData(50, 100);
+      for (var i = img2.data.length; --i >= 0;)
+        img2.data[i] = 0;
+      ctx.putImageData(img2, 175 + d - s, 450);
 
       var img = new Image();
       img.onload = function () {
-        ctx.drawImage(img, 175 + d-s,450, 50, 100);
+        ctx.drawImage(img, 175 + d - s, 450, 50, 100);
 
 
       };
