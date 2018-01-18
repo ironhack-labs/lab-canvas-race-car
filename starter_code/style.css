@@ -1,8 +1,12 @@
 body {
   padding: 0;
   text-align: center;
+  background-color:white;
 }
-
+.container{
+  display: flex;
+  flex-direction: row;
+}
 .game-intro {
   float: left;
   padding: 0% 10%;
@@ -35,4 +39,16 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+ #canvas{
+  z-index: 5;
+}  
+.ocultar{
+  width: 500px;
+  height: 700px;
+  background-color: white;
+  margin-left: 670px;
+}
+.active{
+  z-index: 0 !important;
 }
