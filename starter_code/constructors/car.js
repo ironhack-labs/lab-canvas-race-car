@@ -1,0 +1,1 @@
+var RaceCar = function(){}

@@ -9,5 +9,6 @@ window.onload = function() {
     document.getElementById('game-canvas').setAttribute("width",canvas.width);
     document.getElementById('game-canvas').setAttribute("height",canvas.height);
     canvas.createCanvas();
+    canvas.createCar();
   }
 };

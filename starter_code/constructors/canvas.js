@@ -17,9 +17,17 @@ RaceCanvas.prototype.createCanvas = function(){
   this.ctx.strokeStyle="#fff";
   this.ctx.lineWidth = 5;
   this.ctx.setLineDash([20, 15]);
-  this.ctx.lineDashOffset = 1;
   this.ctx.beginPath();
   this.ctx.moveTo(this.width/2, 0);
   this.ctx.lineTo(this.width/2, this.height);
   this.ctx.stroke();
+}
+
+RaceCanvas.prototype.createCar = function(){
+  var that = this;
+  var img = new Image();
+  img.onload = function() {
+    that.ctx.drawImage(img, that.width/2 -25,that.height - 120,50,100);
+  };
+  img.src = 'images/car.png'; 
 }
