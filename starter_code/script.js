@@ -1,9 +1,5 @@
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
-
-  function startGame() {
-
-  }
-};
+$(document).ready(function(){
+  $(".start-button").click(function() {
+      $(".ocultar").toggle();
+   });
+});
