@@ -34,5 +34,16 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+
+}
+
+.container{
+  display: flex;
+  flex-direction: row;  
+}
+.hide{
+  width: 500px;
+  height: 700px;
+  background-color: #fff;
+  margin-left: 670px;
 }
