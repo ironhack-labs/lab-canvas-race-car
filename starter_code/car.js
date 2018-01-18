@@ -11,6 +11,9 @@ CreateCarObject.prototype.render = function(delta,ctx){
     this.x += this.speed/1000*delta;
     var img = new Image();
     imgScale = 158 / 319;
-      ctx.drawImage(img, this.x, 650, 90 * imgScale, 90);
-    img.src = "images/car.png" }
-
+    img.onload = function () {
+        ctx.drawImage(img, this.x, 650, 90 * imgScale, 90);
+    }
+    img.src = "images/car.png" 
+    console.log("creo el coche");
+}
