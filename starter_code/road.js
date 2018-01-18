@@ -1,16 +1,18 @@
-window.onload = function() {
-    document.getElementById("start-button").onclick = function() {
-    startGame();
-    };
-    var canvas = document.getElementById('canvi');
-     
-     
-      var ctx = canvas.getContext('2d');
-    ctx.fillRect(25, 25, 100, 100);
-      ctx.clearRect(45, 45, 60, 60);
-      ctx.strokeRect(50, 50, 50, 50);
-  }
-  
-    function startGame() {
-  
-    };
+function Pepe(maxSpeed, x, y) {
+  this.maxSpeed = maxSpeed;
+  this.pos = { X: x, Y: y };
+  this.speed = 0;
+
+}
+Car.prototype.move = function(direction){
+  console.log("moving");
+   this.speed = this.maxSpeed * direction;
+}
+
+Car.prototype.stop = function(){
+  this.speed = 0;
+}
+Car.prototype.render = function(delta){
+  this.pos.X += this.speed/1000*delta;
+  ctx.fillRect(this.pos.X, this.pos.Y, 100, 200);
+}

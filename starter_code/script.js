@@ -1,8 +1,13 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
   startGame();
-   
+  
+  };
+  var coche = new Pepe();
+  console.log(coche)
+
 function startGame() {
+  var d = 0, s = 0 ;
   var canvas = document.getElementById('canvi');
    var ctx = canvas.getContext('2d');
     ctx.fillStyle ='#80817F';
@@ -21,12 +26,23 @@ ctx.beginPath();
 ctx.moveTo(200,570 );
 ctx.lineTo(200, 30);
 ctx.stroke();
-var img = new Image();
-img.src = "images/car.png";
-img.onload = function(){
-  ctx.drawImage(img,175,480,50,100 );
-  };
 
-}
-}
+  $(document).keydown(function(e) {
+    switch (e.keyCode) {
+      case 39:
+      d++;
+      
+       break;
+      case 37:
+      s++;
+       break;
+    }
+var img = new Image();
+img.onload = function(){
+  ctx.drawImage(img,175 +d-s,480,50,100 );
+};
+  
+img.src = "images/car.png";
+  });
+ }
 }
