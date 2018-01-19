@@ -15,7 +15,7 @@ window.onload = function() {
         ctx.fillRect(20,0, 340,720);
         ctx.fillStyle = "#fff";
         ctx.fillRect(30,0,10,720);
-        s
+        
         ctx.fillStyle = "#fff";
         ctx.fillRect(340,0,10,720);
         ctx.beginPath();
@@ -29,7 +29,7 @@ window.onload = function() {
         var img = new Image();
          imgScale = 150/150;
          img.onload = function() {
-           ctx.drawImage(img, 175, 660,35*imgScale,50);
+           ctx.drawImage(img, 170, 660,35*imgScale,50);
          };
          img.src = 'images/car.png';
 
