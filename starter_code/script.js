@@ -1,22 +1,26 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
+  var img = new Image();
+
+  // var img = new Image();
+  img.src = "images/car.png";
 
   document.getElementById("start-button").onclick = function() {
     road(ctx);
-    startGame(ctx);
+    startGame(ctx,img);
+    //ctx.drawImage(img, blueCar.y, blueCar.x, 35, 60);
   };
 };
+ 
+var blueCar = new Car();
+//var street = new road();
 
-//var blueCar = new Car();
-
-function startGame(ctx) {
-  var img = new Image();
-
-  img.onload = function(ctx) {
-    ctx.drawImage(img, blueCar.y, blueCar.x, 35, 60);
-  };
-  img.src = "images/car.png";
+function startGame(ctx,img) {
+ 
+  // var img = new Image();
+  // img.src = "images/car.png";
+  ctx.drawImage(img, blueCar.y, blueCar.x, 35, 60);
 
   window.requestAnimationFrame(startGame);
 }
@@ -42,4 +46,9 @@ function road(ctx) {
   ctx.lineTo(150, 700);
   ctx.strokeStyle = "white";
   ctx.stroke();
+
+  // var img = new Image();
+  // img.src = "images/car.png";
+  // ctx.drawImage(img, blueCar.y, blueCar.x, 35, 60);
+
 }
