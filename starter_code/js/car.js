@@ -3,6 +3,10 @@ function CreateCarObject() {
       this.speed = 30;
       this.img = new Image();
       this.scale = 158 / 319;
+      this.img.src = "img/car.png";
+      // this.img.onload = function () {
+      //   window.requestAnimationFrame(gameStart)
+      // }
 }
 
 CreateCarObject.prototype.move = function (key) {

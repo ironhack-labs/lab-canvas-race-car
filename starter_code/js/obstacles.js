@@ -1,24 +1,49 @@
 function CreateObstacles() {
-      this.y = 0;
-      this.walls = [
-            {width: getRandomInt(70, 200),height: getRandomInt(30, 50), posX: getRandomInt(80, 100), posY: getRandomInt(10, 100)},
-            {width: getRandomInt(50, 120),height: getRandomInt(20, 70), posX: getRandomInt(120, 40), posY: getRandomInt(200, 300)},
-            {width: getRandomInt(120, 400),height: getRandomInt(15, 25), posX: getRandomInt(150, 470), posY: getRandomInt(300, 450)}
+      this.walls = [{
+                  width: 150,
+                  height: 75,
+                  posX: 50,
+                  posY: 0
+            },
+            {
+                  width: 75,
+                  height: 75,
+                  posX: 250,
+                  posY: 200
+            },
+            {
+                  width: 250,
+                  height: 75,
+                  posX: 375,
+                  posY: 400
+            }
       ];
 
 
 
 }
 
+// CreateObstacles.prototype.shuffle = function() {
+//       this.walls.forEach(function(wall){
+//             wall.posX = getRandomInt(150, 470),
+//             wall.posY = getRandomInt(300, 450)
+//             wall.width = getRandomInt(50, 400);
+//             wall.height = getRandomInt(20, 500);
+//       });
+// }
+
 CreateObstacles.prototype.render = function (ctx) {
-      this.y ++;
-      this.walls.forEach(function(wall){
+      this.walls.forEach(function (wall) {
             // console.log(wall.posX, wall.posY, wall.width, wall.height);
-            ctx.fillRect(wall.posX, wall.posY+=5, wall.width, wall.height);
-            if(wall.posY>window.innerHeight) {
-                  wall.posY=0     
+            ctx.fillRect(wall.posX, wall.posY += 5, wall.width, wall.height);
+            if (wall.posY > window.innerHeight) {
+                  wall.posX = getRandomInt(150, 470);
+                  wall.posY = getRandomInt(0, 200);
+                  wall.width = getRandomInt(100, 200);
+                  wall.height = getRandomInt(20, 70);
             }
-      });  
+      });
+      console.log(this.walls.length);
 }
 
 function getRandomInt(min, max) {
