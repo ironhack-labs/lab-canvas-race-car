@@ -42,7 +42,7 @@ window.onload = function() {
     }
 
     // NEW INSTANCE OF OBJECT CAR
-    var myCar = new Car(100,225,560);
+    var myCar = new Car(5,225,560);
 
     // OBSTACLE PROTOTYPE
     function Obstacle(x,y,width){
@@ -51,7 +51,7 @@ window.onload = function() {
       this.speed = 1;
       this.width = width;
       this.height = 30;
-      this.length = length;
+      // this.length = length;
     }
 
     Obstacle.prototype.move = function(){
@@ -59,9 +59,12 @@ window.onload = function() {
     }
 
     Obstacle.prototype.render = function(delta){
-      ctx.fillStyle = 'rgb(146,0,0)';       
+      ctx.fillStyle = 'rgb(146,0,0)';  
+      this.move();   
+      if (this.y > 750) {
+        this.y = -50;
+      }  
       ctx.fillRect(this.x, this.y, this.width, this.height);
-      this.move();
     }
 
     // NEW INSTANCES OF OBJECT OBSTACLES
@@ -119,12 +122,9 @@ window.onload = function() {
       window.requestAnimationFrame(render);
     };
     window.requestAnimationFrame(render);
-  }
 
-  // MOVE CAR LEFT OR RIGHT
-  //$('#game-canvas').keydown(function(e){
+    // MOVE CAR LEFT OR RIGHT
   window.addEventListener('keydown', function(e){
-    console.log('ha entrado');
     switch(e.keyCode){
       case 37: // left
         myCar.move(-1);              
@@ -136,10 +136,14 @@ window.onload = function() {
   });
   
   // STOP CAR
-  $('#game-canvas').keyup(function(e){
+  window.addEventListener('keyup', (function(e){
     myCar.stop();
-  });
+  }
+  ));
 
+  }
+
+  
 
 
 };
