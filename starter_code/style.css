@@ -1,6 +1,7 @@
 body {
   padding: 0;
   text-align: center;
+
 }
 
 .game-intro {
@@ -20,7 +21,7 @@ body {
 .arrows-img {
   width: 150px;
 }
-
+document.getElementsByName.canvas
 body button {
   font-size: 30px;
   background-color: #870007;
@@ -35,4 +36,9 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+
+}
+
+
+
 }
