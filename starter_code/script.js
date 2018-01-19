@@ -8,7 +8,7 @@ window.onload = function() {
   };
 };
 
-var blueCar = new Car();
+//var blueCar = new Car();
 
 function startGame(ctx) {
   var img = new Image();
