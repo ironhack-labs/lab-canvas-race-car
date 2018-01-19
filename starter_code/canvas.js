@@ -27,18 +27,23 @@ GameBoard.prototype.cleanGameBoard = function(){
 }
 
 function Car(){
-  this.speed = 10;
+  //this.speed = 10;
   this.imgUrl = "images/car.png";
-  this.x = 155;
-  this.y = 640;
-  this.scale = 158 / 319;
+  this.x = 140;
+  this.y = 580;
+  this.scale = 158/319;
 }
 
 Car.prototype.drawCar = function(ctx){
 
-  var img = new Image();
-  img.src = this.imgUrl;
-  imgScale = 640/480;
-  ctx.drawImage(img, 0, 0,90*this.scale,90)
+   var img = new Image();
+   imgScale = this.scale;
+   var x= this.x;
+   var y = this.y;
+   img.onload = function() {
+       ctx.drawImage(img, x , y, 90*imgScale, 90);
+   };
+  img.src = this.imgUrl;
+
 
 }
