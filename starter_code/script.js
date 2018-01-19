@@ -24,9 +24,9 @@ window.onload = function () {
     ctx.stroke();
 
     var img = new Image();
-    imgScale = 300/600;
+    imgScale = 300/ 600;
     img.onload = function() {
-    ctx.drawImage(img, 215, 600,150*imgScale,150);
+    ctx.drawImage(img, 215, 645,150*imgScale,150);
     };
     img.src = 'images/car.png';
     }

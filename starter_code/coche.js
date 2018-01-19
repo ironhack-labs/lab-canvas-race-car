@@ -17,3 +17,12 @@ CarToGo.prototype.moving = function(keyPressed){
         return;
     }
 }
+
+// CarToGo.prototype.draw = function(){
+//     var img = new Image();
+//     imgScale = 300/600;
+//     img.onload = function() {
+//     ctx.drawImage(img, 215, 600,150*imgScale,150);
+//     };
+//     img.src = 'images/car.png';
+//     }
