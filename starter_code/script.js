@@ -1,6 +1,7 @@
 $(document).ready(() => {
   var canvas = new GameBoard();
   var car = new CreateCarObject();
+  var obstacles = new CreateObstacles(canvas.ctx);
 
   function gameStart() {
     car.img.src = "images/car.png";
@@ -8,6 +9,7 @@ $(document).ready(() => {
       canvas.clean();
       canvas.drawRoad();
       car.render(canvas.ctx);
+      obstacles.render(canvas.ctx);
       window.requestAnimationFrame(gameStart)
     }
   }
