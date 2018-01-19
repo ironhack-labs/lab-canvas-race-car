@@ -27,7 +27,7 @@ GameBoard.prototype.cleanGameBoard = function(){
 }
 
 function Car(){
-  //this.speed = 10;
+
   this.imgUrl = "images/car.png";
   this.x = 140;
   this.y = 580;
@@ -46,4 +46,21 @@ Car.prototype.drawCar = function(ctx){
   img.src = this.imgUrl;
 
 
+}
+
+Car.prototype.moveCar = function(key){
+   switch (key) {
+          case 37: // izquierda
+            this.x -= 5;
+            if (this.x < 15) {
+              this.x = 15;
+            }
+            break;
+          case 39: // derecha
+            this.x += 5;
+            if (this.x > 315) {
+              this.x = 315;
+            }
+            break;
+        }
 }
