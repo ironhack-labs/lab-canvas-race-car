@@ -33,7 +33,8 @@ window.onload = function() {
       var that = this;
       var img = new Image();
       //img.onload = function() {
-      that.ctx.drawImage(img, x, y, 50, 100); //};
+      that.ctx.drawImage(img, x, y, 50, 100);
+      //};
       img.src = "images/car.png";
     };
 
@@ -45,14 +46,25 @@ window.onload = function() {
     };
 
     RaceCar.prototype.move = function(direction) {
-      this.speed = this.maxSpeed * direction;
+      
+        this.speed = this.maxSpeed * direction;
+
+      if(this.pos.X < 25 ){
+        this.stop();
+        this.pos.X = 25;
+      }
+      else if(this.pos.X > 235){
+        car.stop();
+        this.pos.X =235;
+      }
+      
     };
     RaceCar.prototype.stop = function() {
       this.speed = 0;
     };
     RaceCar.prototype.render = function(delta) {
       this.pos.X += this.speed / 1000 * delta;
-
+      
       //canvas.createCar(this.pos.X,this.pos.Y);
       var img = new Image();
       img.src = "images/car.png";
@@ -80,9 +92,7 @@ window.onload = function() {
     window.requestAnimationFrame(rendering);
 
     document.getElementById("game-canvas").setAttribute("width", canvas.width);
-    document
-      .getElementById("game-canvas")
-      .setAttribute("height", canvas.height);
+    document.getElementById("game-canvas").setAttribute("height", canvas.height);
     canvas.createCanvas();
     canvas.createCar(canvas.width / 2 - 25, canvas.height - 120);
 
