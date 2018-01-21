@@ -4,22 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
+  <script src="js/car.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/obstacles.js"></script>
+  
   </script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>Document</title>
 </head>
 <body>
   <div class="game-intro">
-    <img src="./images/logo.png" alt="" class="logo-img">
+    <img src="./img/logo.png" alt="" class="logo-img">
     <br>
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
-    <img src="./images/arrows.png" alt="" class="arrows-img">
+    <img src="./img/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+    <canvas id="canvas" height="1500" width="600"></canvas>
   </div>
+  
 </body>
 </html>

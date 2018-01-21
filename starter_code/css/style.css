@@ -1,11 +1,14 @@
 body {
+  margin:0;
   padding: 0;
   text-align: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 0% 100px 0 20px;
 }
 
 .game-intro p {
@@ -34,5 +37,5 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 0;
 }
