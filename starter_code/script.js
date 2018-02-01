@@ -8,12 +8,12 @@ window.onload = function() {
   var carImg = new Image();
   carImg.src = "images/car.png";
   document.getElementById("start-button").onclick = function() {
+    interval();
     startGame();
   };
 
   function startGame() {
     createGameBoard();
-    interval();
     drawCar();
   }
 
@@ -91,6 +91,9 @@ window.onload = function() {
     }
     createGameBoard();
     drawCar();
+    for (i = 0; i < myObstacles.length; i++) {
+      myObstacles[i].update();
+    }
   }
 
   function updateCanvas() {
@@ -103,6 +106,7 @@ window.onload = function() {
       wallWidth = 100;
       wallHeight = 20;
       myObstacles.push(new component(wallWidth, wallHeight, wallX, 0));
+      board.frames = 2;
     }
     for (i = 0; i < myObstacles.length; i++) {
       myObstacles[i].y += 10;
@@ -110,6 +114,7 @@ window.onload = function() {
       if (myObstacles[i].crashWith(myObstacles[i]) === true) {
         alert("wall");
         myObstacles = [];
+        board.score = 0;
         board.frames = 0;
         startGame();
       }
