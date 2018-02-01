@@ -1,6 +1,7 @@
+
 window.onload = function() {
   function interval() { 
-    setInterval(updateCanvas, 20) 
+    setInterval(updateCanvas, 33) 
   }
 
   var myObstacles = [];
@@ -33,7 +34,7 @@ window.onload = function() {
     this.ctx.lineTo(245,600);
     this.ctx.stroke();
     this.ctx.font = "50px Helvetica";
-    this.ctx.fillText("Score: " + board.frames, 0, 50);
+    this.ctx.fillText("Score: " + board.score, 0, 50);
   }
 
   var car = {
@@ -47,6 +48,7 @@ window.onload = function() {
 
   var board = {
     frames: 0,
+    score: 0
   }
   
   function component (width, height, x, y) {
@@ -87,7 +89,8 @@ window.onload = function() {
       default:
         console.log("oh no!");
     }
-    updateCanvas();
+    createGameBoard();
+    drawCar();
   }
 
   function updateCanvas() {
@@ -95,14 +98,14 @@ window.onload = function() {
     createGameBoard();
     drawCar();
     board.frames++;
-    if (board.frames % 200 === 0) {
+    if (board.frames % 60 === 1) {
       wallX = Math.floor(Math.random() * 400);
       wallWidth = 100;
       wallHeight = 20;
       myObstacles.push(new component(wallWidth, wallHeight, wallX, 0));
     }
     for (i = 0; i < myObstacles.length; i++) {
-      myObstacles[i].y += 2;
+      myObstacles[i].y += 10;
       myObstacles[i].update();
       if (myObstacles[i].crashWith(myObstacles[i]) === true) {
         alert("wall");
@@ -113,6 +116,7 @@ window.onload = function() {
       if (myObstacles[i].y > 600) {
         myObstacles.splice(i,1);
         console.log(myObstacles.length);
+        board.score++;
       }
     }
   }
