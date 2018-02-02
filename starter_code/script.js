@@ -20,6 +20,17 @@ window.onload = function() {
         this.x+=10;
         }
     };
+
+    this.moveUp = function(){
+      if (this.y>40){
+        this.y-=10;
+      }
+    };
+    this.moveDown = function(){
+      if (this.y<520){
+        this.y+=10;
+      }
+    };
   }
   Player.prototype.left = function(){
     return this.x;
@@ -196,6 +207,12 @@ window.onload = function() {
       break;
       case 39:
       car.moveRight();
+      break;
+      case 38:
+      car.moveUp();
+      break;
+      case 40:
+      car.moveDown();
       break;
     }
   };
