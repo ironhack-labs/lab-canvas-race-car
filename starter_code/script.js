@@ -5,7 +5,7 @@ window.onload = function() {
   
   var car = {
     x: 80,
-    y: 105,
+    y: 120,
 
     moveLeft:  function() { this.x -= 15 },
     moveRight: function() { this.x += 15 },
@@ -45,21 +45,31 @@ window.onload = function() {
     var img = new Image();
     img.onload = function() {
     //x & y coordinates to be upated upon update
-    ctx.drawImage(img, car.x, car.y , 50, 40);
+    ctx.drawImage(img, car.x, car.y , 40, 30);
   };
   img.src = "images/car.png";
   }
 
   //use keycodes to read left/right inputs
   document.onkeydown = function(e) {
-    switch (e.keyCode) {
-      case 37: car.moveLeft();  console.log('left',  car); break;
-      case 39: car.moveRight(); console.log('right', car); break;
-    }
+      switch (e.keyCode) {
+        case 37: 
+        car.moveLeft();
+        if(car.x < 15){
+          car.x = 15
+        } 
+        break;
+        case 39: 
+        car.moveRight();
+        if(car.x > 250){
+          car.x = 250;
+        }
+        break;
+      }    
+
     //update the full canvas when key is pressed
     updateCanvas();
   }
-
 
 };
 
