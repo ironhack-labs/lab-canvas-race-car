@@ -31,5 +31,16 @@ Road.prototype.draw = function (){
   for(var i = 0; i < this.h; i +=50 ){
     this.drawRect( this.w/2 , i, anchoLineaIntermitente, altoLineaIntermitente)
   }
+
+  var img = new Image();
+ 
+  var anchoImagen = 60;
+  var altoImagen = 100;
+  img.onload = function(){
+
+    this.ctx.drawImage(img, this.w/2 -anchoImagen/2 ,this.h - altoImagen - 40,anchoImagen, altoImagen)
+  }.bind(this)
+  img.src = "images/car.png";
+  
 }
 
