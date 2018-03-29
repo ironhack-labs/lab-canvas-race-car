@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="./carretera.js"></script>
+  <script src="./road.js"></script>
+  <script type="text/javascript" src="./coche.js"></script>
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
@@ -18,8 +22,9 @@
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
-  <div id="game-board">
-
+  <div id="game-board" class= "fondoBlanco"> 
+     <canvas id="my-canvas" class = "carretera" width="400" height="500"></canvas>
+     <canvas id="my-car" width="40" height="100"></canvas>
   </div>
 </body>
 </html>
