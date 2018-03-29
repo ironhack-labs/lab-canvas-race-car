@@ -35,11 +35,12 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
-    background-color: #fff;
-    height: 200px;
-    width: 100px;
-    display:none;
 }
 #my-canvas {
   display: block
+}
+
+#my-car {
+  width: 168px;
+  height: 318px;
 }
