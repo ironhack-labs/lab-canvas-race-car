@@ -35,12 +35,10 @@ Canvas.prototype.drawRoad = function(){
 
   this.road[1].y = this.road[0].y - 750;
 
-  console.log(this.road[0].y, this.road[1].y);
   this.road[0].drawRoad();
   this.road[1].drawRoad();
 };
 
 Canvas.prototype.clear = function() {
-  debugger;
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };

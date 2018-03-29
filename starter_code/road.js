@@ -35,7 +35,6 @@ Road.prototype.rectCentralWhite = function() {
   this.ctx.fillStyle = "rgba(255, 255, 255, 1)";
 
   for (var i = this.y; i < 750; i += 20) {
-    console.log(222);
     this.ctx.fillRect(300, i, 10, 10);
   }
 

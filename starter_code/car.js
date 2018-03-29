@@ -11,19 +11,27 @@ function Car(canvasId, image, ctx){
     this.image = new Image();
     this.image.src = image;
 
-    this.w = 100;
-    this.h = 250;
+    this.x = 250;
+    this.y = 400;
 
-    this.x = this.canvas.w - this.w;
-    this.y = this.canvas.h * 0,75;
+
     document.onkeydown = function(event) {
+        console.log(event.keyCode);
         var d = 5;
         switch(event.keyCode){
             case RIGHT_KEY:
-             this.x +=d;
+            if(this.x >= 480){
+                alert("Out of track!");
+            }else{
+                this.x += d;
+            }
              break;
              case LEFT_KEY:
+             if(this.x < 50){
+                alert("Out of track!");
+            }else{
              this.x -= d;
+            }
              break;
              case TOP_KEY:
              this.y -= d;
@@ -36,5 +44,5 @@ function Car(canvasId, image, ctx){
 }
 
 Car.prototype.draw = function(){
-    this.ctx.drawImage(this.image, 0,0, 80, 120);
+    this.ctx.drawImage(this.image, this.x, this.y, 80, 120);
 };
