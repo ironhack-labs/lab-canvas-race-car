@@ -1,4 +1,6 @@
 
+var RIGHT_KEY = 39;
+var LEFT_KEY = 37;
 window.onload = function() {
   document.getElementById("start-button").onclick = function () {
     startGame();
@@ -9,7 +11,13 @@ window.onload = function() {
     this.ctx = this.canvas.getContext("2d");
     this.width = 700;
     this.height = 900;
+    this.x = 10;
+    this.moveCar();
 
+    setInterval (function(){
+      this.clear();
+      this.draw();
+    }.bind(this), 10)
    
   }
   Canvas.prototype.drawRect = function (x, y, width, height) {
@@ -36,11 +44,32 @@ window.onload = function() {
     this.img = new Image();
     this.img.src = "images/car.png";
     this.img.onload = function () {
-      this.ctx.drawImage(this.img, 200, 700, 60, 120);
+      this.ctx.drawImage(this.img, this.x, 700, 60, 120);
     }.bind(this)
-
-
   }
+
+  Canvas.prototype.moveCar = function () {
+    
+    document.onkeydown =function(event) {
+      var d = 15;
+      switch (event.keyCode) {
+        case RIGHT_KEY:
+          this.x += d;
+          break;
+        case LEFT_KEY:
+          this.x -= d;
+          break;   
+      }
+    }.bind(this)
+  }
+  Canvas.prototype.clear = function () {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+
+
+
+
   var canvas = new Canvas('my-canvas');
   $('#my-canvas').hide();
 
