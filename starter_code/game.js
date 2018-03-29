@@ -3,7 +3,7 @@ function Game(canvas)  {
     this.ctx = this.canvas.getContext("2d");
 
     this.coche = new Coche(this.canvas, this.ctx);
-    this.carretera = new Carretera(this.canvas, this.ctx);
+    this.carretera = new Carretera (this.canvas, this.ctx);
 }
 
 Game.prototype.start = function () {

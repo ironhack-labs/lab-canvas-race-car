@@ -22,6 +22,10 @@ Carretera.prototype.blancoCarretera = function() {
   this.ctx.strokeStyle = this.ctx.fillStyle;
 };
 
+Carretera.prototype.mover = function () {
+ctx
+}
+
 Carretera.prototype.draw = function() {
   this.verdeCarretera();
   this.drawRect(350, 0, 40, 500);
