@@ -5,7 +5,7 @@ function Coche(canvas, ctx) {
     this.h = 100;
     this.image = new Image();
     this.image.src = "./images/car.png";
-    this.x = this.canvas.width / 2 - this.w / 2;
+    this.x = this.canvas.width / 2 + 50;
     this.y = this.canvas.height * 0.75;
 
     this.setListeners()

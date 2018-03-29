@@ -36,6 +36,7 @@ if (this.pepe > 130) {
   this.drawRect(200, 320 - this.pepe, 5, 50);
   this.drawRect(200, 400 - this.pepe, 5, 50);
   this.drawRect(200, 480 - this.pepe, 5, 50);
+  this.drawRect(200, 560 - this.pepe, 5, 50);
  
   this.pepe++;
 }
