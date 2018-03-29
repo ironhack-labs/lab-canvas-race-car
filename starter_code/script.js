@@ -73,7 +73,7 @@ window.onload = function() {
           //this.ctx.fillStyle = "green";
           this.obstaculoArray[i](this.obstaculoPx[i],i ,this.obstaculoW[i]);
           if (this.obstaculoArray[i].length > 5) this.obstaculoArray.shift();
-        
+        }
         debugger;
         i = 0;
       }.bind(this),
