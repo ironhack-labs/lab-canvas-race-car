@@ -5,13 +5,14 @@ window.onload = function() {
 
   function startGame() {
     var canvas = document.getElementById("canvas");
-    this.ctx = canvas.getContext("2d");
-    document.getElementsBy;
+    this.ctx = canvas.getContext("2d");    
     this.img = new Image();
     this.img.src = "images/car.png";
-    this.player(157.5);
+    this.obstaculoArray = []; 
+    this.draw();
+    this.imgcar();
+    
     this.y = 157;
-    this.obstaculoArray = [];    
     document.onkeydown = function(e) {
       switch (e.keyCode) {
         case 37:
@@ -24,6 +25,9 @@ window.onload = function() {
           break;
       }
     }.bind(this);
+     setInterval( function(){
+      this.obstaculos();
+     }.bind(this),50)
   }
 
   startGame.prototype.drawGreen = function() {
@@ -47,22 +51,23 @@ window.onload = function() {
       this.ctx.fillRect(172.5, i, 5, 25);
     }
   };
-  startGame.prototype.image = function(width, height, x, y) {
+  startGame.prototype.imgcar = function(width, height, x, y) {
     this.img.onload = function() {
       this.ctx.drawImage(this.img, 157.5, 410, 35, 65);
     }.bind(this);
   }
 
   startGame.prototype.drawObstaculos = function () {
-    setInterval( function(){for (let i = 0; i < this.obstaculoArray.length; i++) {
-      
-        console.log(this.obstaculoArray[i][0]);
+    setInterval( function(){for (var i = 0; i < this.obstaculoArray.length; i++) {
         this.clear();
         this.draw();
-        this.ctx.drawImage(this.img, y, 410, 35, 65)
-        this.ctx.fillRect(this.obstaculoArray[i][0], ++this.obstaculoArray[i][2], this.obstaculoArray[i][1], 30)
-            
-    }}.bind(this),200)
+        this.player(this.y);
+        this.ctx.fillStyle = "green";
+        this.ctx.fillRect(this.obstaculoArray[i][0], this.obstaculoArray[i][2] += 0.5, this.obstaculoArray[i][1], 30);
+        if (this.obstaculoArray[i][2] > 500)
+          this.obstaculoArray.shift();    
+    }debugger;
+    i = 0;}.bind(this),10)
     
     
   }
@@ -74,8 +79,7 @@ window.onload = function() {
     this.drawRoad();
     this.drawWhiteBorder();
     this.drawWhiteLines();
-    //this.obstaculos();
-
+    
   };
   
   startGame.prototype.player = function(y) {
@@ -83,6 +87,9 @@ window.onload = function() {
       
         this.clear();
         this.draw();
+        for(let i = 0; i < this.obstaculoArray; i++){
+        this.ctx.fillStyle = "green";
+        this.ctx.fillRect(this.obstaculoArray[i][0], ++this.obstaculoArray[i][2], this.obstaculoArray[i][1], 30)}
         this.ctx.drawImage(this.img, y, 410, 35, 65);
       
     
@@ -99,7 +106,7 @@ window.onload = function() {
   startGame.prototype.obstaculos = function () {
     var randomW = Math.floor(Math.random()* 150)+50;
     var randomP = Math.floor(Math.random()* 220);
-    this.ctx.fillRect(randomP, 0, randomW, 30)
+    this.ctx.fillRect(randomP, 0, randomW, 30);
     this.obstaculoArray.push([randomP, randomW, 0]);
     this.drawObstaculos();
   }
