@@ -14,12 +14,16 @@ Canvas.prototype.drawRect = function(x, y, width, height) {
   this.ctx.fillRect(60, 0, 10, this.h)
   this.ctx.fillStyle='white';
   this.ctx.fillRect(this.w-70, 0, 10, this.h)
-  this.ctx.fillStyle='white';
+  /*this.ctx.fillStyle='white';
   this.ctx.fillRect(270, 10, 10, 50)
   this.ctx.fillStyle='white';
-  this.ctx.fillRect(270, 90, 10, 50)
-  this.ctx.stroke("white");
-
+  this.ctx.fillRect(270, 90, 10, 50)*/
+  this.ctx.setLineDash([10,45]);
+  this.ctx.strokeStyle="white";
+  this.ctx.beginPath();
+  this.ctx.moveTo(275, 520);
+  this.ctx.lineTo(275, 0);
+  this.ctx.stroke();
   /*var speed1=0;
   var speed2=0;
   
