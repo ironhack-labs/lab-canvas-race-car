@@ -20,22 +20,19 @@ Road.prototype.drawGrass = function () {
 
 Road.prototype.drawRoad = function () {
   this.ctx.fillStyle = "grey";
-  this.ctx.fillRect(this.x + 40, this.x + 40, this.canvas.width, this.canvas.height);
+  this.ctx.fillRect(this.x + 40, this.y, this.canvas.width - 80, this.canvas.height);
 }
 
-Road.prototype.drawLateralLines = function() {
+Road.prototype.drawLateralLines = function () {
   this.ctx.fillStyle = "white";
   this.ctx.fillRect(100, 0, 20, this.canvas.height);
   this.ctx.fillRect(this.canvas.width - 120, 0, 20, this.canvas.height);
 }
 
-Road.prototype.drawCentralLines = function() {
-  // Canvas.prototype.drawRoadCenterLine = function () {
-  //   var i = 0;
+Road.prototype.drawCentralLines = function () {
+  this.ctx.fillStyle = "white";
 
-  //   setInterval(function () {
-  //     this.clear();
-  //     this.drawSquare(i++, 0, 20);
-  //   }.bind(this), 100);
-  // }
+  for (var i = this.y; i < this.canvas.height; i += 20) {
+    this.ctx.fillRect(this.x + (this.canvas.width / 2) - 5, i, 10, 15);
+  }
 }
