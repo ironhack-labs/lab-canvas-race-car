@@ -5,7 +5,7 @@
 		this.height = 900;
 		this.car = new Car(this.canvas, this.ctx);
 		this.road = [new Road(this.canvas, this.ctx),new Road(this.canvas, this.ctx)] ;
-		this.obstacles = new Obstacles(this.canvas, this.ctx);				
+		this.listaObstacles = [];				
 	}
 	
 	Game.prototype.clear = function() {
@@ -19,11 +19,12 @@
 			this.liveRoad();
 			this.car.drawCar();
 			this.car.moveCar();
+			this.drawObstacles();
 
 
-		}.bind(this), 10
+		}.bind(this), 60
 		);
-
+		setInterval(this.addObstacle.bind(this), 10000);	
 
 	}
 
@@ -40,14 +41,21 @@ Game.prototype.liveRoad = function(){
 	this.road[1].drawRoad();
 }
 
-Game.prototype.liveObstacles = function(){
+Game.prototype.addObstacle = function(){
+	this.listaObstacles.push(new Obstacles(this.canvas, this.ctx));
+}
+
+Game.prototype.drawObstacles = function(){
 	var e=3;
 
-	if () {
+	for (var i = 0; i < this.listaObstacles.length; i++) {
+		this.listaObstacles[i].y += e;
+		this.listaObstacles[i].drawObs()
 		
 	}
 
-	this.obstacles.drawObstacules();
+
+	
 
 
 
