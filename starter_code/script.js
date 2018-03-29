@@ -9,8 +9,9 @@ window.onload = function() {
     document.getElementsBy;
     this.img = new Image();
     this.img.src = "images/car.png";
+    this.player(157.5);
     this.y = 157;
-    this.draw();
+    this.obstaculoArray = [];    
     document.onkeydown = function(e) {
       switch (e.keyCode) {
         case 37:
@@ -50,16 +51,38 @@ window.onload = function() {
     this.img.onload = function() {
       this.ctx.drawImage(this.img, 157.5, 410, 35, 65);
     }.bind(this);
-  };
+  }
 
+  startGame.prototype.drawObstaculos = function () {
+    setInterval( function(){for (let i = 0; i < this.obstaculoArray.length; i++) {
+      
+        console.log(this.obstaculoArray[i][0]);
+        this.clear();
+        this.draw();
+        this.ctx.drawImage(this.img, y, 410, 35, 65)
+        this.ctx.fillRect(this.obstaculoArray[i][0], ++this.obstaculoArray[i][2], this.obstaculoArray[i][1], 30)
+            
+    }}.bind(this),200)
+    
+    
+  }
+  startGame.prototype.clear = function() {
+    this.ctx.clearRect(0, 0, 350, 500);
+  }
+  startGame.prototype.draw = function() {
+    this.drawGreen();
+    this.drawRoad();
+    this.drawWhiteBorder();
+    this.drawWhiteLines();
+    //this.obstaculos();
+
+  };
+  
   startGame.prototype.player = function(y) {
     
       
-        this.ctx.clearRect(0, 0, 350, 500);
-        this.drawGreen();
-        this.drawRoad();
-        this.drawWhiteBorder();
-        this.drawWhiteLines();
+        this.clear();
+        this.draw();
         this.ctx.drawImage(this.img, y, 410, 35, 65);
       
     
@@ -73,11 +96,11 @@ window.onload = function() {
       return;
     this.player(this.y += 5)
   }
-  startGame.prototype.draw = function() {
-    this.drawGreen();
-    this.drawRoad();
-    this.drawWhiteBorder();
-    this.drawWhiteLines();
-    this.image();
-  };
+  startGame.prototype.obstaculos = function () {
+    var randomW = Math.floor(Math.random()* 150)+50;
+    var randomP = Math.floor(Math.random()* 220);
+    this.ctx.fillRect(randomP, 0, randomW, 30)
+    this.obstaculoArray.push([randomP, randomW, 0]);
+    this.drawObstaculos();
+  }
 };
