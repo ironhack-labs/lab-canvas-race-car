@@ -17,6 +17,13 @@ Coche.prototype.draw = function() {
 
 Coche.prototype.setListeners = function() {
     document.onkeydown = function(event) {
-        this.x += 10
+        switch (event.keyCode) {
+            case 39: 
+            this.x +=10;
+            break;
+            case 37: 
+            this.x -=10;
+            break;
+        }
     }.bind(this)
 }
