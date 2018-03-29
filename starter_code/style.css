@@ -1,3 +1,6 @@
+canvas {
+  border: 1px dotted;
+}
 body {
   padding: 0;
   text-align: center;
