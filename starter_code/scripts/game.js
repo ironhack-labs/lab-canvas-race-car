@@ -9,6 +9,10 @@ function Game(canvasId) {
     new Road(this.canvas, this.ctx),
     new Road(this.canvas, this.ctx)
   ]
+
+  this.car = new Car(this.canvas, this.ctx, "images/car.png");
+
+  this.obstacles = [];
 }
 
 Game.prototype.start = function () {
@@ -17,8 +21,14 @@ Game.prototype.start = function () {
     this.clear();
 
     this.drawRoad();
+    this.car.draw();
+    this.drawObstacles();
+
+    this.checkCollisions();
 
   }.bind(this), 30)
+
+  setInterval(this.addObstacle.bind(this), 10000)
 }
 
 Game.prototype.drawRoad = function () {
@@ -33,12 +43,31 @@ Game.prototype.drawRoad = function () {
 
   this.roads[1].y = this.roads[0].y - this.canvas.height;
 
-
-
   this.roads[0].draw();
   this.roads[1].draw();
+}
 
+Game.prototype.addObstacle = function() {
+  this.obstacles.push(new Obstacles(this.canvas, this.ctx));
+}
 
+Game.prototype.drawObstacles = function() {
+   
+  var aux = 1;
+
+  for(var i=0; i<this.obstacles.length; i++){
+    this.obstacles[i].y += aux;
+    this.obstacles[i].draw();
+  }
+}
+
+Game.prototype.checkCollisions = function() {
+  for(var i=0; i<this.obstacles.length; i++){
+    if(this.obstacles[i].isCollision(this.car)){
+      alert("Game Over!");
+      break;
+    }
+  }
 }
 
 Game.prototype.clear = function () {
