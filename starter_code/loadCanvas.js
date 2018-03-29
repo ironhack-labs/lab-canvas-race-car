@@ -4,11 +4,11 @@ function Canvas(id) {
   this.w = 600;
   this.h = 750;
 
-  this.road = new Road(this.canvas, this.ctx);
-  /* [
+  this.road = 
+  [
     new Road(this.canvas, this.ctx),
     new Road(this.canvas, this.ctx)
-  ]; */
+  ];
   this.car = new Car(this.canvas, "./images/car.png", this.ctx);
 }
 
@@ -26,22 +26,21 @@ Canvas.prototype.start = function() {
 
 Canvas.prototype.drawRoad = function(){
   
-/*   var d = 7;
+  var d = 7;
   this.road[0].y += d;
 
   if(this.road[0].y > this.canvas.height){
     this.road[0].y = 0;
   }
 
-  debugger;
-  this.road[1].y = this.road[0].y - this.canvas.height;
+  this.road[1].y = this.road[0].y - 750;
 
+  console.log(this.road[0].y, this.road[1].y);
   this.road[0].drawRoad();
-  this.road[1].drawRoad(); */
-
-  this.road.drawRoad();
+  this.road[1].drawRoad();
 };
 
 Canvas.prototype.clear = function() {
-  this.ctx.clearRect(0, 0, this.canvas.w, this.canvas.height);
+  debugger;
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
