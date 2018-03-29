@@ -4,13 +4,9 @@ window.onload = function() {
   };
   var canvas = document.getElementById("canvas");
 
- 
-
-
   function startGame() {
     var carretera = new Carretera();
     carretera.draw();
-// new carretera()
   }
 
   
