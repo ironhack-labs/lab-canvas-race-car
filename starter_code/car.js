@@ -13,8 +13,10 @@ function Car(canvas,ctx,url) {
     this.image.onload = function() {
       console.log(this.image.width, this.image.height );
       console.log(this.canvas.width, this.canvas.height);
+      var width = this.image.width * 0.5;
+      var height = this.image.height * 0.5;
       console.log(this.canvas.width/2)
-        this.ctx.drawImage(this.image,this.canvas.width/2 - this.image.width,this.canvas.height-this.image.height);
+        this.ctx.drawImage(this.image,0,0,this.image.width, this.image.height, this.canvas.width/2 - width/2, this.canvas.height-height,width,height);
     }.bind(this)
   }
 
