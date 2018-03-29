@@ -16,7 +16,9 @@ window.onload = function() {
 
     setInterval (function(){
       this.clear();
-      this.draw();
+      this.drawRoad();
+      this.drawCar();
+
     }.bind(this), 10)
    
   }
@@ -24,7 +26,7 @@ window.onload = function() {
     this.ctx.fillRect(x, y, width, height)
 
   }
-  Canvas.prototype.draw = function () {
+  Canvas.prototype.drawRoad = function () {
     this.ctx.fillStyle = "green"
     this.drawRect(0, 0, 700, 900);
     this.ctx.fillStyle = "grey"
@@ -36,8 +38,6 @@ window.onload = function() {
     for (var posY = 0 ; posY <= 810 ; posY += 90 ){
       this.drawRect(posX, posY, 20, 50);
     }
-    this.drawCar();
-    
 
   }
   Canvas.prototype.drawCar = function(){
@@ -65,7 +65,12 @@ window.onload = function() {
   Canvas.prototype.clear = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
+  Canvas.prototype.drawObstacules = function () {
+    
 
+
+    
+  }
 
 
 
