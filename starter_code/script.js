@@ -4,8 +4,31 @@ window.onload = function() {
 
   };
 
+  var lienzo = new Canvas();
+
   function startGame() {
-      var lienzo = new Canvas('road');
-      lienzo.draw(); 
-  }
+      
+     var coche = new Car();
+     render();
+      
+    }
+
+    function render(){
+      console.log("TEST");
+ 
+     setInterval(function(){
+       startAnimation();
+     }, 40);
+     
+    } 
+
+    function startAnimation(){
+      lienzo.clean();
+      lienzo.draw();
+      car.draw();
+      console.log("HOLA");
+    }
+
+
+
 }

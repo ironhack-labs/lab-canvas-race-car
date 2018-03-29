@@ -1,8 +1,9 @@
-function Canvas(id) {
-  var canvas = document.getElementById(id);
+function Canvas() {
+  var canvas = document.getElementById("road");
   this.ctx = canvas.getContext("2d");
   this.w = 550;
   this.h = 520;
+  this.car = new Car()
 }
 
 Canvas.prototype.drawRect = function(x, y, width, height) {
@@ -26,3 +27,6 @@ Canvas.prototype.draw= function(x, y, width, height){
   this.drawRect();
 }
 
+Canvas.prototype.clean= function(){
+  this.ctx.clearRect(0,0,this.w, this.h);
+}
