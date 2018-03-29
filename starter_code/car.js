@@ -6,11 +6,17 @@ function Car(canvas, ctx) {
   this.ctx = ctx;
   this.ancho = 60;
   this.alto = 100;
-  this.src = "images/car.png";
+
 
 
   this.x = this.canvas.width/ 2 - this.ancho/2;
   this.y = this.canvas.height - this.alto - 40;
+
+  this.img =  new Image();
+  this.src = "images/car.png";
+  this.img.src = this.src;
+ 
+
 }
 
 
@@ -43,12 +49,9 @@ Car.prototype.movimiento = function() {
 }
   
   Car.prototype.draw = function (){
-    
-    var img = new Image();
-    img.src = this.src;
-    img.onload = function() {
-      this.ctx.drawImage(img, this.x, this.y, this.ancho, this.alto);
-    }.bind(this);
+  
+      this.ctx.drawImage(this.img, this.x, this.y, this.ancho, this.alto);
+ 
     
   }
 

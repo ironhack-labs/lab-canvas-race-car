@@ -11,32 +11,28 @@ function Game(canvasId) {
 
   this.car = new Car(this.canvas, this.ctx);
 
-  this.obstacle = [
-  ];
+  this.obstacle = [];
 }
 
 Game.prototype.startGame = function() {
-  setInterval(
+  this.clearInterval = setInterval(
     function() {
       this.clear();
       this.dibujarCarretera();
       this.car.movimiento();
       this.car.draw();
       this.dibujarObstaculos();
+      this.colisiones();
     }.bind(this),
     10
   );
 
-  setInterval(
-      this.anadirObstaculos.bind(this), 10000
-    )
-  
+  setInterval(this.anadirObstaculos.bind(this), 5000);
 };
 
-
-Game.prototype.anadirObstaculos = function(){
-  this.obstacle.push (new Obstacle(this.canvas, this.ctx));
-}
+Game.prototype.anadirObstaculos = function() {
+  if(this.obstacle.length < 1)this.obstacle.push(new Obstacle(this.canvas, this.ctx));
+};
 Game.prototype.dibujarCarretera = function() {
   var d = 5;
   this.road[0].y += d;
@@ -60,5 +56,15 @@ Game.prototype.dibujarObstaculos = function() {
     this.obstacle[i].y += d;
 
     this.obstacle[i].draw();
+  }
+};
+
+Game.prototype.colisiones = function() {
+  for (var i = 0; i < this.obstacle.length; i++) {
+    if((Math.abs(this.obstacle[i].x - this.car.x) < Math.abs(this.car.ancho/2 + this.obstacle[i].ancho/2))
+    && Math.abs((this.car.y - this.obstacle[i].y) < this.obstacle[i].alto ))
+    {
+     clearInterval(this.clearInterval);
+    }
   }
 };
