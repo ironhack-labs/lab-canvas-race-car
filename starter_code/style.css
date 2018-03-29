@@ -37,5 +37,6 @@ body button {
     padding: 20px 0px;
 }
 canvas{
-  border: 1px dotted ;
+  border: 1px dotted;
+  display: none;
 }
