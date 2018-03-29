@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
   <link rel="stylesheet" href="style.css">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
   <title>Document</title>
 </head>
+
 <body>
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
@@ -19,7 +22,15 @@
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
+    <canvas id="main-road" width="600" height="750"></canvas>
+
+
+
 
   </div>
 </body>
+<script type="text/javascript" src="road.js"></script>
+<script type="text/javascript" src="car.js"></script>
+<script type="text/javascript" src="loadCanvas.js"></script>
+<script type="text/javascript" src="script.js"></script>
 </html>
