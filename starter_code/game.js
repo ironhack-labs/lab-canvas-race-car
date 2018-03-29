@@ -23,8 +23,9 @@ Game.prototype.clear = function() {
 
 Game.prototype.draw = function() {
   this.carretera.draw();
-  this.coche.draw();
   this.carretera.mover();
+  this.coche.draw();
+
   this.obstaculo.caca();
 };
 
