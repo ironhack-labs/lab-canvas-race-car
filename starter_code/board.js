@@ -14,10 +14,33 @@ Canvas.prototype.drawRect = function(x, y, width, height) {
   this.ctx.fillRect(60, 0, 10, this.h)
   this.ctx.fillStyle='white';
   this.ctx.fillRect(this.w-70, 0, 10, this.h)
+  this.ctx.fillStyle='white';
+  this.ctx.fillRect(270, 10, 10, 50)
+  this.ctx.fillStyle='white';
+  this.ctx.fillRect(270, 90, 10, 50)
+  this.ctx.stroke("white");
+
+  /*var speed1=0;
+  var speed2=0;
   
-  
+  function clearCanvas(){
+    ctx.clearRect(270, 10, 10, 50)
+    ctx.clearRect(270, 90, 10, 50)
+  }
+
+  function updateCanvas() {
+    speed1+=1;
+    speed2+=2;
+    clearCanvas();
+    this.ctx.fillRect(270, speed1, 10, 50)
+    this.ctx.fillRect(270, speed2, 10, 50)
+    window.requestAnimationFrame(updateCanvas);
+  }
+
+  window.requestAnimationFrame();*/
 }
 
 Canvas.prototype.draw= function(x, y, width, height){
   this.drawRect();
 }
+
