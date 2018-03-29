@@ -1,6 +1,7 @@
 function Game(canvas)  {
     this.canvas = document.getElementById(canvas);
     this.ctx = this.canvas.getContext("2d");
+    
 
     this.coche = new Coche(this.canvas, this.ctx);
     this.carretera = new Carretera (this.canvas, this.ctx);
@@ -11,7 +12,7 @@ Game.prototype.start = function () {
      this.clear()
      this.draw()
 
-    }.bind(this), 50) 
+    }.bind(this), 5) 
 }
 
 Game.prototype.clear = function () {
@@ -21,6 +22,9 @@ Game.prototype.clear = function () {
 Game.prototype.draw = function () {
     this.carretera.draw();
     this.coche.draw();
+    
+    this.carretera.mover();
+
 }
 
 /////////////////////////////////////////
