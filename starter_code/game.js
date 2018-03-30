@@ -24,7 +24,7 @@ Game.prototype.start = function () {
         this.checkCollisions();
 
     }.bind(this), 30);
-    setInterval(this.addObstacle.bind(this), 10000);
+    setInterval(this.addObstacle.bind(this), 5000);
 };
 
 Game.prototype.clear = function () {
@@ -45,11 +45,19 @@ Game.prototype.drawObstacles = function () {
 
 Game.prototype.checkCollisions = function () {
     for (var j = 0; j < this.obstacles.length; j++) {
-        if ((this.obstacles[j].y + this.obstacles[j].h >= this.car.y) && (this.obstacles[j].x <= this.car.x + this.car.width)) {
-            console.log("BOOM")
-            clearInterval(this.id);
+        // if ((this.obstacles[j].y + this.obstacles[j].h >= this.car.y) && (this.obstacles[j].x <= this.car.x + this.car.width)) {
+        //     console.log("BOOM")
+        //     clearInterval(this.id);
             
+        // }
+        if((Math.abs(this.obstacles[j].y - this.car.y) <= this.obstacles[j].h || (this.obstacles[j].y > this.car.y))
+        && 
+        (Math.abs(this.obstacles[j].x - this.car.x) <= this.obstacles[j].w) ){
+            console.log ("COLISION VERTICAL!!!!!!!!!!!!!1111");
+            console.log("COLISION HORIZONTAL!!!111");
+            clearInterval(this.id);
         }
+
         // if(Math.abs(this.obstacles[j].x - this.car.x) < this.obstacles[j].w && 
         // Math.abs(this.obstacles[j].y - this.car.y) < this.obstacles[j].h){
         //     console.log("BOOOM derecho")
