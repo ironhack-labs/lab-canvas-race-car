@@ -4,6 +4,5 @@ window.onload = function() {
     var juego = new Game("road");
     juego.startGame();
   };
-  
 
 };
