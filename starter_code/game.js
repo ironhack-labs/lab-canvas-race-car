@@ -21,17 +21,16 @@
 			this.car.moveCar();
 			this.drawObstacles();
 
-
 		}.bind(this), 60
 		);
-		setInterval(this.addObstacle.bind(this), 10000);	
+		setInterval(this.addObstacle.bind(this), 5000);	
 
 	}
 
 
 Game.prototype.liveRoad = function(){
 
-	var d=5;
+	var d=7;
 	this.road[0].y += d;
 	if (this.road[0].y > this.height) {
 		this.road[0].y = 0;
@@ -50,7 +49,7 @@ Game.prototype.drawObstacles = function(){
 
 	for (var i = 0; i < this.listaObstacles.length; i++) {
 		this.listaObstacles[i].y += e;
-		this.listaObstacles[i].drawObs()
+		this.listaObstacles[i].drawObs();
 		
 	}
 
