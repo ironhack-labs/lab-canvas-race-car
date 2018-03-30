@@ -4,7 +4,7 @@ var LEFT_KEY = 37;
 function Car(canvas, ctx){
     this.canvas = canvas;
     this.ctx = ctx;   
-    this.x = 10;
+    this.x = 320;
 };
 Car.prototype.drawCar = function() {
     this.img = new Image();
