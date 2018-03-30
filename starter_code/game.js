@@ -26,7 +26,8 @@ Game.prototype.draw = function() {
   this.carretera.mover();
   this.coche.draw();
 
-  this.obstaculo.caca();
+  this.obstaculo.draw();
+  this.obstaculo.y++;
 };
 
 /////////////////////////////////////////
