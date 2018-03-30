@@ -3,7 +3,7 @@ function Obstacles(canvas, ctx) {
     this.ctx = ctx;
     this.anchuraMinima = 100;
     this.anchuraMaxima = 340;
-    this.posMinimaX = 90,
+    this.posMinimaX = 90;
     this.posMaximaX = 370;
     this.y = 0;
     this.x = this.numeroRandom(this.posMinimaX, this.posMaximaX);
