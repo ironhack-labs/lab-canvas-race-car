@@ -14,7 +14,7 @@ function Car(canvas, ctx, url) {
   this.image.onload = function () {
     this.width = this.image.width * 0.5;
     this.height = this.image.height * 0.5;
-    this.y = this.canvas.height - this.height
+    this.y = this.canvas.height - this.height;
   }.bind(this)
 
 
