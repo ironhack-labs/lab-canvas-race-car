@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+#my-canvas {
+  display: block
+}
+
+#my-car {
+  width: 168px;
+  height: 318px;
+}
