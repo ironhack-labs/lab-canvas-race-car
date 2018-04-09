@@ -1,9 +1,8 @@
 window.onload = function() {
+ 
   document.getElementById("start-button").onclick = function() {
-    startGame();
+    var juego = new Game("road");
+    juego.startGame();
   };
 
-  function startGame() {
-
-  }
 };
