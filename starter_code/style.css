@@ -6,6 +6,7 @@ body {
 .game-intro {
   float: left;
   padding: 0% 10%;
+  position: absolute;
 }
 
 .game-intro p {
@@ -35,4 +36,9 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    position: absolute;
+}
+
+#car {
+  position: absolute;
 }
