@@ -49,13 +49,13 @@ function Linea(y){
   this.alto=30;
   this.ancho=10;
   this.draw = function(){
+        this.y+=10;
+        if(this.y > canvas.height) this.y = 0;
         ctx.beginPath(); 
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x ,this.y, this.ancho,this.alto);
+        ctx.fillRect(this.x ,this.y , this.ancho,this.alto);
         ctx.closePath();}
-  this.move = function(){
-      this.y +=20
-            };
+  
   }
 
 var lineas = []; 
@@ -69,7 +69,13 @@ function drawLines(){
       })
 };
 
-drawLines();
+// function Cochecito(){
+//   this.x = x;
+//   this.y = y;
+//   this.alto = ;
+//   this.ancho = ;
+
+// }
 
   
 
@@ -80,10 +86,13 @@ window.onload = function() {
     startGame();
   };
 
+  var interval;
+
     function startGame() {
-      var interval = setInterval(function(){
+      interval = setInterval(function(){
         update();
-      },1000/60);
+      },1000/40);
+
 
   }
   
@@ -94,6 +103,7 @@ window.onload = function() {
 
 function update(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  drawLines();
   camino();
+  drawLines();
+  
 }
