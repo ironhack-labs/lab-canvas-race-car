@@ -69,15 +69,23 @@ function drawLines(){
       })
 };
 
-// function Cochecito(){
-//   this.x = x;
-//   this.y = y;
-//   this.alto = ;
-//   this.ancho = ;
+function Cochecito(){
+    this.x = 230;
+    this.y = canvas.height - 60;
+    this.alto = 60 ;
+    this.ancho = 30;
+    this.img = new Image();
+    this.img.src = "./images/car.png"
+    this.img.onload = function(){
+            this.draw();
+            }.bind(this);
+    this.draw = function (){
+      ctx.drawImage(this.img, this.x,this.y,this.ancho,this.alto);
+    }
 
-// }
+}
 
-  
+var ferrari = new Cochecito;
 
 
 window.onload = function() {
@@ -101,9 +109,28 @@ window.onload = function() {
 };
 
 
+
 function update(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   camino();
   drawLines();
-  
+  ferrari.draw();
 }
+
+addEventListener("keydown",function(event){
+  event.keyCode;
+  if(event.keyCode===38 && ferrari.y >= 10){
+    ferrari.y -=10;
+  };
+  if (event.keyCode===40 && ferrari.y <= canvas.height-70){
+    ferrari.y +=10;
+  };
+  if(event.keyCode===37 && ferrari.x >= 70){
+      ferrari.x -=10;
+  };
+  if(event.keyCode===39 && ferrari.x <= 400){
+    ferrari.x +=10;
+  }
+
+})
+
