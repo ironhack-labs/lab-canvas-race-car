@@ -41,7 +41,7 @@ img.onload = function () {
 ctx.drawImage(img, 235, 300,70,120);
 }
 img.src = "images/car.png";
-//limites
+//limites 
   this.goLeft = function(){
     if(this.x>71){
       this.x-=90;
@@ -59,16 +59,15 @@ img.src = "images/car.png";
   img.src= this.img;
   ctx.draw(img, x, y, 60, 100)}
 
-
+//probando 
 addEventListener('keydown', function(e){
-  console.log(e.keyCode);
   if(e.keyCode === 37){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
     carrito.goLeft();
     carrito.draw();
+    ctx.clearRect(0,0,100,100);
+
   }
   if(e.keyCode === 39){
-    
     carrito.goRight();
     carrito.draw();
   }
@@ -77,18 +76,18 @@ addEventListener('keydown', function(e){
 
 function update(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  carrito.goLeft();
+  carrito.goRight();
   carrito.draw();
 }
-
+/*
 var interval = setInterval(function(){
   update();
-},1000/60);
+},1000);
   
-  
+
   
 //no sirve ¿?
-  /*
+  
   var carrito = new Car();
   addEventListener('keydown',function(e){
     if(e.keycode ==37){
