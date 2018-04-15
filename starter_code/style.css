@@ -35,4 +35,13 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background: url('images/street.jpg');
+    height: 700px;
+    width: 400px;
 }
+/* 
+.permaBlocked{
+  pointer-events: none;
+} */
