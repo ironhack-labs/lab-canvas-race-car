@@ -4,6 +4,7 @@ function Game() {
   this.fps = 60;
   this.timeStamp = 0;
   this.time = 0;
+  this.dt = 0;
 
 }
 
@@ -73,6 +74,11 @@ window.onload = function () {
     this.xPos = gameCanvas.width / 2 - this.width / 2;
     this.yPos = gameCanvas.height - this.height - 20;
 
+
+    this.move = function (direction) {
+      this.xPos += direction;
+    }
+
   }
 
   function drawSprite(spriteObject) {
@@ -86,10 +92,11 @@ window.onload = function () {
       requestAnimationFrame(updateCanvas);
       var now = new Date().getTime(),
         dt = now - (game.time || now);
+      game.dt = dt;
 
       game.time = now;
 
-      game.timeStamp += dt;
+      game.timeStamp += game.dt;
 
       drawBackground(game.timeStamp / 2);
       drawSprite(game.car);
@@ -97,6 +104,12 @@ window.onload = function () {
 
     }, 1000 / game.fps);
 
+
+  }
+
+  function moveHorizontal(direction) {
+
+    game.car.move(direction);
 
   }
 
@@ -108,6 +121,12 @@ window.onload = function () {
 
 
     requestAnimationFrame(updateCanvas);
+
+    document.onkeydown = function (e) {
+
+      if (e.keyCode == 65 || e.keyCode == 37) { moveHorizontal(-game.dt); }
+      if (e.keyCode == 68 || e.keyCode == 39) { moveHorizontal(game.dt); }
+    }
 
   }
 };
