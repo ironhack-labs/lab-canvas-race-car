@@ -1,12 +1,19 @@
 
+function Game() {
 
+  this.fps = 60;
+  this.timeStamp = 0;
+  this.time = 0;
+
+}
+
+var game;
 
 var gameCanvas;
 
 var ctx;
 
 var frameCount;
-
 
 window.onload = function () {
 
@@ -50,14 +57,49 @@ window.onload = function () {
     }
   }
 
-  function updateCanvas(timeStamp) {
+  function Car() {
 
-    drawBackground(timeStamp);
+    this.xPos = 0;
+    this.yPos = 0;
+    this.width = 100;
+    this.height = 100;
+    this.img = new Image();
+    this.img.src = "images/car.png";
 
-    requestAnimationFrame(updateCanvas);
+  }
+
+  function drawSprite(spriteObject) {
+
+    ctx.drawImage(spriteObject.img, spriteObject.xPos, spriteObject.yPos, spriteObject.width, spriteObject.he
+    );
+
+  }
+
+  function updateCanvas() {
+    setTimeout(function () {
+      requestAnimationFrame(updateCanvas);
+      var now = new Date().getTime(),
+        dt = now - (game.time || now);
+
+      game.time = now;
+
+      game.timeStamp += dt;
+
+      drawBackground(game.timeStamp / 2);
+      drawSprite(game.car);
+
+
+    }, 1000 / game.fps);
+
+
   }
 
   function startGame() {
+
+    game = new Game();
+
+    game.car = new Car();
+
 
     requestAnimationFrame(updateCanvas);
 
