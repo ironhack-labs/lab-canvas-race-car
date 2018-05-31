@@ -3,7 +3,31 @@ window.onload = function () {
     startGame();
   };
 
+  var gameCanvas;
+
+  var ctx;
+
+  var frameCount;
+
+  function drawBackground() {
+
+  }
+
+  function updateCanvas() {
+
+    frameCount++;
+  }
+
   function startGame() {
-    console.log("boop");
+
+    gameCanvas = document.getElementById("gameCanvas");
+    ctx = gameCanvas.getContext("2d");
+    frameCount = 0;
+
+    var second = 1000;
+    var fp = 60;
+
+    setInterval(updateCanvas, fp / second);
+
   }
 };

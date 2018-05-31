@@ -3,6 +3,11 @@ body {
   text-align: center;
 }
 
+#gameCanvas{
+  border:solid; 
+                                                                        
+}                   
+
 .game-intro {
   float: left;
   padding: 0% 10%;
