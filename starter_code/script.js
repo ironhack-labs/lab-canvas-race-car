@@ -59,19 +59,25 @@ window.onload = function () {
 
   function Car() {
 
-    this.xPos = 0;
-    this.yPos = 0;
-    this.width = 100;
-    this.height = 100;
+    this.fileWidth = 158;
+    this.fileHeight = 319;
+
     this.img = new Image();
     this.img.src = "images/car.png";
+
+    this.scale = 0.5;
+
+    this.width = this.fileWidth * this.scale;
+    this.height = this.fileHeight * this.scale;
+
+    this.xPos = gameCanvas.width / 2 - this.width / 2;
+    this.yPos = gameCanvas.height - this.height - 20;
 
   }
 
   function drawSprite(spriteObject) {
 
-    ctx.drawImage(spriteObject.img, spriteObject.xPos, spriteObject.yPos, spriteObject.width, spriteObject.he
-    );
+    ctx.drawImage(spriteObject.img, spriteObject.xPos, spriteObject.yPos, spriteObject.width, spriteObject.height);
 
   }
 
