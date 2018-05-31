@@ -50,21 +50,16 @@ window.onload = function () {
     }
   }
 
-  function updateCanvas() {
+  function updateCanvas(timeStamp) {
 
-    drawBackground(frameCount * 2);
+    drawBackground(timeStamp);
 
-    frameCount++;
+    requestAnimationFrame(updateCanvas);
   }
 
   function startGame() {
 
-    frameCount = 0;
-
-    var second = 1000;
-    var fp = 30;
-
-    setInterval(updateCanvas, fp / second);
+    requestAnimationFrame(updateCanvas);
 
   }
 };
