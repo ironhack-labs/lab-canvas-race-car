@@ -6,12 +6,12 @@ window.onload = function() {
   function startGame() {
     gameArea.start();
     player = new Car(130, 500, 40, 80);
-    player.update();
   }
 
   let myObstacles = [];
 
   let gameArea = {
+    refresh : 200,
     canvas : document.createElement("canvas"),
     start : function() {
               this.canvas.width = 300;
@@ -19,7 +19,7 @@ window.onload = function() {
               this.context = this.canvas.getContext("2d");
               this.drawRoad();
               document.getElementById("game-board").insertBefore(this.canvas, document.getElementById("game-board").childNodes[0]);
-              this.interval = setInterval(updateGameArea, 20);
+              this.interval = setInterval(updateGameArea, 1000/60);
             },
     frames: 0,
     clear : function() {
@@ -48,13 +48,11 @@ window.onload = function() {
               this.context.fillStyle = "grey"
               this.context.fillRect(30,0,240,600);
               this.context.strokeStyle= "white";
-              this.context.lineWidth = 5;
-              this.context.setLineDash([15, 15]);
-              this.context.moveTo(150,15);
-              this.context.lineTo(150,600);
+              for (i = 0 ; i < 40; i++){
+                this.context.clearRect(147,5+30*i,6,15);
+              }
               this.context.clearRect(40,0,6,600);
               this.context.clearRect(254,0,6,600);
-              this.context.stroke();
     }
   }
 
@@ -67,9 +65,13 @@ window.onload = function() {
     this.speedY = 0;
     this.img = new Image();
     this.img.src = "images/car.png";
-    ctx = gameArea.context;
+    this.ctx = gameArea.context;
     this.update = function(){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height); 
+      (this.y < 10) && (this.y = 10); 
+      (this.y > 510) && (this.y = 510);
+      (this.x < 30) && (this.x = 30); 
+      (this.x > 230) && (this.x = 230);
+      this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height); 
     }
     this.newPos = function() {
         this.x += this.speedX;
@@ -93,10 +95,10 @@ window.onload = function() {
     this.height = height;
     this.x = x;
     this.y = y;
-    ctx = gameArea.context;
+    this.ctx = gameArea.context;
     this.update = function(){
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.ctx.fillStyle = color;
+      this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     this.left   = function() { return this.x                 }
     this.right  = function() { return (this.x + this.width)  }
@@ -108,22 +110,25 @@ window.onload = function() {
     for (i = 0; i < myObstacles.length; i += 1) {
       if (player.crashWith(myObstacles[i])) {
         gameArea.stop();
+        console.log(gameArea.refresh);
         return;
       } 
     }
     gameArea.clear();
     gameArea.drawRoad();
-    gameArea.frames +=1;
-    if (gameArea.frames % 100 === 0) {
+    gameArea.frames ++;
+    (gameArea.frames%600 == 0) && (gameArea.refresh -= ((gameArea.frames/600 > 6) ? 0 : 24));
+    if (gameArea.frames % gameArea.refresh === 0) {
         x = gameArea.canvas.width;
         minWidth = 80;
         maxWidth = 160;
         width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
+        newPlace = 30 + Math.floor(Math.random()*(240-width));
         (myObstacles.length>=4) && myObstacles.splice(0,1); 
-        myObstacles.push(new Obstacle(width, 10, "red", 30 + Math.floor(Math.random()*(240-width)), 0));
+        myObstacles.push(new Obstacle(width, 10, "red", newPlace, 0));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].y += 2;
+        myObstacles[i].y += (1+((gameArea.frames/600 > 6) ? 6 : Math.floor(gameArea.frames/600)));
         myObstacles[i].update();
     }
     player.newPos();
@@ -133,22 +138,22 @@ window.onload = function() {
 
   function moveUp() {
     (player.y > 10) ? 
-    player.speedY -= 1 : player.speedY = 0; 
+    player.speedY -= 2 : (player.speedY = 0); 
   }
 
   function moveDown() {
     (player.y < 510) ? 
-    player.speedY += 1 : player.speedY = 0; 
+    player.speedY += 2 : (player.speedY = 0); 
   }
 
   function moveLeft() {
     (player.x > 30) ? 
-    player.speedX -= 1 : player.speedX = 0;
+    player.speedX -= 2 : (player.speedX = 0);
   }
 
   function moveRight() {
     (player.x < 230) ? 
-    player.speedX += 1 : player.speedX = 0;
+    player.speedX += 2 : (player.speedX = 0);
   }
 
   document.onkeydown = function(e) {
