@@ -1,64 +1,46 @@
 window.onload = function() {
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+
+  var board = new Board(400, 550);
+  var car = new Car(175, 440, board.limitLeft, board.limitRight);
+
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
 
+  document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        car.moveLeft();
+        break;
+      case 39:
+        car.moveRight();
+        break;
+    }
+  };
+
   function startGame() {
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-
-    updateCanvas(ctx);
+    updateCanvas();
   }
 
-  function updateCanvas(ctx) {
+  function updateCanvas() {
     // Resetear el canvas
-    ctx.clearRect(0, 0, 400, 550);
+    ctx.clearRect(0, 0, board.width, board.height);
 
-    drawBoard(ctx);
-    drawCar(ctx);
+    move();
+    draw(ctx);
+
+    window.requestAnimationFrame(updateCanvas);
   }
 
-  function drawBoard(ctx) {
-    // Carretera
-    ctx.fillStyle = '#808080';
-    ctx.fillRect(0, 0, 400, 550);
-
-    // Césped
-    ctx.fillStyle = '#008100';
-    ctx.fillRect(0, 0, 30, 550);
-    ctx.fillRect(370, 0, 30, 550);
-
-    // Líneas de la carretera
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 5;
-
-    ctx.moveTo(40, 0);
-    ctx.lineTo(40, 550);
-
-    ctx.moveTo(360, 0);
-    ctx.lineTo(360, 550);
-
-    // Líneas discontinuas
-    var sep = 20;
-    var lineSize = 30;
-    var posY = 10;
-    ctx.moveTo(200, posY);
-
-    while (posY < 550) {
-      posY += lineSize;
-      ctx.lineTo(200, posY);
-      posY += sep;
-      ctx.moveTo(200, posY);
-    }
-
-    ctx.stroke();
+  function move() {
+    board.move();
+    car.move();
   }
 
-  function drawCar(ctx) {
-    var img = new Image();
-    img.onload = function() { 
-      ctx.drawImage(img, 175, 440, 50, 101); 
-    }
-    img.src = "./images/car.png";
+  function draw(ctx) {
+    board.draw(ctx);
+    car.draw(ctx);
   }
 };
