@@ -5,19 +5,29 @@ window.onload = function() {
 
   var car = new Car('./images/car.png')
   var road = new Road()
+  var obstacles = []
+  var y = -100
+  for (var i = 0; i < 10; i++) {
+    obstacles.push(new Obstacle(road.width, Math.floor(Math.random() * 100) + 50, y))
+    y -= Math.floor(Math.random() * 500) + 100
+  }
 
   function startGame() {
-    console.log('prueba')
-
-
     function move() {
       road.move()
       car.move()
+      console.log(obstacles)
+      for (var i = 0; i < obstacles.length; i++) {
+        obstacles[i].move()
+      }
     }
 
     function draw(ctx) {
       road.draw(ctx)
       car.draw(ctx)
+      for (var i = 0; i < obstacles.length; i++) {
+        obstacles[i].draw(ctx)
+      }
     }
 
     function updateCanvas() {

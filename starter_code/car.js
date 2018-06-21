@@ -4,12 +4,29 @@ function Car(img) {
   this.velocity = 5
   this.image = new Image()
   this.image.src = img
+  this.image.width = 100
+  this.image.height = 180
 }
 
 
-Car.prototype.moveLeft = function() {this.nextx = this.x - this.velocity}
-Car.prototype.moveRight = function() {this.nextx = this.x + this.velocity}
-Car.prototype.move = function() {this.x = this.nextx}
+Car.prototype.moveLeft = function() {
+  var next = this.x - this.velocity
+  if (next >= 0) {
+    this.nextx = next
+  }
+}
+
+Car.prototype.moveRight = function() {
+  var next = this.x + this.velocity
+  if (next <= 400 - this.image.width) {
+    this.nextx = next
+  }
+}
+
+Car.prototype.move = function() {
+  this.x = this.nextx
+}
+
 Car.prototype.draw = function(ctx) {
-  ctx.drawImage(this.image, this.x, 500, 100, 180);
+  ctx.drawImage(this.image, this.x, 500, this.image.width, this.image.height);
 }
