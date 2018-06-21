@@ -2,9 +2,11 @@ window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
-  
+
+  initPosition = [300, 600];
   function startGame() {
 
+    //draw the path
     ctx = document.getElementById("game-canvas").getContext("2d");
     ctx.fillStyle = "rgb(0, 193, 49)";
     ctx.fillRect(0 ,0 ,600 , 700);
@@ -21,5 +23,9 @@ window.onload = function() {
     ctx.lineTo(300, 700);
     ctx.stroke();
 
+    //draw the car
+    var img = new Image();
+    img.onload = function() {ctx.drawImage(img, initPosition[0], initPosition[1], 70, 70);}
+    img.src = "images/car.png";
   }
 };
