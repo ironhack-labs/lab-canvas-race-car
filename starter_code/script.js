@@ -52,11 +52,12 @@ window.onload = function() {
     //draw the path
     ctx = document.getElementById("game-canvas").getContext("2d");
     drawThePath();
-
+    var count=1;
     function updateCanvas() {
+      count++;
     ctx.clearRect(0,0,600,700);
     car.move(ctx);
-    drawThePath(ctx);
+    drawThePath(count);
     car.draw(ctx);
     window.requestAnimationFrame(updateCanvas);
   }
@@ -76,7 +77,7 @@ document.onkeydown = function(e) {
   }
 }
 
-function drawThePath(){
+function drawThePath(i){
   ctx.fillStyle = "rgb(0, 193, 49)";
   ctx.fillRect(0 ,0 ,600 , 700);
   ctx.fillStyle = "rgb(198, 198, 198)";
@@ -87,6 +88,7 @@ function drawThePath(){
   ctx.fillRect(510 ,0 ,20 , 700);
   ctx.strokeStyle = "rgb(255, 255, 255)";
   ctx.setLineDash([40, 30]);
+  ctx.lineDashOffset = -2*(car.direction**2*i);;
   ctx.lineWidth = 10;
   ctx.moveTo(300, 0);
   ctx.lineTo(300, 700);
