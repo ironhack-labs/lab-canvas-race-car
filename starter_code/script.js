@@ -15,6 +15,7 @@ window.onload = function() {
     ctx.clearRect(0, 0, 400, 550);
 
     drawBoard(ctx);
+    drawCar(ctx);
   }
 
   function drawBoard(ctx) {
@@ -51,5 +52,13 @@ window.onload = function() {
     }
 
     ctx.stroke();
+  }
+
+  function drawCar(ctx) {
+    var img = new Image();
+    img.onload = function() { 
+      ctx.drawImage(img, 175, 440, 50, 101); 
+    }
+    img.src = "./images/car.png";
   }
 };
