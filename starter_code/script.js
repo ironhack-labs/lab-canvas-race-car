@@ -1,6 +1,3 @@
-//var road = new Image();
-//img.src = "images"
-
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -9,6 +6,8 @@ window.onload = function() {
   function startGame() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
+    
+    //Asfalto
     ctx.fillStyle = "#979A9A";
     ctx.fillRect(15, 0, 300, 600);
     //Verdes
@@ -27,5 +26,13 @@ window.onload = function() {
     ctx.moveTo(165, 10);
     ctx.lineTo(165, 600);
     ctx.stroke();
+
+    //Car
+    var img = new Image();
+    imgScale = 158/310;
+    img.onload = function() {
+      ctx.drawImage(img, 140, 480, 80*imgScale, 80)
+    }
+    img.src = "images/car.png"
   }
 };
