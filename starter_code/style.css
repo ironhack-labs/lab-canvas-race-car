@@ -4,8 +4,8 @@ body {
 }
 
 .game-intro {
-  float: left;
   padding: 0% 10%;
+  text-align: center
 }
 
 .game-intro p {
@@ -34,5 +34,6 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    width: 100%;
+    background: green;
 }
