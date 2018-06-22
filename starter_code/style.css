@@ -36,3 +36,13 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#myCanvas {
+  background: gray;
+}
+
+.greens {
+  width: 10px;
+  height: 700px;
+  background: green;
+}
