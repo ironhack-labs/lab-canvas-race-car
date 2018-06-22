@@ -54,20 +54,12 @@ window.onload = function() {
   
     this.draw = function(){
       ctx.drawImage(this.img, this.x,this.y,this.width,this.height);
-      //decidir si sum o resto
-      // if(this.directiony === 'down'){
-      //   this.y++;
-      //   if(this.y > 256) this.directiony = 'up';
-      // } else {
-      //   this.y--;
-      //   if(this.y < 1) this.directiony = 'down';
-      // }
   
       if(this.directionx === 'right'){
-        this.x++;
+        // this.x++;
         if(this.x > 195) this.directionx = 'left';
       } else {
-        this.x--;
+        // this.x--;
         if(this.x < 1) this.directionx = 'right';
       }
       
@@ -97,9 +89,15 @@ addEventListener('keydown', function(e){
   switch(e.keyCode){
 
     case 39: 
+    // auto.directionx = 0;
     auto.directionx = 'right';
+    auto.x = auto.x + 10;
+    break;
     case 37:
+    // auto.directionx = 0;
     auto.directionx = 'left';
+    auto.x = auto.x -10;
+    break;
 
 
   }
