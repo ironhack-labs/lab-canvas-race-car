@@ -123,9 +123,15 @@ function generateObstacles(){
       }
     };
 
+    var counter = 0;
     function updateCanvas() {
       ctx.clearRect(0, 0, 400, 600);
       track.createBoard();
+      ctx.setLineDash([40, 50]);
+      ctx.lineDashOffset = 3*counter;
+      counter--;
+      ctx.stroke();
+      ctx.fill();
       car.draw();
       car.move();
       obs1.draw(obs1);
