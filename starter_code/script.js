@@ -10,10 +10,10 @@ window.onload = function() {
 
   // BACKGROUND IMAGE 
   function Background() {
-    // FIRST PLOT GRAY BACKGROUND
+    // GRAY BACKGROUND
     ctx.fillStyle = "#808080";
     ctx.fillRect(0, 0, 350, 550);
-    // THEN ADD GREEN LINES IN THE EXTREMES
+    // GREEN LINES 
     ctx.fillStyle = "#008000"
     ctx.fillRect(0, 0, 30, 550);
     ctx.fillRect(320, 0, 350, 550);
@@ -63,7 +63,7 @@ window.onload = function() {
     }
   }
 
-  // CLEAR OUR CANVAS AND DRAW IT AGAIN
+  // CLEAR CANVAS AND DRAW IT AGAIN
   function updateCanvas() {
     ctx.clearRect(0, 0, 350, 550);
     Background();
