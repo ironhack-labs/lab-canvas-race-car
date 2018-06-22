@@ -5,6 +5,7 @@ window.onload = function() {
   var board = new Board(400, 550);
   var car = new Car(175, 440, board.limitLeft, board.limitRight);
   var obstacles = [];
+  var score = 0;
 
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -49,6 +50,7 @@ window.onload = function() {
       if (!o.move()) {
         // Remove the obstacle from the array when reach the bottom of the canvas
         obstacles.splice(index, 1);
+        score++;
       }
     });
   }
@@ -59,6 +61,10 @@ window.onload = function() {
     obstacles.forEach(function(o) {
       o.draw(ctx);
     });
+
+    ctx.fillStyle = '#ffffff'
+    ctx.font = '24px serif';;    
+    ctx.fillText('Score: ' + score, 60, 30);
   }
 
   function createObstacle() {
