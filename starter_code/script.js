@@ -16,8 +16,8 @@ window.onload = function() {
   }
   Car.prototype.moveRight = function() {
     this.x += 20;
-    if (this.x > this.maxX) {
-      this.x = this.maxX;
+    if (this.x > this.maxX - 108) {
+      this.x = this.maxX - 108;
     }
   };
   Car.prototype.moveLeft = function() {
@@ -65,8 +65,10 @@ window.onload = function() {
     switch (e.keyCode) {
       case 37:
         car.moveLeft();
+        break;
       case 39:
         car.moveRight();
+        break;
     }
   };
 
