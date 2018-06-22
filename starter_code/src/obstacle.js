@@ -12,6 +12,12 @@ function Obstacle(minX, maxX, maxY, maxWidth) {
   this.width = this.getWitdh(maxWidth);
 }
 
+/**
+ * Moves the obstacles vertically and returns false
+ * when the obstacle has reach the end of the canvas.
+ * 
+ * @returns boolean
+ */
 Obstacle.prototype.move = function() {
   this.posY += this.movY;
 
