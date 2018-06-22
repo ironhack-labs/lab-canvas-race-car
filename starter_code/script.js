@@ -4,6 +4,7 @@ window.onload = function() {
 
   var board = new Board(400, 550);
   var car = new Car(175, 440, board.limitLeft, board.limitRight);
+  var obstacles = [];
 
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -22,6 +23,14 @@ window.onload = function() {
 
   function startGame() {
     updateCanvas();
+
+    (function loop() {
+      var rand = Math.round(Math.random() * (5000 - 2000)) + 2000;
+      setTimeout(function() {
+        createObstacle();
+        loop();
+      }, rand);
+    })();
   }
 
   function updateCanvas() {
@@ -36,11 +45,24 @@ window.onload = function() {
 
   function move() {
     board.move();
-    car.move();
+    obstacles.forEach(function(o, index) {
+      if (!o.move()) {
+        // Remove the obstacle from the array when reach the bottom of the canvas
+        obstacles.splice(index, 1);
+      }
+    });
   }
 
   function draw(ctx) {
     board.draw(ctx);
     car.draw(ctx);
+    obstacles.forEach(function(o) {
+      o.draw(ctx);
+    });
+  }
+
+  function createObstacle() {
+    var maxWidth = board.limitRight - board.limitLeft - car.width - 20;
+    obstacles.push(new Obstacle(board.limitLeft, board.limitRight, board.height, maxWidth));
   }
 };
