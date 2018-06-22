@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   padding: 0;
   text-align: center;
 }
@@ -34,5 +35,20 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    background-color: green;
+}
+
+canvas{
+  background-color: gray;
+  width:80%;
+}
+
+h2{
+  border-style: solid;
+  color: RGB(133,3,14);
+  
+}
+h3{
+  font-size: 30px;
+  color: RGB(133,3,14);
 }
