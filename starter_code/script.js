@@ -42,8 +42,9 @@ function startGame() {
   ctx = canvas.getContext("2d");
 
   car = new Car();
-  setInterval(createObstacles, 1000);
-  setInterval(calculateScore, 150);
+
+  var obstaclesIntervalId = setInterval(createObstacles, 1000);
+  var scoreIntervalId = setInterval(calculateScore, 150);
   window.requestAnimationFrame(refreshView);
   //setInterval(moveObstacles, 500);
 }
@@ -80,7 +81,8 @@ function checkColision() {
 
   if(c.x < o.x + o.width && c.x + c.width > o.x){
     if(c.y < o.y + o.height && c.y + c.height > o.y){
-      console.log("colision")
+      alert("Perdiste Wey!");
+      window.location.reload();
     }
   }
 }
