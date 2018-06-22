@@ -43,7 +43,7 @@ function startGame() {
 
   car = new Car();
 
-  var obstaclesIntervalId = setInterval(createObstacles, 1000);
+  var obstaclesIntervalId = setInterval(createObstacles, 1200);
   var scoreIntervalId = setInterval(calculateScore, 150);
   window.requestAnimationFrame(refreshView);
   //setInterval(moveObstacles, 500);
