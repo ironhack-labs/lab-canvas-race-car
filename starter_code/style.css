@@ -33,6 +33,14 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  background-color: darkgreen;
+  /* width: 70vh;
+  height: 80vh; */
+  float: left;
 }
+/* 
+ #game-road {
+  background-color: silver;
+  width: 500px;
+  height: 500px;
+} */
