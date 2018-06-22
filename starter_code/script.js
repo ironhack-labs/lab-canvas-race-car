@@ -96,12 +96,12 @@ window.onload = function() {
       ctx.fillRect(420, 0, 30, 700);
       
       //move();
-
+     
       draw(ctx);
-      /*if((y2<=105) && (car.x<225)){
+      if((y2>=580) && (car.x<225) ||(y3>=580) && (car.x>230) ){
         alert("You lose!!")
         location.reload()
-      }*/
+      }
       window.requestAnimationFrame(updateCanvas);
     }
     window.requestAnimationFrame(updateCanvas);
