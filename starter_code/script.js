@@ -36,7 +36,6 @@ window.onload = function() {
       this.y = y;
       this.maxSpeed = 1;
       this.sX = 1;
-      this.sY = 1;
       this.img = new Image(); 
       this.img.src = img;
     }
@@ -46,12 +45,6 @@ window.onload = function() {
     }
     Car.prototype.moveRight = function() { 
       this.sX = this.maxSpeed;
-    }
-    Car.prototype.moveUp = function() {
-      this.sY = -this.maxSpeed;
-    }
-    Car.prototype.moveDown = function() { 
-      this.sY = this.maxSpeed;
     }
     Car.prototype.move = function() {
       this.x += this.sX;
@@ -63,20 +56,12 @@ window.onload = function() {
       ctx.drawImage(this.img, 140, 480, 80*imgScale, 80); 
     }
 
-    var car = new Car (25,25, "images/car.png");
+    var car = new Car (140, 480, "images/car.png");
 
     function draw(ctx){
       road();
       car.draw(ctx);
     }
-
-
-    //var img = new Image();
-    //imgScale = 158/310;
-    //this.img.onload = function() {
-    //  ctx.drawImage(img, 140, 480, 80*imgScale, 80)
-    //}
-    //img.src = "images/car.png"
 
     //Moves
     function move(){
@@ -84,14 +69,16 @@ window.onload = function() {
     }
 
     document.onkeydown = function(e) {
+      console.log("push")
       switch (e.keyCode) {
-        case 37: img.moveLeft(); img.moveLeft(); break;
-        case 39: img.moveRight(); img.moveRight(); break;
-        //case 38: img.moveUp();  img.moveUp(); break;
-        //case 40: img.moveDown(); img.moveDown(); break;
+        case 37: 
+          car.moveLeft(); 
+          break;
+        case 39: 
+          car.moveRight(); 
+          break;
       }
     }
-
 
   //Update canvas
   function updateCanvas() {
