@@ -3,8 +3,9 @@ var interval;
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
-  }; 
+  };
 
+  function startGame() {
     
   
   var canvas = document.getElementById('myCanvas');
@@ -50,7 +51,7 @@ window.onload = function() {
     this.img = new Image();
     this.img.src = "./images/car.png"
     // this.directiony = 'down';
-    this.directionx = 'right';
+    this.directionx ='right'
   
     this.draw = function(){
       ctx.drawImage(this.img, this.x,this.y,this.width,this.height);
@@ -87,11 +88,10 @@ window.onload = function() {
   }
 
   function startGame() {
-   interval = setInterval(update,1000/100)
+   interval = setInterval(function(){
+    update(),1000/100);
+};
 }
-
-// document.getElementById('start-button').addEventListener('click', startGame);
-
 
 addEventListener('keydown', function(e){
   switch(e.keyCode){
@@ -99,10 +99,9 @@ addEventListener('keydown', function(e){
     case 39: 
     auto.directionx = 'right';
     case 37:
-    auto.directionx = 'left';
-
+    auto.directionx = 'left'
 
   }
 })
 
-}
+
