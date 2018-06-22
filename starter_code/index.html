@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
-  <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">  
+  <link rel="stylesheet" href="./style.css">
+  <title>IronCar Racer</title>
 </head>
+
 <body>
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
@@ -17,9 +15,19 @@
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
+    
   </div>
-  <div id="game-board">
 
+
+  <div id="game-board">
+      <div id="game-road"></div>
+    <canvas id="canvas" width="512" height="1024"></canvas> 
+    <div id="car"> <img src="./images/car.png" alt="" class="car"> </div>
+      
+    <!-- la etiqueta se pusó aquí por la posicion dada por el id "game-board" -->
   </div>
+
+<script type="text/javascript" src="./script.js"></script>
+<script type="text/javascript" src="./pong.js"></script>
 </body>
 </html>
