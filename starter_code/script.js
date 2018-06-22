@@ -8,6 +8,7 @@ window.onload = function() {
 
 //constantes
 var interval;
+var aux = 0;
 
 //clases
 function Road(x,y,width,height,color){
@@ -131,13 +132,29 @@ firstObstacle.draw();
     road.draw();
     leftLine.stroke();
     rightLine.stroke();
-    dashedLine.stroke();
-    firstObstacle.draw();
-    myCar.draw();
+    // dashedLine.stroke();
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 4;
+    if(aux%2 === 0) {
+      dashedLine.stroke();
+      myCar.draw();
+      firstObstacle.draw();
+    } else {
+      ctx.beginPath();
+      ctx.setLineDash([5,15]);
+      ctx.moveTo(150,45);
+      ctx.lineTo(150,640);
+      ctx.closePath();
+      ctx.stroke();
+      myCar.draw();
+      firstObstacle.draw();
+    };
+    aux++;
   }
 
   function startGame() {
-    interval = setInterval(update,1000/60);
+    interval = setInterval(update,100);
   };
 
 
