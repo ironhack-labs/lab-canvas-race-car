@@ -37,7 +37,7 @@ window.onload = function() {
     this.height = 50;
   }
 
-  var obstacle1 = new Obstacle(30, 0, 300);
+  var obstacle1 = new Obstacle(30, 0, 200);
   var obstacle2 = new Obstacle(180, -500, 100);
   var obstacle3 = new Obstacle(300, -1000, 200);
   var obstacle4 = new Obstacle(30, -1500, 200);
@@ -101,6 +101,7 @@ window.onload = function() {
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
   }
 
+
   //ANIMATION FUNCTIONS
 
   function animateRoad() {
@@ -109,7 +110,7 @@ window.onload = function() {
 
   function animateScore() {
     if (score > 520) {
-      return "GET FUCKED SON";
+      return "ESQUIVA ESTA";
     }
     return score++;
   }
@@ -120,6 +121,14 @@ window.onload = function() {
 
   function moveObstacle(obj) {
     obj.y += 5;
+  }
+
+  //COLLISION FUNCTION
+
+  function checkCollision(obj){
+    if((car.x >= obj.x && car.x <= obj.width + obj.x) && (car.y >= obj.y && car.y <= obj.y + obstacle1.height)){
+      alert('Game Over');
+    }
   }
 
   //UPDATE CANVAS FUNCTIONS
@@ -145,6 +154,10 @@ window.onload = function() {
   }
 
   function updateCanvas() {
+    checkCollision(obstacle1);
+    checkCollision(obstacle2);
+    checkCollision(obstacle3);
+    checkCollision(obstacle4);
     clearCanvas();
     drawAll();
     animateAll();
