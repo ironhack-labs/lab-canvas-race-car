@@ -35,4 +35,5 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    background-image: url("../starter_code/images/street.jpg")
 }
