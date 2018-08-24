@@ -99,14 +99,12 @@ var obstacle = new Obstacle();
 document.getElementById("start-button").onclick = function () {
   startGame();
 };
-
+var setInterval;
 function startGame() {
-  setInterval = setInterval(function () {
+   setInterval = setInterval(function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     roadPaint();
-    // generateObstacles()
     drawObstacles();
-    obstacle.draw();
     raceCar.draw();
   }, 1000 / 60);
 
@@ -140,7 +138,7 @@ function drawObstacles() {
     // Colision
     if (raceCar.collision(obstacle)) {
       gameOver();
-      console.log("CUAZZZZ");
+      // console.log("CUAZZZZ");
     }
   })
 
@@ -152,8 +150,7 @@ var gameOver = function () {
   // Definimos el tamaño y fuente de nuestro texto
   context.font = "40px Avenir";
   // Dibujamos el texto en el canvas.
-  context.fillText("Game Over", 45, 100);
-  sonido.paused();
+  context.fillText("CRASH¡¡¡¡", 60, 100);
 
   // Detenemos la ejecución del intervalo
   clearInterval(setInterval);
