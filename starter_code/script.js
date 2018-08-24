@@ -4,6 +4,7 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+// ------- ROAD ------
 var roadPaint = function () {
   // Primer linea verde
   context.beginPath();
@@ -38,6 +39,8 @@ var roadPaint = function () {
   context.fillStyle = 'green';
   context.fill();
 }
+
+
 // dibujo auto
 // var image = new Image();
 // image.src = "./images/car.png";
@@ -46,6 +49,7 @@ var roadPaint = function () {
 // }
 
 // -------- CLASS`s---- -----------
+//  RACECAR CLASS 
 class RaceCar {
   constructor() {
     this.x = 120;
@@ -56,15 +60,32 @@ class RaceCar {
     this.image.src = "./images/car.png";
   }
   draw() {
-    // if (frames % 10 === 0) this.x -= 1;
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
+
+//  OBSTACLES CLASS
+class Obstacle {
+  constructor() {
+    this.x = 150;
+    this.y = 0;
+    this.width = 120;
+    this.height = 25;
+    this.image1 = new Image();
+    this.image1.src = "./images/obstacle1.png";
+  }
+  draw() {
+    this.y += 2;
+    context.drawImage(this.image1, this.x, this.y, this.width, this.height);
+  }
+}
+
 // ----------END CLASS`s------------
 
 
-// Instanciamos el objeto
+// Instanciamos el objeto y variables globales
 var raceCar = new RaceCar();
+var obstacle = new Obstacle();
 
 
 // ---------- CLICK START GAME ---------
@@ -72,32 +93,28 @@ document.getElementById("start-button").onclick = function () {
   startGame();
 };
 
-var frames = 0;
-
 function startGame() {
-
   setInterval = setInterval(function () {
-    // frames++;
     context.clearRect(0, 0, canvas.width, canvas.height);
     roadPaint();
+    obstacle.draw();
     raceCar.draw();
   }, 1000 / 60);
 
 }
-
 
 // -------- CLICK IZQ-DER ----------
 addEventListener('keydown', function (e) {
   // TECLA IZQUIERDA
   if (e.keyCode === 37) {
     raceCar.x -= 4;
+    if (raceCar.x < 35) raceCar.x = 35; //Limite del carril
   }
+  // TECLA DERECHA
   if (e.keyCode === 39) {
     raceCar.x += 4;
+    if (raceCar.x > 215) raceCar.x = 215; //Limite del carril
   }
-
-
-
 })
 
 // };
