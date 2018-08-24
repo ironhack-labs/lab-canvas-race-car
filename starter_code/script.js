@@ -62,12 +62,19 @@ class RaceCar {
   draw() {
     context.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
+  // Metodo de colision - comparamos el x y con el otro elemento regresa true o false
+  collision(item) {
+    return (this.x < item.x + item.width) &&
+      (this.x + this.width > item.x) &&
+      (this.y < item.y + item.height) &&
+      (this.y + this.height > item.y);
+  }
 }
 
 //  OBSTACLES CLASS
 class Obstacle {
   constructor() {
-    this.x = 150;
+    this.x = Math.floor((Math.random() * 300) + 1);;
     this.y = 0;
     this.width = 120;
     this.height = 25;
@@ -97,6 +104,8 @@ function startGame() {
   setInterval = setInterval(function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     roadPaint();
+    // generateObstacles()
+    drawObstacles();
     obstacle.draw();
     raceCar.draw();
   }, 1000 / 60);
@@ -107,14 +116,46 @@ function startGame() {
 addEventListener('keydown', function (e) {
   // TECLA IZQUIERDA
   if (e.keyCode === 37) {
-    raceCar.x -= 4;
+    raceCar.x -= 5;
     if (raceCar.x < 35) raceCar.x = 35; //Limite del carril
   }
   // TECLA DERECHA
   if (e.keyCode === 39) {
-    raceCar.x += 4;
+    raceCar.x += 5;
     if (raceCar.x > 215) raceCar.x = 215; //Limite del carril
   }
 })
 
+// Generar obstaculos
+var obstacles = [];
+setInterval(function () {
+  var obstacle = new Obstacle();
+  obstacles.push(obstacle);
+}, 3000);
+console.log(obstacles);
+
+function drawObstacles() {
+  obstacles.forEach(function (obstacle) {
+    obstacle.draw();
+    // Colision
+    if (raceCar.collision(obstacle)) {
+      gameOver();
+      console.log("CUAZZZZ");
+    }
+  })
+
+}
+
+
+// gameOver
+var gameOver = function () {
+  // Definimos el tamaño y fuente de nuestro texto
+  context.font = "40px Avenir";
+  // Dibujamos el texto en el canvas.
+  context.fillText("Game Over", 45, 100);
+  sonido.paused();
+
+  // Detenemos la ejecución del intervalo
+  clearInterval(setInterval);
+}
 // };
