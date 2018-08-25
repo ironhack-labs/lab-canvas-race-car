@@ -91,6 +91,7 @@ window.onload = function() {
   };
 
   function startGame() {
+    generateObstacles();
     interval = setInterval(function() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawBoard();
@@ -108,10 +109,12 @@ window.onload = function() {
     }
   });
 
-  var obsInterval = setInterval(function() {
-    let obstacle = new Obstacle();
-    obstacles.push(obstacle);
-  }, 3000);
+  function generateObstacles() {
+    setInterval(function() {
+      let obstacle = new Obstacle();
+      obstacles.push(obstacle);
+    }, 3000);
+  }
 
   function drawingObstacles() {
     obstacles.forEach(function(obstacle) {
@@ -128,12 +131,13 @@ window.onload = function() {
 
   function gameOver() {
     clearInterval(interval);
-    clearInterval(obsInterval);
     ctx.fillStyle = "black";
     ctx.font = "50px Avenir";
     ctx.fillText("Game Over", 200, 300);
     //score
     ctx.font = '30px sans-serif';
     ctx.fillText(`Your final score: ${count}`, 180, 350);
+    obstacles = [];
+    count = 0;
   }
 };
