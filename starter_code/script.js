@@ -91,6 +91,9 @@ window.onload = function() {
   };
 
   function startGame() {
+    //Limpiar antes de iniciar
+    obstacles = [];
+    count = 0;
     generateObstacles();
     interval = setInterval(function() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -137,7 +140,5 @@ window.onload = function() {
     //score
     ctx.font = '30px sans-serif';
     ctx.fillText(`Your final score: ${count}`, 180, 350);
-    obstacles = [];
-    count = 0;
   }
 };
