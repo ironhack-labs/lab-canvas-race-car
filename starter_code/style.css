@@ -1,6 +1,9 @@
 body {
   padding: 0;
   text-align: center;
+  display: grid;
+  justify-content: center;
+  grid-template-areas: "instructions canvas";
 }
 
 .game-intro {
@@ -14,17 +17,19 @@ body {
 }
 
 .logo-img {
-  width: 350px;
+  max-width: 50%;
+  margin-bottom: 20px;
 }
 
 .arrows-img {
-  width: 150px;
+  max-width: 150px;
 }
 
 body button {
   font-size: 30px;
   background-color: #870007;
   color: #fff;
+  cursor: pointer;
   padding: 20px 40px;
   border: 0;
   box-shadow: 0;
@@ -33,6 +38,10 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+#canvas {
+  background: #fff;
 }
