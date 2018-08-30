@@ -41,7 +41,17 @@ window.onload = function() {
     car.src = "./images/car.png"
 
     car.onload=function(){
-      ctx.drawImage(car,140,130,25,20)
+      ctx.drawImage(car,player.x,player.y,25,20)
     }
+    class Player {
+      constructor(){
+        this.x = 140
+        this.y = 130
+        this.left = false
+        this.right= false
+      }
+    }
+   var player = new Player;
+
   }
 }
