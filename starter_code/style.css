@@ -33,6 +33,22 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+    float: left;	
+	border-left: 20px solid green;
+	border-right: 20px solid green;
+	background-color: #808080;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-top: 50px;
 }
+
+canvas {
+	width: 230px;
+	height: 450px;
+	border-left: 8px solid #fff;
+	border-right: 8px solid #fff;
+	display: block;
+}
+
+
+
