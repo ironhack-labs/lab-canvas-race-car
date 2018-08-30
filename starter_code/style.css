@@ -4,7 +4,6 @@ body {
 }
 
 .game-intro {
-  float: left;
   padding: 0% 10%;
 }
 
@@ -33,6 +32,26 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+    /* float: left;	 */
+	border-left: 60px solid green;
+	border-right: 60px solid green;
+	background-color: #808080;
+	padding-left: 18px;
+	padding-right: 18px;
+	margin-top: 50px;
+	margin-bottom: 200px;
+	width: 880px;
+	margin-left: auto;
+    margin-right: auto;
 }
+
+canvas {
+	width: 840px;
+	height: 370px;
+	border-left: 20px solid #fff;
+	border-right: 20px solid #fff;
+	display: block;
+}
+
+
+
