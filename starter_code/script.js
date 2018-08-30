@@ -2,14 +2,16 @@ window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
+
   var canvas = document.getElementById('car-board');
   var ctx = canvas.getContext("2d");
   var car = new Image();
   car.src="images/car.png";
+  var positionX = 210;
+  var positionY = 600;
   function startGame() {
     scenario();
     blueCar();
-   
   }
 
 function scenario(){
@@ -30,8 +32,35 @@ function scenario(){
 }
 
 function blueCar(){
-  ctx.drawImage(car,210,600,75,150);
+  ctx.drawImage(car,positionX,positionY,75,150);
 }
 
+  document.onkeydown = function(e) {
+    switch(e.keyCode) {
+      case 37:
+      positionX -=1;      
+      moveLeft();
+      break;
+      case 39:
+      positionX +=1; 
+      moveRight();
+      break; 
+    }
+  }
 
-};
+  function moveLeft(){
+    scenario();
+    ctx.drawImage(car,positionX,positionY,75,150); 
+  }
+  
+  function moveRight(){
+    scenario();
+    ctx.drawImage(car,positionX,positionY,75,150);
+  }
+
+
+
+
+
+
+}
