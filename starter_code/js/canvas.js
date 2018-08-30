@@ -1,23 +1,39 @@
-var carCanvas;
+var roadCanvas;
+var car;
+var CARWIDTH = 158;
+var CARHEIGHT = 319;
 
-function CarCanvas() {
-	this.ctx = document.getElementById('carCanvas').getContext('2d');
+
+function RoadCanvas() {
+	this.ctx = document.getElementById('roadCanvas').getContext('2d');
+	this.ROADWIDTH = 840;
+	this.ROADHEIGHT = 370;
 }
 
-carCanvas = new CarCanvas();
+roadCanvas = new RoadCanvas();
+car = new Image();
+car.src = '../starter_code/images/car.png';
 
-CarCanvas.prototype.drawLines = function () {
-	this.ctx.setLineDash([20, 15]); /*dashes are 20px and spaces are 15px*/
+
+RoadCanvas.prototype.drawLines = function () {
+	var lineThickness = 10;
+	this.ctx.setLineDash([45, 40]); /*dashes are 20px and spaces are 15px*/
 	this.ctx.beginPath();
-	this.ctx.moveTo(115, 0);
-	this.ctx.lineTo(115, 450);
+	this.ctx.moveTo((this.ROADWIDTH/2)-(lineThickness/2), 0);
+	this.ctx.lineTo((this.ROADWIDTH/2)-(lineThickness/2), this.ROADHEIGHT);
 	this.ctx.strokeStyle = '#FFF';
-	this.ctx.lineWidth = 3;
+	this.ctx.lineWidth = lineThickness;
+	
 	this.ctx.stroke();
 }
 
-CarCanvas.prototype.createBoard = function () {
-	this.ctx.clearRect(0, 0, 230, 450);
+RoadCanvas.prototype.createBoard = function () {
+	this.ctx.clearRect(0, 0, 560, 370);
 	this.drawLines();
+	car.onload = this.drawImageOnCanvas();
 }
 
+RoadCanvas.prototype.drawImageOnCanvas = function() {
+	this.ctx.drawImage(car, 0, 0);
+	console.log('hola');
+}
