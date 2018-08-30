@@ -9,19 +9,22 @@ window.onload = function() {
   car.src="images/car.png";
   var positionX = 210;
   var positionY = 600;
+  var obsPos = 20;
+  var countDown = 0;
   function startGame() {
     scenario();
     blueCar();
+    setInterval(function (){drawScenario();},1000/30);
   }
 
 function scenario(){
   ctx.fillStyle = '#3e8317';
-  ctx.fillRect(0,0,40,795);
-  ctx.fillRect(460,0,40,795);
+  ctx.fillRect(0,0,40,810);
+  ctx.fillRect(460,0,40,810);
   ctx.fillStyle = '#808080';
-  ctx.fillRect(40,0,10,795);
-  ctx.fillRect(460,0,10,795);
-  ctx.fillRect(60,0,390,795);
+  ctx.fillRect(40,0,10,810);
+  ctx.fillRect(460,0,10,810);
+  ctx.fillRect(60,0,390,810);
   ctx.strokeStyle = '#ffffff';
   ctx.setLineDash([25, 35]);
   ctx.beginPath();
@@ -37,30 +40,48 @@ function blueCar(){
 
   document.onkeydown = function(e) {
     switch(e.keyCode) {
-      case 37:
-      positionX -=1;      
+      case 37:   
       moveLeft();
       break;
-      case 39:
-      positionX +=1; 
+      case 39: 
       moveRight();
       break; 
     }
   }
 
   function moveLeft(){
-    scenario();
-    ctx.drawImage(car,positionX,positionY,75,150); 
+    positionX -=5;   
   }
   
   function moveRight(){
+    positionX +=5;
+  }
+  function drawScenario(){
     scenario();
+    obstacle();
+    moveObs();
     ctx.drawImage(car,positionX,positionY,75,150);
+    countDown++;
+    count();
   }
 
+  function obstacle(){
+    ctx.fillStyle = "#8a230f";
+    ctx.fillRect(80,obsPos,200,40);
+    ctx.fillRect(310,obsPos-300,120,40);
+    ctx.fillRect(180,obsPos-500,80,40);
+    ctx.fillRect(210,obsPos-700,210,40);
+    ctx.fillRect(80,obsPos-1200,160,40);
+  }
+  
+  function moveObs(){
+    obsPos +=5;
+  }
 
-
-
-
+  function count(){
+    if(countDown == 400){
+      alert("You win");
+    }
+  }
 
 }
