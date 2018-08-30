@@ -54,9 +54,8 @@ window.onload = function() {
     }
     
     function updateCanvas() {
-      ctx.clearRect(0,0,1500,1700);
-      ctx.fillText("car_x: " + car.x, 580, 40);
-      draw(car)
+      ctx.clearRect(car.x, 600, 0, 0);
+      draw(car);
     }
     updateCanvas();
   };
