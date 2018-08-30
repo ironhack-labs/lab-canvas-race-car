@@ -21,7 +21,7 @@ body {
   width: 150px;
 }
 
-body button {
+.game-zone button {
   font-size: 30px;
   background-color: #870007;
   color: #fff;
@@ -33,6 +33,10 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+.canvas {
+  border: 1px solid red;
 }
