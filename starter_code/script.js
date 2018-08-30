@@ -33,4 +33,10 @@ window.onload = function() {
   ctx.moveTo(530, 0);
   ctx.lineTo(530, 600);
   ctx.stroke();
+  ctx.lineWidth = 10;
+
+  ctx.moveTo(300, 0);
+  ctx.lineTo(300, 600);
+  ctx.setLineDash([15, 15]);
+  ctx.stroke();
 };
