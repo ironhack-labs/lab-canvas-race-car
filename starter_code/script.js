@@ -63,9 +63,9 @@ function drawLines(ctx, c) {
     ctx.fillStyle = "#FFF";
     ctx.fillRect(196, 13 + 33 * i, 8, 20);
   }
-  for (var i = 0; i < myObstacles.length; i++){
+  for (var j = 0; j < myObstacles.length; j++){
     ctx.fillStyle = "#880001";
-    ctx.fillRect(myObstacles[i].x, myObstacles[i].y, myObstacles[i].width, myObstacles[i].height);
+    ctx.fillRect(myObstacles[j].x, myObstacles[j].y, myObstacles[j].width, myObstacles[j].height);
   }
 }
 
@@ -73,28 +73,28 @@ function drawLines(ctx, c) {
 var xCar = 175;
 
 function moveLeft() {
-  xCar -= 3;
+  xCar -= 4;
 }
 
 
 function moveRight() {
-  xCar += 3;
+  xCar += 4 ;
 }
 
 
 
-var maxHeight = 140;
-var minHeight = 20;
+var maxHeight = 150;
+var minHeight = 100;
 var minPosition = 40;
 var maxPosition = 320;
-var HEIGHT = 50;
-var myObstacles = [new Obstacles(100, 50, 100, 0)];
+var HEIGHT = 20;
+var myObstacles = [new Obstacles(100, HEIGHT, 100, 20)];
 
 
 function createObstacles(maxHeight, minHeight, maxPosition, minPosition) {
   var width = Math.floor(Math.random() * (maxHeight - minHeight) + minHeight);
   var x = Math.floor(Math.random() * (maxPosition - width - minPosition) + minPosition);
-  myObstacles.push(new Obstacles(x, 0, width, HEIGHT));
+  myObstacles.push(new Obstacles(width, HEIGHT, x, 20));
 }
 
 
@@ -107,12 +107,12 @@ function Obstacles(width, height, x, y) {
 
 function moveObstacles() {
   for(var i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].y += 1;
+    myObstacles[i].y += 2;
   }
 }
 
 function objectCreator() {
-  if(frames % 2 === 0){
+  if(frames % 140 === 0){
     createObstacles(maxHeight, minHeight, maxPosition, minPosition);
   }
 }
