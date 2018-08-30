@@ -1,7 +1,7 @@
 var roadCanvas;
 var car;
-var CARWIDTH = 158;
-var CARHEIGHT = 319;
+var CARWIDTH = 158*0.5; //70
+var CARHEIGHT = 319*0.5; //160
 
 
 function RoadCanvas() {
@@ -17,23 +17,26 @@ car.src = '../starter_code/images/car.png';
 
 RoadCanvas.prototype.drawLines = function () {
 	var lineThickness = 10;
+
 	this.ctx.setLineDash([45, 40]); /*dashes are 20px and spaces are 15px*/
 	this.ctx.beginPath();
-	this.ctx.moveTo((this.ROADWIDTH/2)-(lineThickness/2), 0);
-	this.ctx.lineTo((this.ROADWIDTH/2)-(lineThickness/2), this.ROADHEIGHT);
+	this.ctx.moveTo((this.ROADWIDTH/2)-(lineThickness/2)+5, 0);
+	this.ctx.lineTo((this.ROADWIDTH/2)-(lineThickness/2)+5, this.ROADHEIGHT);
 	this.ctx.strokeStyle = '#FFF';
 	this.ctx.lineWidth = lineThickness;
-	
 	this.ctx.stroke();
 }
 
 RoadCanvas.prototype.createBoard = function () {
-	this.ctx.clearRect(0, 0, 560, 370);
+	this.ctx.clearRect(0, 0, this.ROADWIDTH, this.ROADHEIGHT);
 	this.drawLines();
 	car.onload = this.drawImageOnCanvas();
 }
 
 RoadCanvas.prototype.drawImageOnCanvas = function() {
-	this.ctx.drawImage(car, 0, 0);
+	var posX = this.ROADWIDTH/2-CARWIDTH/2;
+	var posY = this.ROADHEIGHT-CARHEIGHT;
+	
+	this.ctx.drawImage(car, posX, posY, CARWIDTH, CARHEIGHT );
 	console.log('hola');
 }
