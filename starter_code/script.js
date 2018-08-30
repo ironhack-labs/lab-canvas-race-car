@@ -1,7 +1,9 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
+    loadImage();
   };
+
 
   function startGame() {
     var canvasSpace = document.getElementById("canvas-field");
@@ -24,6 +26,25 @@ window.onload = function() {
     ctx.moveTo (200, 5); 
     ctx.lineTo (200, 495);
     ctx.stroke();
-    //ctx.fill();
+  }
+};
+
+function loadImage(){
+  var canvasSpace = document.getElementById("canvas-field");
+  var ctx = canvasSpace.getContext("2d");
+
+  var imgCar = new Image();
+  var loadedImage = 0;
+  imgScale = 319/158;  
+  imgCar.src = '../starter_code/images/car.png';
+
+  function drawImages (){
+    loadedImage++;
+    if (loadedImage === 1){
+      ctx.drawImage (imgCar, 170, 372, 60, 60*imgScale);
+    }
+  }
+  imgCar.onload = function(){
+    drawImages();
   }
 };
