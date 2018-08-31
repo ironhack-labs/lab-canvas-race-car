@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.canvas-hidden {
+  opacity: 0;
+}
+
+.canvas-show {
+  opacity: 1;
+}
