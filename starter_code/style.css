@@ -31,8 +31,11 @@ body button {
   border-radius: 5px;
   margin-bottom: 20px;
 }
-
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+
+#RaceCar{
+  border: 1px solid red;
 }
