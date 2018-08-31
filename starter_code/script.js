@@ -24,11 +24,11 @@ window.onload = function() {
       ctx.drawImage(this.image, this.x, this.y, 50, 100);
     }
     left() {
-      if (this.x > 500) return;
+      if (this.x < 50) return;
       this.x -= this.w;
     }
     right() {
-      if (this.x < 50) return;
+      if (this.x > 500) return;
       this.x += this.w;
     }
   }
