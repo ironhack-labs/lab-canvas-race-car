@@ -57,16 +57,38 @@ window.onload = function() {
     ctx.setLineDash([15, 15]);
     ctx.stroke();
   }
-  function obstacles() {
-    let maxHeight = 600;
-    let minHeight = 0;
-    let y = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+  // function obstacles() {
+  //   if (myObstacles.length > 0) {
+  //     let maxHeight = 600;
+  //     let minHeight = 0;
+  //     let y = Math.floor(
+  //       Math.random() * (maxHeight - minHeight + 1) + minHeight
+  //     );
 
-    ctx.fillStyle = "red";
+  //     ctx.fillStyle = "red";
 
-    ctx.fillRect(200, 20, 300, 30);
-    ctx.fillRect(100, y, 150, 30);
-  }
+  //     myObstacles.push([200, 20, 300, 30]);
+  //     myObstacles.push([100, y, 150, 30]);
+  //     for (i = 0; i < myObstacles.length; i++) {
+  //       myObstacles(ctx.fillRect[myObstacles[i]]);
+  //     }
+  //   }
+  //   let obstacleArray = [100,120,300,100];
+  //   // cumplir esto con ciclo de for
+  //   let x = 0;
+  //   let y = 0;
+  //   let ancho = 0;
+  //   let altura = 0;
+  //     function obstacleArrayConsumption(obstacleArray){
+  //       x = obstacleArray[0];
+  //       y = obstacleArray[1];
+  //       ancho = obstacleArray[2];
+  //       altura = obstacleArray[3];
+  //   }
+  //       // iterar a traves cada valor del elementE
+  //   obstacleArrayConsumption(obstacleArray);
+  //   ctx.fillRect(x,y,ancho,altura);
+  // }
   document.onkeydown = function(e) {
     switch (e.keyCode) {
       // flecha derecha
@@ -85,7 +107,7 @@ window.onload = function() {
 
   var interval = setInterval(function() {
     background();
-    obstacles();
+    //obstacles();
     deLorean.draw();
   }, 1000 / 60);
 };
