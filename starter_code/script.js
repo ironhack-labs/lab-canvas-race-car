@@ -5,7 +5,15 @@ window.onload = function() {
     startGame();
   };
   var car = new Image();
-
+  var CarMove = {
+    x: 425,
+    moveLeft: function() {
+      this.x -= 25;
+    },
+    moveRight: function() {
+      this.x += 25;
+    }
+  };
   function startGame() {
     ctx.fillStyle = "#008200";
     ctx.fillRect(0, 0, 450, 650);
@@ -19,9 +27,19 @@ window.onload = function() {
       ctx.fillStyle = "#FFF";
       ctx.fillRect(220, i, 10, 40);
     }
-    ctx.drawImage(car, 150, 525, 50, 100);
+    ctx.drawImage(car, CarMove.x, 525, 50, 100);
   }
   car.src = "../starter_code/images/car.png";
-
+  
+  document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      case 37:
+        CarMove.moveLeft();
+        break;
+      case 39:
+        CarMove.moveRight();
+        break;
+    }
+    startGame();
+  };
 };
-
