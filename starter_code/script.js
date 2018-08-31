@@ -5,12 +5,14 @@ window.onload = function() {
 
   var canvas = document.getElementById('car-board');
   var ctx = canvas.getContext("2d");
-  var car = new Image();
+  var car = new Image(75,150);
   car.src="images/car.png";
   var positionX = 210;
   var positionY = 600;
   var obsPos = 20;
   var countDown = 0;
+  var valueDash = 0;
+
   function startGame() {
     scenario();
     blueCar();
@@ -28,10 +30,12 @@ function scenario(){
   ctx.strokeStyle = '#ffffff';
   ctx.setLineDash([25, 35]);
   ctx.beginPath();
+  ctx.lineDashOffset = valueDash;
   ctx.moveTo(250, 50);
   ctx.lineWidth = 7;
   ctx.lineTo(250, 800);
   ctx.stroke();
+  valueDash-=5;
 }
 
 function blueCar(){
@@ -50,13 +54,19 @@ function blueCar(){
   }
 
   function moveLeft(){
-    positionX -=5;   
+    if(positionX > 55){
+      positionX -=5;
+    }   
   }
   
   function moveRight(){
-    positionX +=5;
+    if(positionX + car.width < canvas.width - 50){
+      positionX +=5;
+    }
+    
   }
   function drawScenario(){
+    ctx.clearRect(0,0,canvas.width, canvas.height);
     scenario();
     obstacle();
     moveObs();
@@ -67,7 +77,7 @@ function blueCar(){
 
   function obstacle(){
     ctx.fillStyle = "#8a230f";
-    ctx.fillRect(80,obsPos,200,40);
+   var obs1 =  ctx.fillRect(80,obsPos,200,40);
     ctx.fillRect(310,obsPos-300,120,40);
     ctx.fillRect(180,obsPos-500,80,40);
     ctx.fillRect(210,obsPos-700,210,40);
@@ -80,7 +90,9 @@ function blueCar(){
 
   function count(){
     if(countDown == 400){
-      alert("Winner Winner, Chicken Dinner");
+      alert("Winner Winner, Chicken Dinner")
+      location.reload();
+      drawScenario();
     }
   }
 
