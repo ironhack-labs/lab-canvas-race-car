@@ -24,6 +24,7 @@ window.onload = function() {
               this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             },
     draw : function(){
+      console.log('road')
               this.context.fillStyle = "green"
               this.context.fillRect(0,0,300,600);
               this.context.fillStyle = "grey"
@@ -38,10 +39,13 @@ window.onload = function() {
     car : function() {
 
       car = new Image();
-      this.context.drawImage(car, 0, 600, 50, 100)
-      console.log("dibuja coche");
-      this.car.src= "images/car.png";
-      console.log("entraaa");
+      car.src= "images/car.png";
+      console.log(car);  
+      car.onload = function(){
+        this.context.drawImage(car, 125, 460, 50, 100)
+        console.log("dibuja coche");
+      }.bind(this)
+      
      }
 
     }
