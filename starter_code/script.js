@@ -12,6 +12,8 @@ window.onload = function() {
     constructor() {
       this.x = 70;
       this.y = 490;
+      this.w = 50;
+      this.h = 50;
       this.image = new Image();
       this.image.src = "./images/car.png";
       this.image.onload = () => {
@@ -20,6 +22,14 @@ window.onload = function() {
     }
     draw() {
       ctx.drawImage(this.image, this.x, this.y, 50, 100);
+    }
+    left() {
+      if (this.x > 500) return;
+      this.x -= this.w;
+    }
+    right() {
+      if (this.x < 50) return;
+      this.x += this.w;
     }
   }
 
@@ -45,6 +55,19 @@ window.onload = function() {
     ctx.setLineDash([15, 15]);
     ctx.stroke();
   }
+  document.onkeydown = function(e) {
+    switch (e.keyCode) {
+      // flecha derecha
+      case 39:
+        deLorean.right();
+        break;
+      // flecha izquierda
+      case 37:
+        deLorean.left();
+        break;
+    }
+  };
+
   let deLorean = new Carro();
   deLorean.draw();
 
@@ -53,6 +76,7 @@ window.onload = function() {
     deLorean.draw();
   }, 1000 / 60);
 };
+
 // find example with
 // moving square
 // function right() {
