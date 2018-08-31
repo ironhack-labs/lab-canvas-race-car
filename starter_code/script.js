@@ -73,6 +73,7 @@ window.onload = function() {
   var lastObstacle=new Date();
   var time=0;
   var points=0;
+  var started=false;
   canvas.width=400;
   canvas.height=500;
   game.appendChild(canvas)
@@ -80,11 +81,17 @@ window.onload = function() {
   drawRoad();
   // startObstacles();
   document.getElementById("start-button").onclick = function() {
-    if(time==0){
+    if(started==false){
+      started=true;
       startGame();
+      document.getElementById("start-button").innerHTML="StopGame"
+      document.getElementById("start-button").style="background-color:#870007"
     }else{
+      started=false;
       stopGame();
       drawRoad();
+      document.getElementById("start-button").innerHTML="StartGame"
+      document.getElementById("start-button").style="background-color:#2b8700"
     }
   };
   function startGame() {
@@ -113,6 +120,8 @@ window.onload = function() {
   }
   function stopGame(){
     clearInterval(intervalId)
+    points=0;
+    obstacles=[]
   }
   function drawGame(){
     drawRoad();
