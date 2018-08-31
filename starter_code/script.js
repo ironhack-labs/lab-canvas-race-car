@@ -28,6 +28,7 @@ window.onload = function() {
     ctx.fillStyle = "green";
     ctx.fillRect(0, 0, 600, 800);
 
+    ctx.setLineDash([0, 0]);
     ctx.fillStyle = "grey";
     ctx.fillRect(25, 0, 540, 600);
     ctx.strokeStyle = "white";
