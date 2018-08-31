@@ -13,11 +13,11 @@ function startGame() {
 
 // var gameArea = { objetos } Aquí crearía los objetos que necesito.
 
-document.onkeydown = function(e) {
+/*document.onkeydown = function(e) {
   if (e.keyCode == 39 && component.x < (gameArea.canvas.width - component.width - 55)) {
     component.x += 10;
   }
   if (e.keyCode == 37 && component.x > 55) {
     component.x -= 10;
   }
-};
+};*/
