@@ -62,6 +62,33 @@ window.onload = function() {
         }  
       }
     }
+    class Obstacle{
+      constructor(x,y,w,h){
+        this.x = Math.floor(Math.random() * canvas.width)
+        this.y = 0
+        this.w = w
+        this.h = 5
+      }
+      drawObstacle(){
+      ctx.beginPath()
+      ctx.fillStyle = "#B52209"
+      ctx.fillRect(this.x,this.y,this.w,this.y)
+      }
+    }
+
+    var large = new Obstacle(Math.floor(Math.random() * canvas.width),0,200,5)
+    var medium= new Obstacle(Math.floor(Math.random() * canvas.width),0,150,5)
+    var small= new Obstacle(Math.floor(Math.random() * canvas.width),0,100,5)
+
+    var walls=[large,medium,small]
+
+    function drawObs(){
+      for(var i =0; i < walls.length; i++){
+        var random = walls[Math.floor(Math.random() * 3)]
+        random.drawObstacle();
+      }
+    }
+
     //
     function drawCar(){
       var car = new Image()
@@ -78,6 +105,7 @@ window.onload = function() {
       ctx.clearRect(0,0,canvas.width, canvas.height)
       drawCar();
       drawBackground();
+      random.drawObstacle();
     }, 1000/60)
     
 
