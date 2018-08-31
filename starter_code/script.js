@@ -19,6 +19,13 @@ window.onload = function () {
 };
 
 var frames = 1;
+var maxHeight = 150;
+var minHeight = 100;
+var minPosition = 40;
+var maxPosition = 320;
+var HEIGHT = 20;
+var myObstacles = [new Obstacles(100, HEIGHT, 100, 20)];
+var xCar = 175;
 
 function startGame() {
   createCanvas();
@@ -70,7 +77,6 @@ function drawLines(ctx, c) {
 }
 
 
-var xCar = 175;
 
 function moveLeft() {
   xCar -= 4;
@@ -80,15 +86,6 @@ function moveLeft() {
 function moveRight() {
   xCar += 4 ;
 }
-
-
-
-var maxHeight = 150;
-var minHeight = 100;
-var minPosition = 40;
-var maxPosition = 320;
-var HEIGHT = 20;
-var myObstacles = [new Obstacles(100, HEIGHT, 100, 20)];
 
 
 function createObstacles(maxHeight, minHeight, maxPosition, minPosition) {
