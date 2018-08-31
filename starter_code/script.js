@@ -28,17 +28,18 @@ window.onload = function() {
 
   document.onkeydown = function(e) {
     switch (e.keyCode) {
-      case 37: car.moveLeft(); drawBoard(); drawCar(car); break;
-      case 39: car.moveRight(); drawBoard(); drawCar(car); break;
+      case 37: car.moveLeft(); break;
+      case 39: car.moveRight(); break;
     }
     //
   }
   var myObstacles = [];
 
   function updateCanvas() {
+    //debugger;
     ctx.clearRect(0,0, MAX_WIDTH,MAX_HEIGHT);
-    drawBoard();
     drawCar(car);
+    drawBoard();
     frames +=1;
     if (frames % 180 === 0) {
     var y = 0;
@@ -54,16 +55,16 @@ window.onload = function() {
       myObstacles[i].y += 1;
       myObstacles[i].update();
     }
-    /*
+    
     var crashed = myObstacles.some(function(obstacle) {
       return car.crashWith(obstacle)
     })
 
     if (crashed) {
       console.log('QUIETORRRRRRRRRRRRR');
-      //clearInterval(interval);
+      stopGame();
     }
-    */
+    
 
   };
 
@@ -116,14 +117,19 @@ window.onload = function() {
               (this.left()   > obstacle.right()))
     }
   };
+  var interval;
 
   function startGame() {
-    drawBoard();
-    drawCar(car);
-    var interval = setInterval(updateCanvas, 10);
+    // drawBoard();
+    // drawCar(car);
+    interval = setInterval(updateCanvas, 10);
     //clearInterval(interval);
 
   };
+
+  function stopGame(){
+    clearInterval(interval);
+  }
 
   
   //START BUTTON EVENT
