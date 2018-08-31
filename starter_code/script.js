@@ -2,7 +2,7 @@ window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
     drawRoad();
-    myGamePiece = new CreatePlayer(50, 50, '../starter_code/images/car.png', 100, 100, 'image');
+    myGamePiece = new CreatePlayer(50, 100, '../starter_code/images/car.png', 250, 500);
     updateGameArea.start();
   };
 
@@ -53,17 +53,13 @@ window.onload = function() {
   function startGame() {
   } 
 
-  function CreatePlayer(width, height, color, x, y, type) {
-    this.width = width;
-    this.height = height;
-    this.type = type;
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    }
-    this.x = x;
-    this.y = y;
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  function CreatePlayer(width, height, color, x, y) {
+
+    var img = new Image();
+    img.onload = function() {
+    ctx.drawImage(img, x, y,width,height);
+    };
+    img.src = color;
   }
 
   function Obsticle(width, height, color, x, y) {
