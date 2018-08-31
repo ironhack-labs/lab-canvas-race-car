@@ -8,31 +8,20 @@ window.onload = function() {
   var canvas = document.getElementById("game-board");
   var ctx = canvas.getContext("2d");
 
-  // place car
-  // var img = document.getElementById("/images/logo.png");
-  // ctx.drawImage(img, 10, 10);
-
-  var imagen = new Image();
-
-  imagen.src = "./images/car.png";
-
-  function Carro() {
-    this.x = 70;
-    this.y = 490;
-    this.ssdf;
+  class Carro {
+    constructor() {
+      this.x = 70;
+      this.y = 490;
+      this.image = new Image();
+      this.image.src = "./images/car.png";
+      this.image.onload = () => {
+        this.draw();
+      };
+    }
+    draw() {
+      ctx.drawImage(this.image, this.x, this.y, 50, 100);
+    }
   }
-  // class Carro {
-  //   constructor {
-  //     this.x = 70;
-  //     this.y = 490;
-
-  //   }
-  // }
-
-  Carro();
-  imagen.onload = function() {
-    ctx.drawImage(imagen, x, y, 50, 100);
-  };
 
   ctx.beginPath();
   ctx.fillStyle = "green";
@@ -53,23 +42,26 @@ window.onload = function() {
   ctx.lineTo(300, 600);
   ctx.setLineDash([15, 15]);
   ctx.stroke();
+
+  let deLorean = new Carro();
+  deLorean.draw();
+
   // find example with
   // moving square
-  function right() {
-    this.x++;
-  }
+  // function right() {
+  //   this.x++;
+  // }
 
-  // move car left and right
-  document.onkeydown = function(e) {
-    switch (e.keyCode) {
-      // flecha derecha
-      case 39:
-        right();
-        break;
-      // flecha izquierda
-      // case 37:
-      //   left();
-      //   break;
-    }
-  };
+  // // move car left and right
+  // document.onkeydown = function(e) {
+  //   switch (e.keyCode) {
+  //     // flecha derecha
+  //     case 39:
+  //       right();
+  //       break;
+  //     // flecha izquierda
+  //     // case 37:
+  //     //   left();
+  //     //   break;
+  //   }
 };
