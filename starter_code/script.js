@@ -55,6 +55,10 @@ window.onload = function() {
     ctx.setLineDash([15, 15]);
     ctx.stroke();
   }
+  function obstacles() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(200, 20, 300, 30);
+  }
   document.onkeydown = function(e) {
     switch (e.keyCode) {
       // flecha derecha
@@ -73,6 +77,7 @@ window.onload = function() {
 
   var interval = setInterval(function() {
     background();
+    obstacles();
     deLorean.draw();
   }, 1000 / 60);
 };
