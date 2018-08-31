@@ -7,7 +7,7 @@ window.onload = function() {
     this.y=y||0
     this.width=w||25;
     this.height=25
-    this.speed=4;
+    this.speed=speedGame;
   }
   Obstacle.prototype.move=function(){
     console.log("move obstacle")
@@ -74,6 +74,8 @@ window.onload = function() {
   var time=0;
   var points=0;
   var started=false;
+  var offsetRoad=0;
+  var speedGame=3;
   canvas.width=400;
   canvas.height=500;
   game.appendChild(canvas)
@@ -131,6 +133,7 @@ window.onload = function() {
     drawPoints();
   }
   function drawRoad(){
+    offsetRoad-=speedGame
     // ctx.restore();
     ctx.setLineDash([])
     ctx.fillStyle=GREEN;
@@ -152,7 +155,8 @@ window.onload = function() {
     ctx.beginPath()
     ctx.moveTo(canvas.width/2,25)
     ctx.lineTo(canvas.width/2,canvas.height)
-    ctx.setLineDash([20,10]);
+    ctx.lineDashOffset=offsetRoad;
+    ctx.setLineDash([20,30]);
     ctx.lineWidth=5;
     ctx.stroke()
   }
