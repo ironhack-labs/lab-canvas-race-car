@@ -1,3 +1,4 @@
+var obs1, obs2,obs3,obs4,obs5
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -7,12 +8,16 @@ window.onload = function() {
   var ctx = canvas.getContext("2d");
   var car = new Image(75,150);
   car.src="images/car.png";
+  
   var positionX = 210;
   var positionY = 600;
   var obsPos = 20;
   var countDown = 0;
-  var valueDash = 0;
-
+  var valueDash = 0; 
+  car.onload = function(){
+    ctx.drawImage(car,positionX,positionY,75,150);
+  };
+  scenario();
   function startGame() {
     scenario();
     blueCar();
@@ -70,18 +75,19 @@ function blueCar(){
     scenario();
     obstacle();
     moveObs();
-    ctx.drawImage(car,positionX,positionY,75,150);
+    blueCar();
+    colision();
     countDown++;
     count();
   }
 
   function obstacle(){
     ctx.fillStyle = "#8a230f";
-   var obs1 =  ctx.fillRect(80,obsPos,200,40);
-    ctx.fillRect(310,obsPos-300,120,40);
-    ctx.fillRect(180,obsPos-500,80,40);
-    ctx.fillRect(210,obsPos-700,210,40);
-    ctx.fillRect(80,obsPos-1200,160,40);
+    obs1 = ctx.fillRect(80,obsPos,200,40);
+    obs2 = ctx.fillRect(310,obsPos-300,120,40);
+    obs3 = ctx.fillRect(180,obsPos-500,80,40);
+    obs4 = ctx.fillRect(210,obsPos-700,210,40);
+    obs5 = ctx.fillRect(80,obsPos-1200,160,40);
   }
   
   function moveObs(){
@@ -92,8 +98,13 @@ function blueCar(){
     if(countDown == 400){
       alert("Winner Winner, Chicken Dinner")
       location.reload();
-      drawScenario();
+      
     }
   }
 
+  function colision(){
+    if(positionY +10 == obsPos){
+      location.reload();
+    }
+  }
 }
