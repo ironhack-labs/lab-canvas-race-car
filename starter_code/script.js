@@ -72,6 +72,7 @@ window.onload = function() {
   var car;
   var lastObstacle=new Date();
   var time=0;
+  var points=0;
   canvas.width=400;
   canvas.height=500;
   game.appendChild(canvas)
@@ -118,6 +119,7 @@ window.onload = function() {
     randomObstacle();
     drawObstacles();
     car.draw();
+    drawPoints();
   }
   function drawRoad(){
     // ctx.restore();
@@ -157,6 +159,7 @@ window.onload = function() {
     obstacles.push(new Obstacle(obstacles.length,x,y,w))
   }
   function deleteObstacle(id){
+    points+=obstacles[id].width
     delete obstacles[id]
   }
   function randomObstacle(){
@@ -170,5 +173,9 @@ window.onload = function() {
       createObstacle(randomX,0,randomW)  
       lastObstacle=now
     }
+  }
+  function drawPoints(){
+    ctx.font="30px Verdana"
+    ctx.fillText("Points: "+points,canvas.width/2-25,25)
   }
 };
