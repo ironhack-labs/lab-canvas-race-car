@@ -76,6 +76,7 @@ var WIDTH = 400;
     function moveLeft() {
       racingCar.x -= 5;    
     }
+
     var racingCar = {
       x: 200,
       y: 400,
@@ -105,6 +106,23 @@ var WIDTH = 400;
       }
     }
 
+    var Obstacle = function() {
+      this.x = 0;
+      this.y = 0;
+      this.width = 100;
+      this.height = 20; 
+    }
+
+    function generateObstacles() {
+      var obstacle = new Obstacle;
+    
+    };
+
+    function moveObstacles() {
+
+    }
+
+      
   }
 
 
