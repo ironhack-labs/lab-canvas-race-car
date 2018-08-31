@@ -22,7 +22,7 @@ window.onload = function() {
       console.log(car.y,this.y)
       if(car.x < this.x + this.width && car.x + car.width > this.x){
         console.log("colision")
-        clearInterval(intervalId) 
+        stopGame();
       }
     }
   }
@@ -83,22 +83,18 @@ window.onload = function() {
   drawRoad();
   // startObstacles();
   document.getElementById("start-button").onclick = function() {
-    if(started==false){
-      started=true;
-      startGame();
-      document.getElementById("start-button").innerHTML="StopGame"
-      document.getElementById("start-button").style="background-color:#870007"
-    }else{
-      started=false;
+    if(started){
       stopGame();
       drawRoad();
-      document.getElementById("start-button").innerHTML="StartGame"
-      document.getElementById("start-button").style="background-color:#2b8700"
+    }else{
+      startGame();
     }
   };
   function startGame() {
+    started=true;
     time=1 ;
     drawRoad()
+    car.x=canvas.width/2-car.width/2
     car.draw()
     randomObstacle()
     drawObstacles()
@@ -116,14 +112,17 @@ window.onload = function() {
           break;
       }
     }
-     // Set source path
-    // ctx.strokeRect(35,0,canvas.width-25*2,canvas.height)
-    // ctx.fillStyle=white;
+    document.getElementById("start-button").innerHTML="StopGame"
+    document.getElementById("start-button").style="background-color:#870007"
   }
   function stopGame(){
+    started=false;
     clearInterval(intervalId)
     points=0;
+    
     obstacles=[]
+    document.getElementById("start-button").innerHTML="StartGame"
+    document.getElementById("start-button").style="background-color:#2b8700"
   }
   function drawGame(){
     drawRoad();
