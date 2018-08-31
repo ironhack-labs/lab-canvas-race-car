@@ -1,3 +1,5 @@
+var myObstacles = [];
+
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -56,9 +58,14 @@ window.onload = function() {
     ctx.stroke();
   }
   function obstacles() {
+    let maxHeight = 600;
+    let minHeight = 0;
+    let y = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+
     ctx.fillStyle = "red";
+
     ctx.fillRect(200, 20, 300, 30);
-    ctx.fillRect(100, 320, 150, 30);
+    ctx.fillRect(100, y, 150, 30);
   }
   document.onkeydown = function(e) {
     switch (e.keyCode) {
