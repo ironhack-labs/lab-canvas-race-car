@@ -58,6 +58,7 @@ window.onload = function() {
   function obstacles() {
     ctx.fillStyle = "red";
     ctx.fillRect(200, 20, 300, 30);
+    ctx.fillRect(100, 320, 150, 30);
   }
   document.onkeydown = function(e) {
     switch (e.keyCode) {
