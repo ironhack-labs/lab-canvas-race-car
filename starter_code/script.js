@@ -31,7 +31,7 @@ function scenario(){
   ctx.setLineDash([25, 35]);
   ctx.beginPath();
   ctx.lineDashOffset = valueDash;
-  ctx.moveTo(250, 50);
+  ctx.moveTo(250, 20);
   ctx.lineWidth = 7;
   ctx.lineTo(250, 800);
   ctx.stroke();
