@@ -34,5 +34,10 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 0px 0px 0px 100px;
+}
+
+canvas{
+  border:solid 2px #920000;
+  border-style: dotted;
 }
