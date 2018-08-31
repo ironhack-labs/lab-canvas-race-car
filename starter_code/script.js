@@ -5,7 +5,6 @@ window.onload = function() {
 
   var canvas = document.getElementById("canvas")
   var ctx = canvas.getContext("2d")
-  
   function startGame() {
 
     //Function DrawBack
@@ -56,6 +55,12 @@ window.onload = function() {
           console.log(this.x) 
         }       
       }
+      goRight(){
+        if(this.x<260){
+          this.x+=10
+          console.log(this.x)
+        }  
+      }
     }
     //
     function drawCar(){
@@ -82,8 +87,9 @@ window.onload = function() {
      
     switch(e.keyCode){
       case 37: player.goLeft()
-            
-         break;
+        break;
+      case 39: player.goRight()
+        break;
     }
    }//keydown
    //
