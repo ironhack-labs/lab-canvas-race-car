@@ -10,13 +10,13 @@ window.onload = function() {
     var ctx = canvasSpace.getContext("2d");
 
     ctx.fillStyle = "rgb(65, 130, 0)";
-    ctx.fillRect(5, 5, 25, 490);
-    ctx.fillRect(375, 5, 25, 490);
+    ctx.fillRect(5, 5, 25, 540);
+    ctx.fillRect(375, 5, 25, 540);
 
     ctx.fillStyle = "rgb(128, 128, 128)";
-    ctx.fillRect(30, 5, 10, 490);
-    ctx.fillRect(365, 5, 10, 490);
-    ctx.fillRect(55, 5, 295, 490);
+    ctx.fillRect(30, 5, 10, 540);
+    ctx.fillRect(365, 5, 10, 540);
+    ctx.fillRect(55, 5, 295, 540);
 
     
     ctx.strokeStyle = 'white'; 
@@ -24,7 +24,7 @@ window.onload = function() {
     ctx.setLineDash([20,20]);
     ctx.beginPath();     
     ctx.moveTo (200, 5); 
-    ctx.lineTo (200, 495);
+    ctx.lineTo (200, 545);
     ctx.stroke();
   }
 };
@@ -41,7 +41,7 @@ function loadImage(){
   function drawImages (){
     loadedImage++;
     if (loadedImage === 1){
-      ctx.drawImage (imgCar, 170, 372, 60, 60*imgScale);
+      ctx.drawImage (imgCar, 170, 422, 60, 60*imgScale);
     }
   }
   imgCar.onload = function(){
