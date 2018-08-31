@@ -36,3 +36,9 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#canvas{
+  height : 800px;
+  width:500px;
+  border: 1px solid black;
+}
