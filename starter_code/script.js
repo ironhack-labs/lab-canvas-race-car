@@ -80,7 +80,7 @@ function blueCar(){
 
   function count(){
     if(countDown == 400){
-      alert("You win");
+      alert("Winner Winner, Chicken Dinner");
     }
   }
 
