@@ -56,7 +56,9 @@ function Component(width, height, color, x, y) {
 
 function drawRoadLines() {
   for(var i = 0; i < myGameArea.canvas.height; i += 40) {
-
+    var lineY = i;
+    myGameArea.ctx.fillStyle = "white";
+    myGameArea.ctx.fillRect(myGameArea.canvas.width/2-5, lineY, 10, 20);
   }
 }
 
@@ -86,6 +88,9 @@ function drawCar() {
 }
 
 function updateGameArea() {
+  for (var i = 0; i < roadLines.length; i += 1) {
+
+  }
   /* for (i = 0; i < myObstacles.length; i += 1) {
       if (car.crashWith(myObstacles[i])) {
           myGameArea.stop();
@@ -94,6 +99,7 @@ function updateGameArea() {
   } */
   // myGameArea.clear();
   myGameArea.drawRoad();
+  drawRoadLines();
   car.update(0);
   // myGameArea.frames +=1;
   // if (myGameArea.frames % 100 === 0) {
