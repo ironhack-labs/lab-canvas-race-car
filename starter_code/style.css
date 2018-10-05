@@ -36,3 +36,31 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+#canvas{
+  position: absolute;
+  top: 15;
+  z-index:50
+}
+#canvas2{
+  position: absolute;
+  top: 15;
+  z-index:100;
+}
+.points{
+  position: absolute;
+  top: 25;
+  left: 10;
+  font-size: 30px;
+  color: white;
+  z-index: 150;
+}
+.gameover{
+  position: absolute;
+  top: 15;
+}
+.off{
+  z-index: 0
+}
+.on{
+  z-index: 200
+}
