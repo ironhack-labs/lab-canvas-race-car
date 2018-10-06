@@ -23,6 +23,7 @@ var myGameArea = {
       document.getElementById("game-board").appendChild(this.canvas);
       this.interval = setInterval(updateGameArea, 20);
   },
+  frames: 0,
   drawRoad : function() {
     this.ctx.fillStyle = "grey";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -56,9 +57,14 @@ function Component(width, height, color, x, y) {
 
 function drawRoadLines() {
   for(var i = 0; i < myGameArea.canvas.height; i += 40) {
-    var lineY = i;
+    var lineY = i + myGameArea.frames;
+    if(lineY > myGameArea.canvas.height) {
+      lineY = -20;
+
+    }
+    console.log(lineY);
     myGameArea.ctx.fillStyle = "white";
-    myGameArea.ctx.fillRect(myGameArea.canvas.width/2-5, lineY, 10, 20);
+    myGameArea.ctx.fillRect(myGameArea.canvas.width/2-5, lineY + myGameArea.frames, 10, 20);
   }
 }
 
@@ -101,7 +107,7 @@ function updateGameArea() {
   myGameArea.drawRoad();
   drawRoadLines();
   car.update(0);
-  // myGameArea.frames +=1;
+  myGameArea.frames +=1;
   // if (myGameArea.frames % 100 === 0) {
   //     x = myGameArea.canvas.width;
   //     minHeight = 20;
