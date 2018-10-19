@@ -1,5 +1,6 @@
 var canvas = document.getElementById("game-board");
 var ctx = canvas.getContext('2d');
+var frames = 0;
 
 class Player{
   constructor(ctx) {
@@ -14,18 +15,20 @@ class Player{
   }
 
   move(direction) {
-    var xMin = -this.width;
-    var xMax = this.ctx.canvas.width
+    var xMin = 0;
+    var xMax = this.ctx.canvas.width - this.width;
     switch (direction) {
       case "right":
-        this.x += 5;
-        if (this.x >= xMax) 
-          this.x = xMin
-        break;
+      if (this.x >= xMax){
+      } else{
+        this.x += 5;  
+      }
+      break;
       case "left":
+      if (this.x <= xMin){
+      } else {
         this.x -= 5;
-        if (this.x <= xMin) 
-          this.x = xMax
+      }
         break;
     }
   }
@@ -34,25 +37,6 @@ class Player{
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 }
-var p1 = new Player(ctx);
-
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-    p1.draw();
-  };
-
-  function startGame() {
-    var img = new Image();
-    img.src = 'https://i.pinimg.com/originals/dd/0b/12/dd0b125832d6f243016b2bceba1d50e3.jpg';
-    ctx.drawImage(img, 0, 0, 300, 500);
-  }
-
-  function drawEverything() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
-  
-};
 
 document.onkeydown = function (event) {
   event.preventDefault()
@@ -64,7 +48,86 @@ document.onkeydown = function (event) {
       p1.move("left")
       break
   }
-  console.log(event.code);
-
-  update()
 }
+
+var p1 = new Player(ctx);
+
+class Obstacle{
+  constructor(ctx, width, x){
+    this.cts = ctx;
+    this.width = width;
+    this.x = x;
+    this.y = 20;
+  }
+}
+
+let obstacles = [];
+
+function drawObstacle(obstacles){
+  for(let i =0; i< obstacles.length; i++){
+    ctx.fillStyle = "chartreuse";
+    ctx.fillRect(obstacles[i].x,obstacles[i].y, obstacles[i].width,10);
+    obstacles[i].y += 2;
+    if (obstacles[i].y > 500) {
+      obstacles.shift()
+      p1.score++;
+    }
+  }
+}
+
+function score(ctx, p1){
+  ctx.font = '30px serif';
+  ctx.fillStyle = 'white';
+  ctx.fillText('Score: '+ p1.score, 200, 100);
+}
+
+
+
+function startGame() {
+  var img = new Image();
+  img.src = 'images/road.jpg';
+  ctx.drawImage(img, 0, 0, 300, 500);
+}
+
+function addObst(){
+  frames++;
+  if (frames % 120 === 0) {
+    minX = 0;
+    maxX = 150;
+    x = Math.floor(Math.random()*(maxX-minX+1)+minX)
+    minWidth = 20;
+    maxWidth = 200;
+    width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
+    obstacles.push(new Obstacle(ctx, width, x));
+  }
+}
+
+function update(intervalId) {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  startGame();
+  p1.draw();
+  addObst();
+  drawObstacle(obstacles);
+  if (crash(intervalId)){
+    clearInterval(intervalId);
+  }
+  score(ctx, p1);
+}
+
+function crash(){
+  let checkCrash = false;
+  for(let i = 0; i<obstacles.length; i++){
+    if (p1.y <= obstacles[i].y && p1.x > obstacles[i].x && p1.x <obstacles[i].x+obstacles[i].width){
+      checkCrash = true;
+    }
+  }
+  return checkCrash;
+}
+
+window.onload = function() {
+  document.getElementById("start-button").onclick = function() {
+    let intervalId = setInterval(function(){
+      update(intervalId);
+    }, 1000/50);
+  };
+};
