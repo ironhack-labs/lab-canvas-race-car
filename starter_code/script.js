@@ -18,13 +18,7 @@ window.onload = function() {
   Car.prototype.draw = function() {
     var img = new Image();
     img.onload = () => {
-      ctx.drawImage(
-        img,
-        this.x - this.width / 2,
-        this.y - this.height / 2,
-        this.width,
-        this.height
-      );
+      ctx.drawImage(img, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
     };
     img.src = "./images/car.png";
   };
@@ -63,25 +57,26 @@ window.onload = function() {
   }
 
   //move the car
-
   function moveLeft() {
     playerCar.x -= 25;
     drawBoard();
   }
 
   function moveRight() {
-    playerCar.y += 25;
+    playerCar.x += 25;
     drawBoard();
   }
 
-  document.onkeydown = function(e) {
-    switch (e.keyCode) {
+  document.onkeydown = moveCar;
+  function moveCar(event) {
+    switch (event.keyCode) {
       case 37:
         moveLeft();
         break;
+
       case 39:
         moveRight();
         break;
     }
-  };
+  }
 };
