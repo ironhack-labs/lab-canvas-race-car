@@ -1,6 +1,6 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    startGame();
+    drawBoard();
   };
 
   var canvas = document.getElementById("road");
@@ -55,7 +55,7 @@ window.onload = function() {
 
   function startGame() {
     drawBoard();
-  }
+  };
 
   function leftArrowPressed() {
     playerCar.x -= 25;
