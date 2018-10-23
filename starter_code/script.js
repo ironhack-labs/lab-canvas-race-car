@@ -42,16 +42,6 @@ function loadcar(car) {
   img.src = "images/car.png";
 }
 
-// faire defiler les obstacles
-function defilement (myObstacles){
-for (var j = 0; j < myObstacles.length ; j++) {
-  myObstacles[j].movedown();
-};
-drawObstacles(myObstacles);
-};
-
-
-
 // faire bouger la voiture avec les touches
 document.onkeydown = function(e) {
   switch (e.keyCode) {
@@ -67,38 +57,35 @@ document.onkeydown = function(e) {
   updateCanvas();
 };
 
-// créer les obstacles dans un tableau
+// créer le tableau d'obstacles
 var myObstacles = [];
-// créer 10 obstacles
-for (var j = 0; j < 10; j++) {
-  // leur donner des positions verticales espacées
-  for (var ypos = 800; ypos > -2500; ypos -= 300) {
-    var obstacle = {
-      x: Math.floor(Math.random() * 400),
-      y: ypos,
-      width: Math.floor(Math.random() * 100),
-      height: 25,
-      color: "#9f0000",
-      movedown: function() {
-        this.y += 10;
-      }
-    };
-    myObstacles.push(obstacle);
+
+// créer 20 obstacles
+for (var j = 0; j < 15; j++) {
+  var obstacle = {
+    x: Math.floor(Math.random() * 400),
+    y: 0,
+    width: Math.floor(Math.random() * 100),
+    height: 25,
+    color: "#9f0000",
+    movedown: function() {
+      this.y += 100;
+    }
   };
-  
+  myObstacles.push(obstacle);
 }
 
 // dessiner les obstacles
 function drawObstacles(myObstacles) {
   var canvas = document.getElementById("road");
   var ctx = canvas.getContext("2d");
-  for (var j = 0; j < myObstacles.length; j++) {
+  for (var j = 0; j < compteur; j++) {
     ctx.fillStyle = myObstacles[j].color;
     ctx.fillRect(
       myObstacles[j].x,
       myObstacles[j].y,
       myObstacles[j].width,
-      myObstacles[j].height,
+      myObstacles[j].height
     );
   }
 }
@@ -108,7 +95,23 @@ function startGame() {
   draw();
   loadcar(car);
   drawObstacles(myObstacles);
-  setInterval(defilement(myObstacles),1000);
+  setInterval(defilement, 1000, myObstacles);
+}
+
+var compteur = 0;
+
+// faire defiler les obstacles
+function defilement(myObstacles) {
+  len = myObstacles.length;
+  while (myObstacles[len - 1].y < 800) {
+    compteur++;
+    array_idx = Math.min(compteur, len)
+    for (var j = 0; j < array_idx; j++) {
+      myObstacles[j].movedown();
+    }
+    drawObstacles(myObstacles);
+    updateCanvas();
+  }
 }
 
 // updater le jeu à chaque mouvement
