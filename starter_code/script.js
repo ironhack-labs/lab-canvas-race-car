@@ -1,16 +1,13 @@
-
-
-
-  let frame = 0;
-  let ctx;
-  let x = 230;
-  //let obsPosition;
-  //let obsSize;
-  let obstacles = [];
+let frame = 0;
+let ctx;
+let x = 230;
+// let obsPosition;
+// let obsSize;
+const obstacles = [];
 
 window.onload = function () {
   document.getElementById('start-button').onclick = function () {
-    startGame(); 
+    startGame();
   };
 
 
@@ -23,18 +20,14 @@ window.onload = function () {
   }
 
   function render() {
-    frame += 1
+    frame += 1;
     ctx.clearRect(0, 0, 500, 600);
     drawStreet();
     drawCar();
     createObstacles();
     drawObstacles();
   }
-
-  
-
   function drawStreet() {
-
     ctx.beginPath();
     ctx.fillStyle = 'green';
     ctx.fillRect(0, 0, 30, 600);
@@ -55,21 +48,17 @@ window.onload = function () {
       ctx.fillRect(245, i, 10, 50);
       ctx.closePath();
     }
-
   }
 
   function drawCar() {
-
-    var car = new Image();
-    car.src = "images/car.png";
+    let car = new Image();
+    car.src = 'images/car.png';
     car.onload = function () {
       ctx.drawImage(car, x, 510, 40, 80);
-    }
-
-
+    };
   }
-  
-  function Obstacle (posX, sizeX) {
+
+  function Obstacle(posX, sizeX) {
     this.posX = posX;
     this.posY = 0;
     this.sizeX = sizeX;
@@ -77,52 +66,41 @@ window.onload = function () {
     this.color = 'red';
   }
   function createObstacles() {
+    if (frame % 200 === 0) {
+      obsPosition = Math.floor(Math.random() * (350 - 50 + 1)) + 50;
+      obsSize = Math.floor(Math.random() * (200 - 120 + 1)) + 120;
 
-    if(frame % 1000 === 0){
-    obsPosition = Math.floor(Math.random() * (350 - 50 + 1)) + 50;
-    obsSize = Math.floor(Math.random() * (200 - 120 + 1)) + 120;
-
-    obs = new Obstacle(obsPosition, obsSize);
-    obstacles.push('obs');
-    console.log(obstacles);
-
+      obs = new Obstacle(obsPosition, obsSize);
+      obstacles.push(obs);
+      console.log(obstacles);
+    }
   }
-
-  }
-
 
   function drawObstacles() {
 
-    for(let i = 0; i < obstacles.length; i += 1){
-      obstacles[i]
+    for (let i = 0; i < obstacles.length; i += 1) {
+      
+      obstacles[i].posY += 1;
+      ctx.beginPath();
+      ctx.fillStyle = obstacles[i].color;
+      ctx.fillRect(obstacles[i].posX, obstacles[i].posY, obstacles[i].sizeX, obstacles[i].sizeY);
 
     }
-
-    ctx.beginPath();
-    ctx.fillStyle = 'red'
-    ctx.fillRect(obsPosition, 0, obsSize, 40);
 
   }
 
   function move(e) {
-
     switch (e.keyCode) {
-
       case 37:
         x -= 10;
-        console.log('esquerda')
+        console.log('esquerda');
         console.log(e);
         break;
 
       case 39:
         x += 10;
-        console.log('direita')
+        console.log('direita');
         break;
-
     }
   }
-
-
-
 };
-
