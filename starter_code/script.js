@@ -90,11 +90,11 @@ window.onload = function() {
     this.overTheEdge = false;
 
     this.rdnObtWidth = () => {
-      this.width = Math.floor(Math.random() * 250 + 60);
+      this.width = Math.floor(Math.random() * 150)+ 160;
       // console.log('width = ${this.width}');
     };
     this.rdnObtX = () => {
-      this.x = Math.floor(Math.random() * 320 - this.width + 38 + this.width);
+      this.x = Math.floor((Math.random() * 320 - this.width )+ 38 + this.width);
       // console.log('x = ${this.x}');
     };
     this.moveY = () => {
@@ -126,7 +126,7 @@ window.onload = function() {
       thisObstacle.rdnObtX();
       thisObstacle.points += 1;
     }
-    if (thisObstacle.y > Math.floor(Math.random() * 550)+350) {
+    if (thisObstacle.y > Math.floor(Math.random() * 550)+450) {
       thisObstacle.overTheEdge = true;
       console.log(thisObstacle.overTheEdge);
     }
@@ -138,10 +138,7 @@ window.onload = function() {
 
   // updates direction
   function updateCanvas() {
-    if (gotHit) {
-      console.log("Game Over");
-      gameOver();
-    }
+
     frames += 1;
     ctx.clearRect(0, 0, 467, 717);
     ctx.fillText(`Car_x: ${car.x}`, 580, 40);
@@ -157,17 +154,24 @@ window.onload = function() {
     //points text
     ctx.font = "38px serif";
     ctx.fillText("Points: " + obstaclesContainer[0].points, 10, 50);
+    if (gotHit) {
+      gameOver();
+    }
   }
 
   //Game over if Obstacle hits the car
   function gameOver() {
-    ctx.clearRect(0, 0, 467, 717);
-    ctx.fillRect(0, 0, 467, 717);
-    ctx.font = "38px serif";
-    ctx.fillText("Game Over", 100, 50);
+
 
     //Only this working, not above
     clearInterval(gameRunning);
+    console.log("Game Over");
+    ctx.fillStyle = 'black';
+    ctx.clearRect(0, 0, 467, 717);
+    ctx.fillRect(0, 0, 467, 717);
+    ctx.fillStyle = 'white';
+    ctx.font = "38px serif";
+    ctx.fillText("Game Over", 120, 358.5);
   }
 
   for (let i = 0; i < numOfObstacles; i++) {
