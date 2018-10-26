@@ -69,6 +69,7 @@ window.onload = function () {
     ctx.fillText(`Car_x: ${car.x}`, 580, 40);
     drawRoad();
     draw(car);
+    drawObstacle();
   }
 
   // obstaculos
@@ -92,7 +93,8 @@ window.onload = function () {
   }
 
   function drawObstacle() {
-
+    ctx.fillStyle = ('blue');
+    ctx.fillRect(20, 40, 80, 300);
   }
 
   // start game
