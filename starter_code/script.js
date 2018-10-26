@@ -47,7 +47,10 @@ window.onload = function() {
       ctx.drawImage(img, car.x, 556, 100 * imgScale, 100);
     };
     img.src = "./images/car.png";
+    
   }
+
+  console.log(draw())
 
   function retangulo(arg1, arg2, arg3, arg4, color) {
     ctx.fillStyle = color;
@@ -126,7 +129,7 @@ window.onload = function() {
       thisObstacle.rdnObtX();
       thisObstacle.points += 1;
     }
-    if (thisObstacle.y > Math.floor(Math.random() * 550)+450) {
+    if (thisObstacle.y > Math.floor(Math.random() * 550)+550) {
       thisObstacle.overTheEdge = true;
       console.log(thisObstacle.overTheEdge);
     }
