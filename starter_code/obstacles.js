@@ -1,11 +1,11 @@
 function Obstacle() {
-  this.x = Math.random()*(260) - 130;
+  this.x = Math.random() * (130) - 130;
   this.y = -600;
+  this.width = Math.random()* 150 + 50;
 
-  this.draw = function() {
+  this.draw = (road) => {
     this.y += 5;
-    road.fillRect(this.x, this.y, Math.random()*(240)+80, 30);
-  }
-} 
-
-
+    road.fillStyle = 'red';
+    road.fillRect(this.x, this.y, this.width, 30);
+  };
+}
