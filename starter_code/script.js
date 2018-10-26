@@ -15,6 +15,8 @@ window.onload = function () {
 
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
+  let obstacle = new Obstacle();
+  let frames = 0;
 
   const car = {
     x: 208.74,
@@ -27,6 +29,12 @@ window.onload = function () {
       if (this.x < 357.4) {
         this.x += 25;
       }
+    },
+    checkCollision(obstacle){
+      if(car.y < obstacle.y){
+        console.log("hit")
+        return true;
+      }
     }
   };
 
@@ -38,6 +46,7 @@ window.onload = function () {
       ctx.drawImage(img, car.x, 556, 100 * imgScale, 100);
     };
     img.src = './images/car.png';
+
   }
 
   function retangulo(arg1, arg2, arg3, arg4, color) {
@@ -62,6 +71,46 @@ window.onload = function () {
     ctx.stroke();
   }
 
+  // obstaculos
+  let numOfObstacles = 10;
+  let obstaclesContainer = [];
+
+
+  function Obstacle() {
+    this.height = 41;
+    this.width = 0;
+    this.x = 0;
+    this.y = 0;
+    this.rdnObtWidth = () => {
+      this.width = Math.floor((Math.random() * 260) + 100);
+      // console.log('width = ${this.width}');
+    };
+    this.rdnObtX = () => {
+      this.x = Math.floor((Math.random() * 320)+38);
+      // console.log('x = ${this.x}');
+    };
+    this.moveY = () => {
+      this.y += 1;
+      console.log('movendo');
+    };
+  }
+
+  function drawObstacle(thisObstacle) {
+    ctx.fillStyle = ('rgb(140, 0, 0)');
+    ctx.fillRect(thisObstacle.x, thisObstacle.y, thisObstacle.width, thisObstacle.height);
+   
+    //Check for collision with car
+    if(thisObstacle.y === 556 && thisObstacle.x >= car.x && thisObstacle.x + thisObstacle.width >= car.x){
+      console.log("hit")
+    }
+    else if(thisObstacle.y > 717){
+      console.log(frames)
+      thisObstacle.y = 0;
+      thisObstacle.rdnObtWidth()
+      thisObstacle.rdnObtX()
+    }
+    thisObstacle.moveY();
+  };
 
   // updates direction
   function updateCanvas() {
@@ -69,42 +118,29 @@ window.onload = function () {
     ctx.fillText(`Car_x: ${car.x}`, 580, 40);
     drawRoad();
     draw(car);
-    drawObstacle();
+    drawObstacle(obstaclesContainer[0])
+    frames += 1;  
   }
 
-  // obstaculos
-  function Obstacle() {
-    this.height = 41;
-    this.width = 0;
-    this.x = 0;
-    this.y = 0;
-    this.rdnObtWidth = () => {
-      this.width = Math.floor((Math.random() * 215) + 206);
-      // console.log('width = ${this.width}');
-    };
-    this.rdnObtX = () => {
-      this.x = Math.floor((Math.random() * 283.4) + 67);
-      // console.log('x = ${this.x}');
-    };
-    this.moveY = () => {
-      this.y -= 1;
-      console.log('movendo');
-    };
+  for(let i = 0; i<numOfObstacles; i++){
+    obstacle = new Obstacle();
+    obstaclesContainer.push(obstacle);
   }
 
-  function drawObstacle() {
-    ctx.fillStyle = ('blue');
-    ctx.fillRect(20, 40, 80, 300);
-  }
-
+  obstaclesContainer.forEach(function(o){
+    o.rdnObtX()
+    o.rdnObtWidth()
+    o.moveY()
+   },100)
+  
   // start game
   function startGame() {
-    const obstacle = new Obstacle();
-    console.log(obstacle);
-    obstacle.rdnObtWidth();
-    obstacle.rdnObtX();
-    obstacle.moveY();
-    drawRoad();
+    console.log(obstaclesContainer);
+
+    setInterval(function(){
+      updateCanvas();
+    })
+
     document.onkeydown = function (e) {
       switch (e.keyCode) {
         case 37:
@@ -117,8 +153,6 @@ window.onload = function () {
           break;
         default: ('');
       }
-      updateCanvas();
     };
-    updateCanvas();
   }
 };
