@@ -16,7 +16,9 @@ window.onload = function () {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   let obstacle = new Obstacle();
-  let frames = 0;
+  let points = 0;
+  let gotHit = false;
+  let gameRunning;
 
   const car = {
     x: 208.74,
@@ -71,6 +73,10 @@ window.onload = function () {
     ctx.stroke();
   }
 
+  function drawGameOver() {
+    retangulo(0, 0, 467, 717, 'rgb(0,0,0)');
+  }
+
   // obstaculos
   let numOfObstacles = 10;
   let obstaclesContainer = [];
@@ -82,7 +88,7 @@ window.onload = function () {
     this.x = 0;
     this.y = 0;
     this.rdnObtWidth = () => {
-      this.width = Math.floor((Math.random() * 260) + 100);
+      this.width = Math.floor((Math.random() * 260) + 60);
       // console.log('width = ${this.width}');
     };
     this.rdnObtX = () => {
@@ -100,27 +106,37 @@ window.onload = function () {
     ctx.fillRect(thisObstacle.x, thisObstacle.y, thisObstacle.width, thisObstacle.height);
    
     //Check for collision with car
-    if(thisObstacle.y === 556 && thisObstacle.x >= car.x && thisObstacle.x + thisObstacle.width >= car.x){
+    if(thisObstacle.y === 515 && car.x > thisObstacle.x && car.x < thisObstacle.x + thisObstacle.width){
       console.log("hit")
+      gotHit = true;
     }
     else if(thisObstacle.y > 717){
       console.log(frames)
       thisObstacle.y = 0;
       thisObstacle.rdnObtWidth()
-      thisObstacle.rdnObtX()
+      thisObstacle.rdnObtX()  
     }
     thisObstacle.moveY();
   };
 
   // updates direction
   function updateCanvas() {
+    if(gotHit){
+      console.log("Game Over");
+      ctx.clearRect(0, 0, 467, 717);
+      gameOver()
+    }
     ctx.clearRect(0, 0, 467, 717);
     ctx.fillText(`Car_x: ${car.x}`, 580, 40);
     drawRoad();
     draw(car);
     drawObstacle(obstaclesContainer[0])
-    frames += 1;  
   }
+
+//Game over if Obstacle hits the car  
+function gameOver() {
+  clearInterval(gameRunning);
+}
 
   for(let i = 0; i<numOfObstacles; i++){
     obstacle = new Obstacle();
@@ -133,14 +149,12 @@ window.onload = function () {
     o.moveY()
    },100)
   
+
   // start game
   function startGame() {
-    console.log(obstaclesContainer);
-
-    setInterval(function(){
+   gameRunning = setInterval(function(){
       updateCanvas();
     })
-
     document.onkeydown = function (e) {
       switch (e.keyCode) {
         case 37:
