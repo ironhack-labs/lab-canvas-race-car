@@ -153,10 +153,10 @@ window.onload = function () {
       var cond3 = (500 < (this.obstacleArray[i].y + this.obstacleArray[i].y1));
       var cond4 = (500 + 100 > this.obstacleArray[i].y);
 
-      document.querySelector('.game-intro p').innerText =
-        `${cond1} ${cond2} ${cond3} ${cond4}
-      ${this.carPosition} ${this.obstacleArray[i].x} ${this.obstacleArray[i].y}
-      ${this.obstaclesPosition} ${this.score}`
+      // document.querySelector('.game-intro p').innerText =
+      //   `${cond1} ${cond2} ${cond3} ${cond4}
+      // ${this.carPosition} ${this.obstacleArray[i].x} ${this.obstacleArray[i].y}
+      // ${this.obstaclesPosition} ${this.score}`
 
       if (cond1 && cond2 && cond3 && cond4) {
         clearInterval(this.ourIntervalID);
@@ -179,7 +179,7 @@ window.onload = function () {
     } else if (this.obstaclesPosition < 500 && 0< this.obstaclesPosition) {
       this.score = 6*this.lapScore
     }
-
+    document.querySelector('.game-intro h2').innerText = `SCORE: ${this.score}`
   }
   var canvas = new Canvas;
   canvas.draw()
