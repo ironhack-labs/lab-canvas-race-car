@@ -4,21 +4,35 @@ window.onload = function() {
   };
 
   
-
-
   function CanvasLogic(x, y, vLine){
     //Nuestro juego
-    this.x = x;
-    this.y = y;
+    this.xCar = 210;
+    this.yCar = 430;
     this.vLine = vLine;
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.offsetCounter = 0;
-    var img = new Image();
+    this.img = new Image();
     this.img.src="images/car.png";
+    this.key_rigth = 39;
+    this.key_left = 37;
 
 
    }
+
+   CanvasLogic.prototype.setListeners = function() {
+    document.onkeydown = function(e) {
+      e.preventDefault();
+      switch(e.keyCode) {
+        case this.key_left: 
+          this.xCar -= 10;
+          break; 
+        case this.key_rigth: 
+          this.xCar += 10;
+          break; 
+      }
+    }.bind(this);
+  }
 
     CanvasLogic.prototype.start = function(){
 
@@ -26,6 +40,8 @@ window.onload = function() {
         this.eraseScreen();
         this.draw();
         this.drawLine();
+        this.drawCar();
+        this.setListeners();
         this.offsetCounter++;
         console.log(this.draw);
 
@@ -73,7 +89,8 @@ window.onload = function() {
 
     CanvasLogic.prototype.drawCar = function(){
 
-      this.ctx
+      this.ctx.drawImage(this.img,this.xCar,this.yCar, 50,100);
+
 
     }
 
