@@ -11,7 +11,7 @@ window.onload = function() {
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = y;
-    this.vx = 10;
+    this.vx = 15;
     this.setListeners();
     this.img = new Image();
     this.img.src = "images/car.png";
@@ -23,10 +23,10 @@ window.onload = function() {
       e.preventDefault();
       switch (e.keyCode) {
         case KEY_LEFT:
-          this.x -= this.vx;
+          if (this.x > 0) this.x -= this.vx;
           break;
         case KEY_RIGHT:
-          this.x += this.vx;
+          if (this.x <= this.canvas.width - 50) this.x += this.vx;
           break;
       }
     }.bind(this);
@@ -36,20 +36,34 @@ window.onload = function() {
     this.ctx.drawImage(this.img, this.x, this.y, 40, 80);
   };
 
-  Car.prototype.move = function() {
-    if (this.x >= this.canvas.width || this.x < 0) {
-      this.vx *= -1;
-    }
+  function Obstacle(canvas, x, y, vy) {
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext("2d");
+    this.x = x;
+    this.y = y;
+    this.vy = vy;
+  }
+
+  Obstacle.prototype.draw = function() {
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "red";
+    this.ctx.fillRect(this.x, this.y, 200, 30);
+    this.ctx.closePath();
   };
 
+  Obstacle.prototype.move = function() {
+    this.y += this.vy;
+  };
   function Canvas(id) {
     this.canvas = document.getElementById(id);
     this.ctx = this.canvas.getContext("2d");
     this.fps = 60;
     this.counter = 0;
-    this.carA = new Car(this.canvas, 250, 560);
+    this.car = new Car(this.canvas, 250, 560);
     this.offset = 0;
+    this.obstacleArray = [];
   }
+
   Canvas.prototype.roadDraw = function() {
     this.ctx.beginPath();
     this.ctx.fillStyle = "#008500";
@@ -81,13 +95,39 @@ window.onload = function() {
     this.ctx.closePath();
   };
 
+  Canvas.prototype.checkCollision = function() {
+    this.obstacleArray.forEach(
+      function(obstacle) {
+        if (
+          this.car.x + this.car.width >= obstacle.x &&
+          obstacle.x + obstacle.width >= this.car.x &&
+          this.car.y + this.car.height >= obstacle.y &&
+          obstacle.height + obstacle.y >= this.car.y
+        ) {
+          return true;
+        }
+      }.bind(this)
+    );
+  };
+
   Canvas.prototype.drawAll = function() {
-    setInterval(
+
+    this.intervalID = setInterval(
       function() {
         this.roadDraw();
         this.drawLines();
-        this.carA.carDraw();
-        this.offset++
+        this.car.carDraw();
+        this.offset++;
+        if (this.offset % 150 === 0) {
+          this.obstacleArray.push(
+            new Obstacle(this.canvas, Math.floor(Math.random() * 301), 0, 3)
+          );
+        }
+        this.obstacleArray.forEach(function(obstacle) {
+          obstacle.draw();
+          obstacle.move();
+        });
+        if(this.checkCollision()) clearInterval(this.intervalID);
       }.bind(this),
       1000 / this.fps
     );
