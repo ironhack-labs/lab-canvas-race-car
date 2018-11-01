@@ -9,16 +9,19 @@ window.onload = function() {
     var canvas = document.getElementById(myCanvas);
     this.w = 350;
     this.h = 600;
-
     this.ctx = canvas.getContext("2d");
+    
+    
   }
-
+  
   function Road(ctx) {
     this.ctx = ctx;
     this.x = 0;
     this.y = 0;
     this.width = 350;
     this.height = 600;
+    this.imageCar= new Image();
+    this.imageCar.src="./images/car.png";
   }
 
   Road.prototype.green = function() {
@@ -39,7 +42,6 @@ window.onload = function() {
   Road.prototype.line=function(){
    
     this.ctx.strokeStyle = 'white';
-
     this.ctx.lineWidth = 5;
     this.ctx.beginPath();
     this.ctx.setLineDash([20,15]);
@@ -48,16 +50,26 @@ window.onload = function() {
     this.ctx.stroke();
     this.ctx.closePath();
   }
+
+  Road.prototype.car =function(){
   
+  this.imageCar.onload=function(){
+  this.ctx.drawImage(this.imageCar, this.x+150, this.y +470, 50, 100);
+
+  }.bind(this)
+
+}
+
+  
+
+
   var canvas = new Canvas('myCanvas');
   var road = new Road(canvas.ctx);
-
- 
 
     road.green();
     road.grey();
     road.white();
     road.line();
-  
+    road.car();
 
 };
