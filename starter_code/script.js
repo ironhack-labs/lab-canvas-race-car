@@ -4,9 +4,9 @@ window.onload = function() {
   };
 
   var gameBoard = new GameBoard();
-
+  
   function startGame() {
-    
+    gameBoard.start()
   }
 };
 
@@ -16,12 +16,19 @@ function GameBoard(){
   this.height = this.canvas.height;
   this.width = this.canvas.width;
   this.car = new Car(this.width,this.height);
-
+  
   this.obstacles = [];
-
+  
   this.obstacles.push(new Obstacle(this.width));
   
+  this.intervalID;
+  this.score = 0;
 
+  this.drawBackground();
+  this.drawLines(0);
+}
+
+GameBoard.prototype.start = function() {
   this.render();
 }
 
@@ -43,7 +50,7 @@ GameBoard.prototype.drawBackground = function() {
 GameBoard.prototype.render = function() {
   var yLine = -this.height;
   var obstacleCounter = 0;
-  setInterval(function() {
+  this.intervalID = setInterval(function() {
     
     this.clear();
     this.drawBackground();
@@ -55,19 +62,37 @@ GameBoard.prototype.render = function() {
     obstacleCounter++;
     if(obstacleCounter % 150 == 0) {
       this.obstacles.push(new Obstacle(this.width));
-      if(this.obstacles.length > 7){
-        this.obstacles.shift();
-      }
     }
-    
-    console.log(this.obstacles.length);
 
     this.obstacles.forEach(function(obstacle) {
       obstacle.draw(this.ctx);
+      if (obstacle.y > this.height) {
+          this.obstacles.shift();
+          this.score++;
+      }
     }.bind(this));
 
     this.car.draw(this.ctx);
+    
+    this.showScore();
+
+    if (this.checkCollision()) {
+      clearInterval(this.intervalID);
+      this.showGameOver();
+    }
   }.bind(this), 1000/60)
+}
+
+GameBoard.prototype.showGameOver = function() {
+  this.ctx.fillStyle = '#000';
+  this.ctx.fillRect(0,0,this.width,this.height);
+  this.ctx.font = "40px Arial";
+  this.ctx.fillStyle = "red";
+  this.ctx.textAlign = "center";
+  this.ctx.fillText("Game Over", this.width/2, 250);
+  this.ctx.fillStyle = "#fff";
+  this.ctx.fillText(`Your final score:`, this.width/2, 310);
+  this.ctx.fillText(this.score, this.width/2, 360);
 }
 
 GameBoard.prototype.drawLines = function(y) {
@@ -80,8 +105,23 @@ GameBoard.prototype.drawLines = function(y) {
   this.ctx.stroke();
 }
 
+
+GameBoard.prototype.checkCollision = function(){
+  return this.obstacles.filter(function(obstacle){
+    if(obstacle.x + obstacle.width >= this.car.x && this.car.x + this.car.width >= obstacle.x && obstacle.y + obstacle.height >= this.car.y && this.car.y + this.car.height >= obstacle.y)          return true
+
+    return false;
+  }.bind(this)).length;
+}
+
 GameBoard.prototype.clear = function() {
   this.ctx.clearRect(0,0,this.width, this.height);
+}
+GameBoard.prototype.showScore = function(){
+    this.ctx.font = "20px Arial";
+    this.ctx.fillStyle = "#fff";
+
+    this.ctx.fillText(`Score: ${this.score}`, 60, 30)
 }
 
 function Car(canvasWidth, canvasHeight) {
