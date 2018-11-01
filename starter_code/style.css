@@ -32,7 +32,18 @@ body button {
   margin-bottom: 20px;
 }
 
+button:hover{
+  background-color: #3f0003;
+}
+
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 0px;
+    background: green;
+    height: 500px;
+    width: 40%;
+}
+
+#pista{
+  background: gray;
 }
