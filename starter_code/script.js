@@ -31,13 +31,21 @@ Canvas.prototype.draw = function () {
   this.ctx.fillRect(this.x + 355, this.y, this.whiteLineWidth, this.height);  // linea blc dch
   this.ctx.fillStyle = '#FFFDFF';
   this.dashLineDraw();
- 
-
-
-
+  
+  this.carImg();
 
   this.ctx.closePath();
+
+
 }
+Canvas.prototype.carImg= function(){
+  var img = new Image ()
+  img.src = './images/car.png';
+  img.onload = function() { // para que la referencie dentro de un metódo y pasarle su contexto
+    this.ctx.drawImage(img, 175, 520, 50, 100);
+  }.bind(this);
+}
+
 Canvas.prototype.dashLineDraw= function(){
 
   for(var i=1;i<=14;i++){
