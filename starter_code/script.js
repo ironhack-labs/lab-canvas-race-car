@@ -15,6 +15,7 @@ function GameBoard(){
   this.ctx = this.canvas.getContext("2d");
   this.height = this.canvas.height;
   this.width = this.canvas.width;
+  this.car = new Car(this.width,this.height);
 
 
   this.render();
@@ -44,10 +45,13 @@ GameBoard.prototype.render = function() {
     // Line 1
     this.clear();
     this.drawBackground();
-    
+
     yLine++;
     if(yLine === 0) yLine = -this.height;
     this.drawLines(yLine);
+
+    //this.ctx.drawImage(this.car.img, 0, 0);
+    this.car.draw(this.ctx);
     
     
 
@@ -56,7 +60,7 @@ GameBoard.prototype.render = function() {
 
 GameBoard.prototype.drawLines = function(y) {
   this.ctx.beginPath();
-  this.ctx.lineWidth = 3;
+  this.ctx.lineWidth = 4;
   this.ctx.strokeStyle = "#fff";
   this.ctx.setLineDash([20,15]);
   this.ctx.moveTo(this.width/2, y);
@@ -72,3 +76,19 @@ GameBoard.prototype.clear = function() {
   this.ctx.clearRect(0,0,this.width, this.height);
 }
 
+function Car(canvasWidth, canvasHeight) {
+  this.img = new Image();
+  this.img.src = "images/car.png";
+
+  this.width = this.img.width * .4;
+  this.height = this.img.height * .4;
+
+  this.x = canvasWidth/2 - this.width/2;
+  this.y = canvasHeight-this.height-30;
+
+  
+}
+
+Car.prototype.draw = function (ctx) {
+  ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+}
