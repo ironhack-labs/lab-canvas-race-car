@@ -23,7 +23,12 @@ window.onload = function() {
     this.y = 0;
     this.carX = 150;
     this.carY = 450;
+    this.obstacleX=60;
+    this.obstacleY= 50;
+    this.obstacleW=150;
+    this.obstacleH=30;
     this.vx = 5;
+    this.vyObstacle= 0.5;
     this.width = 350;
     this.height = 600;
     this.imageCar= new Image();
@@ -67,7 +72,6 @@ window.onload = function() {
 
 }
 
-
   Road.prototype.move=function(){
     
     if(this.carX < 0){
@@ -99,6 +103,21 @@ var KEY_LEFT = 37;
     }.bind(this);
   }
 
+  Road.prototype.obstacle1 =function (){
+    this.ctx.fillStyle = 'red'
+    this.ctx.fillRect(this.obstacleX, this.obstacleY, this.obstacleW, this.obstacleH);
+    this.ctx.fillRect(this.obstacleX+125, this.obstacleY-350, this.obstacleW-40, this.obstacleH);
+    this.ctx.fillRect(this.obstacleX, this.obstacleY-700, this.obstacleW+10, this.obstacleH);
+    
+  }
+
+  Road.prototype.moveObstacle1= function(){
+    
+    this.obstacleY+=this.vyObstacle;
+      }
+    
+  
+
 
     function startGame(road) {
       setInterval(function(){
@@ -110,6 +129,8 @@ var KEY_LEFT = 37;
         road.white();
         road.line();
         road.car();
+        road.obstacle1();
+        road.moveObstacle1();
 
       }.bind(this), 1000/this.fps);
     }
