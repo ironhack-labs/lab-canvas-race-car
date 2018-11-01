@@ -16,26 +16,27 @@ window.onload = function () {
         this.road = new Road(this.canvas);
         this.counter = 0;
 
+
     }
     Canvas.prototype.draw = function () {
         this.road.draw();
         this.car.draw();
         this.obstacles.forEach(function(obstacle){
             obstacle.draw();
+            obstacle.y++;
         })
     }
 
     Canvas.prototype.start = function () {
         setInterval(function () {
+            console.log(this.counter)
+            if(this.counter===0||this.counter===200||this.counter===400){
+                this.obstacles.push(new Obstacle(this.canvas));
+            }
             this.draw();
             this.road.lineOffset = (-this.counter % 38); //line longitud +  space length
             this.counter++;
         }.bind(this), 1000 / this.fps); // Interval 60 times per second
-    }
-    Canvas.prototype.createObstacle = function(){
-        var width = 80 + Math.floor(Math.random()*100);//Random number between 80 and 290
-        var x = 60 + Math.floor(Math.random()*150);
-        this.obstacles.push(new Obstacle(this.canvas,x,width));
     }
 
     function startGame() {
@@ -131,24 +132,32 @@ window.onload = function () {
             this.x = finalX;
         }
     }
-    
-    function Obstacle (canvas,x,width){
+
+    function Obstacle (canvas){
         this.canvas=canvas;
         this.ctx=canvas.getContext("2d");
-        this.x = x;
-        this.width = width;
         this.y = 0;
         this.height = 20;
         this.color="rgb(116,0,0)";
+        this.setRandomValues();
     }
 
     Obstacle.prototype.draw = function(){
+        if (this.y>this.canvas.height){
+            this.y=0;
+            this.setRandomValues();
+        }
         this.ctx.fillStyle=this.color;
         this.ctx.fillRect(this.x,this.y,this.width,this.height);
 
     }
+
+    Obstacle.prototype.setRandomValues = function(){
+        this.width = 80 + Math.floor(Math.random()*100);//Random number between 80 and 290
+        this.x = 60 + Math.floor(Math.random()*150);
+    }
     // Instacniamos nuevo objeto del tipo Canvas
     var myCanvas = new Canvas("#canvas-game");
-    myCanvas.createObstacle();
+
 
 };
