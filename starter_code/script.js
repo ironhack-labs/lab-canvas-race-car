@@ -4,10 +4,16 @@ window.onload = function() {
       //var ctx = document.getElementById("myCanvas")
       var canvas = new Canvas("myCanvas");
 
-
-
       setInterval(function() {
           canvas.startGame();
+        
+          if(canvas.counter % 200 ===0){
+            canvas.counter++;
+          }
+          if(canvas.counter === canvas.height){
+            canvas.counter =0;
+          }
+        
       }.bind(this), 1000 / 60);
 
   };
@@ -22,6 +28,10 @@ window.onload = function() {
       this.width = 350;
       this.height = 700;
       this.offset = 0;
+      this.obstaclesArray = [new Obstacle(this.canvas,0), new Obstacle(this.canvas,50),new Obstacle(this.canvas,60) ];
+      this.counter =0;
+      this.xCar = this.width / 2.3;
+      this.yCar= this.height / 1.2;
 
   }
 
@@ -58,7 +68,12 @@ window.onload = function() {
       this.ctx.stroke();
       this.ctx.closePath();
       this.loadCar();
-      // this.ctx.strokeRect(this.width / 2, 50, 100, 500);
+       this.obstaclesArray[0].y+= (this.counter);
+       this.obstaclesArray[1].y+=(this.counter);
+       this.obstaclesArray[2].y+= (this.counter);
+      
+     
+ 
 
 
   }
@@ -71,14 +86,57 @@ window.onload = function() {
   Canvas.prototype.loadCar = function() {
       var img = new Image();
       img.src = "images/car.png";
-      this.ctx.drawImage(img, this.width / 2.3, this.height / 1.2, 50, 100);
+
+      this.ctx.drawImage(img, this.xCar, this.yCar / 1.2, 50, 100);
 
 
   }
+
 
   Canvas.prototype.obstacles = function(){
-    this.rect(100, 25, this.x, this.y, "rgb(117,0,0)");
-      
+    this.obstaclesArray.forEach(function(obstacle) {
+      obstacle.draw();
+    })
   }
+ 
+
+  Canvas.prototype.generateObstacles = function() {
+
+    this.obstaclesArray.push(new Obstacle(this.canvas,0))
+  }
+
+
+  Canvas.prototype.colision = function(){
+     this.obstacles.forEach(obstacle)
+  }
+
+
+
+  function Obstacle(canvas, valy){
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext("2d");
+    this.fps = 60;
+    this.x = 0;
+    this.y = (Math.random() * (0 - 400)) + 100 ;
+    this.width = Math.floor(Math.random() * (200 - 100)) + 100;
+    this.height = 25;
+    // //this.xRandom = (Math.floor((Math.random() * (this.x + 30 - this.width - 40)) + this.width - 40));
+    // this.xRandom = (Math.floor((Math.random() * (this.x + 170 -  this.width - 40))+ 170));
+
+    // this.y =0;
+
+  }
+
+  Obstacle.prototype.draw= function(valy){
+    
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "rgb(117,0,0)";
+  
+   
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.ctx.closePath();
+
+  }
+
 
 }
