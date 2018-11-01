@@ -21,17 +21,24 @@ window.onload = function() {
    }
 
    CanvasLogic.prototype.setListeners = function() {
-    document.onkeydown = function(e) {
-      e.preventDefault();
-      switch(e.keyCode) {
-        case this.key_left: 
-          this.xCar -= 10;
-          break; 
-        case this.key_rigth: 
-          this.xCar += 10;
-          break; 
+      document.onkeydown = function(e) {
+        e.preventDefault();
+        switch(e.keyCode) {
+
+          case this.key_left:
+          if (this.xCar>=40){
+            this.xCar -= 10;
+            break; 
+          }
+          case this.key_rigth: 
+          if(this.xCar<=380){
+            this.xCar += 10;
+            break; 
+          }
       }
-    }.bind(this);
+      }.bind(this);
+
+
   }
 
     CanvasLogic.prototype.start = function(){
@@ -41,9 +48,10 @@ window.onload = function() {
         this.draw();
         this.drawLine();
         this.drawCar();
-        this.setListeners();
+        this.setListeners()
+        console.log(this.xCar);
+        console.log(this.xCar>30 && this.xCar<390);
         this.offsetCounter++;
-        console.log(this.draw);
 
       }.bind(this), 1000/60);
     }
