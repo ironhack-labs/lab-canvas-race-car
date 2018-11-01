@@ -17,6 +17,7 @@ window.onload = function () {
     }
     Canvas.prototype.draw = function () {
         this.road.draw();
+        this.car.draw();
     }
 
     Canvas.prototype.start = function(){
@@ -80,11 +81,14 @@ window.onload = function () {
     function Car(canvas) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
-        this.x = 200;
-        this.y = 480;
+        this.x = 155;
+        this.y = this.canvas.height -150;
+        this.img = new Image();
+        this.img.src = "./images/car.png";
     }
+    
     Car.prototype.draw = function () {
-
+        this.ctx.drawImage(this.img,this.x,this.y,40,70);
     }
 
     // Instacniamos nuevo objeto del tipo Canvas
