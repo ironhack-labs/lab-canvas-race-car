@@ -19,6 +19,7 @@ window.onload = function () {
     this.y = 0;
     this.width = this.canvas.width;
     this.height = this.canvas.height;
+    this.offset=0;
   }
 
   Road.prototype.draw = function () {
@@ -37,7 +38,8 @@ window.onload = function () {
     this.ctx.moveTo(this.x + 225, this.y + 1);
     this.ctx.lineTo(this.x + 225, this.y + 700);
     this.ctx.lineWidth = 8;
-    this.ctx.setLineDash([30, 45])
+    this.ctx.setLineDash([30, 45]);
+    this.ctx.lineDashOffset =this.offset;
     this.ctx.strokeStyle = 'white';
     this.ctx.stroke();
     this.ctx.closePath();
@@ -57,13 +59,10 @@ window.onload = function () {
   Car.prototype.draw = function () {
     this.img = new Image();
     this.img.src = "images/police.png";
-    // this.img.onload = function () {
-      this.ctx.drawImage(this.img, this.x, this.y, 70, 120);
-    // }.bind(this)
+    this.ctx.drawImage(this.img, this.x, this.y, 70, 120);
+    
   }
-  // Car.prototype.move = function() {
-  //   this.x += this.vx;}
-
+  
 
   Car.prototype.move = function () {
     document.onkeydown = function (e) {
@@ -85,15 +84,6 @@ window.onload = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  // Car.prototype.moveLimits = function() {
-  //   this.x += this.vx;
-    
-  //   if(this.x+50 + this.img >= this.x-160 || this.x-80 - this.img < 0) {
-  //     this.vx *=-1;
-  //   }
-    
-    
-  // }
 
 
   var canvas = document.getElementById("game");
@@ -102,16 +92,19 @@ window.onload = function () {
   var road = new Road(canvas);
   var car = new Car(canvas);
 
+
   function startGame() {
-      
+      var counter=0;
+
+
       setInterval(function() {
       car.clear();
       road.draw();
       road.lines();
       car.draw();
-      
+      road.offset= -counter%75;
       car.move();
-      // car.moveLimits();
+      counter++;
       
       
     },1000/60)
