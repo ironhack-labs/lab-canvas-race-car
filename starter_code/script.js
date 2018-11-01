@@ -1,6 +1,8 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
+  var offset = 0;
+
 
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -22,7 +24,7 @@ window.onload = function() {
     this.originalVx = vx;
     this.vx = vx;
     this.x = 175;
-    this.y = 450;
+    this.y = 480;
     this.imgCar = new Image();
     this.imgCar.src =
       "https://github.com/YaredMyers/lab-canvas-race-car/blob/master/starter_code/images/car.png?raw=true";
@@ -42,12 +44,12 @@ window.onload = function() {
       e.preventDefault();
       switch (e.keyCode) {
         case KEY_LEFT:
-        if(this.x >= 0){
+        if(this.x >= 50){
           this.x -= this.vx;
         }
           break;
         case KEY_RIGHT:
-        if(this.x <= 350){
+        if(this.x <= 300){
       this.x += this.vx;}
           break;
       }
@@ -82,11 +84,23 @@ window.onload = function() {
    ctx.lineWidth = 4;
    ctx.strokeStyle = "white";
    ctx.setLineDash([25, 20]);
+   ctx.lineDashOffset = -offset;
    ctx.moveTo(200, 0);
    ctx.lineTo(200, 800);
    ctx.stroke();
    ctx.closePath();
   }
+
+  // function march() {
+  //     offset++;
+  //     if (offset > 16) {
+  //       offset = 0;
+  //     }
+  //     road.draw();
+  //     setTimeout(march, 20);
+  //   }
+    
+  //   march();
 
   var canvas = new Canvas();
   var road = new Road(canvas);
@@ -95,8 +109,9 @@ window.onload = function() {
   this.setInterval(function(){
     road.draw();
     car.draw();
-    //car.move();
+    offset++;
   }.bind(this),1000/canvas.fps)
   car.setListeners();
 
 };
+
