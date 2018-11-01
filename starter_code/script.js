@@ -1,7 +1,14 @@
+  
+  
+  var KEY_RIGHT = 39;
+  var KEY_LEFT = 37;
+
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
+
+
   function Car (canvas,ctx) {
     this.canvas = canvas;
     this.img=new Image();
@@ -11,21 +18,39 @@ window.onload = function() {
     this.yCar=500;
     this.widthCar=60;
     this.heightCar=100;
-   // debugger
-    //this.ctx.drawImage(img,200,620);
-
+    this.xv=5;
+    
+    this.setListeners();
+    
+    this.offset=0;
   }
   Car.prototype.draw=function(){
-    //console.log(this.img);
-    this
-    this.img.onload=function(){
-     this.ctx.drawImage(this.img,this.xCar,this.yCar, this.widthCar,this.heightCar); 
-    }.bind(this);
+    this.ctx.drawImage(this.img,this.xCar,this.yCar, this.widthCar,this.heightCar); 
     
   }
 
-  Car.prototype.move=function(){
+  Car.prototype.setListeners=function(){
+    document.onkeydown=function(e){
+      e.preventDefault();
+      switch(e.keyCode){
+        case KEY_LEFT:
+        this.xCar-=this.xv;
+        break;
+        case KEY_RIGHT:
+        this.xCar+=this.xv;
+        break;
+      }
+    }.bind(this);
+  }
 
+  Car.prototype.move=function(){
+    console.log(this.xCar+this.widthCar);
+
+    if(this.xCar<40){
+      return this.xCar=40;
+    } else if (this.xCar>300) {
+      return this.xCar=300
+    }
   }
 
   function Driveway(id) {
@@ -36,6 +61,9 @@ window.onload = function() {
   
     this.ctx = canvas.getContext("2d");
     this.car = new Car(canvas, this.ctx);
+    this.counter=0;
+    this.fps=60;
+    //this.setInterval ();
   }
 
   Driveway.prototype.drawLine = function(x,y,width, height){
@@ -54,16 +82,34 @@ window.onload = function() {
     this.ctx.fillStyle="white";
 }
 
+Driveway.prototype.start = function() {
+  
+  setInterval(function() {
+  //  this.clear();
+    this.drawAll();
+    this.car.move();
+    
+    this.counter++;
+    
+    if(this.counter % 110 == 0) {
+    }
+  }.bind(this), 1000/this.fps);
+}
+
 
   Driveway.prototype.dashed=function(){
+    //var offset=0;
+    
     this.ctx.beginPath();
     this.ctx.setLineDash([25]);
+    this.ctx.lineDashOffset = this.offset;
     this.ctx.moveTo(200, 10);
     this.ctx.lineTo(200,650);
     this.ctx.strokeStyle="white";
     this.ctx.lineWidth=10;
     this.ctx.stroke();
-  
+    this.ctx.closePath();
+    this.offset-=5;
 }
   Driveway.prototype.drawAll=function(){
      
@@ -95,12 +141,13 @@ window.onload = function() {
     this.colorGreen();
     this.drawLine(x+(width*0.94),y,width*0.06,height);
 
+    this.dashed();
     this.car.draw();
-
+    
   }
   
   var drawing=new Driveway("driveway");
-  drawing.drawAll();
+  drawing.start();
 
 
 
