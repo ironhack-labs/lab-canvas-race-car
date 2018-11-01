@@ -2,6 +2,7 @@
 var keyLeft = 37;
 var keyRight = 39;
 
+
 function Canvas(id) {
 
   this.canvas = document.getElementById(id);
@@ -12,6 +13,7 @@ function Canvas(id) {
   this.fps = 60;
   this.vx = 20;
   this.dashLineWidth = 6;
+  this.offSet = 0;
   // this.dashLine = [];
   this.dashLineHeight = 20;
   this.grassWidth = 25;
@@ -45,6 +47,10 @@ Canvas.prototype.setListeners = function () {
   }.bind(this);
 }
 
+Canvas.prototype.clear = function(){
+
+  this.ctx.clearRect(0, 0, 400, this.height);
+}
 
 Canvas.prototype.draw = function () {
 
@@ -59,7 +65,7 @@ Canvas.prototype.draw = function () {
   this.ctx.fillRect(this.x + 35, this.y, this.whiteLineWidth, this.height);  // linea blc izq
   this.ctx.fillStyle = '#FFFDFF';
   this.ctx.fillRect(this.x + 355, this.y, this.whiteLineWidth, this.height);  // linea blc dch
-  this.ctx.fillStyle = '#FFFDFF';
+  // this.ctx.fillStyle = '#FFFDFF';
   this.dashLineDraw();
 
   this.carImg();
@@ -76,19 +82,17 @@ Canvas.prototype.carImg = function () {
   }.bind(this);
 }
 
-Canvas.prototype.dashLineDraw = function () {
-
-  for (var i = 1; i <= 14; i++) {
-    var inc = 30;
-    this.ctx.fillRect(this.x + 197, (this.y - 15) + i * (inc + 20), this.dashLineWidth, this.dashLineHeight);
-  }
-
+Canvas.prototype.dashLineDraw = function () { 
+    this.ctx.strokeStyle = '#FFFDFF';
+    this.ctx.lineWidth=5;    
+    this.ctx.setLineDash([20, 40]);   
+    this.ctx.lineDashOffset = this.offset;  
+    this.ctx.moveTo(200, 0);
+    this.ctx.lineTo(200, 650);
+    this.ctx.stroke();
 }
 
 window.onload = function () {
-
-
-
 
   document.getElementById("start-button").onclick = function () {
     startGame();
@@ -97,9 +101,14 @@ window.onload = function () {
   var road = new Canvas("road");
   road.draw();
   function startGame() {
+    var counter=0;
+
     setInterval(function () {
+      // road.clear()
       road.draw();
+      road.offset = -counter% 60; 
       road.setListeners();
+      counter++;
 
     }, 1000 / this.fps);
 
