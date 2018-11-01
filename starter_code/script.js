@@ -59,9 +59,9 @@ window.onload = function () {
   Car.prototype.draw = function () {
     this.img = new Image();
     this.img.src = "images/police.png";
-    this.img.onload = function () {
+    // this.img.onload = function () {
       this.ctx.drawImage(this.img, this.x, this.y, 70, 120);
-    }.bind(this)
+    // }.bind(this)
   }
   // Car.prototype.move = function() {
   //   this.x += this.vx;}
@@ -81,6 +81,10 @@ window.onload = function () {
     }.bind(this);
   }
 
+  Car.prototype.clear = function() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
 
 
   var canvas = document.getElementById("game");
@@ -90,14 +94,15 @@ window.onload = function () {
   var car = new Car(canvas);
 
   function startGame() {
-
-   
-      road.draw();
-      car.move();
-      road.lines();
+      
       setInterval(function() {
-     
+      car.clear();
+      road.draw();
+      road.lines();
       car.draw();
+
+     
+      car.move();
     },1000/60)
   }
 };
