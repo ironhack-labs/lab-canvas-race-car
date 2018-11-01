@@ -2,16 +2,18 @@ window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     var canvas = new Canvas('myCanvas');
     var road = new Road(canvas.ctx);
-
+   
+    
     startGame(road);
   };
-
+  var offset = 0;
   function Canvas(myCanvas) {
     var canvas = document.getElementById(myCanvas);
     this.fps=60;
     this.w = 350;
     this.h = 600;
     this.ctx = canvas.getContext("2d");
+    
   }
 
   
@@ -50,6 +52,8 @@ window.onload = function() {
     this.ctx.strokeStyle = 'white';
     this.ctx.lineWidth = 5;
     this.ctx.beginPath();
+    this.ctx.lineDashOffset = offset;
+    offset -=0.75;
     this.ctx.setLineDash([20,15]);
     this.ctx.moveTo(this.x+175, this.y);
     this.ctx.lineTo(this.x+175, this.y+600);
