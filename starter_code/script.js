@@ -20,7 +20,7 @@ window.onload = function () {
     this.car = new Car(this.canvas);
   }
 
-
+  var score = document.querySelector("#score").innerText
 
   Canvas.prototype.moveAll = function () {
     setInterval(function () {
@@ -33,7 +33,8 @@ window.onload = function () {
 
 
       this.counter++
-
+      document.querySelector("#score").innerText = this.counter
+      
       if (this.counter % 100 === 0) {
         this.obstacles.push(new Obstacle(this.canvas));
       }
