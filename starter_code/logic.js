@@ -1,4 +1,8 @@
 
+var KEY_RIGHT = 39;
+var KEY_LEFT = 37;
+
+
 function Canvas(id) {
     this.canvas = document.getElementById(id);
     this.ctx = this.canvas.getContext("2d");
@@ -9,7 +13,7 @@ function Canvas(id) {
     this.y = 0;
 }
 Canvas.prototype.drawBackground = function () {
-    var offset = 0;
+   
 
     this.ctx.fillStyle = '#008500';
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -20,19 +24,36 @@ Canvas.prototype.drawBackground = function () {
     this.ctx.fillStyle = 'white';
     this.ctx.fillRect(this.x + 50, this.y, this.width - 490, this.height);
 
-    
+    this.ctx.beginPath()
+    this.ctx.strokeStyle = 'white';
+    this.ctx.lineWidth = 5;
+    this.ctx.setLineDash([25, 25]);
+    this.ctx.moveTo(this.width / 2, 0);
+    this.ctx.lineTo(this.width / 2, this.height);
+    this.ctx.stroke();
+    this.ctx.closePath();
+
+
+
+
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect(this.x + 440, this.y, this.width - 490, this.height);
+}
+
+Canvas.prototype.lineAnimation = function () {
+    var offset = 0;
     setInterval(function () {
-        this.ctx.clearRect(this.width / 2-1, 0, 5, this.height);
+        this.ctx.clearRect(this.width / 2 - 1, 0, 5, this.height);
         this.ctx.beginPath()
         this.ctx.strokeStyle = 'grey';
         this.ctx.lineWidth = 16; //ponemos ancho muy grande para no ver los restos de la linea al repintarse
         this.ctx.setLineDash([25, 25]);
         this.ctx.lineDashOffset = -offset; //desplaza la linea discont
-        offset++; 
+        offset++;
         if (offset > 100) {
             offset = 0;
         }
-        
+
         this.ctx.moveTo(this.width / 2, 0);
         this.ctx.lineTo(this.width / 2, this.height);
         this.ctx.stroke();
@@ -40,12 +61,42 @@ Canvas.prototype.drawBackground = function () {
 
 
     }.bind(this), 20);
-
-
-    
-
-
-    this.ctx.fillStyle = 'white';
-    this.ctx.fillRect(this.x + 440, this.y, this.width - 490, this.height);
+}
+function Car(canvas, x, y,width,height, vx, vy, src) {
+   
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext("2d");
+    this.x = x;
+    this.y = y;
+    this.width=width;
+    this.height=height;
+    this.vx = vx;
+    this.vy = vy;
+    this.src = src;
+    this.setListeners();
 }
 
+Car.prototype.setListeners = function () {
+    document.onkeydown = function (e) {
+        e.preventDefault();
+        switch (e.keyCode) {
+            case KEY_LEFT:
+                this.x -= this.vx;
+                break;
+            case KEY_RIGHT:
+                this.x += this.vx;
+                break;
+
+        }
+    }.bind(this);
+}
+
+Car.prototype.drawCar = function () {
+   console.log("entra");
+   
+    var carImg = new Image();
+    carImg.src = this.src;
+    carImg.onload = function(){
+        this.ctx.drawImage(carImg,this.x,this.y, this.width, this.height)
+    }.bind(this)
+}
