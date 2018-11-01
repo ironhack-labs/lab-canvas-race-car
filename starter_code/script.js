@@ -1,27 +1,33 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
+    var canvas = new Canvas('myCanvas');
+    var road = new Road(canvas.ctx);
 
-  function startGame() {}
+    startGame(road);
+  };
 
   function Canvas(myCanvas) {
     var canvas = document.getElementById(myCanvas);
+    this.fps=60;
     this.w = 350;
     this.h = 600;
     this.ctx = canvas.getContext("2d");
-    
-    
   }
+
   
   function Road(ctx) {
     this.ctx = ctx;
     this.x = 0;
     this.y = 0;
+    this.carX = 150;
+    this.carY = 450;
+    this.vx = 5;
     this.width = 350;
     this.height = 600;
     this.imageCar= new Image();
     this.imageCar.src="./images/car.png";
+
+    this.setListeners();
   }
 
   Road.prototype.green = function() {
@@ -53,23 +59,54 @@ window.onload = function() {
 
   Road.prototype.car =function(){
   
-  this.imageCar.onload=function(){
-  this.ctx.drawImage(this.imageCar, this.x+150, this.y +470, 50, 100);
-
-  }.bind(this)
+  this.ctx.drawImage(this.imageCar, this.carX, this.carY, 50, 100);
 
 }
 
+
+  Road.prototype.move=function(){
+    
+    if(this.carX < 0){
+      this.carX = 10;
+    } if (this.carX >= 300 ){
+      this.carX= 290;
+    }
+    }
   
+  Road.prototype.clear=function(){
+    this.ctx.clearRect(0,0,350,600);
+  }
+
+//to move car
+var KEY_RIGHT = 39;
+var KEY_LEFT = 37;
+
+  Road.prototype.setListeners =function(){
+    document.onkeydown = function(e) {
+      e.preventDefault();
+      switch(e.keyCode) {
+        case KEY_LEFT: 
+          this.carX -= this.vx;
+          break; 
+        case KEY_RIGHT: 
+          this.carX += this.vx;
+          break; 
+      }
+    }.bind(this);
+  }
 
 
-  var canvas = new Canvas('myCanvas');
-  var road = new Road(canvas.ctx);
+    function startGame(road) {
+      setInterval(function(){
+        road.clear();
+        road.move();
+        road.car();
+        road.green();
+        road.grey();
+        road.white();
+        road.line();
+        road.car();
 
-    road.green();
-    road.grey();
-    road.white();
-    road.line();
-    road.car();
-
+      }.bind(this), 1000/this.fps);
+    }
 };
