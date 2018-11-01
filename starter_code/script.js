@@ -15,6 +15,7 @@ window.onload = function() {
     this.ctx = this.canvas.getContext("2d");
     this.fps = 60;
     this.obstacles = [];
+    
   }
 
   function getObjRan(min, max) {
@@ -37,6 +38,19 @@ window.onload = function() {
     this.ctx.fillRect(this.x, this.y++, this.width, this.height);
   }
 
+  Obstacles.prototype.collision = function(car) {
+    console.log(car.width)
+
+
+    if( car.x + car.width >= this.x  && this.x + this.width >= car.x &&
+      car.y+this.height >= this.y && this.y+this.height >= car.y) {
+        console.log(true);
+      } else {
+        return false;
+      }
+  }
+  
+  
 
 /////////////////////////
 
@@ -47,13 +61,15 @@ window.onload = function() {
     this.vx = vx;
     this.x = 175;
     this.y = 480;
+    this.width = 50;
+    this.height = 100;
     this.imgCar = new Image();
     this.imgCar.src =
       "https://github.com/YaredMyers/lab-canvas-race-car/blob/master/starter_code/images/car.png?raw=true";
   }
 
   Car.prototype.draw = function() {
-      this.ctx.drawImage(this.imgCar, this.x, this.y, 50, 100);
+      this.ctx.drawImage(this.imgCar, this.x, this.y, this.width, this.height);
       this.setListeners();
   };
 
@@ -127,13 +143,15 @@ window.onload = function() {
     offset++;
 
     counter++
-      console.log(canvas.obstacles)
-    if (counter % 100 === 0) {
+    if (counter % 200 === 0) {
       this.obstacles.push(new Obstacles(canvas.canvas))
+      
+
     }
 
     this.obstacles.forEach(function(obstacle) {
       obstacle.draw();
+      obstacle.collision(car);
     });
   }.bind(this),1000/canvas.fps)
     car.setListeners();
