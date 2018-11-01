@@ -104,6 +104,7 @@ window.onload = function(){
     this.fps = 60;
     this.counter = 0;
     this.id;
+    this.score = 0;
   }
 
   Canvas.prototype.generateLines = function() {
@@ -139,7 +140,7 @@ window.onload = function(){
       if(this.counter % 110 == 0) {
         this.generateObstacles();
       }
-
+      console.log(canvas.score);
     }.bind(this), 1000/this.fps);
 
 
@@ -179,8 +180,16 @@ window.onload = function(){
         canvas.car.y+canvas.car.h >= obstacle.y && obstacle.y+obstacle.h >= canvas.car.y
       ){
         stopGame();
+      } else {
+       canvas.score += 0.07;
       }
     })
+
+    var text = `Your score is ${parseInt(canvas.score)}`;
+
+    this.ctx.font = '48px serif';
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillText(text, 150, 780, 200);
 
   
 
@@ -198,7 +207,7 @@ window.onload = function(){
     this.obstacles = [];
     this.road = [];
     clearInterval(canvas.id);
-    alert('You lose!!'); 
+    alert(`You lose!! You score was ${parseInt(canvas.score)}`); 
   }
   
 }
