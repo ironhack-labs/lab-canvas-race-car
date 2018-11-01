@@ -20,6 +20,9 @@ window.onload = function () {
     Canvas.prototype.draw = function () {
         this.road.draw();
         this.car.draw();
+        this.obstacles.forEach(function(obstacle){
+            obstacle.draw();
+        })
     }
 
     Canvas.prototype.start = function () {
@@ -28,6 +31,11 @@ window.onload = function () {
             this.road.lineOffset = (-this.counter % 38); //line longitud +  space length
             this.counter++;
         }.bind(this), 1000 / this.fps); // Interval 60 times per second
+    }
+    Canvas.prototype.createObstacle = function(){
+        var width = 80 + Math.floor(Math.random()*100);//Random number between 80 and 290
+        var x = 60 + Math.floor(Math.random()*150);
+        this.obstacles.push(new Obstacle(this.canvas,x,width));
     }
 
     function startGame() {
@@ -79,12 +87,14 @@ window.onload = function () {
         this.ctx.stroke();
         this.ctx.closePath();
     }
-
+// CAR
     function Car(canvas) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
         this.x = 155;
         this.y = this.canvas.height - 150;
+        this.width = 40;
+        this.height = 70;
         this.img = new Image();
         this.img.src = "./images/car.png";
         this.speed = 5;
@@ -92,7 +102,7 @@ window.onload = function () {
     }
 
     Car.prototype.draw = function () {
-        this.ctx.drawImage(this.img, this.x, this.y, 40, 70);
+        this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
     Car.prototype.setListeners = function () {
         
@@ -100,17 +110,45 @@ window.onload = function () {
             e.preventDefault();
             switch (e.keyCode) {
                 case KEY_RIGHT:
-                    this.x += this.speed;
-                    break;
+                    this.moveRight();
+                    break; 
                 case KEY_LEFT:
-                    this.x -= this.speed;
+                    this.moveLeft();
                     break;
             }
         }.bind(this); // function inside a method loose the scope this
     }
 
+    Car.prototype.moveRight = function (){
+      var finalX = this.x + this.speed;
+      if(finalX < this.canvas.width - this.width- 60){ 
+          this.x = finalX;
+      }
+    }
+    Car.prototype.moveLeft = function (){
+        var finalX = this.x - this.speed;
+        if(finalX > 60){ 
+            this.x = finalX;
+        }
+    }
+    
+    function Obstacle (canvas,x,width){
+        this.canvas=canvas;
+        this.ctx=canvas.getContext("2d");
+        this.x = x;
+        this.width = width;
+        this.y = 0;
+        this.height = 20;
+        this.color="rgb(116,0,0)";
+    }
 
+    Obstacle.prototype.draw = function(){
+        this.ctx.fillStyle=this.color;
+        this.ctx.fillRect(this.x,this.y,this.width,this.height);
+
+    }
     // Instacniamos nuevo objeto del tipo Canvas
     var myCanvas = new Canvas("#canvas-game");
+    myCanvas.createObstacle();
 
 };
