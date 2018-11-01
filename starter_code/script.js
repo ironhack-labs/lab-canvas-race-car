@@ -53,16 +53,18 @@ window.onload = function() {
     }
   }
 
-  function Driveway(id) {
-    var canvas = document.getElementById(id);
+  function Driveway() {
+    this.canvas = document.getElementById("driveway");
 
     this.width = 400;
     this.height = 630;
   
-    this.ctx = canvas.getContext("2d");
-    this.car = new Car(canvas, this.ctx);
+    this.ctx = this.canvas.getContext("2d");
+    this.car = new Car(this.canvas, this.ctx);
     this.counter=0;
     this.fps=60;
+
+    this.obstacle = [];
     //this.setInterval ();
   }
 
@@ -88,11 +90,14 @@ Driveway.prototype.start = function() {
   //  this.clear();
     this.drawAll();
     this.car.move();
-    
+
     this.counter++;
+    console.log(this.obstacle)
+    if(this.counter % 150 == 0) {
+      this.obstacle.push(new Obstacles(this.canvas));
+      //console.log(this.obstacle)
+      }
     
-    if(this.counter % 110 == 0) {
-    }
   }.bind(this), 1000/this.fps);
 }
 
@@ -112,7 +117,8 @@ Driveway.prototype.start = function() {
     this.offset-=5;
 }
   Driveway.prototype.drawAll=function(){
-     
+
+
     var x=0;
     var y=0;
     var width=400;
@@ -143,9 +149,31 @@ Driveway.prototype.start = function() {
 
     this.dashed();
     this.car.draw();
-    
+
+   // this.obstacle.draw();
+   this.obstacle.forEach(function(unit){
+    unit.draw();
+    unit.yObstacle++; 
+   })
+
   }
   
+  function Obstacles (canvas){
+    this.canvas = canvas;
+    this.ctx= canvas.getContext("2d");
+    this.xObstacle=Math.floor(Math.random()*(220-40)+40);
+    this.yObstacle=0;
+    this.widthObstacle=Math.floor(Math.random()*(220-80)+80);
+    this.heightObstacle=10;
+
+  }
+
+  Obstacles.prototype.draw=function(){
+    this.ctx.fillRect(this.xObstacle,this.yObstacle,this.widthObstacle,this.heightObstacle);
+
+    }
+  
+
   var drawing=new Driveway("driveway");
   drawing.start();
 
