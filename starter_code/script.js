@@ -1,10 +1,14 @@
 window.onload = function () {
-    document.getElementById("start-button").onclick = function () {
-        startGame();
-    };
     var KEY_RIGHT = 39;
     var KEY_LEFT = 37;
 
+    // Instacniamos nuevo objeto del tipo Canvas
+    var myCanvas;
+    document.getElementById("start-button").onclick = function () {
+        myCanvas= new Canvas("#canvas-game");
+        startGame();
+    };
+    
     function Canvas(id) {
         this.canvas = document.querySelector(id);
         this.ctx = this.canvas.getContext("2d");
@@ -28,16 +32,39 @@ window.onload = function () {
     }
 
     Canvas.prototype.start = function () {
-        setInterval(function () {
+        var intervalId = setInterval(function () {
             console.log(this.counter)
             if(this.counter===0||this.counter===200||this.counter===400){
                 this.obstacles.push(new Obstacle(this.canvas));
+            }
+            if(this.checkCollision()){
+                clearInterval(intervalId);
+                alert("Game over");
+                
+
             }
             this.draw();
             this.road.lineOffset = (-this.counter % 38); //line longitud +  space length
             this.counter++;
         }.bind(this), 1000 / this.fps); // Interval 60 times per second
     }
+    Canvas.prototype.checkCollision = function(){
+        var aw = this.car.width;
+        var ax = this.car.x;
+        var ah = this.car.height;
+        var ay = this.car.y;
+        var collision=false;
+        
+        this.obstacles.forEach(function(obstacle){
+            
+            if(ax+aw>= obstacle.x && obstacle.x + obstacle.width >= ax&&
+                ay+ah>= obstacle.y && obstacle.y + obstacle.height>=ay){
+                    collision= true;
+                }
+        });
+        return collision;
+    }
+
 
     function startGame() {
         myCanvas.start();
@@ -156,8 +183,11 @@ window.onload = function () {
         this.width = 80 + Math.floor(Math.random()*100);//Random number between 80 and 290
         this.x = 60 + Math.floor(Math.random()*150);
     }
-    // Instacniamos nuevo objeto del tipo Canvas
-    var myCanvas = new Canvas("#canvas-game");
+
+    
+
+
+    
 
 
 };
