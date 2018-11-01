@@ -39,11 +39,6 @@ button:hover{
 #game-board {
     float: left;
     padding: 0px;
-    background: green;
     height: 500px;
     width: 40%;
-}
-
-#pista{
-  background: gray;
 }
