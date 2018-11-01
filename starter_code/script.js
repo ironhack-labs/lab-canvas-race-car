@@ -14,9 +14,31 @@ window.onload = function() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.fps = 60;
+    this.obstacles = [];
   }
 
-  //coche
+  function getObjRan(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+//////////////////////
+
+  function Obstacles(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
+    this.y = 0;
+    this.x = getObjRan(50,200);
+    this.width = getObjRan(40,100);
+    this.height = 5;
+  }
+
+  Obstacles.prototype.draw = function() {
+    this.ctx.fillStyle="brown";
+    this.ctx.fillRect(this.x, this.y++, this.width, this.height);
+  }
+
+
+/////////////////////////
 
   function Car(canvas, vx) {
     this.canvas = canvas;
@@ -28,7 +50,6 @@ window.onload = function() {
     this.imgCar = new Image();
     this.imgCar.src =
       "https://github.com/YaredMyers/lab-canvas-race-car/blob/master/starter_code/images/car.png?raw=true";
-
   }
 
   Car.prototype.draw = function() {
@@ -91,27 +112,32 @@ window.onload = function() {
    ctx.closePath();
   }
 
-  // function march() {
-  //     offset++;
-  //     if (offset > 16) {
-  //       offset = 0;
-  //     }
-  //     road.draw();
-  //     setTimeout(march, 20);
-  //   }
-    
-  //   march();
+
 
   var canvas = new Canvas();
   var road = new Road(canvas);
   var car = new Car(canvas, 15);
 
-  this.setInterval(function(){
+  var counter = 0;
+
+  Canvas.prototype.moveAll = function () {
+    setInterval(function(){
     road.draw();
     car.draw();
     offset++;
+
+    counter++
+      console.log(canvas.obstacles)
+    if (counter % 100 === 0) {
+      this.obstacles.push(new Obstacles(canvas.canvas))
+    }
+
+    this.obstacles.forEach(function(obstacle) {
+      obstacle.draw();
+    });
   }.bind(this),1000/canvas.fps)
-  car.setListeners();
-
+    car.setListeners();
 };
+canvas.moveAll();
 
+}
