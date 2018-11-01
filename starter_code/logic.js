@@ -11,7 +11,9 @@ function Canvas(id) {
     this.height = 800;
     this.x = 0;
     this.y = 0;
-    this.car = new Car(this.canvas, 216, 620, 70, 160, 5, 5, "images/car.png");
+    this.vx = 5;
+    this.vy = 5;
+    this.car = new Car(this.canvas, 216, 620, 70, 160, this.vx, this.vy, "images/car.png");
 }
 Canvas.prototype.drawBackground = function () {
 
@@ -44,6 +46,8 @@ Canvas.prototype.drawBackground = function () {
 Canvas.prototype.lineAnimation = function () {
     var offset = 0;
     setInterval(function () {
+        this.drawBackground();
+        this.car.drawCar();
         this.ctx.clearRect(this.width / 2 - 1, 0, 5, this.height);
         this.ctx.beginPath()
         this.ctx.strokeStyle = 'grey';
@@ -60,7 +64,11 @@ Canvas.prototype.lineAnimation = function () {
 
         this.ctx.stroke();
         this.ctx.closePath();
+
+        this.car.moveCar();
         this.car.drawCar();
+
+
 
 
     }.bind(this), 30);
@@ -96,11 +104,28 @@ Car.prototype.setListeners = function () {
 
 Car.prototype.drawCar = function () {
 
-
     var carImg = new Image();
     carImg.src = this.src;
 
     this.ctx.drawImage(carImg, this.x, this.y, this.width, this.height)
-
-
 }
+
+Car.prototype.moveCar = function () {
+    //cambiarlo
+    if (this.x + this.width >= this.canvas.width-50 ) {        
+       this.x=this.x-5;
+    }
+
+    if (this.x < 50) {
+       this.x=this.x+5;
+    }
+}
+
+Car.prototype.clearCar = function () {
+
+    /* cambiat param */
+    this.ctx.clearRect(this.x, this.y, this.width, this.height);
+}
+
+
+
