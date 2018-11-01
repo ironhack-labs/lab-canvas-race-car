@@ -14,6 +14,7 @@ function Canvas(id) {
     this.vx = 5;
     this.vy = 5;
     this.car = new Car(this.canvas, 216, 620, 70, 160, this.vx, this.vy, "images/car.png");
+    this.obstacle=new Obstacles(this.canvas,this.x + 50,this.y+200,200,20);
 }
 Canvas.prototype.drawBackground = function () {
 
@@ -45,7 +46,7 @@ Canvas.prototype.drawBackground = function () {
 
 Canvas.prototype.lineAnimation = function () {
     var offset = 0;
-    setInterval(function () {
+    var idInterval=setInterval(function () {
         this.drawBackground();
         this.car.drawCar();
         this.ctx.clearRect(this.width / 2 - 1, 0, 5, this.height);
@@ -67,6 +68,11 @@ Canvas.prototype.lineAnimation = function () {
 
         this.car.moveCar();
         this.car.drawCar();
+        this.obstacle.drawObstacle();
+        if(this.colision()){
+            clearInterval(idInterval);
+            alert("¡¡HAS PERDIDO!!");
+        }
 
 
 
@@ -111,7 +117,7 @@ Car.prototype.drawCar = function () {
 }
 
 Car.prototype.moveCar = function () {
-    //cambiarlo
+
     if (this.x + this.width >= this.canvas.width-50 ) {        
        this.x=this.x-5;
     }
@@ -121,11 +127,34 @@ Car.prototype.moveCar = function () {
     }
 }
 
-Car.prototype.clearCar = function () {
 
-    /* cambiat param */
-    this.ctx.clearRect(this.x, this.y, this.width, this.height);
+
+function Obstacles(canvas,x,y,width,height){
+    this.canvas = canvas;
+    this.ctx = this.canvas.getContext("2d");
+    this.x=x;
+    this.y=y;
+    this.width=width;
+    this.height=height;
+    
 }
 
+Obstacles.prototype.drawObstacle = function () {
+    console.log(this.x);
+    console.log(this.y);
 
+    
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillRect(this.x , this.y++, this.width, this.height);
+}
 
+Canvas.prototype.colision = function () {
+    
+    if( this.car.x+this.car.width >= this.obstacle.x && this.obstacle.x+this.obstacle.width >= this.car.x &&  
+        this.car.y +this.car.height >= this.obstacle.height && this.obstacle.y+this.obstacle.height >= this.car.y ){
+        return true;
+       
+          
+
+    }
+}
