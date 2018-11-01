@@ -11,9 +11,10 @@ function Canvas(id) {
     this.height = 800;
     this.x = 0;
     this.y = 0;
+    this.car = new Car(this.canvas, 216, 620, 70, 160, 5, 5, "images/car.png");
 }
 Canvas.prototype.drawBackground = function () {
-   
+
 
     this.ctx.fillStyle = '#008500';
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -56,20 +57,22 @@ Canvas.prototype.lineAnimation = function () {
 
         this.ctx.moveTo(this.width / 2, 0);
         this.ctx.lineTo(this.width / 2, this.height);
+
         this.ctx.stroke();
         this.ctx.closePath();
+        this.car.drawCar();
 
 
-    }.bind(this), 20);
+    }.bind(this), 30);
 }
-function Car(canvas, x, y,width,height, vx, vy, src) {
-   
+function Car(canvas, x, y, width, height, vx, vy, src) {
+
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = y;
-    this.width=width;
-    this.height=height;
+    this.width = width;
+    this.height = height;
     this.vx = vx;
     this.vy = vy;
     this.src = src;
@@ -92,11 +95,12 @@ Car.prototype.setListeners = function () {
 }
 
 Car.prototype.drawCar = function () {
-   console.log("entra");
-   
+
+
     var carImg = new Image();
     carImg.src = this.src;
-    carImg.onload = function(){
-        this.ctx.drawImage(carImg,this.x,this.y, this.width, this.height)
-    }.bind(this)
+
+    this.ctx.drawImage(carImg, this.x, this.y, this.width, this.height)
+
+
 }
