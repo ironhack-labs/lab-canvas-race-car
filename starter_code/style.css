@@ -3,6 +3,10 @@ body {
   text-align: center;
 }
 
+#game {
+  border: 1px solid red;
+}
+
 .game-intro {
   float: left;
   padding: 0% 10%;
