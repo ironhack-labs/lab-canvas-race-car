@@ -36,3 +36,10 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#my-canvas {
+  width: 300px;
+  height: 450px;
+  border: 1px solid black;
+  background-color: #008000;
+}
