@@ -44,7 +44,7 @@ window.onload = function() {
   }
 
   Car.prototype.move=function(){
-    console.log(this.xCar+this.widthCar);
+    //console.log(this.xCar+this.widthCar);
 
     if(this.xCar<40){
       return this.xCar=40;
@@ -53,6 +53,7 @@ window.onload = function() {
     }
   }
 
+  
   function Driveway() {
     this.canvas = document.getElementById("driveway");
 
@@ -91,6 +92,9 @@ Driveway.prototype.start = function() {
     this.drawAll();
     this.car.move();
 
+
+    this.collision();
+
     this.counter++;
     console.log(this.obstacle)
     if(this.counter % 150 == 0) {
@@ -101,6 +105,14 @@ Driveway.prototype.start = function() {
   }.bind(this), 1000/this.fps);
 }
 
+
+Driveway.prototype.collision = function(){
+  if (this.xCar+this.heightCar>=this.xObstacle && this.xObstacle+this.widthObstacle>=this.xCar && this.yCar+this.heightCar>=this.yObstacle && this.yObstacle+this.heightObstacle>=this.yCar){
+    return true;
+    //return this.xCar=170;
+  }
+
+}
 
   Driveway.prototype.dashed=function(){
     //var offset=0;
@@ -170,6 +182,7 @@ Driveway.prototype.start = function() {
 
   Obstacles.prototype.draw=function(){
     this.ctx.fillRect(this.xObstacle,this.yObstacle,this.widthObstacle,this.heightObstacle);
+    this.ctx.fillStyle="maroon";
 
     }
   
