@@ -77,18 +77,40 @@ GameBoard.prototype.clear = function() {
 }
 
 function Car(canvasWidth, canvasHeight) {
+  this.KEY_LEFT = 37;
+  this.KEY_RIGHT = 39;
   this.img = new Image();
   this.img.src = "images/car.png";
+
+  this.canvasWidth = canvasWidth;
 
   this.width = this.img.width * .4;
   this.height = this.img.height * .4;
 
+  this.vel = 5;
+
   this.x = canvasWidth/2 - this.width/2;
   this.y = canvasHeight-this.height-30;
 
-  
+    this.setListeners();
 }
 
 Car.prototype.draw = function (ctx) {
   ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+}
+
+Car.prototype.setListeners = function () {
+  document.onkeydown = function (e) {
+    e.preventDefault();
+    
+    switch(e.keyCode) {
+      case this.KEY_LEFT:
+        if (this.x > 0) this.x -= this.vel;
+        break;
+      case this.KEY_RIGHT:
+        if (this.x < this.canvasWidth - this.width) this.x += this.vel;
+        break;
+    }
+    
+  }.bind(this);
 }
