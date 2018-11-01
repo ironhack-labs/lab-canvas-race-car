@@ -14,7 +14,7 @@ function Canvas(id) {
     this.vx = 5;
     this.vy = 5;
     this.car = new Car(this.canvas, 216, 620, 70, 160, this.vx, this.vy, "images/car.png");
-    this.obstacle=new Obstacles(this.canvas,this.x + 50,this.y+200,200,20);
+    this.obstacle = [new Obstacles(this.canvas, this.x + 50, this.y + 400, 200, 20), new Obstacles(this.canvas, this.x + 300, this.y + 100, 200, 40), new Obstacles(this.canvas, this.x + 50, this.y - 80, 150, 20)];
 }
 Canvas.prototype.drawBackground = function () {
 
@@ -46,7 +46,7 @@ Canvas.prototype.drawBackground = function () {
 
 Canvas.prototype.lineAnimation = function () {
     var offset = 0;
-    var idInterval=setInterval(function () {
+    var idInterval = setInterval(function () {
         this.drawBackground();
         this.car.drawCar();
         this.ctx.clearRect(this.width / 2 - 1, 0, 5, this.height);
@@ -68,8 +68,18 @@ Canvas.prototype.lineAnimation = function () {
 
         this.car.moveCar();
         this.car.drawCar();
-        this.obstacle.drawObstacle();
-        if(this.colision()){
+        this.obstacle[0].drawObstacle();
+        if (this.colision()) {
+            clearInterval(idInterval);
+            alert("¡¡HAS PERDIDO!!");
+        }
+        this.obstacle[1].drawObstacle();
+        if (this.colision()) {
+            clearInterval(idInterval);
+            alert("¡¡HAS PERDIDO!!");
+        }
+        this.obstacle[2].drawObstacle();
+        if (this.colision()) {
             clearInterval(idInterval);
             alert("¡¡HAS PERDIDO!!");
         }
@@ -118,43 +128,46 @@ Car.prototype.drawCar = function () {
 
 Car.prototype.moveCar = function () {
 
-    if (this.x + this.width >= this.canvas.width-50 ) {        
-       this.x=this.x-5;
+    if (this.x + this.width >= this.canvas.width - 50) {
+        this.x = this.x - 5;
     }
 
     if (this.x < 50) {
-       this.x=this.x+5;
+        this.x = this.x + 5;
     }
 }
 
 
 
-function Obstacles(canvas,x,y,width,height){
+function Obstacles(canvas, x, y, width, height) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
-    this.x=x;
-    this.y=y;
-    this.width=width;
-    this.height=height;
-    
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+
 }
 
 Obstacles.prototype.drawObstacle = function () {
     console.log(this.x);
     console.log(this.y);
+    if (this.y > 800) {
+        this.y = 0;
+    }
 
-    
     this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(this.x , this.y++, this.width, this.height);
+    this.ctx.fillRect(this.x, this.y++, this.width, this.height);
 }
 
 Canvas.prototype.colision = function () {
-    
-    if( this.car.x+this.car.width >= this.obstacle.x && this.obstacle.x+this.obstacle.width >= this.car.x &&  
-        this.car.y +this.car.height >= this.obstacle.height && this.obstacle.y+this.obstacle.height >= this.car.y ){
-        return true;
-       
-          
 
-    }
+    this.obstacle.forEach(function (item) {
+       
+        if (this.car.x + this.car.width >= item.x && item.x + item.width >= this.car.x &&
+            this.car.y + this.car.height >= item.height && item.y + item.height >= this.car.y) {
+            return true;
+        }
+    }.bind(this))
+
 }
