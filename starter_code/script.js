@@ -8,6 +8,9 @@ window.onload = function() {
     //Nuestro juego
     this.xCar = 210;
     this.yCar = 430;
+    this.intervalId;
+    this.xob1 = 100;
+    this.yob1 = 50;
     this.vLine = vLine;
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
@@ -16,7 +19,10 @@ window.onload = function() {
     this.img.src="images/car.png";
     this.key_rigth = 39;
     this.key_left = 37;
+    this.obstacles= [];
+    
 
+    
 
    }
 
@@ -43,17 +49,23 @@ window.onload = function() {
 
     CanvasLogic.prototype.start = function(){
 
-        setInterval(function(){ 
+        this.intervalId =
+      setInterval(function(){ 
         this.eraseScreen();
         this.draw();
         this.drawLine();
         this.drawCar();
         this.setListeners()
-        console.log(this.xCar);
-        console.log(this.xCar>30 && this.xCar<390);
         this.offsetCounter++;
-
-      }.bind(this), 1000/60);
+        this.colisions();
+        this.yob1++
+        this.obstacles.forEach(function(element){
+          element.draw(this.ctx);
+        }.bind(this))
+        if(this.offsetCounter %200 ==0){
+          this.obstacles.push(new Obstacle(Math.floor(Math.random()*250 ),Math.floor(Math.random()*250 )));
+        }
+      }.bind(this), 500/60);
     }
     
     
@@ -117,13 +129,39 @@ window.onload = function() {
     }
 
     CanvasLogic.prototype.eraseScreen = function(){
-
       this.ctx.clearRect(0,0,470,550);
-
     }
-  
-    var canvasGame = new CanvasLogic(0,0,5);
 
+    CanvasLogic.prototype.colisions = function(){
+      this.obstacles.forEach(function(element){
+        if( this.xCar+ 50 >= element.x && element.x+element.width >= this.xCar &&
+          this.yCar+100 >= element.y && element.y+ 30 >= this.yCar){
+              clearInterval(this.intervalId)
+          }
+        
+      }.bind(this))
+    }
+
+
+  
+
+  function Obstacle(x,width){
+
+    this.x=x;
+    this.y=-30;
+    this.height=30;
+    this.width=width;
+    this.color="red";
+
+
+  }
+
+  Obstacle.prototype.draw = function(ctx){
+    ctx.fillStyle = "brown";
+    ctx.fillRect(this.x, this.y++, this.width, this.height);
+    
+  }
+    var canvasGame = new CanvasLogic(0,0,5);
 
 
     function startGame() {
