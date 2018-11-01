@@ -1,8 +1,6 @@
 window.onload = function () {
 
-  var KEY_UP = 38;
   var KEY_RIGHT = 39;
-  var KEY_DOWN = 40;
   var KEY_LEFT = 37;
 
   document.getElementById("start-button").onclick = function () {
@@ -72,11 +70,13 @@ window.onload = function () {
       e.preventDefault();
       switch (e.keyCode) {
         case KEY_LEFT:
-          this.x -= this.vx;
+        if(this.x>75){this.x -= this.vx;}
+         else {this.x += this.vx}
           break;
         case KEY_RIGHT:
-          this.x += this.vx;
-          break;
+        if(this.x<305){this.x += this.vx;}
+        else {this.x -= this.vx}
+         break;
       }
     }.bind(this);
   }
@@ -85,6 +85,15 @@ window.onload = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  // Car.prototype.moveLimits = function() {
+  //   this.x += this.vx;
+    
+  //   if(this.x+50 + this.img >= this.x-160 || this.x-80 - this.img < 0) {
+  //     this.vx *=-1;
+  //   }
+    
+    
+  // }
 
 
   var canvas = document.getElementById("game");
@@ -100,9 +109,11 @@ window.onload = function () {
       road.draw();
       road.lines();
       car.draw();
-
-     
+      
       car.move();
+      // car.moveLimits();
+      
+      
     },1000/60)
   }
 };
