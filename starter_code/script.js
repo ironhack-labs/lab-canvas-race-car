@@ -17,6 +17,10 @@ function GameBoard(){
   this.width = this.canvas.width;
   this.car = new Car(this.width,this.height);
 
+  this.obstacles = [];
+
+  this.obstacles.push(new Obstacle(this.width));
+  
 
   this.render();
 }
@@ -34,15 +38,13 @@ GameBoard.prototype.drawBackground = function() {
   this.ctx.fillRect(40,0,10,this.height);
 
   this.ctx.fillRect(this.width-40,0,-10,this.height);
-
-  
 }
 
 GameBoard.prototype.render = function() {
   var yLine = -this.height;
+  var obstacleCounter = 0;
   setInterval(function() {
     
-    // Line 1
     this.clear();
     this.drawBackground();
 
@@ -50,11 +52,21 @@ GameBoard.prototype.render = function() {
     if(yLine === 0) yLine = -this.height;
     this.drawLines(yLine);
 
-    //this.ctx.drawImage(this.car.img, 0, 0);
-    this.car.draw(this.ctx);
+    obstacleCounter++;
+    if(obstacleCounter % 150 == 0) {
+      this.obstacles.push(new Obstacle(this.width));
+      if(this.obstacles.length > 7){
+        this.obstacles.shift();
+      }
+    }
     
-    
+    console.log(this.obstacles.length);
 
+    this.obstacles.forEach(function(obstacle) {
+      obstacle.draw(this.ctx);
+    }.bind(this));
+
+    this.car.draw(this.ctx);
   }.bind(this), 1000/60)
 }
 
@@ -66,10 +78,6 @@ GameBoard.prototype.drawLines = function(y) {
   this.ctx.moveTo(this.width/2, y);
   this.ctx.lineTo(this.width/2, this.height);
   this.ctx.stroke();
-  
-  
-
-  
 }
 
 GameBoard.prototype.clear = function() {
@@ -113,4 +121,16 @@ Car.prototype.setListeners = function () {
     }
     
   }.bind(this);
+}
+
+function Obstacle(widthCanvas) { 
+  this.x = Math.random() * (widthCanvas * .75 - widthCanvas * .2) + widthCanvas * .2;
+  this.y = 0;
+  this.width = 100;
+  this.height = 25;
+}
+
+Obstacle.prototype.draw = function (ctx) {
+  ctx.fillStyle = '#910000';
+  ctx.fillRect(this.x, this.y++, this.width, this.height);
 }
