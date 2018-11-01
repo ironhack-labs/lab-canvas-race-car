@@ -25,6 +25,11 @@ window.onload = function () {
     this.sideLineWidth = 16;
     this.carPosition= 175;
     this.carSpeed=10;
+    this.dashedLinePosition=0;
+    this.obstaclesPosition=0;
+    this.obstacleNumber= 6; //times 311, which is half the canvas height.
+    this.obstacleArray =[];
+    this.ourIntervalID = 0;
     // this.width = document.querySelector('#canv').getAttribute("width");
     // this.height
   }
@@ -45,13 +50,14 @@ window.onload = function () {
     this.ctx.fillRect(400 - this.grassWidth - 2 * this.sideLineWidth, 0, this.sideLineWidth, 622);
     this.drawDashedLine();
     this.drawCar();
+    this.generateObstacles();
   }
 
   Canvas.prototype.drawDashedLine = function () {
     //MidDashedLine
     this.ctx.strokeStyle = "white";
     this.ctx.setLineDash([35, 25]);
-    this.ctx.lineDashOffset = 65;
+    this.ctx.lineDashOffset = this.dashedLinePosition;
     this.ctx.beginPath();
     this.ctx.moveTo(200, 0);
     this.ctx.lineTo(200, 622);
@@ -64,7 +70,6 @@ window.onload = function () {
     carImg.src = "./images/car.png";
     carImg.onload = function() {
       this.ctx.drawImage(carImg, this.carPosition, 500, 50, 100);
-
     }.bind(this)
   }
 
@@ -73,14 +78,22 @@ window.onload = function () {
   }
 
   Canvas.prototype.move = function(){
-    // this.carPosition += 1;
+
+    this.dashedLinePosition -= this.fps/30;
+    this.obstaclesPosition += this.fps/30;
+
+    if (this.obstaclesPosition > (311 + this.obstacleNumber*311)) { //Regenerate the roll.
+      this.dashedLinePosition = 0;
+      this.obstaclesPosition = 0;
+    }
   }
 
   Canvas.prototype.startRendering = function() {
   
-    setInterval(function() {
+    this.ourIntervalID = setInterval(function() {
       this.clear();
       this.move();
+      this.detectCollisions();
       this.draw();
       
       // this.counter++;
@@ -94,28 +107,72 @@ window.onload = function () {
   Canvas.prototype.setListeners = function() {
     document.onkeydown = function(e) {
       e.preventDefault();
-      var KEY_UP = 38;
+      // var KEY_UP = 38;
       var KEY_RIGHT = 39;
       var KEY_DOWN = 40;
       var KEY_LEFT = 37;
       switch(e.keyCode) {
         case KEY_LEFT: 
-          this.carPosition -= this.carSpeed;
+          if(this.carPosition > (this.grassWidth + 2*this.sideLineWidth)) {this.carPosition -= this.carSpeed};
           break; 
         // case KEY_UP: 
         //   this.y -= this.vy;
         //   break; 
         case KEY_RIGHT: 
-          this.carPosition += this.carSpeed;
+          if(this.carPosition+50 < (400-(this.grassWidth + 2*this.sideLineWidth))){this.carPosition += this.carSpeed};
           break; 
-        // case KEY_DOWN: 
-        //   this.y += this.vy;
-        //   break; 
+        case KEY_DOWN: 
+          clearInterval(this.ourIntervalID);
+          break; 
       }
     }.bind(this);
   }
 
+  Canvas.prototype.generateObstacles= function(){
+    
+    this.obstacleArray=[
+      {x:180,y:this.obstaclesPosition,x1:150,y1:30},
+      {x:80,y:this.obstaclesPosition-311,x1:150,y1:30},
+      {x:160,y:this.obstaclesPosition-622,x1:150,y1:30},
+      {x:110,y:this.obstaclesPosition-933,x1:150,y1:30},
+      {x:200,y:this.obstaclesPosition-1244,x1:150,y1:30},
+      {x:100,y:this.obstaclesPosition-1555,x1:150,y1:30},
+    ]
+
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(180, this.obstaclesPosition , 150, 30);
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(80, this.obstaclesPosition -311, 150, 30);
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(160, this.obstaclesPosition -622, 150, 30);
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(110, this.obstaclesPosition -933, 150, 30);
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(200, this.obstaclesPosition -1244, 150, 30);
+    this.ctx.fillStyle = "#fabada";
+    this.ctx.fillRect(100, this.obstaclesPosition -1555, 150, 30);
+  }
+
+  Canvas.prototype.detectCollisions = function(){
+    
+    for (i=0; i<this.obstacleArray.length; i++){
+      if( (this.carPosition < (this.obstacleArray[i][0] + this.obstacleArray[i][2])) &&
+        (this.carPosition + 50 > this.obstacleArray[i][0]) &&
+        (500 < (this.obstacleArray[i][1] + this.obstacleArray[i][3])) &&
+        (500 +100 > this.obstacleArray[i][1]) 
+      ) {
+        clearInterval(this.ourIntervalID);
+      }
+    
+    }
+    
+  }
+
+
   var canvas = new Canvas;
   canvas.draw()
 }
+
+
+
 
