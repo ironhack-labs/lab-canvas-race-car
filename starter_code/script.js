@@ -40,4 +40,3 @@ window.onload = function() {
   street.drawLimit();
   street.moveStreet();
 };
-
