@@ -17,10 +17,32 @@ window.onload = function () {
     this.ctx = this.canvas.getContext("2d");
     this.x = 0;
     this.y = 0;
+    this
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.offset=0;
   }
+  Road.prototype.obstacles = function(){
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillRect((Math.random()*(this.x+305-this.x+75)-this.x+75), this.y+20, this.x+305, this.y+20);
+  }
+
+  Road.prototype.moveObstacles = function() {
+    this.y += this.vx;
+    // //this.y += this.vy;
+    
+    // if(this.x + this.radius >= this.canvas.width || this.x - this.radius < 0) {
+    //   this.vx *= -1;
+    // }
+    
+    // if(this.y + this.radius >= this.canvas.height || this.y - this.radius < 0) {
+    //   this.vy *= -1;
+    // }
+  }
+
+
+
+
 
   Road.prototype.draw = function () {
     this.ctx.fillStyle = 'green';
@@ -84,6 +106,8 @@ window.onload = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  
+
 
 
   var canvas = document.getElementById("game");
@@ -96,12 +120,14 @@ window.onload = function () {
   function startGame() {
       var counter=0;
 
-
       setInterval(function() {
       car.clear();
+      
       road.draw();
+      road.obstacles();
       road.lines();
       car.draw();
+     
       road.offset= -counter%75;
       car.move();
       counter++;
