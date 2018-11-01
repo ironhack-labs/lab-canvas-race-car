@@ -12,14 +12,23 @@ window.onload = function () {
         this.obstacles = [];
         this.car = new Car(this.canvas);
         this.road = new Road(this.canvas);
+        this.counter = 0;
+        
     }
     Canvas.prototype.draw = function () {
         this.road.draw();
     }
 
+    Canvas.prototype.start = function(){
+        setInterval(function(){
+            this.draw();
+            this.road.lineOffset = (-this.counter % 38); //line longitud +  space length
+            this.counter++;
+        }.bind(this),1000/this.fps); // Interval 60 times per second
+    }
+
     function startGame() {
-        // Set interval 
-        myCanvas.draw();
+        myCanvas.start();
     }
 
     function Road(canvas) {
@@ -29,7 +38,8 @@ window.onload = function () {
         this.greyMarginWidth = 10;
         this.whiteLineWidth = 10;
         this.roadWidth = 270;
-        this.centerLineWidth = 3;
+        this.centerLineWidth = 5;
+        this.lineOffset = 0;
         this.greenColor = "rgb(8,113,0)";
         this.whiteColor = "rgb(255,255,255)";
         this.greyColor = "rgb(109,109,109)";
@@ -49,14 +59,22 @@ window.onload = function () {
             0, this.roadWidth, this.canvas.height);
         //Line white
         this.ctx.fillStyle = this.whiteColor;
-
-
         //1st white line
         this.ctx.fillRect(this.greenLineWidth + this.greyMarginWidth, 0, this.whiteLineWidth,
             this.canvas.height);
         //2nd white line
         this.ctx.fillRect(this.greenLineWidth+this.roadWidth-
             this.whiteLineWidth-this.greyMarginWidth,0,this.whiteLineWidth,this.canvas.height)
+        //DrawCenterLine;    
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = this.whiteColor;
+        this.ctx.lineWidth = this.centerLineWidth;
+        this.ctx.lineDashOffset = this.lineOffset;
+        this.ctx.setLineDash([15, 23]);
+        this.ctx.moveTo(this.greenLineWidth+(this.roadWidth/2), 0);
+        this.ctx.lineTo(this.greenLineWidth+(this.roadWidth/2),this.canvas.height);
+        this.ctx.stroke();
+        this.ctx.closePath();
     }
 
     function Car(canvas) {
@@ -68,7 +86,6 @@ window.onload = function () {
     Car.prototype.draw = function () {
 
     }
-
 
     // Instacniamos nuevo objeto del tipo Canvas
     var myCanvas = new Canvas("#canvas-game");
