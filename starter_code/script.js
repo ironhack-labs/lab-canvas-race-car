@@ -19,12 +19,14 @@ window.onload = function() {
   function Car(canvas, vx) {
     this.canvas = canvas;
     this.ctx = canvas.ctx;
+    this.originalVx = vx;
     this.vx = vx;
     this.x = 175;
     this.y = 450;
     this.imgCar = new Image();
     this.imgCar.src =
       "https://github.com/YaredMyers/lab-canvas-race-car/blob/master/starter_code/images/car.png?raw=true";
+
   }
 
   Car.prototype.draw = function() {
@@ -40,10 +42,13 @@ window.onload = function() {
       e.preventDefault();
       switch (e.keyCode) {
         case KEY_LEFT:
+        if(this.x >= 0){
           this.x -= this.vx;
+        }
           break;
         case KEY_RIGHT:
-          this.x += this.vx;
+        if(this.x <= 350){
+      this.x += this.vx;}
           break;
       }
     }.bind(this);
@@ -90,6 +95,7 @@ window.onload = function() {
   this.setInterval(function(){
     road.draw();
     car.draw();
+    //car.move();
   }.bind(this),1000/canvas.fps)
   car.setListeners();
 
