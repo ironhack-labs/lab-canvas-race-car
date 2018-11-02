@@ -163,7 +163,7 @@ Obstacles.prototype.drawObstacle = function () {
 Canvas.prototype.colision = function () {
 
     this.obstacle.forEach(function (item) {
-       
+        debugger
         if (this.car.x + this.car.width >= item.x && item.x + item.width >= this.car.x &&
             this.car.y + this.car.height >= item.height && item.y + item.height >= this.car.y) {
             return true;
