@@ -136,7 +136,9 @@ window.onload = function() {
       this.obstacles.forEach(function(element){
         if( this.xCar+ 50 >= element.x && element.x+element.width >= this.xCar &&
           this.yCar+100 >= element.y && element.y+ 30 >= this.yCar){
-              clearInterval(this.intervalId)
+              clearInterval(this.intervalId);
+              this.obstacles = [];
+              this.offsetCounter = 0;
           }
         
       }.bind(this))
