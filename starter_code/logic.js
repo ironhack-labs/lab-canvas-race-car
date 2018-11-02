@@ -68,23 +68,14 @@ Canvas.prototype.lineAnimation = function () {
 
         this.car.moveCar();
         this.car.drawCar();
-        this.obstacle[0].drawObstacle();
-        if (this.colision()) {
-            clearInterval(idInterval);
-            alert("¡¡HAS PERDIDO!!");
-        }
-        this.obstacle[1].drawObstacle();
-        if (this.colision()) {
-            clearInterval(idInterval);
-            alert("¡¡HAS PERDIDO!!");
-        }
-        this.obstacle[2].drawObstacle();
-        if (this.colision()) {
-            clearInterval(idInterval);
-            alert("¡¡HAS PERDIDO!!");
-        }
+        this.obstacle.forEach(function (item) {
+            item.drawObstacle();
 
-
+        }.bind(this))
+        if (this.colision()) {
+            clearInterval(idInterval);
+            alert("¡¡HAS PERDIDO!!");
+        }
 
 
     }.bind(this), 30);
@@ -150,8 +141,7 @@ function Obstacles(canvas, x, y, width, height) {
 }
 
 Obstacles.prototype.drawObstacle = function () {
-    console.log(this.x);
-    console.log(this.y);
+
     if (this.y > 800) {
         this.y = 0;
     }
@@ -163,11 +153,12 @@ Obstacles.prototype.drawObstacle = function () {
 Canvas.prototype.colision = function () {
 
     this.obstacle.forEach(function (item) {
-        debugger
         if (this.car.x + this.car.width >= item.x && item.x + item.width >= this.car.x &&
             this.car.y + this.car.height >= item.height && item.y + item.height >= this.car.y) {
+
             return true;
         }
+
     }.bind(this))
 
 }
