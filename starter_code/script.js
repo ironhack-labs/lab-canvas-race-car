@@ -103,22 +103,32 @@ var KEY_LEFT = 37;
     }.bind(this);
   }
 
-  Road.prototype.obstacle1 =function (){
+  Road.prototype.obstacles =function (){
     this.ctx.fillStyle = 'red'
     this.ctx.fillRect(this.obstacleX, this.obstacleY, this.obstacleW, this.obstacleH);
-    this.ctx.fillRect(this.obstacleX+125, this.obstacleY-350, this.obstacleW-40, this.obstacleH);
-    this.ctx.fillRect(this.obstacleX, this.obstacleY-700, this.obstacleW+10, this.obstacleH);
+    //this.ctx.fillRect(this.obstacleX+125, this.obstacleY-350, this.obstacleW-40, this.obstacleH);
+    //this.ctx.fillRect(this.obstacleX, this.obstacleY-700, this.obstacleW+10, this.obstacleH);
     
   }
 
-  Road.prototype.moveObstacle1= function(){
-    
+  Road.prototype.moveObstacles= function(){
+    if(this.obstacleY>600){
+     
+     this.obstacleY=-20;
+     this.obstacleW=(Math.random()*150)+40;
+     this.obstacleX=(Math.random()*80)+40;
+    }
     this.obstacleY+=this.vyObstacle;
       }
     
+  Road.prototype.collision =function(){
+
+    if(this.carX+50>=this.obstacleX && this.obstacleX +this.obstacleW>=this.carX && this.carY+100>=this.obstacleY>=this.carY){
+      return true;
+    }
+
+  }    
   
-
-
     function startGame(road) {
       setInterval(function(){
         road.clear();
@@ -129,8 +139,13 @@ var KEY_LEFT = 37;
         road.white();
         road.line();
         road.car();
-        road.obstacle1();
-        road.moveObstacle1();
+        road.obstacles();
+        road.moveObstacles();
+        if (road.collision()){
+          clearInterval(id);
+          alert ("Game Over");
+        }
+        
 
       }.bind(this), 1000/this.fps);
     }
