@@ -3,7 +3,9 @@ var canvas = document.getElementById("canvas")
 var ctx  = canvas.getContext('2d')
 
 // variables
-
+var images = {
+  car: "./images/car.png"
+}
 
 // classes
 function Board(){
@@ -33,8 +35,22 @@ function Board(){
   }
 }
 
+function Car(){
+  this.x = canvas.width / 2 - 40
+  this.y = canvas.height / 2
+  this.width = 79
+  this.height = 159
+  this.image = new Image()
+  this.image.src = images.car
+
+  this.draw = function(){
+    ctx.drawImage(this.image, this.x, this.y,this.width,this.height)
+  }
+}
+
 // instances
 var board = new Board()
+var car = new Car()
 
 // main functions
 
@@ -49,5 +65,6 @@ window.onload = function() {
 
   function startGame() {
     board.draw()
+    car.draw()
   }
 };
