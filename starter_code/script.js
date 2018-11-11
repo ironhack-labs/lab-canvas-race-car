@@ -44,6 +44,10 @@ function Board(){
     ctx.fillStyle = 'white'
     ctx.fillRect(197, this.y, 6, 40)
   }
+  this.drawScore = function(){
+    ctx.font = "bold 24px Avenir"
+    ctx.fillText("Score: " + Math.floor(frames/60),60,50)
+  }
 }
 
 function Car(){
@@ -55,9 +59,21 @@ function Car(){
   this.image.src = images.car
 
   this.draw = function(){
+    this.boundaries()
+    ctx.drawImage(this.image, this.x, this.y,this.width,this.height)
+  }
+
+  this.boundaries = function(){
     if(this.x < 30) this.x = 30
     if(this.x > 290) this.x = 290
-    ctx.drawImage(this.image, this.x, this.y,this.width,this.height)
+  }
+
+  this.isTouching = function(item){
+    // tocando de frente -> this. y < item.y
+    return (this.x < item.x + item.width) &&
+      (this.x + this.width > item.x) &&
+      (this.y < item.y + item.height) &&
+      (this.y + this.height > item.y);
   }
 }
 
@@ -87,6 +103,20 @@ function update(){
   drawRoad()
   drawObstacles()
   car.draw()
+  board.drawScore()
+  checkCollition()
+}
+
+function gameOver(){
+  clearInterval(interval)
+  interval = null
+  ctx.fillStyle = "red"
+  ctx.font = "bold 40px Arial"
+  ctx.fillText("GAME OVER",80,200)
+  ctx.fillStyle = "black"
+  ctx.font = "bold 40px Arial"
+  ctx.fillText("Final score: " + Math.floor(frames/60),60,250)
+  // ctx.fillText("Press 'enter' to restart",50,350)
 }
 
 // aux functions
@@ -118,6 +148,14 @@ function drawObstacles(){
   obstacles.forEach(function(obstacle){
     obstacle.draw()
   })
+}
+
+function checkCollition(){
+  for(var obstacle of obstacles){
+    if(car.isTouching(obstacle)){
+      gameOver()
+    }
+  }
 }
 
 // listeners
