@@ -1,10 +1,17 @@
 
 var canvas = document.getElementById('c')
 var ctx = canvas.getContext('2d')
+var interval = 0
 var frames = 0;
-var intervalo;
 var road = []
+
 var obstacles = []
+var music = { 
+    onRoad: './sounds/dame-tu-cocona-la-sarita.mp3',
+    Lose:'./sounds/sad-song.mp3'
+}
+
+audio = new Audio();
 
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
@@ -12,7 +19,14 @@ window.onload = function() {
   };
 
   function startGame() {
-    interval = setInterval(update, 1000/60)  
+    frames = 0
+    road = []
+    obstacles = []
+    audio.src = music.onRoad
+    audio.loop = true
+    audio.play()
+    if(!interval) 
+      interval = setInterval(update, 1000/500)   
   }
 
 
@@ -33,33 +47,42 @@ window.onload = function() {
         ctx.fillStyle = 'white'
         ctx.fillRect(canvas.width/2 -10, this.y, 10, 40)
     }
+    this.score = function (){
+      ctx.fillStyle = 'black'
+      ctx.font = "bold 24px Avenir"
+      ctx.fillText("Score: " + Math.floor(frames/60),canvas.width/2-45,50)
 
+    }
 
   }
 
   function car(){
     this.x = canvas.width/2 - 29
+    this.y = canvas.height - 120
     this.draw = function () {
       var img = new Image()
       img.src = "../starter_code/images/car.png"
-      ctx.drawImage(img, this.x , canvas.height - 120, 50 ,80)
+      ctx.drawImage(img, this.x ,this.y , 50 ,80)
     }
 
     this.isTouch = function (item){
          return ((this.x < item.x + item.width) && 
-            (this.x + this.width > item.x) && 
+            (this.x > item.x) && 
             (this.y<item.y + item.height) && 
-            (this.y + this.height > item.y) )
+            (this.y > item.y) )
     }
     
   }
 
   function obstacle(randomX,randomW ){
+    this.x = randomX
     this.y = -40
+    this.width = randomW
+    this.height = 30
     this.draw = function (){
       this.y++
       ctx.fillStyle = 'red'
-      ctx.fillRect(randomX, this.y, randomW, 30)
+      ctx.fillRect(this.x, this.y, this.width, this.height)
     }
     
 
@@ -87,8 +110,9 @@ window.onload = function() {
          w = canvas.width - 70 - x
       obstacles.push(new obstacle(x,w))
     }
-    if(obstacles[0].y > canvas.height + 200)
-        obstacles.shift()
+    if(obstacles.length>0)
+      if(obstacles[0].y > canvas.height + 200)
+          obstacles.shift()
         
   }
 
@@ -102,20 +126,51 @@ window.onload = function() {
   var car = new car()
 
   function collition(){
- 
+    
     for(var i of obstacles){
       if(car.isTouch(i))
-       { console.log('hola') 
-       gameOver()  }
+       gameOver()  
     }
   }
 
   function gameOver(){
     clearInterval(interval)
     interval = null
+    delete board
+    delete car
+    audio.src= music.Lose
+    audio.play()
     ctx.fillStyle = "black"
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "red"
     ctx.font = " bold 80px Arial"
-    ctx.fillText("GAME OVER", 300,300)
+    ctx.fillText("GAME OVER!", 80,300)
+    ctx.fillStyle = "white"
+    ctx.font = " bold 40px Arial"
+    ctx.fillText("Your final score: "+ Math.floor(frames/60), 160,400)
+    ctx.font = " bold 20px Arial"
+    
+    
+    setInterval(function(){
+      ctx.fillStyle = "black"
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+        
+          ctx.fillStyle = "red"
+          ctx.font = " bold 90px Arial"
+          ctx.fillText("GAME OVER!", 50,150)
+          ctx.font = " bold 110px Arial"
+          ctx.fillText("GAME OVER!", -80,250)
+          ctx.font = " bold 140px Arial"
+          ctx.fillText("GAME OVER!", -300,400)
+          ctx.font = " bold 160px Arial"
+          ctx.fillText("GAME OVER!", -400,550)
+          ctx.fillStyle = "white"
+          ctx.font = " bold 180px Arial"
+          ctx.fillText("OVER!", 50,350)
+          mls=0
+        
+   
+    },30000/10)
   }
 
 
@@ -128,6 +183,7 @@ window.onload = function() {
     drawRoad()
     car.draw()
     drawObstacles()
+    board.score()
     collition()
   } 
 
