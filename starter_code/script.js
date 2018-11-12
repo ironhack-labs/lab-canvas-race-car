@@ -113,14 +113,6 @@ function generateRoad(){
   }
 }
 
-function checkCollition(){
-  for(var obstacle of obstacle){
-    if(car.isTouching(obstacle)){
-      gameOver()
-    }
-  }
-}
-
 function drawRoad(){
   generateRoad()
   road.forEach(board => {
@@ -145,6 +137,14 @@ function drawObstacles(){
   })
 }
 
+function checkCollition(){
+  for(var obstacle of obstacle){
+    if(car.isTouching(obstacle)){
+      gameOver()
+    }
+  }
+}
+
 //Listeners
 addEventListener('keydown', function(e){
   switch(e.keyCode){
@@ -163,9 +163,16 @@ window.onload = function() {
   };
 
   function startGame() {
+    ctx.clearRect(0,0,canvas.width, canvas.height)
+    frames++
     board.draw()
     car.draw()
     if(interval) interval= setInterval(update, 100/60)
+    drawRoad()
+    drawObstacles()
+    car.draw()
+    board.drawScore()
+    checkCollition()
   }
 
   function gameOver (){
