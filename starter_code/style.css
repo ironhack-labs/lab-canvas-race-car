@@ -2,6 +2,9 @@ body {
   padding: 0;
   text-align: center;
 }
+.container{
+  display: flex;
+}
 
 .game-intro {
   float: left;
@@ -35,4 +38,8 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+
+canvas{
+  border: 2px solid black;
 }
