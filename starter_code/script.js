@@ -3,6 +3,7 @@ window.onload = function () {
     startGame();
   };
   var myObstacles = [];
+  var myLines = [];
 
   // var icon = new Image();
   // icon.src = '/starter_code/images/car.png';
@@ -15,7 +16,7 @@ window.onload = function () {
     myGameArea.start();
     background = new Background;
     // player = new Player(220, 510, 35, 75);    
-    player = new Player(220, 510, 60, 60);   
+    player = new Player(220, 510, 50, 50);   
     over = new Over(); 
   }
 
@@ -40,12 +41,9 @@ window.onload = function () {
       this.points = (Math.floor(this.frames / 5))
       this.context.font = '18px monospace';
       this.context.fillStyle = 'black';
-      this.context.fillText('Score: ' + points, 350, 50);
+      this.context.fillText('Score: ' + this.points, 350, 50);
     },
-
   }
-
- 
 
   function Player(x, y, width, height) {
     this.speedX = 0;
@@ -57,7 +55,6 @@ window.onload = function () {
     this.update = function () {
       ctx = myGameArea.context;
       ctx.drawImage(icon, this.x, this.y, this.width, this.height);
-      // ctx.drawImage(obstacle, 405, 9, 50, 50);
     }
     this.newPos = function () {
       this.x += this.speedX;
@@ -92,11 +89,8 @@ window.onload = function () {
     this.height = 50;
     this.width = 50;
     this.update = function () {
-      // console.log('UPDATE OBSTACLE!');
       ctx = myGameArea.context;
-      // ctx.fillRect(this.x, this.y, 50, 50);
       ctx.drawImage(obstacle, this.x, this.y, this.width, this.height);
-      // ctx.drawImage(obstacle, 20, 20, 50, 50);
     }
     this.newPos = function () {
       this.x += this.speedX;
@@ -118,7 +112,6 @@ window.onload = function () {
 
   function Background() {
     this.update = function () {
-      // console.log('UPDATE OBSTACLE!');
       ctx = myGameArea.context;
       ctx.fillStyle = 'green';
         ctx.fillRect(0, 0, 50, 600);
@@ -130,11 +123,15 @@ window.onload = function () {
         ctx.fillRect(65, 0, 10, 600);
         ctx.fillStyle = 'white';
         ctx.fillRect(405, 0, 10, 600);
+    }
+  }
 
-        for (let i = 0; i < myGameArea.canvas.height; i += 70) {
-          ctx.fillStyle = 'white';
-          ctx.fillRect(230, i, 10, 50);
-        }
+  function Line(y){
+    this.y = y;
+    this.update = () => {
+      ctx = myGameArea.context;
+      ctx.fillStyle = 'white';
+      ctx.fillRect(230, this.y, 10, 50);
     }
   }
 
@@ -162,6 +159,15 @@ window.onload = function () {
     myGameArea.clear();
     background.update();
     myGameArea.frames += 1;
+
+    if (myGameArea.frames % 90 === 0) {
+      myLines.push(new Line(-30));
+    }
+    for (let i = 0; i < myLines.length; i++) {
+      myLines[i].y++;
+      myLines[i].update();
+    }
+
     if (myGameArea.frames % 100 === 0) {
       var x = Math.floor(Math.random() * (myGameArea.canvas.width));
       myObstacles.push(new Obstacle(x,0));
