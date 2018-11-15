@@ -1,9 +1,47 @@
 window.onload = function() {
+  var gameArea = {
+    canvas: document.createElement("canvas"),
+    start: function() {
+      (this.canvas.width = 500),
+        (this.canvas.height = 500),
+        (this.context = this.canvas.getContext("2d"));
+      document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+      this.interval = setInterval(updateGameArea, 20);
+    },
+    clear: function() {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+  };
+
+  function Component(width, height, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.update = function() {
+      ctx = myGameArea.context;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.drawImage(this.x, this.y, this.width, this.height);
+    };
+    this.newPos = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+    };
+  }
+
+  function updateGameArea() {
+    gameArea.clear();
+    car.update();
+  }
+
+  car = new Component(200, 300, 100, 200);
+
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   var positionXCar = 200;
   var positionYObstacle = 0;
-  var positionYObstacle2 = -300;
   var img = new Image();
 
   function startGame() {
@@ -12,7 +50,6 @@ window.onload = function() {
       ctx.drawImage(img, positionXCar, 300, 100, 200);
       ctx.fillStyle = "#551A8B";
       ctx.fillRect(0, positionYObstacle, 200, 60);
-      ctx.fillRect(300, positionYObstacle2, 200, 60);
     };
   }
 
@@ -35,40 +72,16 @@ window.onload = function() {
       intersect(
         { x: 0, y: positionYObstacle, width: 200, height: 60 },
         { x: positionXCar, y: 300, width: 100, height: 200 }
-      ) ||
-      intersect(
-        { x: 300, y: positionYObstacle2, width: 200, height: 60 },
-        { x: positionXCar, y: 300, width: 100, height: 200 }
       )
     ) {
       alert("Game over");
       positionYObstacle = 0;
     } else {
-      if (positionYObstacle === 500) {
-        positionYObstacle = -60;
-        positionYObstacle2++;
-        ctx.clearRect(0, 0, 500, 500);
-        ctx.drawImage(img, positionXCar, 300, 100, 200);
-        ctx.fillRect(0, positionYObstacle, 200, 60);
-        ctx.fillRect(300, positionYObstacle2, 200, 60);
-        window.requestAnimationFrame(updateCanvas);
-      } else if (positionYObstacle2 === 500) {
-        positionYObstacle2 = -60;
-        positionYObstacle++;
-        ctx.clearRect(0, 0, 500, 500);
-        ctx.drawImage(img, positionXCar, 300, 100, 200);
-        ctx.fillRect(0, positionYObstacle, 200, 60);
-        ctx.fillRect(300, positionYObstacle2, 200, 60);
-        window.requestAnimationFrame(updateCanvas);
-      } else {
-        positionYObstacle++;
-        positionYObstacle2++;
-        ctx.clearRect(0, 0, 500, 500);
-        ctx.drawImage(img, positionXCar, 300, 100, 200);
-        ctx.fillRect(0, positionYObstacle, 200, 60);
-        ctx.fillRect(300, positionYObstacle2, 200, 60);
-        window.requestAnimationFrame(updateCanvas);
-      }
+      positionYObstacle++;
+      ctx.clearRect(0, 0, 500, 500);
+      ctx.drawImage(img, positionXCar, 300, 100, 200);
+      ctx.fillRect(positionYObstacle, 0, 200, 60);
+      window.requestAnimationFrame(updateCanvas);
     }
   }
 
@@ -90,10 +103,10 @@ window.onload = function() {
       rect1bottom < rect2top
     );
   }
-};
 
-// function nextObstacle() {
-//   if (positionXObstacle === 300) {
-//     ctx.fillRect(positionXObstacle, 0, 200, 60);
-//   }
-// }
+  function nextObstacle() {
+    if (positionYObstacle === 300) {
+      ctx.fillRect(positionYObstacle, 0, 200, 60);
+    }
+  }
+};
