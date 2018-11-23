@@ -1,0 +1,12 @@
+var DRAW_OBST_INTERVAL = 1000 / 60;
+
+
+var KEY_RIGHT = 39;
+var KEY_LEFT = 37;
+
+var SPEED_MOVE = 5;
+var WALL_SPEED_MOVE = 1;
+var FRICTION = 0.9;
+
+var WALL_INTERVAL = 200;
+var COIN_INTERVAL = 50;
