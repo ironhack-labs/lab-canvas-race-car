@@ -1,33 +1,24 @@
 let interval, openingTrack;
 let restartFlag = false;
+let canvas = document.createElement("canvas");
 
 //Gameplay
-// let Game = function() {
-//   this.obstacles = [];
-//   this.frames = 0;
-//   this.canvas = document.createElement("canvas"),
-//   this.margen = 40;
-//   this.paintCanvas = function () {
-
-//   }
-// }
-
-let myGame = {
-  obstacles : [],
-  frames : 0,
-  canvas : document.createElement("canvas"),
-  margen : 40,
-  paintCanvas : function () {
+let Game = function(canvas) {
+  this.obstacles = [];
+  this.frames = 0;
+  this.score = 0;
+  this.canvas = canvas;
+  this.margen = 40;
+  this.paintCanvas = function () {
     let padding = 20;
     let lineWidth = 4;
     this.frames++;
     this.canvas.width = 400;
     this.canvas.height = 600;
     this.leftBoundary = this.margen;
-    this.rightBoundary = this.canvas.width- this.margen;
+    this.rightBoundary = this.canvas.width - this.margen;
     this.ctx = this.canvas.getContext("2d");
     // this.canvas.style = "float: left"
-    document.getElementById("game-board").appendChild(this.canvas);
     this.ctx.fillStyle = "#33AA88";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height); //Pasto
     this.ctx.fillStyle = "#888888";
@@ -39,34 +30,46 @@ let myGame = {
     this.ctx.clearRect(this.canvas.width - (this.margen + padding + lineWidth*2), 0, lineWidth*2, this.canvas.height);
     myCar.displayCar();
     this.obstacles.forEach(el => el.draw());
-  },
+    this.displayScore();
+  };
 
-  clearCanvas : function() {
+  this.clearCanvas = function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  },
+  };
 
-  checkGameOver : function()  {
+  this.checkGameOver = function()  {
     if (myCar.checkCollision() === true) {
       clearInterval(interval);
       openingTrack.setAttribute("src", "audio/lostLife.mp3");
       restartFlag = true;
     }
-  },
-  makeObstacle : function() {
+  };
+  this.makeObstacle = function() {
     if (this.frames % 70 !== 0) return; //Sal si no es divisible entre 200
-    let minGap = myCar.carWidth*1.50;
-    let maxGap = myCar.carWidth*2.90;
+    let minGap = myCar.carWidth*1.50; //Hard mode: 1.50
+    let maxGap = myCar.carWidth*2.90; //Hard mode: 2.90
     let minWidth = this.margen;
     let maxWidth = this.canvas.width - this.margen - maxGap;
     let randomGap = Math.floor(Math.random()*(maxGap - minGap)+1) + minGap;
     let randomWidth = Math.floor(Math.random()*(maxWidth - minWidth) + 1) + minWidth;
-    console.log("made obs", randomWidth, randomGap)
     
     obsLeft = new Obstacle(0, randomWidth, "#953735");
     obsRight = new Obstacle(randomWidth+randomGap, this.canvas.width-(randomWidth+randomGap), "#953735");
     this.obstacles.push(obsLeft);
     this.obstacles.push(obsRight);
-  }
+  };
+  this.clearObstacles = function() {
+    for (let i = 0; i < this.obstacles.length; i++) {
+      if (this.obstacles[i].y > this.canvas.height) {
+        this.obstacles.splice(i, 1);
+        this.score += 25; //Hard mode: 25
+      }
+    }
+  };
+  this.displayScore = function() {
+    this.ctx.font = "24px Arial"
+    this.ctx.fillStyle = "#FFFFFF"
+    this.ctx.fillText("Score: " + this.score, 80, 40)  };
 }
 
 //Constructor de jugador
@@ -82,8 +85,8 @@ function RaceCar() {
     let car = this;
     this.top = this.y;
     this.bottom = this.y + this.carHeight;
-    this.left = this.x;
-    this.right = this.x + this.carWidth;
+    this.left = this.x + 2; //Holgura UX
+    this.right = this.x + this.carWidth - 2; //Holgura UX
     if (this.left > myGame.leftBoundary && this.right < myGame.rightBoundary) {
       this.x += this.xSpeed;
     }
@@ -134,7 +137,7 @@ function Obstacle(x, width, color) {
   this.width = width;
   this.height = 10;
   this.draw = function() {
-    this.y += 7;
+    this.y += 7; //Hard mode: 7
     this.left = this.x;
     this.right = this.x + this.width;
     this.top = this.y;
@@ -144,9 +147,6 @@ function Obstacle(x, width, color) {
   }
 }
 
-//Instanciar clase
-let myCar = new RaceCar();
-
 //Iniciar juego
 function startGame() {
   myGame.paintCanvas();
@@ -155,9 +155,10 @@ function startGame() {
 //Actualizar: borrar y volver a pintar todo
 function updateGame() {
   myGame.checkGameOver();
-  myGame.makeObstacle()
+  myGame.makeObstacle();
   myGame.clearCanvas();
   myGame.paintCanvas();
+  myGame.clearObstacles();
 }
 
 function randomMusic() {
@@ -187,11 +188,14 @@ window.onload = function() {
   }
 
   document.getElementById("start-button").onclick = function() {
-    //myGame = new Game();
+    if (!restartFlag) document.getElementById("game-board").appendChild(canvas);
+    myGame = new Game(canvas);
+    myCar = new RaceCar();
     startGame();
     openingTrack.setAttribute("src", randomMusic());
     openingTrack.play();
     interval = setInterval(updateGame, 20);
+    restartFlag = true;
   }
 
   document.onkeydown = function(e) {
