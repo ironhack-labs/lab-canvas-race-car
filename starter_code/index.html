@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
+  <style>
+    canvas {
+      background-color: grey;
+    }
+  </style>
 </head>
 <body>
   <div class="game-intro">
@@ -19,7 +21,10 @@
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+    <canvas id="my-canvas" width="600" height="600">
+      This brower does not support canvas!
+    </canvas>
   </div>
 </body>
+<script type="text/javascript" src="../starter_code/script.js"></script>
 </html>
