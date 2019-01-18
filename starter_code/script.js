@@ -4,18 +4,14 @@ const carSize = 158;
 let x = 260;
 let y = 400;
 let index = 2;
+let arrayObstacle = [];
 
 
-function rectangle (x, y, wh, hh) {
+function rectangle(x, y, wh, hh) {
   ctx.beginPath();
   ctx.rect(x, y, wh, hh);
   ctx.fill();
   ctx.closePath();
-}
-
-function obstacle(x, y) {
-  ctx.fillStyle = "#890000";
-  rectangle(x, y, 150, 30);
 }
 
 function random() {
@@ -25,14 +21,14 @@ function random() {
 function pickObstacle() {
   switch (random()) {
     case 0:
-    obstacle(90, 0);
-    break;
+      arrayObstacle.push(new Obstacle(90, 0));
+      break;
     case 1:
-    obstacle(220, 0);
-    break;
+      arrayObstacle.push(new Obstacle(220, 0));
+      break;
     case 2:
-    obstacle(350, 0);
-    break;
+      arrayObstacle.push(new Obstacle(350, 0));
+      break;
   }
 }
 
@@ -59,18 +55,28 @@ function road() {
 function drawCar() {
   const img = new Image();
   let imgScale = 158 / 319;
-  img.onload = function() {
+  img.onload = function () {
     ctx.drawImage(img, x, y, 150 * imgScale, 150);
   };
   img.src = "../starter_code/images/car.png"
 }
 
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
+function obstacle(x, y) {
+  ctx.fillStyle = "#890000";
+  rectangle(x, y, 150, 30);
+}
+
+function Obstacle(x) {
+  this.x = x
+  this.y = 0;
+}
+
+window.onload = function () {
+  document.getElementById("start-button").onclick = function () {
     startGame();
   };
 
-  document.onkeydown = function(e) {
+  document.onkeydown = function (e) {
     switch (e.keyCode) {
       case 37:
         move("left");
@@ -88,15 +94,15 @@ window.onload = function() {
       car();
     }
   }
-   
-   function moveRight() {
+
+  function moveRight() {
     if (index !== 3) {
       index += 1;
       x += carSize;
-      car();
+      drawCar();
     }
   }
-  
+
   function move(direction) {
     switch (direction) {
       case "left":
@@ -106,19 +112,32 @@ window.onload = function() {
         moveRight();
         break;
     }
-   }
+  }
 
   function startGame() {
     road();
-    car();
-    obstacle();
+    // car();
+    // obstacle(220, 0);
+    // pickObstacle();
+    setInterval(function () {
+      pickObstacle();
+    }, 2000);
+
+    setInterval(function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      road();
+      drawCar();
+      arrayObstacle.forEach(element => {
+        console.log(element);
+        element.y += 1;
+        obstacle(element.x, element.y);
+      });
+    }, 10);
   }
 
-  function car() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    road();
-    pickObstacle();
-    drawCar();
-  }
 };
-
+    // function car() {
+    //   road();
+    //   pickObstacle();
+    //   drawCar();
+    // }
