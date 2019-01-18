@@ -1,4 +1,3 @@
-var myObstacles = [];
 var myGameArea = {
   canvas: document.createElement("canvas"),
   start: function() {
@@ -27,7 +26,11 @@ var myGameArea = {
   },
   clear: function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  }
+  },
+  stop: function() {
+    clearInterval(this.interval);
+  },
+  frames: 0
 };
 
 class Component {
@@ -57,12 +60,61 @@ class Component {
   newPosition() {
     this.x += this.speedX;
   }
+  crashWith(obstacle) {
+    if((this.y + this.height < obstacle.y) ||
+      (this.y > obstacle.y + obstacle.height) ||
+      (this.x + this.width < obstacle.x) ||
+      (this.x > obstacle.x + obstacle.width))
+         {return false;}
+    else {return true;}
+  }
+}
+
+class Obstacle extends Component {
+  constructor(width, height, x, y, color){
+    super(width, height, x, y);
+    this.color = "red"
+  }
+  update(){
+    this.ctx = myGameArea.ctx;
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+}
+
+var myObstacles = [];
+function addObstacle(){
+  minWidth = 20;
+  maxWidth = 200;
+  width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
+  minGap = 50;
+  maxGap = 200;
+  gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+  myObstacles.push(new Obstacle (width, 15, 0, 0));
+  myObstacles.push(new Obstacle (myGameArea.canvas.width-width-gap, 15, width+gap, 0));
 }
 
 function updateGameArea() {
   myGameArea.clear();
   myGameArea.start();
   player.update();
+  myGameArea.frames ++;
+  if (myGameArea.frames % 12000 === 0){
+    addObstacle();
+  }
+  for (i = 0; i < myObstacles.length; i += 1) {
+    myObstacles[i].y += 0.01;
+    myObstacles[i].update();
+  }
+  var crashed = myObstacles.some(function(obstacle){
+    return player.crashWith(obstacle);
+  })
+  if (crashed) {
+    console.log("crahsed")
+    myGameArea.stop();
+    console.log('game gestoppt')
+  }
 }
 
 var player;
@@ -71,27 +123,24 @@ imgCar.src = "images/car.png";
 
 function startGame() {
   myGameArea.start();
-  player = new Component(30, (30 * imgCar.height) / imgCar.width, 185, 610);
 }
 
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
+    player = new Component(30, (30 * imgCar.height) / imgCar.width, 185, 610);
     startGame();
   };
   document.onkeydown = function(event) {
     switch (event.keyCode) {
       case 37:
-        console.log("player moves left");
         player.moveLeft();
         break;
       case 39:
-        console.log("player moves right");
         player.moveRight();
         break;
     }
   };
   document.onkeyup = function() {
-    console.log("player stops");
     player.stopMove();
   };
 };
