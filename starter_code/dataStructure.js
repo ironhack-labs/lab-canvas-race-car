@@ -4,29 +4,33 @@ var app = {
     canvasDOM: undefined,
     w: 550,
     h: 550,
+    car: {
+        width: 50,
+        height: 100,
+        x: 205,
+        y: 440,
+    },
     _setCanvasDimensions: function () {
         this.canvasDOM
-            .setAttribute("width", this.w);
-
+        .setAttribute("width", this.w);
+        
         this.canvasDOM
-            .setAttribute("height", this.h)
+        .setAttribute("height", this.h)
     },
     _listener: function() {
         document.addEventListener("keydown", (e) => {
-        this._draw(e.keyCode)});
+            this._draw(e.keyCode)});
     },
     _draw: function(keyPress) {
         var ctx = this.ctx;
-        var car = {
-        x: 205,
-        y: 440,
-        moveCar:  function(keyPress) { 
-                if(keyPress == 37) {
-                this.x -= 25 
-                } else if (keyPress == 39) {
-                this.x += 25
-                }
-            }
+        var img = new Image();
+        
+        function drawCar(car) {
+            img.onload = () => {
+            ctx.drawImage(img, car.x, car.y, car.width, car.height);
+            };
+            img.src = 'images/car.png';
+
         }
         
         function drawRoad() {
@@ -38,31 +42,29 @@ var app = {
         ctx.fillRect(385, 0, 10, 600);
         ctx.fillStyle = "#068200";
         ctx.fillRect(395, 0, 30, 600);
+        }
+        
+        function drawLineRoad() {
         ctx.fillStyle = "#fff"
         for(let i = 0; i < 600; i+=60 ) {
             ctx.fillRect(225, 0 + i, 8, 20 )
         }
         }
 
-
-        var img = new Image();
-
-        function drawCar(car) {
-            img.onload = function() {
-            ctx.drawImage(img, car.x, 440, 50, 100);
-            };
-            img.src = 'images/car.png';
-
+        function moveCar(keyPress, car) { 
+        if(keyPress == 37) {
+        car.x -= 25 
+        } else if (keyPress == 39) {
+        car.x += 25
+        }
         }
 
-        drawCar(car)
+
+        drawCar(this.car)
         drawRoad()
-        car.moveCar(keyPress)
-
-        
-
-
-
+        drawLineRoad()
+        moveCar(keyPress, this.car)
+            
     },
     init: function(canvasSelector) {
         this.canvasDOM = document.querySelector(canvasSelector)
