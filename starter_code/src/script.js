@@ -8,6 +8,9 @@ var myGameArea = {
       this.canvas,
       document.querySelector("#game-board")
     );
+    this.interval = setInterval(updateGameArea, 16);
+  },
+  drawRoad: function() {
     this.ctx.fillStyle = "green";
     this.ctx.fillRect(0, 0, 30, this.canvas.height);
     this.ctx.fillRect(this.canvas.width - 30, 0, 30, this.canvas.height);
@@ -22,7 +25,6 @@ var myGameArea = {
     this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
     this.ctx.strokeStyle = "white";
     this.ctx.stroke();
-    this.interval = setInterval(updateGameArea, 16);
   },
   clear: function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -85,8 +87,8 @@ class Obstacle extends Component {
 
 var myObstacles = [];
 function addObstacle(){
-  minWidth = 20;
-  maxWidth = 200;
+  minWidth = 70;
+  maxWidth = 150;
   width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
   minGap = 50;
   maxGap = 200;
@@ -97,24 +99,20 @@ function addObstacle(){
 
 function updateGameArea() {
   myGameArea.clear();
-  myGameArea.start();
+  myGameArea.drawRoad();
   player.update();
   myGameArea.frames ++;
-  if (myGameArea.frames % 12000 === 0){
+  if (myGameArea.frames % 100 === 0){
     addObstacle();
   }
   for (i = 0; i < myObstacles.length; i += 1) {
-    myObstacles[i].y += 0.01;
+    myObstacles[i].y += 2;
     myObstacles[i].update();
   }
   var crashed = myObstacles.some(function(obstacle){
     return player.crashWith(obstacle);
   })
-  if (crashed) {
-    console.log("crahsed")
-    myGameArea.stop();
-    console.log('game gestoppt')
-  }
+  if (crashed) myGameArea.stop();
 }
 
 var player;
@@ -123,6 +121,7 @@ imgCar.src = "images/car.png";
 
 function startGame() {
   myGameArea.start();
+  myGameArea.drawRoad();
 }
 
 window.onload = function() {
