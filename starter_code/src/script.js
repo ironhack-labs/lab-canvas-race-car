@@ -32,6 +32,12 @@ var myGameArea = {
   stop: function() {
     clearInterval(this.interval);
   },
+  score: function() {
+    points = (Math.floor(this.frames/5));
+    this.ctx.font = "18px serif";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText('Score: '+points, 100, 100);
+  },
   frames: 0
 };
 
@@ -88,10 +94,10 @@ class Obstacle extends Component {
 var myObstacles = [];
 function addObstacle(){
   minWidth = 70;
-  maxWidth = 150;
+  maxWidth = 200;
   width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
-  minGap = 50;
-  maxGap = 200;
+  minGap = 70;
+  maxGap = 150;
   gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
   myObstacles.push(new Obstacle (width, 15, 0, 0));
   myObstacles.push(new Obstacle (myGameArea.canvas.width-width-gap, 15, width+gap, 0));
@@ -102,6 +108,7 @@ function updateGameArea() {
   myGameArea.drawRoad();
   player.update();
   myGameArea.frames ++;
+  myGameArea.score();
   if (myGameArea.frames % 100 === 0){
     addObstacle();
   }
