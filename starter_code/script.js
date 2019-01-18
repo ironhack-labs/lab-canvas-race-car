@@ -33,13 +33,13 @@ window.onload = function() {
     this.ctx.fillStyle = ("#FFFFFF")
     this.ctx.fillRect (36, 0, 9, this.height)
     this.ctx.fillStyle = ("#FFFFFF")
-    this.ctx.fillRect (427, 0, 9, this.height)
+    this.ctx.fillRect (630, 0, 9, this.height)
 
     
     }
 
     Game.prototype.drawCar = function (){
-      this.ctx.drawImage(this.img, 100, 100)
+      this.ctx.drawImage(this.img, 270 ,410)
     }
 
   
