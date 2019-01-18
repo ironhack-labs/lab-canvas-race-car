@@ -5,7 +5,20 @@ let x = 260;
 let y = 400;
 let index = 2;
 let arrayObstacle = [];
+let score = 0;
+const scale = (158 / 319) * 150;
 
+function textGameOver() {
+  ctx.font = "60px Arial";
+  ctx.fillStyle = "black";
+  ctx.fillText("Game Over", 127, 250);
+}
+
+function textScore() {
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("Score: " + score, 60, 30);
+}
 
 function rectangle(x, y, wh, hh) {
   ctx.beginPath();
@@ -72,6 +85,7 @@ function Obstacle(x) {
 }
 
 window.onload = function () {
+  road();
   document.getElementById("start-button").onclick = function () {
     startGame();
   };
@@ -88,18 +102,22 @@ window.onload = function () {
   }
 
   function moveLeft() {
-    if (index !== 1) {
-      index -= 1;
-      x -= carSize;
-      car();
+    if (index !== 0) {
+      if (index !== 1) {
+        index -= 1;
+        x -= carSize;
+        drawCar();
+      }
     }
   }
 
   function moveRight() {
-    if (index !== 3) {
-      index += 1;
-      x += carSize;
-      drawCar();
+    if (index !== 0) {
+      if (index !== 3) {
+        index += 1;
+        x += carSize;
+        drawCar();
+      }
     }
   }
 
@@ -115,29 +133,44 @@ window.onload = function () {
   }
 
   function startGame() {
+    x = 260;
+    index = 2;
+    arrayObstacle = [];
+    score = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     road();
-    // car();
-    // obstacle(220, 0);
-    // pickObstacle();
-    setInterval(function () {
+
+    let createObstacle = setInterval(function () {
       pickObstacle();
-    }, 2000);
+    }, 3000);
 
-    setInterval(function () {
+    let render = setInterval(function () {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      road();
       drawCar();
-      arrayObstacle.forEach(element => {
-        console.log(element);
-        element.y += 1;
-        obstacle(element.x, element.y);
-      });
-    }, 10);
-  }
+      road();
+      textScore();
 
+      for (let i = 0; i < arrayObstacle.length; i++) {
+        if ((x < arrayObstacle[i].x + 150) && (x + scale > arrayObstacle[i].x) && (y < arrayObstacle[i].y + 30) && (y + 150 > arrayObstacle[i].y)) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          clearInterval(createObstacle);
+          clearInterval(render);
+          road();
+          textGameOver();
+          index = 0;
+          break;
+        } else {
+          if (arrayObstacle[i].y === canvas.height) {
+            score += 1;
+            arrayObstacle.splice(arrayObstacle[i], 1);
+            console.log(arrayObstacle.length);
+          } else {
+            arrayObstacle[i].y += 1;
+            obstacle(arrayObstacle[i].x, arrayObstacle[i].y);
+          }
+        }
+      }
+
+    }, 15);
+  }
 };
-    // function car() {
-    //   road();
-    //   pickObstacle();
-    //   drawCar();
-    // }
