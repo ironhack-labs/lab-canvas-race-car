@@ -9,6 +9,8 @@ class GameArea {
     }
     start() {
       document.body.appendChild(this.canvas, document.querySelector("#game-board"));
+      this.frames = 0;
+        this.points = 0;
     }
     drawRoad() {
       this.ctx.fillStyle = "green";
