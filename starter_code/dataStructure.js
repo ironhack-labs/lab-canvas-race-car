@@ -9,6 +9,7 @@ var app = {
         height: 100,
         x: 205,
         y: 440,
+        velocity: 15
     },
     _setCanvasDimensions: function () {
         this.canvasDOM
@@ -53,9 +54,11 @@ var app = {
 
         function moveCar(keyPress, car) { 
         if(keyPress == 37) {
-        car.x -= 25 
+            if(car.x <= 85) { car.x = car.x } 
+            else { car.x -= car.velocity } 
         } else if (keyPress == 39) {
-        car.x += 25
+            if(car.x >= 315) { car.x = car.x }
+            else { car.x += car.velocity }
         }
         }
 
