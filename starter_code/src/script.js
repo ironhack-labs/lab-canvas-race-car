@@ -1,16 +1,16 @@
 //initiating the game area with player and obstacles collection
 var myGameArea = new GameArea();
 var myObstacles = [];
-var player;
 var imgCar = new Image();
 imgCar.src = "images/car.png";
+var player = player = new Component(30, (30 * imgCar.height) / imgCar.width, 185, 610);
 
 //creating new obstacles randomly
 function addObstacle(){
   minWidth = 70;
   maxWidth = 200;
   width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
-  minGap = 70;
+  minGap = 50;
   maxGap = 150;
   gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
   myObstacles.push(new Obstacle (width, 15, 0, 0));
@@ -20,6 +20,7 @@ function addObstacle(){
 //updating the game area and the player
 function updateEverything() {
   myGameArea.clear();
+  myGameArea.updateRoad();
   player.update();
   myGameArea.frames ++;
 }
@@ -42,8 +43,7 @@ function drawEverything(){
 //start the game with 0 points and 0 frames
 function startGame() {
   myGameArea.start();
-  myGameArea.drawRoad();
-  player.draw();
+  animation();
 }
 
 //update the game area constantly until we crash
@@ -52,6 +52,7 @@ function animation(){
   updateEverything();
   drawEverything();
   myAnimation = window.requestAnimationFrame(animation);
+  
   //stop the game if the car crashed into an obstacle
   var crashed = myObstacles.some(function(obstacle){
     return player.crashWith(obstacle);
@@ -66,9 +67,8 @@ function animation(){
 
 // defining what start button should do
 document.getElementById("start-button").onclick = function() {
-    player = new Component(30, (30 * imgCar.height) / imgCar.width, 185, 610);
-    startGame();
-    animation();
+  player = new Component(30, (30 * imgCar.height) / imgCar.width, 185, 610);
+  startGame();
   };
 
 // define events for left and right arrows

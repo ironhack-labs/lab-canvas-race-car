@@ -6,11 +6,13 @@ class GameArea {
       this.ctx = this.canvas.getContext("2d");
       this.frames = 0;
       this.points = 0;
+      this.linestart = -this.canvas.height;
     }
     start() {
-      document.body.appendChild(this.canvas, document.querySelector("#game-board"));
+      document.querySelector("#game-board").appendChild(this.canvas);
       this.frames = 0;
-        this.points = 0;
+      this.points = 0;
+      myObstacles = [];
     }
     drawRoad() {
       this.ctx.fillStyle = "green";
@@ -23,10 +25,16 @@ class GameArea {
       this.ctx.lineWidth = 3;
       this.ctx.setLineDash([15, 15]);
       this.ctx.beginPath();
-      this.ctx.moveTo(this.canvas.width / 2, 0);
-      this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
+      this.ctx.moveTo(this.canvas.width / 2, this.linestart);
+      this.ctx.lineTo(this.canvas.width / 2, this.canvas.height*2);
       this.ctx.strokeStyle = "white";
       this.ctx.stroke();
+    }
+    updateRoad() {
+        this.linestart += 3;
+        if(this.linestart > 0) {
+            this.linestart = -this.canvas.height
+        }
     }
     clear() {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
