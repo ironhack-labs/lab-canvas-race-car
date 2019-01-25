@@ -82,8 +82,10 @@ class Background {
 
   function gameOver() {
     if(frames%1000===0){
-      ctx.font = '30px sans';
+      clearInterval(interval)
+      ctx.font = '20px sans';
       ctx.fillStyle = 'black'
+      ctx.fillText("GAME OVER",110,180)
       ctx.fillText("Your score is: " + Math.floor(frames/60),100,200)
       console.log("Game over")
     }
