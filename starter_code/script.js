@@ -8,7 +8,7 @@
 
 let interval
 let frames = 0
-let friction = 0.95
+let friction = 0.8
 let keys = {}
 let obstacleInterval
 let obstacleList = []
@@ -40,6 +40,7 @@ class Obstacle{
   }
   draw(){
     this.y++
+    ctx.fillStyle="black"
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
@@ -70,11 +71,11 @@ class Background {
     frames++
     drawTime()
     move()
-    newObstacles()
-    drawObstacles()
     green1.draw()
     green2.draw()
-    // grey.draw()
+    grey.draw()
+    newObstacles()
+    drawObstacles()
     gameOver()
     car.draw()
   }
@@ -83,7 +84,7 @@ class Background {
     if(frames%1000===0){
       ctx.font = '30px sans';
       ctx.fillStyle = 'black'
-      ctx.fillText("Your score is: " + Math.floor(frames/60),150,200)
+      ctx.fillText("Your score is: " + Math.floor(frames/60),100,200)
       console.log("Game over")
     }
   }
@@ -97,7 +98,6 @@ function move(){
   // Car
   car.x += car.velX
   car.velX *= friction // to slow down over time
-
   if(keys[39]){
     car.velX++
   }
@@ -107,13 +107,14 @@ function move(){
 }
 
 function newObstacles() {
-  if(frames%150===0){
+  if(frames%200 === 0){
     let randomWidth =  Math.floor(Math.random() * (200 - 20 + 1)) + 20
     let randomX =  Math.floor(Math.random() * (250 - 20 + 1)) + 20
     let o = new Obstacle(randomWidth,randomX)
     obstacleList.push(o)
     console.log(frames)
   }
+
 
 }
 function drawObstacles(){
@@ -125,7 +126,9 @@ function drawObstacles(){
 // Listeners
 addEventListener('keydown', e=>{
   if(e.keyCode === 32){
-    startGame()
+    if (frames ===0){
+      startGame()
+    }
   }
   keys[e.keyCode] = true
 })
