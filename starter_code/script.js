@@ -1,9 +1,9 @@
-function animate() {
+function animate(ctx, width, height) {
   console.log("animating");
   drawBackground(ctx, width, height);
   drawRoad(ctx, width, height);
   drawCar(ctx, width, height);
-  window.requestAnimationFrame(() => animate);
+  window.requestAnimationFrame(() => animate(ctx, width, height));
 }
 
 function drawBackground(ctx, width, height) {
@@ -47,6 +47,6 @@ window.onload = function() {
   let speed = 10;
 
   document.getElementById("start-button").onclick = function() {
-    window.requestAnimationFrame(() => animate);
+    window.requestAnimationFrame(() => animate(ctx, width, height));
   };
 };
