@@ -21,38 +21,67 @@ var car = {
   }
 }
 
-//function draw(car) {
-  var img = new Image();
-  img.onload = function() { 
-    ctx.drawImage(img, car.x, car.y, 40, 81); 
-  }
-  img.src = "images/car.png";
-//}
+//W3 SCHOOLS
+function everyinterval(n) {
+  if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+  return false;
+}
+
+var img = new Image();
+img.onload = function() { 
+  ctx.drawImage(img, car.x, car.y, 40, 81); 
+}
+img.src = "images/car.png";
+
+function generateX(){
+  return Math.floor(Math.random()*340) + 57;
+}
 
 var y = 0;
 var dy = +2;
 
+class Obstacle {
+  constructor(x, width){
+    this.x = x;
+    this.y = 0;
+    this.width = width;
+  }
+}
+
+let obs1 = new Obstacle(67, 25);
+let obs2 = new Obstacle(200, 35);
+let obs3 = new Obstacle(67, 45);
+
+let obstacles = [];
+
+function createObstacle(){
+  let obs = {
+    x:50,
+    y:0
+  }
+  obstacles.push(new Obstacle(Math.random()*canvas.width, Math.random()*50));
+  console.log(obstacles)
+}
+
+setInterval(createObstacle, 3000);
 
 function drawObstacle() {
-  ctx.beginPath();
-  ctx.moveTo(57, y);
-  ctx.lineTo(120, y);
-  ctx.stroke();
-  ctx.closePath();
-  y += dy;
+  for(var i = 0; i<obstacles.length; i++){
+    obstacles[i].y += 2
+    ctx.fillRect(obstacles[i].x,obstacles[i].y, obstacles[i].width,100)
+  }
 }
+
+let frames = 0;
 
 animate();
 function animate(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawObstacle();
+  drawObstacle(obstacles[1]);
   ctx.drawImage(img, car.x, car.y, 40, 81);
   window.requestAnimationFrame(animate);
+  frames += 1;
 }
-
-//TO STOP THE GAME
-//window.cancelAnimationFrame(intervalwhatever);
-
 
 document.onkeydown = function(e) {
   if(car.x < 80){
