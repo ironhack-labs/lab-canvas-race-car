@@ -1,0 +1,23 @@
+{
+  "name": "lab-canvas-race-car",
+  "version": "1.0.0",
+  "description": "![Ironhack Logo](https://i.imgur.com/1QgrNNw.png)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/browser-sync start --server --index 'starter_code/index.html' --files 'starter_code/*' --serveStatic 'starter_code'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewkeil/lab-canvas-race-car.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matthewkeil/lab-canvas-race-car/issues"
+  },
+  "homepage": "https://github.com/matthewkeil/lab-canvas-race-car#readme",
+  "dependencies": {
+    "browser-sync": "^2.26.3"
+  }
+}
