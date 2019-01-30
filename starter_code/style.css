@@ -36,3 +36,12 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+canvas{
+  /* border:1px solid green; */
+}
+
+#raceBoard{
+  position: fixed;
+  top: 30px;
+  right: 100px; 
+}
