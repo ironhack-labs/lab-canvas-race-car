@@ -21,12 +21,6 @@ var car = {
   }
 }
 
-//W3 SCHOOLS
-function everyinterval(n) {
-  if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
-  return false;
-}
-
 var img = new Image();
 img.onload = function() { 
   ctx.drawImage(img, car.x, car.y, 40, 81); 
@@ -48,9 +42,8 @@ class Obstacle {
   }
 }
 
-let obs1 = new Obstacle(67, 25);
-let obs2 = new Obstacle(200, 35);
-let obs3 = new Obstacle(67, 45);
+//Math.random() * (max - min) + min;
+// Math.random()*canvas.width
 
 let obstacles = [];
 
@@ -59,7 +52,7 @@ function createObstacle(){
     x:50,
     y:0
   }
-  obstacles.push(new Obstacle(Math.random()*canvas.width, Math.random()*50));
+  obstacles.push(new Obstacle(generateX(), Math.random()*(250-80)+80));
   console.log(obstacles)
 }
 
@@ -68,7 +61,7 @@ setInterval(createObstacle, 3000);
 function drawObstacle() {
   for(var i = 0; i<obstacles.length; i++){
     obstacles[i].y += 2
-    ctx.fillRect(obstacles[i].x,obstacles[i].y, obstacles[i].width,100)
+    ctx.fillRect(obstacles[i].x,obstacles[i].y, obstacles[i].width,30)
   }
 }
 
