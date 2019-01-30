@@ -33,6 +33,11 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+canvas {
+  background-image: url('images/board.png');
+  background-size: cover;
 }
