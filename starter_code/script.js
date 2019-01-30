@@ -1,26 +1,10 @@
-
-window.onload = function() {
-  
-  let canvas = document.getElementById('game-board');
-  let ctx = canvas.getContext('2d');
-  let carCtx = canvas.getContext('2d');
-  canvas.width=screen.width/3;
-  canvas.height=screen.height*.65;
-  let height = canvas.height;
-  let width = canvas.width;
-
-  document.getElementById("start-button").onclick = function() {
-    window.requestAnimationFrame(animate);
-  };
-
-  function animate() {
-    console.log("animating");
-    drawBackground(ctx, width, height);
-    drawRoad(ctx, width, height);
-    drawCar(ctx, width, height);
-    window.requestAnimationFrame(animate);
-  }
-};
+function animate() {
+  console.log("animating");
+  drawBackground(ctx, width, height);
+  drawRoad(ctx, width, height);
+  drawCar(ctx, width, height);
+  window.requestAnimationFrame(() => animate);
+}
 
 function drawBackground(ctx, width, height) {
   ctx.fillStyle = "#888888";
@@ -52,3 +36,17 @@ function drawCar(ctx, height, width) {
     ctx.drawImage(image, width/2, height, 50, 100) 
   }
 }
+
+
+window.onload = function() {
+  
+  let canvas = document.getElementById('game-board');
+  let width = canvas.width = screen.width/3;
+  let height = canvas.height = screen.height*.65;
+  let ctx = canvas.getContext('2d');
+  let speed = 10;
+
+  document.getElementById("start-button").onclick = function() {
+    window.requestAnimationFrame(() => animate);
+  };
+};
