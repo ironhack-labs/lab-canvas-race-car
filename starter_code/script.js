@@ -4,7 +4,6 @@ window.onload = function() {
   };
 
   function startGame() {
-
   }
 };
 
@@ -22,13 +21,38 @@ var car = {
   }
 }
 
-function draw(car) {
+//function draw(car) {
   var img = new Image();
   img.onload = function() { 
-     ctx.drawImage(img, car.x, car.y, 40, 81); 
+    ctx.drawImage(img, car.x, car.y, 40, 81); 
   }
   img.src = "images/car.png";
+//}
+
+var y = 0;
+var dy = +2;
+
+
+function drawObstacle() {
+  ctx.beginPath();
+  ctx.moveTo(57, y);
+  ctx.lineTo(120, y);
+  ctx.stroke();
+  ctx.closePath();
+  y += dy;
 }
+
+animate();
+function animate(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawObstacle();
+  ctx.drawImage(img, car.x, car.y, 40, 81);
+  window.requestAnimationFrame(animate);
+}
+
+//TO STOP THE GAME
+//window.cancelAnimationFrame(intervalwhatever);
+
 
 document.onkeydown = function(e) {
   if(car.x < 80){
@@ -47,13 +71,14 @@ document.onkeydown = function(e) {
       case 39: car.moveRight(); console.log('right', car); break;
     }
   }
-  updateCanvas();
+}
+
+let update = () => {
+  setInterval(updateCanvas, 1000);
+  update();
 }
 
 function updateCanvas() {
   ctx.clearRect(0,0,1500,1700);
   draw(car);
 }
-updateCanvas();
-
-draw(car);
