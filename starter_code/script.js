@@ -6,7 +6,7 @@ window.onload = function() {
     else {
       alert('Game already started!');
     }
-    startGame();
+  
   };
 
   let gameOn = false;
