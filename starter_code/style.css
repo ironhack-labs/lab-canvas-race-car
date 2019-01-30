@@ -36,3 +36,14 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+#example {
+ display: flex;
+ justify-content: flex-end;
+  border: 35px solid rgb(0, 255, 98);
+  border-bottom: none;
+  border-top: none;
+}
+
+canvas {
+  border: 1px solid black;
+}
