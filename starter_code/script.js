@@ -1,11 +1,11 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    // if (!gameOn){
-    // startGame();
-    // }
-    // else {
-    //   alert('Game already started!');
-    // }
+    if (!gameOn){
+    startGame();
+    }
+    else {
+      alert('Game already started!');
+    }
     startGame();
   };
 
