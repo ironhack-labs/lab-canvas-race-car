@@ -1,11 +1,12 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    if (!gameOn){
+    // if (!gameOn){
+    // startGame();
+    // }
+    // else {
+    //   alert('Game already started!');
+    // }
     startGame();
-    }
-    else {
-      alert('Game already started!');
-    }
   };
 
   let gameOn = false;
@@ -122,6 +123,7 @@ function moveObstacles() {
        alert("Watch where you're going!");
         clearInterval(myInterval);
         carCtx.clearRect(0,0,350,600);  
+        gameOn = false;
     }
   }
   
