@@ -4,9 +4,12 @@ window.onload = function() {
   };
 
   function startGame() {
+
+
     var canvas = document.getElementById('road');
     var ctx = canvas.getContext('2d');
 
+      function drawRoad(){
     ctx.fillStyle = 'green';
     ctx.fillRect(0,10, 350, 600);
 
@@ -23,4 +26,53 @@ window.onload = function() {
       ctx.fillRect(175, 20 + i * 30, 4, 20);
     }
   }
+    var car = {
+      x: 150,
+      y: 475,
+      moveLeft:  function() { this.x -= 10 },
+      moveRight: function() { this.x += 10 },
+    }
+    function draw(car) {
+      var img = new Image();
+      img.onload = function() { 
+         ctx.drawImage(img, car.x, car.y, 50, 100); 
+      }
+      img.src = "images/car.png";
+    }
+
+    document.onkeydown = function(e) {
+      switch (e.keyCode) {
+        case 37: 
+          if(car.x >= 40){
+          car.moveLeft();  
+          console.log('left',  car); 
+          break;
+          }
+          else {
+            break;
+          }
+        case 39: 
+          if(car.x <= 260){
+          car.moveRight(); 
+          console.log('right', car); 
+          break;
+          }
+          else {
+            break;
+          }
+      }
+      updateCanvas();
+    }
+    
+    function updateCanvas() {
+      ctx.clearRect(0,0,1500,1700);
+      drawRoad();
+      draw(car)
+    }
+    
+    drawRoad();
+    draw(car);
+  }
+
+ 
 };
