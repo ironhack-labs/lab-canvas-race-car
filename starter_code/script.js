@@ -122,6 +122,7 @@ function moveObstacles() {
        alert("Watch where you're going!!");
         clearInterval(myInterval);
         carCtx.clearRect(0,0,350,600);  
+        gameOn = false
     }
   }
   
