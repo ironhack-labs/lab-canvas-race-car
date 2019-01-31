@@ -55,12 +55,12 @@ window.onload = function()
       function animateObstacle()
       {
         //loop through array of obstacles and animate each one
-          for(let i = 0; i < newObstacles.length; i++)
-          {
-            ctx.fillStyle = "red";
+          //for(let i = 0; i < newObstacles.length; i++)
+          //{
+            ctx.fillStyle = 'rgb(211, 0, 0)';
             ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, 30);
             obstacle.y+=5;
-          }
+          //}
       }
       setInterval(animateObstacle, 2000)
 
@@ -89,7 +89,6 @@ window.onload = function()
         window.requestAnimationFrame(animate);
       }
       
-
       //Make the boundaries of the car
       var car = 
       {
