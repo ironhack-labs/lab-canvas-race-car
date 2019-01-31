@@ -39,20 +39,34 @@ window.onload = function()
       }
       setInterval(streetlines, 1300);
 
-      function animateObstacle()
-      {
-        //loop through array of obstacles and animate each one
-        ctx.fillStyle = "red";
-        ctx.fillRect(350,obstacle.y,100, 100);
-        obstacle.y+=10;
-      }
 
       var obstacle = 
       {
-        x: 50,
-        y: 0
+        x: Math.floor(Math.random() * (500 - 50) + 50),
+        y: 0,
+        width: Math.floor(Math.random() * (300 -50) + 50)
       };
-      
+
+      function pushArray()
+      {
+        newObstacles.push()
+      }
+
+      function animateObstacle()
+      {
+        //loop through array of obstacles and animate each one
+          for(let i = 0; i < newObstacles.length; i++)
+          {
+            ctx.fillStyle = "red";
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, 30);
+            obstacle.y+=5;
+          }
+      }
+      setInterval(animateObstacle, 2000)
+
+      let newObstacles = [];
+
+
       document.onkeydown = function(e) 
       {
         switch (e.keyCode) 
@@ -75,6 +89,8 @@ window.onload = function()
         window.requestAnimationFrame(animate);
       }
       
+
+      //Make the boundaries of the car
       var car = 
       {
         x: 325,
