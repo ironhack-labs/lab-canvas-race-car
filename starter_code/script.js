@@ -4,6 +4,7 @@ window.onload = function() {
   };
 
   function startGame() {
+    animate();
   }
 };
 
@@ -28,7 +29,7 @@ img.onload = function() {
 img.src = "images/car.png";
 
 function generateX(){
-  return Math.floor(Math.random()*340) + 57;
+  return Math.floor(Math.random()*250) + 57;
 }
 
 var y = 0;
@@ -52,7 +53,7 @@ function createObstacle(){
     x:50,
     y:0
   }
-  obstacles.push(new Obstacle(generateX(), Math.random()*(250-80)+80));
+  obstacles.push(new Obstacle(generateX(), Math.random()*(175-80)+80));
   console.log(obstacles)
 }
 
@@ -66,14 +67,22 @@ function drawObstacle() {
 }
 
 let frames = 0;
+let clearedObstacles = 0;
 
-animate();
+console.log(frames);
+// animate();
 function animate(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawObstacle(obstacles[1]);
   ctx.drawImage(img, car.x, car.y, 40, 81);
   window.requestAnimationFrame(animate);
+  // if (Obstacle.y > window.height - 40) {
+  //   $('#score').text("Score: " + points);
+  //   console.log(points);
+  // }
   frames += 1;
+  //$('#score').text("Score: " + frames/5);
+  document.getElementById('score').innerText = "Score: " + Math.floor(frames/5)
 }
 
 document.onkeydown = function(e) {
@@ -104,3 +113,14 @@ function updateCanvas() {
   ctx.clearRect(0,0,1500,1700);
   draw(car);
 }
+ if (Obstacle.y === car.y && (Obstacle.x === car.x)){
+  function stop () {
+    
+ }}
+// let clearedObstacles = 0;
+// let points = clearedObstacles * 5;
+
+// if (Obstacle.y > window.height - 40) {
+//   $('#score').text("Score: " + points);
+//   console.log(points);
+// }

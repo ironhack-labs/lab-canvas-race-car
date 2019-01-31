@@ -35,6 +35,13 @@ body button {
 #game-board {
   float: left;
   padding: 20px 0px;
+  position: relative;
+}
+
+#score {
+  color: black;
+  /* position: absolute;
+  z-index: 1000; */
 }
 
 canvas {
