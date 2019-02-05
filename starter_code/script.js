@@ -1,20 +1,50 @@
-function animate(ctx, width, height) {
-  console.log("animating");
-  drawBackground(ctx, width, height);
-  drawRoad(ctx, width, height);
-  drawCar(ctx, width, height);
-  window.requestAnimationFrame(() => animate(ctx, width, height));
-}
+let canvas = document.getElementById('game-board');
+  let ctx = canvas.getContext('2d');
+  let carCtx = canvas.getContext('2d');
+  canvas.width=screen.width/3;
+  canvas.height=screen.height*.65;
+  let height = canvas.height;
+  let width = canvas.width;
+
+window.onload = function() {
+  
+  
+
+  document.getElementById("start-button").onclick = function() {
+    drawBackground(ctx, width, height);
+    animate();
+  };
+
+  function animate() {
+    console.log("animating");
+    draw(car);
+    drawRoad(ctx, width, height);
+    draw(ctx, width, height);
+    window.requestAnimationFrame(animate);
+  }
+};
 
 function drawBackground(ctx, width, height) {
-  ctx.fillStyle = "#888888";
+  let col = width/5;
+  let row = 160;
+  ctx.fillStyle = "#f7f7e3";
   ctx.fillRect(0, 0, width, height)  
-  ctx.fillStyle = "green";
-  ctx.fillRect(0, 0, 30, height) 
-  ctx.fillRect(width-30, 0, width, height)
-  ctx.fillStyle = "#FFF";
-  ctx.fillRect(40, 0, 10, height) 
-  ctx.fillRect(width-50, 0, 10, height)
+  ctx.fillStyle = "#000000";
+  
+  //VERTICAL BARS
+  ctx.fillRect(0, 0, 2, height) 
+  ctx.fillRect(col, 0, 3, row*3.5) 
+  ctx.fillRect(col*2, 0, 3, row*3.5) 
+  ctx.fillRect(col*3, 0, 3, row*3.5) 
+  ctx.fillRect(col*4, 0, 3, row*3.5) 
+  ctx.fillRect(width-2, 0, 2, height) 
+  //HORIZONTAL BARS
+  ctx.fillRect(0, 0, width, 3)
+  ctx.fillRect(0, row, width, 2)
+  ctx.fillRect(0, row*2, width, 2)
+  ctx.fillRect(0, row*3, width, 2)
+  ctx.fillRect(0, row*3.5, width, 2)
+  ctx.fillRect(0, height-2, width, 2)
 }
 
 function drawRoad(ctx, width, height) {
@@ -27,26 +57,32 @@ function drawRoad(ctx, width, height) {
 
 }
 
-function drawCar(ctx, height, width) {
-  let image = new Image();
 
-  image.src = 'images/car.png';
-  
-  image.onload = function() {
-    ctx.drawImage(image, width/2, height, 50, 100) 
-  }
+
+var car = {
+  x: width/2,
+  moveLeft:  function() { this.x -= 25 },
+  moveRight: function() { this.x += 25 },
 }
 
+function draw(car) {
+  var img = new Image();
+  img.onload = function() { 
+     ctx.drawImage(img, car.x, height/1.25, 50, 100); 
+  }
+  img.src = "/Users/miketroianello/Desktop/code/lab/lab-canvas-race-car/starter_code/images/car.png"
+}
 
-window.onload = function() {
-  
-  let canvas = document.getElementById('game-board');
-  let width = canvas.width = screen.width/3;
-  let height = canvas.height = screen.height*.65;
-  let ctx = canvas.getContext('2d');
-  let speed = 10;
+document.onkeydown = function(e) {
+  switch (e.keyCode) {
+    case 37: car.moveLeft();  console.log('left',  car); break;
+    case 39: car.moveRight(); console.log('right', car); break;
+  }
+  updateCanvas();
+}
 
-  document.getElementById("start-button").onclick = function() {
-    window.requestAnimationFrame(() => animate(ctx, width, height));
-  };
-};
+function updateCanvas(){
+  ctx.clearRect(0,0, width ,height);
+  drawBackground(ctx, width, height);
+  animate();
+}
