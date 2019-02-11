@@ -1,8 +1,7 @@
 let canvas = document.getElementById('game-board');
+let actionCanvas = document.getElementById('action');
   let ctx = canvas.getContext('2d');
-  let carCtx = canvas.getContext('2d');
-  canvas.width=screen.width/3;
-  canvas.height=screen.height*.65;
+  let carCtx = actionCanvas.getContext('2d');
   let height = canvas.height;
   let width = canvas.width;
   let lines = -16;
@@ -12,43 +11,47 @@ let canvas = document.getElementById('game-board');
 window.onload = function() {
   
   
+  
 
   document.getElementById("start-button").onclick = function() {
-    let movedFoward = false
-    // let dashInterval = setInterval(function(){
+    drawBackground(ctx, width, height);
+    drawDash();
+    animate();
+    };
+
+};
+
+function drawDash(){ 
+  let movedFoward = false;
    setInterval(function(){
+    console.log(movedFoward)
       if (movedFoward === false) {
         for (var i = 0; i < 20; i++) {
-          carCtx.fillStyle = 'white'
-          carCtx.fillRect(230, 10 + i * 30, 4, 20);
-          carCtx.fillStyle = 'gray'
-          carCtx.fillRect(230, 0 + i * 30, 4, 10);
+          ctx.fillStyle = 'white'
+          ctx.fillRect(230, 10 + i * 30, 4, 20);
+          ctx.fillStyle = 'gray'
+          ctx.fillRect(230, 0 + i * 30, 4, 10);
           movedFoward = true;  
         }
       }  
       else {
         for (var i = 0; i < 20; i++) {
-          carCtx.fillStyle = 'white'
-          carCtx.fillRect(230, -5 + i * 30, 4, 20);
-          carCtx.fillStyle = 'gray'
-          carCtx.fillRect(230, 15 + i * 30, 4, 10);
+          ctx.fillStyle = 'white'
+          ctx.fillRect(230, -5 + i * 30, 4, 20);
+          ctx.fillStyle = 'gray'
+          ctx.fillRect(230, 15 + i * 30, 4, 10);
           movedFoward = false;  
         }
       }
     }, 100)
 
-    drawBackground(ctx, width, height);
-    animate();
-  };
-
-
-};
+ 
+  }
 
 function animate() {
-  // let ANIM;
-  // window.cancelAnimationFrame(ANIM);
-  ctx.clearRect(0,0, width ,height);
-  drawBackground(ctx, width, height);
+
+  carCtx.clearRect(0, 0, width, height);
+  //drawBackground(ctx, width, height);
   draw(car);
   drawObstacles();
   window.requestAnimationFrame(animate);
@@ -56,8 +59,8 @@ function animate() {
 
 function updateCanvas(){
   //window.cancelAnimationFrame(ANIM);
-  carCtx.clearRect(car.x,car.y,50,100);
-
+  ctx.clearRect(0, 0, width, height);
+  drawBackground(ctx, width, height);
   draw(car);
 
   //animate();
@@ -93,7 +96,7 @@ var car = {
 function draw(car) {
   var img = new Image();
   img.onload = function() { 
-     carCtx.drawImage(img, car.x, height/1.25, 50, 100); 
+     ctx.drawImage(img, car.x, height/1.25, 50, 100); 
   }
   img.src = "/Users/miketroianello/Desktop/code/lab/lab-canvas-race-car/starter_code/images/car.png"
 }
@@ -138,12 +141,15 @@ function drawObstacles(){
   }
   
   for (let j=0; j< obstacles.length; j++){
-    if (obstacles[j].y + 20 == 476 && 
-      ((car.x >= obstacles[j].x && car.x <= obstacles[j].x + obstacles[j].width) ||
-      (car.x+50 >= obstacles[j].x && car.x+50 <= obstacles[j].x + obstacles[j].width) )) {
-       alert("Game Over!");
+    // if (obstacles[j].y + 10 >= 478 && 
+    //   ((car.x >= obstacles[j].x && car.x <= obstacles[j].x + obstacles[j].width) ||
+    //   (car.x+50 >= obstacles[j].x && car.x+50 <= obstacles[j].x + obstacles[j].width) )) {
+       if(obstacles[j].y  == 478 && 
+        ((car.x >= obstacles[j].x && car.x <= obstacles[j].x + obstacles[j].length) ||
+        (car.x+50 >= obstacles[j].x && car.x+50 <= obstacles[j].x + obstacles[j].length) )){
+    alert("Game Over!");
         clearInterval(myInterval);
-        carCtx.clearRect(0,0,350,600);  
+       carCtx.clearRect(0,0,width,height);  
     }
   }
   

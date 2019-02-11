@@ -33,6 +33,11 @@ body button {
 }
 
 #game-board {
+    position: absolute;
     padding: 20px 0px;
+    z-index: -1;
+}
+
+#action{
 
 }
