@@ -36,3 +36,25 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+
+.finish{
+  position: fixed;
+  top: 200px;
+  left: 300px;
+  width: 600px;
+  height: 300px;
+  background-color: white;
+  border: 2px solid brown;
+  visibility: hidden;
+}
+
+.finish h1{
+  font-size: 50px;
+  padding-top: 50px;
+}
+
+.finish p{
+  font-size: 20px;
+  font-weight: bolder
+}
