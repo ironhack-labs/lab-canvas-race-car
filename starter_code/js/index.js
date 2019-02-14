@@ -4,6 +4,11 @@ window.onload = function() {
   };
 
   function startGame() {
-
+    var game = new Game()
+    game.init("road")
+    game.draw()
+    
   }
+
 };
+
