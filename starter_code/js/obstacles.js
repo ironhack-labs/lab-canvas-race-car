@@ -3,6 +3,8 @@ function Obstacle (x,y,game) {
     this.y = 0
     this.w = 50
     this.h = 20
+    this.right  = this.x + this.w
+    this.bottom = this.y + this.h
     this.ySpeed = 4
     this.game = game
     this.canvas = game.canvasDom

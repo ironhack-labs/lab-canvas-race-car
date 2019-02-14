@@ -6,6 +6,8 @@ function Game () {
     this.h = 500
     this.x = 75
     this.y = 400
+    this.carW = 50
+    this.carH = 100
     this.xSpeed = 10
     this.separatorY = this.h
     this.obstacles = []
@@ -108,24 +110,31 @@ Game.prototype.senseOfSpeed = function() {
         for (var i = 0; i < this.obstacles.length; i++){
             this.obstacles[i].move()
             this.obstacles[i].drawObstacle()
-            this._detectCollisions()
+            if (this._detectCollisions(this.obstacles[i])){
+                alert("Has chocado. You lose! Recarga la página para volver a empezar")
+            }
         }
 
     }.bind(this), 60)
 }
 
 Game.prototype.generateObstacles = function () {
+
     setInterval (function () {
         var newObstacle = new Obstacle (0,0,this)
         newObstacle._randomizeCoordinates()
         this.obstacles.push(newObstacle)
     }.bind(this), 3000)
+
 }
 
-Game.prototype._detectCollisions = function () {
-    for (var i = 0; i < this.obstacles.length; i++){
-        if ((this.x + this.w) >= this.obstacles[i].x && this.x >= (this.obstacles[i].x + this.obstacles[i].w) && (this.y + this.h) <= this.obstacles[i].y && this.y <= (this.obstacles[i].y + this.obstacles[i].h)){
-            console.log("Hay colisión")
-        }
+
+Game.prototype._detectCollisions = function (obstacle) {
+
+    if(obstacle.y + obstacle.h >= 400 && obstacle.y + obstacle.h < this.h){
+        return (this.x < (obstacle.x + obstacle.w)) && ((this.x + this.carW) > obstacle.x)
     }
+
 }
+
+
