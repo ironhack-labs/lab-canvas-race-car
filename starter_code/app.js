@@ -1,3 +1,4 @@
+//Because of this var everything gets faster each 10seconds
 var accelerator = 0
 
 function DrawApp(){
@@ -6,11 +7,14 @@ function DrawApp(){
     this.w = undefined
     this.h = undefined
     this.linepos = 0
-    this.carpos = 170
+    this.carposX = 170
+    this.carposY = 600
     this.carwidth = 55
     this.carheight = 100
     this.obstacles = []
+    this.bullets = []
     this.time = 0
+    this.kills = 0
     this.interval = undefined
 }
 
@@ -47,12 +51,14 @@ DrawApp.prototype.animateApp = function(){
         this.drawLine()
         this.drawCar()
         this.drawObstacles()
+        this.drawBullets()
         this.detectColisions()
+        this.detectBulletColisions()
         score.innerText = this.time
         this.time++
-        if (this.linepos>=200) this.linepos=0
         if (this.time%400===0) accelerator++
     }.bind(this),25)
+
     setInterval(function(){
         this.obstacles.push(new Obstacle())
     }.bind(this),2000)
@@ -68,24 +74,25 @@ DrawApp.prototype.drawLine = function(){
     this.ctx.lineTo(195,this.linepos+800)
     this.ctx.stroke()
     this.linepos+=2+accelerator
+    if (this.linepos>=200) this.linepos=0
 }
 
 
 DrawApp.prototype.drawCar = function(){
     var img = new Image();   
     img.src = "images/car.png"; 
-    this.ctx.drawImage(img, this.carpos, 600, this.carwidth, this.carheight) 
+    this.ctx.drawImage(img, this.carposX, this.carposY, this.carwidth, this.carheight) 
 }
 
 
 DrawApp.prototype.moveCarRight = function(){
-    if (this.carpos<320)
-    this.carpos += 8
+    if (this.carposX<320)
+    this.carposX += 8
 }
 
 DrawApp.prototype.moveCarLeft = function(){
-    if(this.carpos>20)
-    this.carpos -= 8
+    if(this.carposX>20)
+    this.carposX -= 8
 }
 
 
@@ -94,10 +101,10 @@ function Obstacle (){
     this.posY = -30
     this.width = Math.random()*100 + 50
     this.height = 30
+    this.life = 2
 }
 
 DrawApp.prototype.drawObstacles = function(){
-    var indexes = []
     this.obstacles.forEach(function(elm){
         this.ctx.fillStyle = "red"
         this.ctx.fillRect(elm.posX, elm.posY,elm.width,elm.height)
@@ -111,18 +118,18 @@ DrawApp.prototype.drawObstacles = function(){
 
 DrawApp.prototype.detectColisions = function(){
     this.obstacles.forEach(function(elm){
-        if ((elm.posY+elm.height>600)&&(elm.posY<600+this.carheight)){
-            if((elm.posX<this.carpos)&&(elm.posX+elm.width>this.carpos)){
+        if ((elm.posY+elm.height>this.carposY)&&(elm.posY<this.carposY+this.carheight)){
+            if((elm.posX<this.carposX)&&(elm.posX+elm.width>this.carposX)){
                 finishdiv.style.visibility = "visible"
                 clearInterval(this.interval)
                 this.showFinishScore()
             }
-            if((elm.posX<this.carpos+this.carwidth)&&(elm.posX+elm.width>this.carpos+this.carwidth)){
+            if((elm.posX<this.carposX+this.carwidth)&&(elm.posX+elm.width>this.carposX+this.carwidth)){
                 finishdiv.style.visibility = "visible"
                 clearInterval(this.interval)
                 this.showFinishScore()
             }
-            if((elm.posX>this.carpos)&&(elm.posX+elm.width<this.carpos+this.carwidth)){
+            if((elm.posX>this.carposX)&&(elm.posX+elm.width<this.carposX+this.carwidth)){
                 finishdiv.style.visibility = "visible"
                 clearInterval(this.interval)
                 this.showFinishScore()
@@ -131,7 +138,53 @@ DrawApp.prototype.detectColisions = function(){
     }.bind(this))
 }
 
+DrawApp.prototype.detectBulletColisions = function(){
+    this.obstacles.forEach(function(obs){
+        this.bullets.forEach(function(bul){
+            if((bul.posY-bul.height/2<obs.posY+obs.height)&&(bul.posY+bul.height/2>obs.posY+obs.height)){
+                if((bul.posX>obs.posX)&&(bul.posX<obs.posX+obs.width)){
+                    bul.width = 0
+                    obs.life--
+                }
+            }
+        }.bind(this))
+        if(obs.life===0) {
+            this.kills++
+            scorekills.innerText = this.kills
+        }
+    }.bind(this))
+    this.bullets = this.bullets.filter(function(bul){
+        return bul.width != 0
+    })
+    this.obstacles = this.obstacles.filter(function(obs){
+        return obs.life > 0
+    })
+}
+
 
 DrawApp.prototype.showFinishScore = function(){
     finishscore.innerText += " " + this.time
+    finishkills.innerText += " " + this.kills
+}
+
+
+function Bullet(x,y){
+    this.posX = x+app.carwidth/2
+    this.posY = y
+    this.width = 10;
+    this.height = 10;
+}
+
+DrawApp.prototype.drawBullets = function(){
+    this.bullets.forEach(function(elm){
+        this.ctx.fillStyle = "yellow"
+        this.ctx.beginPath()
+        this.ctx.arc(elm.posX, elm.posY, 5, 0, 2 * Math.PI);
+        this.ctx.stroke()
+        this.ctx.fill()
+        elm.posY-=4+accelerator
+    }.bind(this))
+    this.bullets = this.bullets.filter(function(elm){
+        return elm.posY>-10
+    })
 }
