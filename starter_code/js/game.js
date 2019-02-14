@@ -124,7 +124,7 @@ Game.prototype.generateObstacles = function () {
         var newObstacle = new Obstacle (0,0,this)
         newObstacle._randomizeCoordinates()
         this.obstacles.push(newObstacle)
-    }.bind(this), 3000)
+    }.bind(this), 2000)
 
 }
 
