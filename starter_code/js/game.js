@@ -103,7 +103,7 @@ Game.prototype._update = function() {
 }
 
 Game.prototype.senseOfSpeed = function() {
-    setInterval (function () {
+    var intervalo = setInterval (function () {
 
         this.separatorY += 2
         this.draw()
@@ -111,7 +111,8 @@ Game.prototype.senseOfSpeed = function() {
             this.obstacles[i].move()
             this.obstacles[i].drawObstacle()
             if (this._detectCollisions(this.obstacles[i])){
-                alert("Has chocado. You lose! Recarga la página para volver a empezar")
+                alert("Has chocado. ¡Prueba otra vez!")
+                clearInterval(intervalo)
             }
         }
 
@@ -122,9 +123,9 @@ Game.prototype.generateObstacles = function () {
 
     setInterval (function () {
         var newObstacle = new Obstacle (0,0,this)
-        newObstacle._randomizeCoordinates()
+        newObstacle._randomize()
         this.obstacles.push(newObstacle)
-    }.bind(this), 2000)
+    }.bind(this), 2500)
 
 }
 

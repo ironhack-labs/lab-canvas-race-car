@@ -16,8 +16,9 @@ Obstacle.prototype.drawObstacle = function() {
     this.canvasCtx.fillRect(this.x,this.y,this.w,this.h)
 }
 
-Obstacle.prototype._randomizeCoordinates = function () {
+Obstacle.prototype._randomize = function () {
     this.x = Math.floor(Math.random() * (170 - 35) + 35)
+    this.w = Math.floor(Math.random() * (80 - 50) + 50)
 }
 
 Obstacle.prototype.move = function() {
