@@ -56,14 +56,13 @@ DrawApp.prototype.animateApp = function(){
         this.detectBulletColisions()
         score.innerText = this.time
         this.time++
+        //Here the magic happens
         if (this.time%400===0) accelerator++
+        //Original value was one obstacle each 2s, now there is some random behaviour added
+        if ((this.time%80===0)||(this.time%(Math.floor(Math.random()*120)+40)===0)) this.obstacles.push(new Obstacle())
     }.bind(this),25)
-
-    setInterval(function(){
-        this.obstacles.push(new Obstacle())
-    }.bind(this),2000)
-
 }
+
 
 DrawApp.prototype.drawLine = function(){
     this.ctx.beginPath()
