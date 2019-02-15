@@ -1,9 +1,9 @@
 window.onload = function() {
+  // StartGame();
+
+  var app = new StartGame ()
+  
   document.getElementById("start-button").onclick = function() {
-    startGame();
+    app.init("canvasExp")
   };
-
-  function startGame() {
-
-  }
 };

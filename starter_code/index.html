@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="app.js"></script>
   <script type="text/javascript" src="script.js">
 
   </script>
@@ -11,6 +12,9 @@
   <title>Document</title>
 </head>
 <body>
+
+
+
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
@@ -19,7 +23,24 @@
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+      <canvas id="canvasExp"></canvas>
   </div>
+
+  <script>
+    var myCarApp = new StartGame()
+    myCarApp.init('canvasExp')
+    myCarApp.drawAll()
+
+    // var img = new Image()
+    // img.src='images/car.png'
+    // myCarApp.showImage('url')
+
+
+ 
+
+  
+  </script>
+
+  
 </body>
 </html>
