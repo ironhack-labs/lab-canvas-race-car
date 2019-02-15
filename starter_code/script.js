@@ -17,7 +17,7 @@ window.onload = function() {
         this.ctx = this.canvasDom.getContext('2d');
         this.posX = 220 // Coche defaul
         this.posY = 390 // Coche default
-
+        this.poslY = 0
 
 
 
@@ -30,6 +30,7 @@ window.onload = function() {
 
     startGame.prototype.init = function() { // Iniciamos la aplicación
 
+        // Pendiente de meter las funciones
     }
 
 
@@ -51,11 +52,11 @@ window.onload = function() {
 
     startGame.prototype.dibujarLinea = function() {
 
-        var posY = 0
+        // var poslY = 0
 
-        setInterval(function() { //Pendiente de revisión, no funciona el movimiento
-            posY += 1
-        }.bind(this), 10)
+        // setInterval(function() { //Pendiente de revisión, no funciona el movimiento
+        //     poslY += 1
+        // }.bind(this), 10)
 
 
         this.ctx.beginPath()
@@ -63,7 +64,7 @@ window.onload = function() {
         this.ctx.strokeStyle = 'white'
         this.ctx.setLineDash([30, 15])
 
-        this.ctx.moveTo(200, posY)
+        this.ctx.moveTo(200, this.poslY)
         this.ctx.lineTo(200, 500)
         this.ctx.stroke()
 
@@ -73,11 +74,10 @@ window.onload = function() {
     startGame.prototype.moverLinea = function() {
 
         setInterval(function() {
-
-            this.ctx.moveTo(200, 0)
+            this.poslY += 10
         }.bind(this), 10)
 
-        this.dibujarLinea
+        this.dibujarLinea()
     }
 
     startGame.prototype.dibujarCoche = function() {
@@ -116,7 +116,7 @@ window.onload = function() {
     }
 
 
-    AnimateApp.prototype._refreshCanvas = function() {
+    startGame.prototype._refreshCanvas = function() {
         this.ctx.clearRect(0, 0, this.w, this.h)
             // this.ctx.fillRect(this.posX, this.h / 2 - 50, 100, 100)
     }
