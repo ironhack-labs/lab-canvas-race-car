@@ -1,5 +1,7 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
+let interval, frames;
+
 const colors = {
   green: "rgb(0, 126, 10)",
   gray: "rgb(127, 127, 127",
@@ -33,7 +35,21 @@ class Background {
   }
 }
 
+class Car {
+  constructor() {
+    this.image = new Image();
+    this.image.src = "./images/car.png";
+    this.width = 30;
+    this.height = 60;
+  }
+
+  draw() {
+    ctx.drawImage(this.image, 185, canvas.height - this.height - 10, this.width,this.height);
+  }
+}
+
 let fondo = new Background();
+let auto = new Car();
 
 window.onload = function() {
   fondo.draw();
@@ -41,5 +57,10 @@ window.onload = function() {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    inteval = setInterval(() => {
+      frames++;
+      auto.draw();
+    }, 1000 / 60);
+  }
 };
