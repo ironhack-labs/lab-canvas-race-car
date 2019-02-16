@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
 
   </script>
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Island Racer 1.0</title>
 </head>
 <body>
   <div class="game-intro">
@@ -17,9 +16,14 @@
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
+    <p id="score">SCORE: 0</p>
+    <P id="max-score">MAX SCORE: 0</P>
   </div>
   <div id="game-board">
+    <canvas id="canvas" width="500" height="670"></canvas>
 
   </div>
+
+  <script type="text/javascript" src="./script.js"></script>
 </body>
 </html>
