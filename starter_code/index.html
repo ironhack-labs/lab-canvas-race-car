@@ -17,9 +17,17 @@
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
+
+    <div id="game-over" class="hidden">
+      <p>Game Over!</p>
+      <p>Your final score <span id="final-score">X</span> </p>
+    </div>
   </div>
   <div id="game-board">
     <canvas id="canvas" width="400" height="800"></canvas>
+    <div id="display">
+      <p>Score <span id="score-dis">0</span></p>
+    </div>
   </div>
   <script src="./script.js"></script>
 </body>

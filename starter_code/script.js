@@ -1,7 +1,9 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let interval,
+let scoreDisp = document.getElementById("score-dis");
+let interval = 0,
   frames = 0;
+finalScore = 0;
 
 const colors = {
   green: "rgb(0, 126, 10)",
@@ -14,10 +16,10 @@ const desplaz = 15;
 const rightBoundarie = 306;
 const leftBoundarie = 64;
 const trackWidth = 280;
-const gap = 60;
+const gap = 30;
 const obstacleHeight = 20;
 const carWidth = 30;
-const trackSpeed = 10;
+const trackSpeed = 5;
 const minObstacleWidth = 40;
 
 class Background {
@@ -57,6 +59,15 @@ class Car {
     this.y = canvas.height - this.height - 10;
   }
 
+  collision(item) {
+    return (
+      this.x < item.x + item.width &&
+      this.x + this.width > item.x &&
+      this.y < item.y + item.height &&
+      this.y + this.height > item.y
+    );
+  }
+
   draw() {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
@@ -75,8 +86,12 @@ class Obstacle {
     this.width = randomNum(trackWidth - gap, minObstacleWidth);
     this.height = height;
     this.x = randomNum(rightBoundarie, leftBoundarie);
-    // offscreen
+    // starts offscreen
     this.y = 0 - this.height;
+    // fix to avoid the obstacle getting biiger than the track
+    if (this.width + this.x > rightBoundarie) {
+      this.width = rightBoundarie - this.x + gap;
+    }
   }
 
   draw() {
@@ -96,7 +111,7 @@ function randomNum(max, min) {
 }
 
 function generateObstacles() {
-  if (frames % 100 == 0 || frames % 60 == 0) {
+  if (frames % 100 == 0) {
     let obs = new Obstacle(obstacleHeight);
     obstacles.push(obs);
   }
@@ -105,31 +120,53 @@ function generateObstacles() {
 function drawObstacles() {
   obstacles.forEach((obs, index) => {
     // remove obstacle from array
-    if (obs.y > canvas.height) obstacles.splice(index, 1);
+    if (obs.y > canvas.height) {
+      obstacles.splice(index, 1);
+      // increment score
+      finalScore++;
+      scoreDisp.innerText = finalScore.toString();
+    }
     obs.draw();
+    if (auto.collision(obs)) {
+      // stop interval and put game over mesage
+      clearInterval(interval);
+      showScore(finalScore);
+    }
   });
+}
+
+function showScore(score) {
+  document.getElementById("final-score").innerText = score.toString();
+  document.getElementById("game-over").classList.remove("hidden");
 }
 
 window.onload = function() {
   fondo.draw();
   // add listener
-  document.addEventListener("keydown", event => {
-    if (startedGame) {
-      switch (event.keyCode) {
-        // right arrow
-        case 39:
-          auto.moveRight(desplaz);
-          break;
-        // left arrow
-        case 37:
-          auto.moveLeft(desplaz);
-          break;
-        default:
-          break;
+  document.addEventListener(
+    "keydown",
+    event => {
+      if (startedGame) {
+        switch (event.keyCode) {
+          // right arrow
+          case 39:
+            auto.moveRight(desplaz);
+            break;
+          // left arrow
+          case 37:
+            auto.moveLeft(desplaz);
+            break;
+          default:
+            break;
+        }
       }
-    }
-  });
+    },
+    true
+  );
   document.getElementById("start-button").onclick = function() {
+    // as button was clicked, the focus is still on that element,
+    // so either an enter or a spacebar activates it again
+    this.disabled = true;
     auto = new Car();
     startGame();
   };

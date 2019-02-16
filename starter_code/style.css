@@ -36,3 +36,31 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+div#game-over{
+  padding: 40px;
+  background-color: black;
+  font-family: "Verdana";
+}
+
+div#game-over > p:first-child{
+  font-size: 25px;
+  color: red;
+}
+
+div#game-over p{
+  font-size: 25px;
+  color: white;
+}
+
+div#display{
+  padding: 1px;
+  background-color: gray;
+  font-size: 30px;
+  color: #fff;
+  font-family: "Verdana";
+}
+
+.hidden{
+  display: none;
+}
