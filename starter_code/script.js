@@ -1,11 +1,7 @@
 window.onload = function() {
     document.getElementById("start-button").onclick = function() {
         var game = new startGame();
-        game.dibujarPista()
-        game.dibujarLinea()
-        game.dibujarCoche()
-        game.moverCoche()
-        game.moverLinea()
+        game.init()
 
 
     };
@@ -13,24 +9,32 @@ window.onload = function() {
     function startGame() {
 
         // Inicializados valores y propiedades reutilizables
-        this.canvasDom = document.getElementById('gamecar')
-        this.ctx = this.canvasDom.getContext('2d');
-        this.posX = 220 // Coche defaul
+        this.w = window.innerWidth
+        this.h = window.innerHeight
+
+        this.posX = 220 // Coche default
         this.posY = 390 // Coche default
         this.poslY = 0
 
+        this.fps = 60
+    }
 
+    startGame.prototype.init = function() { // Iniciamos la aplicación
 
+        this.canvasDom = document.getElementById('gamecar')
+        this.ctx = this.canvasDom.getContext('2d');
         // Medidas
         this.canvasDom.setAttribute("width", "400px");
         this.canvasDom.setAttribute("height", "500px");
         this.canvasDom.setAttribute("float", "left");
 
-    }
+        this.dibujarPista()
+        this.dibujarLinea()
+        this.dibujarCoche()
+        this.moverCoche()
+        this.moverLinea()
+        this.refreshCanvas()
 
-    startGame.prototype.init = function() { // Iniciamos la aplicación
-
-        // Pendiente de meter las funciones
     }
 
 
@@ -52,13 +56,6 @@ window.onload = function() {
 
     startGame.prototype.dibujarLinea = function() {
 
-        // var poslY = 0
-
-        // setInterval(function() { //Pendiente de revisión, no funciona el movimiento
-        //     poslY += 1
-        // }.bind(this), 10)
-
-
         this.ctx.beginPath()
         this.ctx.lineWidth = 10
         this.ctx.strokeStyle = 'white'
@@ -68,32 +65,36 @@ window.onload = function() {
         this.ctx.lineTo(200, 500)
         this.ctx.stroke()
 
+        this.ctx.beginPath()
+        this.ctx.lineWidth = 10
+        this.ctx.strokeStyle = 'white'
+        this.ctx.setLineDash([30, 15])
 
-    }
+        this.ctx.moveTo(200, this.poslY - 500)
+        this.ctx.lineTo(200, this.poslY)
+        this.ctx.stroke()
 
-    startGame.prototype.moverLinea = function() {
-
-        setInterval(function() {
-            this.poslY += 10
-        }.bind(this), 10)
-
-        this.dibujarLinea()
     }
 
     startGame.prototype.dibujarCoche = function() {
 
         var img = new Image(); // Create new img element
         img.src = "./images/car.png"; // Set source path
-        img.onload = function() {
-            this.ctx.drawImage(img, this.posX, this.posY, 60, 100)
-        }.bind(this)
 
+        this.ctx.drawImage(img, this.posX, this.posY, 60, 100)
+
+    }
+
+    startGame.prototype.moverLinea = function() {
+
+        this.poslY += 2
+        if (this.poslY > 500) this.poslY = 0;
     }
 
     startGame.prototype.moverCoche = function() {
 
-
         document.onkeyup = function(e) {
+
             switch (e.keyCode) {
                 case 39:
                     this._moveRight()
@@ -107,25 +108,39 @@ window.onload = function() {
 
     startGame.prototype._moveLeft = function() {
         this.posX -= 10
-        this._refreshCanvas()
+
     }
 
     startGame.prototype._moveRight = function() {
         this.posX += 10
-        this._refreshCanvas()
+
     }
 
 
-    startGame.prototype._refreshCanvas = function() {
-        this.ctx.clearRect(0, 0, this.w, this.h)
-            // this.ctx.fillRect(this.posX, this.h / 2 - 50, 100, 100)
+    startGame.prototype.refreshCanvas = function() {
+
+        this.interval = setInterval(function() {
+
+            this.ctx.clearRect(0, 0, this.w, this.h)
+
+            this.framesCounter++;
+
+            if (this.framesCounter > 1000) {
+                this.framesCounter = 0;
+            }
+
+            // controlamos la velocidad de generación de obstáculos
+            //if (this.framesCounter % 50 === 0) {
+            //    this.generateObstacle();
+            //}
+
+            this.dibujarPista()
+            this.dibujarLinea()
+            this.dibujarCoche()
+            this.moverCoche()
+            this.moverLinea()
+
+        }.bind(this), 1000 / this.fps)
     }
-
-
-
-
-
-
-
 
 }
