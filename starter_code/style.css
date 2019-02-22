@@ -36,3 +36,15 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+canvas {
+  border: 1px solid red;
+}
+
+#inital-canvas{
+  border: none;
+}
+
+.hide {
+  display: none;
+}
