@@ -61,6 +61,7 @@ window.onload = function() {
           var img = document.getElementById("car");
           ctx.drawImage(img, this.x, this.y, this.width, this.height)
         } else{
+          console.log(this.x, this.y, this.width, this.height)
           ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
@@ -96,11 +97,11 @@ window.onload = function() {
       minGap = 50;
       maxGap = 200;
       gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-      myObstacles.push(new Component(width, 10, "green", width + gap, y));
+      myObstacles.push(new Component(width, 10, "green", gap, 0));
     }
     
     for (i = 0; i < myObstacles.length; i++) {
-      myObstacles[i].y += -1;
+      myObstacles[i].y += 1;
       myObstacles[i].update();
     }
 
