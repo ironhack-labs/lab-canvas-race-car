@@ -16,7 +16,7 @@ function GameBoardConstr() {
   this.borderRight = this.width - 50 - car.width;
   this.obstacleInterval = 250;
   this.obstacleSpeed = 2;
-  // this.withDrivable = this.width - 90;
+  this.ctx.font = "20px Arial";
 };
 
 // CAR object
@@ -35,7 +35,7 @@ function ObstacleConstr() {
   // 45 to 130
   this.width = Math.random() * 85 + 45;
   this.xmax = this.x + this.width;
-  this.height = 15;
+  this.height = -15; // draw the Y up :)
   this.draw = function () {
     gameBoard.ctx.fillStyle = "red";
     gameBoard.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -67,11 +67,7 @@ window.onload = function () {
 
   function startGame() {
     gameBoard = new GameBoardConstr();
-    requestAnimationFrame(updateCanvas); // no function parantheses
-    // gameBoard.createRoad();
-    // gameBoard.createCar();
-
-
+    requestAnimationFrame(updateCanvas); // no function parantheses 
   }
 };
 
@@ -80,6 +76,7 @@ function updateCanvas() {
   gameBoard.ctx.clearRect(0, 0, gameBoard.width, gameBoard.height)
   gameBoard.createRoad();
   gameBoard.createCar();
+  gameBoard.createScore();
   // console.log(framerate); 
   if (framerate % gameBoard.obstacleInterval === 0) {
     var obstacle = new ObstacleConstr;
@@ -94,27 +91,33 @@ function updateCanvas() {
     if (obstacles[i].y > gameBoard.height) {
       obstacles.splice(i, 1);
     };
-    // collision check here?
-    // console.log(obstacles[i].y);
-    // console.log(car.y);
-    if (obstacles[i].y == car.y) {
-      console.log("yes Y");
-    }
-    // if (car.x + car.width >= obstacles[i].x) {
-    //   console.log("yes x 1");
-    // }
-    // if (car.x <= obstacles[i].xmax) {
-    //   console.log("yes x 2");
-    // }
+    // collision check here  
     if (obstacles[i].y == car.y && car.x + car.width >= obstacles[i].x && car.x <= obstacles[i].xmax) {
-      alert("game over");
+      gameBoard.createGameOver();
       return;
     }
   };
   requestAnimationFrame(updateCanvas);
 };
 
+// draw score
+GameBoardConstr.prototype.createScore = function() { 
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("Score: " + this.score, 60, 60);
+}
 
+// draw gameover
+GameBoardConstr.prototype.createGameOver = function() { 
+  this.ctx.font = "40px Arial";
+  this.ctx.fillStyle = "black";
+  this.ctx.fillRect(0,0,this.width,190);
+  this.ctx.fillStyle = "red";
+  this.ctx.textAlign = "center";
+  this.ctx.fillText("Game Over!", this.width / 2, 60)
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("Your final score:", this.width / 2, 110);
+  this.ctx.fillText(this.score, this.width / 2, 160);
+}
 
 // draw road
 GameBoardConstr.prototype.createRoad = function () {
