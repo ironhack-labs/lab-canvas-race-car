@@ -33,10 +33,11 @@ window.onload = function() {
   }
  
   //creamos el  coche
-  /* var img = new Image();
+   var img = new Image();
   img.src = "images/car.png";
   ctx.drawImage(img, 0, 0);
+  ctx.scale(0.3, 0.3);
   img.onload = function(){
-    ctx.drawImage(img, 0, 0);
-  } */
+    ctx.drawImage(img, 500, 1380);
+  } 
 };
