@@ -22,6 +22,8 @@ window.onload = function() {
         break;
     }
   }
+
+
     
   document.onkeyup = function(e) {
     stopMove();
@@ -90,7 +92,7 @@ var myGameArea = {
   frames : 0,
   stop : function() {
     clearInterval(this.interval);
-    stopMove();
+    finalFunction();
   },
   score: function() {
     points = (Math.floor(this.frames/10))
@@ -151,6 +153,7 @@ var player = {
 function updateGameArea() {
   for (i = 0; i < myObstacles.length; i += 1) {
     if (player.crashWith(myObstacles[i])) {
+        finalPoints = myGameArea.frames/10
         myGameArea.stop();
         return;
     }
@@ -195,19 +198,22 @@ function moveRight() {
 
 function stopMove() {
   player.x = player.x;
-  var finalPoints = myGameArea.frames/10;
-  var finalFunction = function (){
-    ctx = myGameArea.canvas.getContext("2d");
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, 1200, 800);
-    ctx.font = '50px serif';
-    ctx.fillStyle = 'darkred';
-    ctx.fillText('Game Over!', 495, 320);
-    ctx.font = '50px serif';
-    ctx.fillStyle = 'white';
-    ctx.fillText('Your final score is ' + finalPoints, 395, 420);
-  }
-  finalFunction();
+}
+
+
+var finalFunction = function (){
+  ctx = myGameArea.canvas.getContext("2d");
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, 1200, 800);
+  ctx.font = '50px serif';
+  ctx.fillStyle = 'darkred';
+  ctx.fillText('Game Over!', 495, 320);
+  ctx.font = '50px serif';
+  ctx.fillStyle = 'white';
+  ctx.fillText('Your final score is ' + finalPoints, 395, 420);
+  ctx.font = '50px serif';
+  ctx.fillStyle = 'white';
+  ctx.fillText('Press F5 to play again', 395, 520);
 }
 
 function initialCanvas(selector) {
