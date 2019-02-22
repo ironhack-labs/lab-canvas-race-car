@@ -31,13 +31,30 @@ window.onload = function() {
     ctx.fillRect(170, discountLines, 6, 20);
     discountLines += 50 
   }
- 
+ //creamos una posicion variable que luego moveremos con los controles
+ var posX = 500;
   //creamos el  coche
-   var img = new Image();
+  var img = new Image();
   img.src = "images/car.png";
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, posX, 1380);
   ctx.scale(0.3, 0.3);
+
+
+  
+  
   img.onload = function(){
-    ctx.drawImage(img, 500, 1380);
+    ctx.drawImage(img, posX, 1380);
   } 
+  //actualizamos la posicion x  dependiendo de las teclas que se pulsen
+  document.onkeydown = function(elem) {
+    //console.log(elem.keyCode)
+    if(elem.keyCode == 37){
+      posX -= 1;
+      console.log(posX);
+    }
+    if(elem.keyCode == 39){
+      posX += 1;
+      console.log(posX);
+    }
+  }
 };
