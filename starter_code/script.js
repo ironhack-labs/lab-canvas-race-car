@@ -1,5 +1,5 @@
 "use strict";
-var gameBoard;
+var gameBoard, car;
 var framerate;
 var imgCar = new Image();
 imgCar.src = "images/car.png";
@@ -21,14 +21,14 @@ function GameBoardConstr(setWidth) {
   this.ctx.font = "20px Arial";
 };
 
-// CAR object
-var car = {
-  x: 150,
-  y: 500,
-  width: 158 * 0.25,
-  height: 319 * 0.25,
-  speed: 5
-}
+// CAR contstructor
+function Car() {
+  this.x = 150;
+  this.y = 500;
+  this.width = 158 * 0.25;
+  this.height = 319 * 0.25;
+  this.speed = 5;
+};
 
 // OBSTACLE constructor
 function ObstacleConstr() {
@@ -72,26 +72,26 @@ window.onload = function () {
     startGame(350);
   };
   document.getElementById("mode-easy").onclick = function () {
-    startGame(600);
+    startGame(500);
   };
 
-    function startGame(width) {
-      if (status == 1) {
-        gameBoard = new GameBoardConstr(width);
-        obstacles = [];
-        framerate = 0;
-        status = 0; // status is reset after game over. Otherwise you can press start game forever.
-        car.speed = 5;
-        requestAnimationFrame(updateCanvas); // no function parantheses 
-      } else {
-        var warning = document.getElementById("warning");  
-        warning.style.color = "red";
-        setTimeout(function() {
-          warning.style.color = "black";
-        }, 1000);
-      }
+  function startGame(width) {
+    if (status == 1) {
+      car = new Car();
+      gameBoard = new GameBoardConstr(width);
+      obstacles = [];
+      framerate = 0;
+      status = 0; // status is reset after game over. Otherwise you can press start game forever. 
+      requestAnimationFrame(updateCanvas); // no function parantheses 
+    } else {
+      var warning = document.getElementById("warning");
+      warning.style.color = "red";
+      setTimeout(function () {
+        warning.style.color = "black";
+      }, 1000);
     }
-  };
+  }
+};
 
 function updateCanvas() {
   framerate++;
@@ -109,7 +109,7 @@ function updateCanvas() {
   if (framerate % (gameBoard.obstacleInterval * 3) === 0) {
     gameBoard.obstacleSpeed += 1;
     if (car.speed < 26) {
-      framerate = 0; // reset, otherwise the new interval will cause double objects etc.
+      framerate = 0; // reset, otherwise the new interval will cause double objects etc. because modulo
       gameBoard.obstacleInterval -= 10;
       car.speed += 2;
     };
@@ -171,7 +171,7 @@ GameBoardConstr.prototype.createRoad = function () {
   this.ctx.strokeStyle = "white";
   this.ctx.lineWidth = 4;
   this.ctx.moveTo(this.width / 2, this.height + 157.5);
-  this.ctx.lineTo(this.width / 2, 7.5);
+  this.ctx.lineTo(this.width / 2, -7.5);
   this.ctx.stroke();
   this.ctx.closePath();
 };
@@ -184,4 +184,3 @@ GameBoardConstr.prototype.createCar = function () {
   // };
   that.ctx.drawImage(imgCar, car.x, car.y, car.width, car.height);
 };
- 
