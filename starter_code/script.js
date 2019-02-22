@@ -1,6 +1,7 @@
 var initailScreen = document.querySelector(".game-intro")
 var firstCanvas = document.querySelector("#inital-canvas")
 var myObstacles = [];
+var finalPoints;
 
 window.onload = function() {
   initialCanvas(firstCanvas)
@@ -89,6 +90,13 @@ var myGameArea = {
   frames : 0,
   stop : function() {
     clearInterval(this.interval);
+    stopMove();
+  },
+  score: function() {
+    points = (Math.floor(this.frames/10))
+    this.context.font = '25px serif';
+    this.context.fillStyle = 'white';
+    this.context.fillText('Score: '+points, 0, 20);
   },
 }
 
@@ -106,8 +114,7 @@ function Component(width, height, x, y) {
   }
   this.left   = function() { return this.x                 }
   this.right  = function() { return (this.x + this.width)  }
-  this.top    = function() { return this.y                 }
-  this.bottom = function() { return (this.y + this.height) }
+  this.bottom    = function() { return this.y + this.height     }
   
   
 }
@@ -130,12 +137,11 @@ var player = {
   left: function() { return player.x                 },
   right: function() { return (player.x + player.width)  },
   top: function() { return player.y                 },
-  bottom: function() { return (player.y + player.height) },
 
   crashWith : function(obstacle) {
     return ((player.top() < obstacle.bottom())    &&
-             (player.right()    < obstacle.right()) &&
-             (player.left()    > obstacle.left())) 
+             (player.right()    > obstacle.left()) &&
+             (player.left()    < obstacle.right())) 
   },
 
 
@@ -174,6 +180,7 @@ function updateGameArea() {
   player.update();
   if(player.x < 130) {player.x = 130}
   if (player.x > 1020) {player.x = 1020}
+  myGameArea.score();
 }
 
 
@@ -187,7 +194,20 @@ function moveRight() {
 
 
 function stopMove() {
-  player.x = player.x; 
+  player.x = player.x;
+  var finalPoints = myGameArea.frames/10;
+  var finalFunction = function (){
+    ctx = myGameArea.canvas.getContext("2d");
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, 1200, 800);
+    ctx.font = '50px serif';
+    ctx.fillStyle = 'darkred';
+    ctx.fillText('Game Over!', 495, 320);
+    ctx.font = '50px serif';
+    ctx.fillStyle = 'white';
+    ctx.fillText('Your final score is ' + finalPoints, 395, 420);
+  }
+  finalFunction();
 }
 
 function initialCanvas(selector) {
