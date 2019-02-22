@@ -20,5 +20,13 @@ window.onload = function() {
     ctx.moveTo(175,25);
     ctx.lineTo(175,600);
     ctx.stroke();
+    var img = new Image();
+    img.src = "images/car.png";
+    img.onload = function() {
+      ctx.drawImage(img,150, 460, 50, 100);
+    }
+    
+  
+  
   }
 };
