@@ -1,3 +1,5 @@
+var myObstacles = [];
+
 var myGameArea = {
   canvas : document.createElement('canvas'),
   frames: 0,
@@ -41,21 +43,28 @@ var myGameArea = {
   }*/
 }
 
-function Car (width, height, x, y, color) {
+function Car (width, height, x, y) {
   this.width = width;
   this.height = height;
   this.x = x;
   this.y = y;
   this.speedX = 0;
+
+  this.img = new Image();
+  this.img.src = './images/car.png';
+
+
   this.update = function() {
     ctx = myGameArea.ctx;
+
     /*var img = new Image();
-    img.src = './images/car.png';
-    img.onload = function() {
-      ctx.drawImage(img, this.x, this.y, this.width, this.height);
-    }*/    
-    ctx.fillStyle = color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    img.src = './images/car.png';*/
+    
+    //this.img.onload = function() {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    //}
+    //ctx.fillStyle = color;
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
   }
   this.newPos = function() {
     this.x += this.speedX;
@@ -66,11 +75,11 @@ function Car (width, height, x, y, color) {
 
 
 function moveLeft() {
-  car.speedX -= 1;
+  if (car.x > 50) { car.speedX -= 1; }
 }
 
 function moveRight() {
-  car.speedX += 1;
+  if (car.x < 300) { car.speedX += 1; }
 }
 
 document.onkeydown = function(e) {
@@ -105,7 +114,7 @@ function startGame() {
   myGameArea.drawnRoad();
   //myGameArea.drawnCar();
   //car = new Car(175, 425, 50, 100);
-  car = new Car( 50, 100, 175, 425, 'blue');
+  car = new Car( 50, 100, 175, 425);
 }
 
 window.onload = function() {
