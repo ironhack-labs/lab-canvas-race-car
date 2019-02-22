@@ -41,6 +41,12 @@ var myGameArea = {
       myCtx.drawImage(img, 175, 425, 50, 100);
     } 
   }*/
+  score: function() {
+    points = ( Math.floor( this.frames/5 ) );
+    this.ctx.font = '18px serif';
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillText('Score: ' + points, 60, 50);
+  },
 }
 
 function Car (width, height, x, y) {
@@ -71,7 +77,44 @@ function Car (width, height, x, y) {
   }
   this.left   = function() { return this.x };
   this.right  = function() { return (this.x + this.width) };
+
+  this.crashWith = function(obstacle) {
+    return !(( this.right() < obstacle.left()  && obstacle.top < 550-150)   ||
+             ( this.left()  > obstacle.right() && obstacle.top < 550-150) )
+  }
 }
+
+
+
+function Obstacle (width, height, color, x, y) { // DGG: Para crear el personaje y los obstáculos
+  this.width = width;
+  this.height = height;
+  this.x = x;
+  this.y = y;
+  this.speedX = 0;
+  this.speedY = 0;
+  this.update = function() {
+    ctx = myGameArea.ctx;
+    ctx.fillStyle = color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+  this.newPos = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+  }
+  this.left   = function() { return this.x };
+  this.right  = function() { return (this.x + this.width) };
+  this.top    = function() { return this.y };
+  this.bottom = function() { return (this.y + this.height) };
+
+  this.crashWith = function(obstacle) {
+    return !(( this.bottom() < obstacle.top() )    ||
+             ( this.top()    > obstacle.bottom() ) ||
+             ( this.right()  < obstacle.left() )   ||
+             ( this.left()   > obstacle.right() ) )
+  }
+}
+
 
 
 function moveLeft() {
@@ -83,7 +126,6 @@ function moveRight() {
 }
 
 document.onkeydown = function(e) {
-  console.log(e.key);
   switch (e.keyCode) {
     case 37:
       moveLeft();
@@ -106,7 +148,40 @@ function updateGameArea() {
   myGameArea.clear();
   car.update();
   car.newPos();
+  myGameArea.score();
   myGameArea.frames += 1;
+
+  if ( myGameArea.frames % 140 === 0 ) { // DGG: Separación entre obstáculos
+    //y = myGameArea.canvas.height;
+    minWidth = 20;
+    maxWidth = 300;
+    minPosX = 45;
+    maxPosX = 355;
+    width = Math.floor( Math.random() * (maxWidth - minWidth + 1) + minWidth );
+    posX = Math.floor( Math.random() * (maxPosX - minPosX + 1) + minPosX );
+    myObstacles.push( new Obstacle(width, 20, "brown", posX, 0) );
+  }
+
+  for (i = 0; i < myObstacles.length; i++) {
+    myObstacles[i].y += 1;
+    myObstacles[i].update(); 
+  }  
+
+  function crashWith(car, obstacle) {
+    console.log('Coche: ' + 'X=' + car.x + ' ,Y=' + car.y);
+    console.log('Obstáculo: ' + 'X=' + obstacle.x + ' ,Y=' + obstacle.y);
+    /*return !(( car.x + 50 < obstacle.left()  && obstacle.y === 425)   ||
+             ( car.x      > obstacle.right() && obstacle.y === 425) )*/
+    return (obstacle.y > 425-20);
+  }
+
+  var crashed = myObstacles.some(function(obstacle) {
+    //return car.crashWith(obstacle);
+    return crashWith(car, obstacle);
+  })
+  if (crashed) {
+    myGameArea.stop();
+  }
 }
 
 function startGame() {
