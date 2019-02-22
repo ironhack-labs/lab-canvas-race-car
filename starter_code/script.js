@@ -103,7 +103,6 @@ function updateCanvas() {
   if (framerate % gameBoard.obstacleInterval === 0) {
     var obstacle = new ObstacleConstr;
     obstacles.push(obstacle);
-    gameBoard.score++;
   };
   // increase speed
   if (framerate % (gameBoard.obstacleInterval * 3) === 0) {
@@ -126,6 +125,7 @@ function updateCanvas() {
     // delete item when out of sight
     if (obstacles[i].y > gameBoard.height) {
       obstacles.splice(i, 1);
+      gameBoard.score++;
     }
   };
   requestAnimationFrame(updateCanvas);
