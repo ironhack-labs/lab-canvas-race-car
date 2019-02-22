@@ -1,9 +1,11 @@
 //Creamos el lienzo cuando hacemos click en el botón de start
-var carBoard = document.querySelector("game-board");
 var initialBoard = document.querySelector("game-intro");
+
+var carBoard = document.querySelector('#raceCar');
 
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
+    //carBoard.classList.remove('hide');
     startGame();
   };
   
