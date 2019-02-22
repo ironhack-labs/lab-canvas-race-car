@@ -39,26 +39,27 @@ var myGameArea = {
     this.canvas.height = 800;
     this.context = this.canvas.getContext("2d");
     this.context.fillStyle = 'green';
-    this.context.fillRect(0, 0, 170, 800);
+    this.context.fillRect(0, 0, 130, 800);
     this.context.fillStyle = 'gray';
-    this.context.fillRect(170, 0, 34, 800);
+    this.context.fillRect(130, 0, 20, 800);
     this.context.fillStyle = 'white';
-    this.context.fillRect(204, 0, 50, 800);
+    this.context.fillRect(150, 0, 30, 800);
     this.context.fillStyle = 'gray';
-    this.context.fillRect(254, 0, 692, 800);
+    this.context.fillRect(180, 0, 840, 800);
     this.context.fillStyle = 'white';
-    this.context.fillRect(946, 0, 50, 800);
+    this.context.fillRect(1020, 0, 30, 800);
     this.context.fillStyle = 'gray';
-    this.context.fillRect(996, 0, 34, 800);
+    this.context.fillRect(1050, 0, 20, 800);
     this.context.fillStyle = 'green';
-    this.context.fillRect(1030, 0, 170, 800);
-    /*var midLines = 0
+    this.context.fillRect(1070, 0, 130, 800);
+    var midLines = 0
     while(midLines < 800){
       this.context.fillStyle = 'white';
-      this.context.fillRect(399, midLines, 2, 30);
-      this.context += 50 
-    }*/
+      this.context.fillRect(599, midLines, 2, 30);
+      midLines += 50 
+    }
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    this.interval = setInterval(updateGameArea, 20);
   }
 }
 
@@ -68,6 +69,20 @@ function component(width, height, color, x, y) {
 }
 
 var player = {
+  width: 50,
+  height: 100,
+  x: 575,
+  y: 700,
+  speedX: 0,
+  update : function(){
+    ctx = myGameArea.context;
+    var img = new Image();
+    img.onload = function() { 
+      ctx.drawImage(img, player.x, player.y, player.width, player.height); 
+    }
+    img.src = "images/car.png"
+  }
+
 
 }
 
