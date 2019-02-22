@@ -1,5 +1,6 @@
 var initailScreen = document.querySelector(".game-intro")
 var firstCanvas = document.querySelector("#inital-canvas")
+var myObstacles = [];
 
 window.onload = function() {
   initialCanvas(firstCanvas)
@@ -7,6 +8,7 @@ window.onload = function() {
     initailScreen.classList.add("hide")
     firstCanvas.classList.add("hide")
     startGame();
+    player.update()
   };
 
   document.onkeydown = function(e) {
@@ -60,12 +62,54 @@ var myGameArea = {
     }
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.interval = setInterval(updateGameArea, 20);
-  }
+  },
+  clear: function() {
+    this.context = this.canvas.getContext("2d");
+    this.context.fillStyle = 'green';
+    this.context.fillRect(0, 0, 130, 800);
+    this.context.fillStyle = 'gray';
+    this.context.fillRect(130, 0, 20, 800);
+    this.context.fillStyle = 'white';
+    this.context.fillRect(150, 0, 30, 800);
+    this.context.fillStyle = 'gray';
+    this.context.fillRect(180, 0, 840, 800);
+    this.context.fillStyle = 'white';
+    this.context.fillRect(1020, 0, 30, 800);
+    this.context.fillStyle = 'gray';
+    this.context.fillRect(1050, 0, 20, 800);
+    this.context.fillStyle = 'green';
+    this.context.fillRect(1070, 0, 130, 800);
+    var midLines = 0
+    while(midLines < 800){
+      this.context.fillStyle = 'white';
+      this.context.fillRect(599, midLines, 2, 30);
+      midLines += 50 
+    }
+  },
+  frames : 0,
+  stop : function() {
+    clearInterval(this.interval);
+  },
 }
 
 
-function component(width, height, color, x, y) {
-
+function Component(width, height, x, y) {
+  this.width = width;
+  this.height = height;
+  this.x = x;
+  this.y = y;
+  this.update = function(){
+    ctx = myGameArea.context;
+    var color = "rgb(" + Math.floor(Math.random()*255) + " , " + Math.floor(Math.random()*255) + " , " + Math.floor(Math.random()*255) + ")";
+    ctx.fillStyle = color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+  this.left   = function() { return this.x                 }
+  this.right  = function() { return (this.x + this.width)  }
+  this.top    = function() { return this.y                 }
+  this.bottom = function() { return (this.y + this.height) }
+  
+  
 }
 
 var player = {
@@ -81,29 +125,69 @@ var player = {
       ctx.drawImage(img, player.x, player.y, player.width, player.height); 
     }
     img.src = "images/car.png"
-  }
+  },
+
+  left: function() { return player.x                 },
+  right: function() { return (player.x + player.width)  },
+  top: function() { return player.y                 },
+  bottom: function() { return (player.y + player.height) },
+
+  crashWith : function(obstacle) {
+    return ((player.top() < obstacle.bottom())    &&
+             (player.right()    < obstacle.right()) &&
+             (player.left()    > obstacle.left())) 
+  },
 
 
 }
 
 
 function updateGameArea() {
+  for (i = 0; i < myObstacles.length; i += 1) {
+    if (player.crashWith(myObstacles[i])) {
+        myGameArea.stop();
+        return;
+    }
+  }
 
+  myGameArea.clear();
+  myGameArea.frames +=1;
+
+  if (myGameArea.frames % 30 === 0) {
+    var x = (Math.floor(Math.random()*(800)));
+    var maxRight = 400;
+    var oWidth = Math.floor(Math.random()*maxRight) + 50;
+    myObstacles.push(new Component(oWidth, (Math.floor(Math.random() * 40) + 10), x, 0));
+  };
+
+  for (i = 0; i < myObstacles.length; i += 1) {
+    if(myObstacles[i].y >= 800){
+      myObstacles.shift(myObstacles[i]);
+      i--
+      continue
+    }
+    myObstacles[i].y += 10;
+    myObstacles[i].update();
+  };
+
+
+  player.update();
+  if(player.x < 130) {player.x = 130}
+  if (player.x > 1020) {player.x = 1020}
 }
-
 
 
 function moveLeft() {
-  player.speedX -= 1;
+  player.x -= 10;
 }
 
 function moveRight() {
-  player.speedX += 1;
+  player.x += 10;
 }
 
 
 function stopMove() {
-  player.speedX = 0; 
+  player.x = player.x; 
 }
 
 function initialCanvas(selector) {
