@@ -156,8 +156,7 @@ function Component(width, height, color, x, y){
       ctx.fillRect(this.x, this.y, this.width, this.height);
   }
   this.newPos = function() {
-      this.x += this.speedX;/* 
-      this.y += this.speedY;  */
+      this.x += this.speedX;
   }
   this.left   = function() { return this.x                 }
   this.right  = function() { return (this.x + this.width)  }
@@ -205,6 +204,20 @@ function car(){
     ctx.drawImage(img, car.x, car.y, xScale, 150); 
   };
   this.  img.src = "./images/car.png";
+}
+var car = {
+  x : 150,
+  y : 480,
+  moveLeft :  function() {
+    this.x -= 5;
+    if(this.x <= 80){
+      this.x = 80;
+    }},
+  moveRight : function() { 
+    this.x += 5;
+    if(this.x >= 330){
+      this.x = 330;
+    }},
 }
 
 function player(car) {
