@@ -21,9 +21,7 @@ window.onload = function() {
         moveRight();
         break;
       case 13:
-        myObstacles = [];
-        startGame();
-        player.update();
+        reset();
         break;
     }
   }
@@ -38,6 +36,16 @@ window.onload = function() {
 
 function startGame() {
   myGameArea.start();
+}
+
+function reset() {
+  player.x = 575;
+  player.y = 700;
+  myGameArea.frames = 0;
+  finalPoints = 0;
+  myObstacles = [];
+  startGame();
+  player.update();
 }
 
 
