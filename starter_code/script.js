@@ -20,6 +20,11 @@ window.onload = function() {
       case 39:
         moveRight();
         break;
+      case 13:
+        myObstacles = [];
+        startGame();
+        player.update();
+        break;
     }
   }
 
@@ -213,7 +218,7 @@ var finalFunction = function (){
   ctx.fillText('Your final score is ' + finalPoints, 395, 420);
   ctx.font = '50px serif';
   ctx.fillStyle = 'white';
-  ctx.fillText('Press F5 to play again', 395, 520);
+  ctx.fillText('Press Enter to play again', 380, 520);
 }
 
 function initialCanvas(selector) {
