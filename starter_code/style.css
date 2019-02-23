@@ -34,5 +34,6 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    margin: 20px 0px;
+    border: 2px solid blue;
 }
