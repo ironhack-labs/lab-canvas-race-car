@@ -3,6 +3,10 @@ body {
   text-align: center;
 }
 
+canvas{
+  margin-top: 60px;
+}
+
 .game-intro {
   float: left;
   padding: 0% 10%;
