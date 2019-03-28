@@ -4,22 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
 <body>
-  <div class="game-intro">
+  <div class="main-area">  
+    <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
-  <div id="game-board">
-
+  <div class="game-board">
+    <canvas id="game"></canvas>
   </div>
+</div>
+
+  <script src="./script.js"></script>
 </body>
 </html>
