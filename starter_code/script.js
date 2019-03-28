@@ -1,19 +1,24 @@
+var canvas;
+/** @type {CanvasRenderingContext2D} */
+var ctx;
+var w;
+var h;
+var dimensions;
+var color;
+
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
 
-   var canvas = document.querySelector("#container")
-    /** @type {CanvasRenderingContext2D} */
-    var ctx = canvas.getContext('2d');
-    var w = canvas.clientWidth;
-    var h = canvas.clientHeight;
-    var dimensions = 400;
-    var color='red';
+    canvas = document.querySelector("#container")
+    ctx = canvas.getContext('2d');
+    w = canvas.clientWidth;
+    h = canvas.clientHeight;
+    dimensions = 400;
+    color ='red';
 
   function startGame() {
-   
-
     draw(ctx,w,h,color,dimensions);
   }
 };
@@ -24,6 +29,7 @@ function draw (ctx,w,h,color,dimensions){
   drawRoad(ctx, 35, h, 'white', 330);
   drawRoad(ctx, 45, h, 'gray', 310);
   drawLine(ctx,h);
+  drawCar(ctx,h);
 }
 
 function drawRoad(ctx,w,h,color,dimensions) {
@@ -36,7 +42,7 @@ function drawRoad(ctx,w,h,color,dimensions) {
   ctx.closePath()
 }
 
-function drawLine(ctx,h){
+function drawLine(ctx,h) {
   ctx.beginPath()
   ctx.strokeStyle = `white`
   ctx.lineWidth = 5
@@ -46,6 +52,15 @@ function drawLine(ctx,h){
   ctx.stroke()
   ctx.closePath()
 }
+
+function drawCar(ctx,h) {
+  var imgCar = new Image();
+  imgCar.src = "./images/car.png";
+  imgCar.onload = function () {
+  ctx.drawImage(imgCar,165,600,70,150);
+  };
+}
+
 
 
 
