@@ -54,11 +54,12 @@ function gameProcess() {
   drawMovingLine();
   drawExternalLines(115);
   drawExternalLines(w - 115)
-
+  //Iteration 2
+  drawCar();
 }
 
 
-
+//Iteration 1
 function drawRoad() {
   ctx.beginPath()
   ctx.fillStyle = "#0E8014"
@@ -96,3 +97,36 @@ function drawExternalLines(x) {
   ctx.closePath();
 }
 
+//Iteration 2
+
+function drawCar() {
+  carWheel();
+  ctx.drawImage(carImg, posX, posY, 50, 100);
+}
+
+function carWheel() {
+  if (arrowLeftOn && posX - 1 > 100) {
+    posX--;
+  }
+  if (arrowRightOn && posX + 1 < w - 150) {
+    posX++;
+  }
+}
+
+function pressingDown(e) {
+  if (e.keyCode === 37) {
+    arrowLeftOn = true;
+  }
+  if (e.keyCode === 39) {
+    arrowRightOn = true;
+  }
+}
+
+function freeUp(e) {
+  if (e.keyCode === 37) {
+    arrowLeftOn = false;
+  }
+  if (e.keyCode === 39) {
+    arrowRightOn = false;
+  }
+}
