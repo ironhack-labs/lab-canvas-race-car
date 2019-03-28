@@ -54,8 +54,12 @@ function gameProcess() {
   drawMovingLine();
   drawExternalLines(115);
   drawExternalLines(w - 115)
-  //Iteration 2
+  //Iteration 2 & 3
   drawCar();
+  //Iteration 4 & 5
+  createWalls();
+  moveWalls();
+  drawWalls();
 }
 
 
@@ -97,7 +101,7 @@ function drawExternalLines(x) {
   ctx.closePath();
 }
 
-//Iteration 2
+//Iteration 2 & 3
 
 function drawCar() {
   carWheel();
@@ -128,5 +132,69 @@ function freeUp(e) {
   }
   if (e.keyCode === 39) {
     arrowRightOn = false;
+  }
+}
+
+//Iteration 4 & 5
+
+var arrayWalls = [];
+
+function createWalls() {
+  if (Math.random() < 0.01) {
+    arrayWalls.push(new Wall(assignWallPos(100,w - 200),10));
+   
+  }
+}
+
+class Wall{
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+    this.w = 75;
+    this.h = 15;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.fillStyle = "#881C02";
+    ctx.rect(this.x, this.y,  this.w, this.h);
+    ctx.fill();
+    ctx.closePath();
+  }
+  move() {
+    this.y++;
+  }
+}
+function drawWalls() {
+  arrayWalls.forEach(wall => {
+    wall.draw()
+  })
+}
+function moveWalls() {
+  arrayWalls.forEach(wall => { 
+    wall.move() 
+    carCrash(wall.x,wall.y,wall.w,wall.h)
+})
+}
+
+function assignWallPos(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function carCrash(xWall,yWall,wWall,hWall) {
+  if(xWall < posX && posX < (xWall+wWall) && (posY > yWall)&&(posY < (yWall+hWall))){
+    cancelAnimationFrame(frameID);
+    
+    ctx.beginPath()
+    arrayWalls = [];
+    ctx.clearRect(0, 0, w, h)
+    ctx.rect(0, 0, w, h)
+    ctx.fillStyle = "#881C02"
+    ctx.fill();
+    ctx.closePath();
+    ctx.font = "100px Verdana";
+    ctx.fillStyle = "#FFFFFF"
+    var textSpace = ctx.measureText("Game Over!")
+    ctx.fillText("Game Over!  \n:( ", w2 - textSpace.width/2, h2);
+   
   }
 }
