@@ -1,3 +1,5 @@
+//KEYS left: 37, right: 39
+
 var canvas, ctx;
 var w = window.innerWidth;
 var h = window.innerHeight;
@@ -5,21 +7,56 @@ var ditchWidth = 50;
 var lineWidth = 10;
 var asphaltWidth = 500;
 var canvasW = ditchWidth * 2 + asphaltWidth;
+var speed = 5;
+
+//Refactor this:
+var carWidth = 60;
+var carHeight = 100;
+
+var car = {
+  width: 60,
+  height: 100,
+  x: canvasW / 2 - carWidth / 2,
+  y: h - carHeight * 2
+};
+//End of refactor
+
 var img;
 
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
+};
 
-  function startGame() {
+window.onkeydown = function(e) {
+  switch (e.keyCode) {
+    //LEFT KEY
+    case 37:
+      moveCarToLeft();
+      break;
+    //RIGHT KEY
+    case 39:
+      moveCarToRight();
+      break;
+  }
+
+  refresh();
+};
+
+function startGame() {
     var gameboard = document.querySelector("#game-board");
     canvas = document.createElement("canvas");
     canvas.width = canvasW;
     canvas.height = this.innerHeight - 70;
     ctx = canvas.getContext("2d");
     gameboard.appendChild(canvas);
+    
+    refresh();
+  }
 
+  function refresh() {
+    ctx.clearRect(0, 0, canvasW, h);
     paintRoad();
     paintMiddleLine();
     paintCar();
@@ -30,7 +67,6 @@ window.onload = function() {
     var lineWidth = 10;
     var asphaltWidth = 500;
 
-    console.log("called paintRoad()");
     //1st Green Line
     ctx.beginPath();
     ctx.fillStyle = "rgb(0,255,0)";
@@ -52,6 +88,7 @@ window.onload = function() {
     //Continuous lines
     ctx.beginPath();
     ctx.strokeStyle = "#fff";
+    ctx.setLineDash([0]);
     ctx.lineWidth = lineWidth / 2;
     ctx.moveTo(ditchWidth + lineWidth, 0);
     ctx.lineTo(ditchWidth + lineWidth, h);
@@ -60,6 +97,7 @@ window.onload = function() {
 
     ctx.beginPath();
     ctx.strokeStyle = "#fff";
+    ctx.setLineDash([0]);
     ctx.lineWidth = lineWidth / 2;
     ctx.moveTo(asphaltWidth + ditchWidth - lineWidth, 0);
     ctx.lineTo(asphaltWidth + ditchWidth - lineWidth, h);
@@ -81,15 +119,29 @@ window.onload = function() {
   }
 
   function paintCar() {
-    console.log("Painting car!");
-    var carWidth = 60;
-    var carHeight = 100;
-
     img = new Image();
     img.onload = function() {
-      ctx.drawImage(img, canvasW/2 - (carWidth/2), h - carHeight*2, carWidth, carHeight);
+      ctx.drawImage(
+        img,
+        car.x,
+        car.y,
+        car.width,
+        car.height
+      );
     };
     img.src = "./images/car.png";
-    console.log(img);
   }
-};
+
+  function moveCarToLeft() {
+    if(car.x - speed > ditchWidth){
+      car.x -= speed;
+    }
+    requestAnimationFrame(paintCar);
+  }
+
+  function moveCarToRight() {
+    if(car.x + speed < asphaltWidth){
+      car.x += speed;
+    }
+    requestAnimationFrame(paintCar);
+  }
