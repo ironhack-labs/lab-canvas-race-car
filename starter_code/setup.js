@@ -1,6 +1,6 @@
 let w, h, w2, h2
 
-function setup(canvas) {
+function setup(canvas,draw) {
     function setCanvasDimensions() {
         canvas.setAttribute("height", window.innerHeight);
         canvas.setAttribute("width", window.innerWidth/2);
@@ -13,7 +13,7 @@ function setup(canvas) {
         h2 = h / 2;
 
         setCanvasDimensions();
-        // draw();
+        draw();
     }
 
     w = window.innerWidth/2;
@@ -22,5 +22,5 @@ function setup(canvas) {
     h2 = h / 2;
 
     setCanvasDimensions();
-    // draw();
+    draw();
 }

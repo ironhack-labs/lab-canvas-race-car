@@ -7,12 +7,21 @@ window.onload = function() {
 
   canvas.setAttribute("height", window.innerHeight);
   canvas.setAttribute("width", window.innerWidth/2);
-  setup(canvas);
+  // setup(canvas,draw);
+  
+  // ctx.beginPath();
+  // ctx.fillRect(25, 25, 100, 100);
+  // ctx.stroke();
+  // var lineHeight = 200;
+  // ctx.strokeStyle = red;
+  // ctx.moveTo(i, h2 - lineHeight / 2)
+  // ctx.lineTo(i, h2 + lineHeight / 2)
+  // ctx.stroke();
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
 
   function startGame() {
-
+    drawRoad(ctx);
   }
 };

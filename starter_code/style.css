@@ -37,5 +37,6 @@ body button {
     padding: 20px 0px;
 }
 canvas {
-  /* background-color: black; */
+  outline: 1px solid silver;
+  /* background-color: green; */
 }
