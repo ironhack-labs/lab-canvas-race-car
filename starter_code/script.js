@@ -6,6 +6,8 @@ var canvas;
 /** @type {CanvasRenderingContext2D} */
 var ctx;
 var w, h, w2, h2;
+var car = new Image;
+car.src = "./images/car.png";
 
 function setup() {
   canvas = document.querySelector("#canvas");
@@ -60,8 +62,8 @@ function gameLoop() {
   drawDashLine();
   drawSideLine(120);
   drawSideLine(w-120)
+  drawCar();
   requestAnimationFrame(startGame);
-
 }
 
 function drawBackground() {
@@ -97,4 +99,7 @@ function drawSideLine(x) {
   ctx.lineTo(x,h);
   ctx.stroke()
   ctx.closePath();
+}
+function drawCar() {
+  ctx.drawImage(car, w2-50/2,h-300/2,50,100)
 }
