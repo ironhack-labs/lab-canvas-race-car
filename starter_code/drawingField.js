@@ -62,11 +62,13 @@ function drawMiddleLine(ctx,offset) {
 //   }
   
 
-function drawBugga(ctx){
+function drawBugga(ctx,posX){
     // debugger
     bugga = new Image();   // Create new <img> element
     bugga.src = './images/car.png'; // Set source path
     bugga.onload = ()=>{
-        ctx.drawImage(bugga, w2-25,h-200,50,100);
+        // ctx.drawImage(bugga, w2-25,h-200,50,100);
+        ctx.drawImage(bugga, posX,h-200,    50,100);
     }
 }
+
