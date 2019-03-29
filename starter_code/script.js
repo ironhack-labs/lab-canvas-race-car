@@ -12,6 +12,7 @@ window.onload = function() {
     ctx = canvas.getContext('2d');
     var carImg = new Image();
     carImg.src = './images/car.png';
+
     
     setInterval(() => {
       ctx.clearRect(0,0,500,600);
@@ -21,6 +22,8 @@ window.onload = function() {
       paintLines2();
       paintMoveLine();
       car(carImg);
+      paintObstacles();
+      obstaclesMoving();
       
     }, 100);
 
@@ -91,4 +94,26 @@ window.onload = function() {
           }
       }
   };
+
+
+  var obstaclesPosX = Math.floor(Math.random() * (400 - 0 + 1) + 0);
+  var obstaclesPosY = 0;
+  var obstaclesWidth = Math.floor(Math.random() * (300 - 50 + 1) + 50);  
+
+  function paintObstacles() {
+    ctx.save();
+    ctx.fillStyle = '#800000';
+    //obstacleArr = [];
+
+    ctx.fillRect(obstaclesPosX, obstaclesPosY, obstaclesWidth, 30);
+    ctx.restore();
+  }
+
+  function obstaclesMoving() {
+    setInterval(() => {
+      obstaclesPosY ++;
+      paintObstacles();
+    }, 100);
+  }
+
 };
