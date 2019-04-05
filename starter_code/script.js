@@ -25,12 +25,16 @@ window.onload = function() {
       ctx.fillRect(350, 0, 50, this.height)
       ctx.fillStyle = 'white'
       ctx.fillRect(325, 0, 7, this.height)
+      
+      
       for(let y = 5; y < this.height; y+=40){
-      ctx.fillStyle = 'white'
-      ctx.fillRect(195, y , 5, 25)
+        ctx.fillStyle = 'white'
+        ctx.fillRect(195, y , 5, 25)
       }
     }
-    draw2(){
+    draw2(score){
+      ctx.font = '20px Arial'
+      ctx.fillText('Score :',50,50)
     }
 
   }
@@ -59,7 +63,7 @@ window.onload = function() {
     }
     moveUp(){
       if (this.y > 500 ) this.y = 490
-      this.y += 10
+      this.y += 30
     }
     moveDown(){
       if (this.y < 80 ) this.y = 90
@@ -68,13 +72,15 @@ window.onload = function() {
   }
 
   class Obstacles{
-    constructor(x,w){
+    constructor(x,w,color){
       this.x = x
       this.w = w
+      this.color = color
     }
-    draw(){
-      ctx.fillStyle = 'orange'
-      ctx.fillRect(this.x,positiony,this.w-75,20)
+    draw(y){
+      y > 500 ? y = 0 : y++
+      ctx.fillStyle = this.color
+      ctx.fillRect(this.x + 75,y,this.w-75,20)
       // ctx.fillStyle = 'orange'
       // ctx.fillRect(150,y,w,20)
       // ctx.fillStyle = 'orange'
@@ -95,17 +101,23 @@ window.onload = function() {
       ctx.fillRect(200,y,w,20)
     }
   }
+  
   const _POSITION = 75
   const _WIDTH = 200
   let board = new Board()
   let player = new Player(175,400,imagenes.img1)
-  let obstacle = new Obstacles(rnd(200),rnd(200))
-  let positiony2 = -100
-  let positiony3 = -190
-  let positiony4 = -250
+  const colorsArray = ['blue','DEEPPINK','yellow','peru','LIGHTSALMON','orange','grape']
+  let obstacle = new Obstacles(rnd(200),rnd(200),colorsArray[Math.floor(Math.random()*colorsArray.length-1)])
+  let obstacle2 = new Obstacles(rnd(200),rnd(200),colorsArray[rnd(colorsArray.length-1)])
+  let obstacle3 = new Obstacles(rnd(200),rnd(200))
+  let obstacle4 = new Obstacles(rnd(200),rnd(200))
+  let positiony2 = rnd(300)-650
+  let positiony3 = rnd(300)-650
+  let positiony4 = rnd(300)-650
   let positiony = 0
   let frames = 0
   let interval
+  let score = 0
   
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -126,12 +138,6 @@ window.onload = function() {
       }
     })
   };
-  function rndX(){
-    let x = Math.floor(Math.random()*_WIDTH) + _POSITION 
-  }
-  function rndWidth(){
-
-  }
   function rnd(len){
     let x = len
     x = Math.floor(Math.random()*len)
@@ -143,23 +149,41 @@ window.onload = function() {
     player.draw()
     if (frames >= 500){
       frames = 0
-      obstacle = new Obstacles(rnd(_WIDTH)+_POSITION)
     }
     if( frames%100 === 0){
     }
     
-    if (positiony > 500){positiony = 0} 
-    if (positiony2 > 500){positiony2 = 0} 
-    if (positiony3 > 500){positiony3 = 0} 
-    if (positiony4 > 500){positiony4 = 0} 
+    if (positiony > 500){
+      positiony = 0
+      obstacle = new Obstacles(rnd(200),rnd(200),colorsArray[rnd(colorsArray.length-1)])
+      score++
+    } 
+    if (positiony2 > 500){
+      positiony2 = 0
+      obstacle2 = new Obstacles(rnd(200),rnd(200),colorsArray[rnd(colorsArray.length-1)])
+      score++
+    } 
+    if (positiony3 > 500){
+      obstacle3 = new Obstacles(rnd(200),rnd(200),colorsArray[rnd(colorsArray.length-1)])
+      positiony3 = 0
+      score++
+    } 
+    if (positiony4 > 500){
+      obstacle4 = new Obstacles(rnd(200),rnd(200),colorsArray[rnd(colorsArray.length-1)])
+      positiony4 = 0
+      score++
+    } 
+    
     positiony++
     positiony2++
     positiony3++
     positiony4++
-    obstacle.draw2(positiony2,80) 
-    obstacle.draw(positiony,80)
-    obstacle.draw3(positiony3,80)
-    obstacle.draw4(positiony4,80)
+    obstacle.draw(positiony)
+    obstacle.draw2(0)
+    obstacle2.draw(positiony2)
+    obstacle3.draw(positiony3)
+    obstacle4.draw(positiony4)
+    
     frames++
   }
   function startGame() {
