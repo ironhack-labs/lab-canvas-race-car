@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
+  
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
+  <style>
+    canvas {
+      border:2px solid black;
+    }
+  </style>
 </head>
 <body>
   <div class="game-intro">
@@ -18,8 +21,9 @@
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
-  <div id="game-board">
+  <canvas id="game-board" width= "700" height= "900"></canvas>
+  <script type="text/javascript" src="script.js"></script>
 
-  </div>
+
 </body>
 </html>
