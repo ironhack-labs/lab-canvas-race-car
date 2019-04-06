@@ -3,6 +3,10 @@ body {
   text-align: center;
 }
 
+canvas {
+  background-color: grey;
+}
+
 .game-intro {
   float: left;
   padding: 0% 10%;
@@ -10,7 +14,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -19,6 +23,11 @@ body {
 
 .arrows-img {
   width: 150px;
+}
+
+.pista-img {
+  width: 350px;
+  margin-right: 15%;
 }
 
 body button {
@@ -33,6 +42,7 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+  height: 1500px;
 }
