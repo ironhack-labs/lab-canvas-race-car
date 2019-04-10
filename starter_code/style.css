@@ -38,5 +38,11 @@ body button {
 }
 
 canvas {
+  float: right;
   border: black 10px dashed;
+}
+
+#car-canvas {
+  border: red solid 10px;
+
 }
