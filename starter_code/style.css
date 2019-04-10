@@ -1,3 +1,7 @@
+canvas{
+  border: 1px dashed red
+}
+
 body {
   padding: 0;
   text-align: center;
