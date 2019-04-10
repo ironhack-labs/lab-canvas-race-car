@@ -4,7 +4,7 @@ window.onload = function() {
   };
 
   function startGame() {
-    
+    document.getElementById('score').innerHTML = ''
     var carpic = new Image ();
       carpic.src = './images/car.png'
     var img = new Image();
@@ -24,16 +24,17 @@ window.onload = function() {
 
       var car = {
         pic: carpic,
-        posY: 700,
+        posY: 600,
         posX: 80,
         speed: 10,
-
+        height: 180,
+        width: 120,
         move: function() {
 
         },
 
         draw: function() {
-          ctx.drawImage (this.pic, this.posX, this.posY, 40, 80);
+          ctx.drawImage (this.pic, this.posX, this.posY, this.width, this.height);
           
         
         }};
@@ -61,31 +62,63 @@ window.onload = function() {
 
       var enemyCar = {
         pic: enemyCarPic,
-        posY: 300,
+        posY: 40,
         posX: 200,
-        speed: 3,
+        speed: 2,
+        height: 180,
+        width: 120,
 
         move: function() {
           this.posY += this.speed;
           this.posY %= canvas.height;
+
+          if (this.posX >= 500) {
+            this.posX = 0;
+          } else {
+          this.posX += Math.floor(Math.random() * 3);
+          }
         },
 
         draw: function() {
-          ctx.drawImage (this.pic, this.posX, this.posY, 40, 80);
-          if (this.speed < 0) {
+          ctx.drawImage (this.pic, this.posX, this.posY, this.width, this.height);
+          if (this.speed > 0) {
             ctx.drawImage(this.pic, 0, this.y + canvas.height);
           } else {
             ctx.drawImage(this.pic, 0, this.y - this.pic.height);
           }
         },
-        //   if (this.speed < 0) {
-        //     ctx.drawImage(this.pic, 0, this.y + canvas.height);
-        //   } else {
-        //     ctx.drawImage(this.pic, 0, this.y - canvas.height);
-        //   }
-        // },
+       
         
         };
+        var enemyCar2 = {
+          pic: enemyCarPic,
+          posY: 20,
+          posX: 320,
+          speed: 3,
+          height: 180,
+          width: 120,
+  
+          move: function() {
+            this.posY += this.speed;
+            this.posY %= canvas.height;
+            if (this.posX <= 0) {
+              this.posX = 500;
+            } else {
+            this.posX -= Math.floor(Math.random() * 3);
+            }
+          },
+  
+          draw: function() {
+            ctx.drawImage (this.pic, this.posX, this.posY, this.width, this.height);
+            if (this.speed < 0) {
+              ctx.drawImage(this.pic, 0, this.y + canvas.height);
+            } else {
+              ctx.drawImage(this.pic, 0, this.y - this.pic.height);
+            }
+          },
+         
+          
+          };
 
 
       var backgroundImage = {
@@ -111,28 +144,62 @@ window.onload = function() {
       document.onkeydown = function(e) {
         switch (e.keyCode) {
           case 38: // up arrow
-            car.posY -= 10;
+            car.posY -= 15;
             break;
           case 40: // down arrow
-            car.posY += 10;
+            car.posY += 15;
             break;
           case 37: // left arrow
-            car.posX -= 10;
+            car.posX -= 15;
             break;
           case 39: // right arrow
-            car.posX += 10;
+            car.posX += 15;
             break;
         }
       };
       
+      function carsCollide() {
+          if (car.posX < enemyCar.posX + enemyCar.width - 20 &&
+            car.posX + car.width - 20 > enemyCar.posX &&
+            car.posY < enemyCar.posY + enemyCar.height - 20 &&
+            car.posY + car.height - 20 > enemyCar.posY)  {
+
+              car.pic.src = "./images/explosion.png";
+              car.draw();
+              return true;
+              
+          
+            } else if 
+               (car.posX < enemyCar2.posX + enemyCar2.width - 20 &&
+                car.posX + car.width - 20 > enemyCar2.posX &&
+                car.posY < enemyCar2.posY + enemyCar2.height  - 20 &&
+                car.posY + car.height - 20 > enemyCar2.posY){
+
+                  car.pic.src = "images/explosion.png";
+                  car.draw();
+                  return true;
+                  
+            } else {
+              return false;
+            }
+
+          }
+
       function updateCanvas() {
         backgroundImage.move();
         enemyCar.move();
+        enemyCar2.move();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         backgroundImage.draw();
         car.draw();
         enemyCar.draw();
-        
+        enemyCar2.draw();
+        addScore();
+         if (carsCollide()) {
+          
+                  
+           return;
+         };
 
         requestAnimationFrame(updateCanvas);
       }
@@ -143,7 +210,10 @@ window.onload = function() {
         }
 };
 
-
+function addScore () {
+score = document.getElementById('score');
+score.innerHTML++;
+}
 
 
 
