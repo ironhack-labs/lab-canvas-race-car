@@ -33,6 +33,17 @@ body button {
 }
 
 #game-board {
+  position: relative;
     float: left;
     padding: 20px 0px;
+}
+
+canvas{
+  border: black 10px solid;
+}
+
+h1{
+position: absolute;
+left: 115px;
+top: 300px;
 }
