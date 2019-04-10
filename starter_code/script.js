@@ -5,27 +5,14 @@
 //   document.getElementById(
 //     "game-board"
 //   ).innerHTML = `<canvas height='500px' width='300px'><canvas>`;
+//var myObstacle=[]
 
 
-
-function startGame() {
-  game = new Game()
-  updateCanvas()
-}
-
-var canvas = document.getElementById('race-canvas');
-var ctx = canvas.getContext('2d');
-let w= 350;
-let h=500;
-
-
-
-
-class Game {
-  constructor() {
-    this.car = new Car();
-  }
-}
+// function startGame() {
+//   game = new Game()
+//   updateCanvas()
+//   //myObstacle = new component(10, 200, "red", 300, 120); 
+// }
 
 class Car {
   constructor() {
@@ -33,8 +20,6 @@ class Car {
     this.height = 70;
     this.x = 150;
     this.y = 400;
-    this.speedX = 0;
-    this.speedY = 0;
     this.imgsrc = 'images/car.png';
     this.ctx = document.getElementById('race-canvas').getContext('2d');
   }
@@ -46,58 +31,58 @@ class Car {
     
   }
 }
-
- let allObstacles = [
- {width:'50px', height:'10px', x:20, y:2},
-  {width:'50px', height:'10px', x:20, y:13},
-  {width:'50px', height:'10px', x:20, y:19},
- ]
- function drawObstacle(){
-   for(i=0;i<=y;i++)
-   return i;
- }
-class Obstacle {
+class Game {
   constructor() {
-    this.width = 50;
-    this.height = 70;
-    this.color = red;
-    this.x = 30;
-    this.y = 100;
-    this.speedX = 0;
-    this.speedY = 0;
-    this.ctx = document.getElementById('race-canvas').getContext('2d');
-  
-
-
+    this.car = new Car();
   }
 }
-/*function Obstacles() {
-  myGameArea.frames += 1;
-  if (myGameArea.frames % 120 === 0) {
-    var x = myGameArea.canvas.width;
-    var minHeight = 20;
-    var maxHeight = 200;
-    var height = Math.floor(
-      Math.random() * (maxHeight - minHeight + 1) + minHeight
-    );
-    var minGap = 50;
-    var maxGap = 200;
-    var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-    myObstacles.push(new Component(10, height, "red", x, 0));
-    myObstacles.push(
-      new Component(10, x - height - gap, "red", x, height + gap)
-    );
+
+let game = new Game()
+let allObstacles = [] 
+
+
+
+var canvas = document.getElementById('race-canvas');
+var ctx = canvas.getContext('2d');
+let w= 350;
+let h=500;
+
+
+
+
+
+class Obstacle {
+  constructor(y) {
+    this.width = Math.floor(Math.random()*100);
+    this.height = 20;
+    this.x = Math.floor(Math.random()*200);
+    this.y = y;
+    this.color = "#"+((1<<24)*Math.random()|0).toString(16)
   }
 }
-  var myObstacles = [];
 
-var myGameArea = {
-  canvas: document.createElement("canvas"),
-  frames: 120
-}*/
+//  let allObstacles = [
+//  {width:'50px', height:'10px', x:20, y:2},
+//   {width:'50px', height:'10px', x:20, y:13},
+//   {width:'50px', height:'10px', x:20, y:19},
+//  ]
 
 
+function createObstacles(){
+  for(let i=0; i<100; i++){
+    allObstacles.push(  new Obstacle(i*-100)  )
+  }
+}
+ 
+function updateAndDrawObstacles(){
+  for(let i=0; i<100; i++){
+    allObstacles[i].y++;
+    let obs = allObstacles[i];
 
+    ctx.fillStyle = obs.color
+    ctx.fillRect(obs.x, obs.y, obs.width, obs.height)
+  }   
+}
 
     document.onkeydown = function(e){
       console.log("====", e)
@@ -107,37 +92,23 @@ var myGameArea = {
         case 39: game.car.x+=5; console.log("moving right"); break;
         case 40: game.car.y+=5; console.log("moving down"); break;
       }
-      updateCanvas();
+      //updateCanvas();
     } 
+  
 
-
-function updateCanvas(){
+function updateCanvas(){ //This keeps erasing and redrawing everything.
+  console.log('update')
   ctx.clearRect(0,0,w,h)
   game.car.drawCar()
+  updateAndDrawObstacles()
   window.requestAnimationFrame(updateCanvas)
   
 }
 
 
-/*function updateObstacles() {
-  for (i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].x += -1;
-    myObstacles[i].update();
-  }
-}*/
-
-function updateGameArea() {
-  myGameArea.clear();
-  player.newPos();
-  player.update();
-  obstacles.update();
-}
-
-
-
-game = new Game()
+createObstacles()
 updateCanvas()
-updateObstacles()
+
 
 
 
