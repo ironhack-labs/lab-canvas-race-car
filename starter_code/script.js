@@ -55,7 +55,9 @@ ctx.strokeStyle= "white"
  ctx.lineTo(196, 600);
  ctx.lineWidth= 8;
  ctx.stroke();
-
+  // stop: () => {
+  // clearInterval(this.interval);
+  // };
 };
 
 let carImage = new Image()
@@ -63,7 +65,7 @@ carImage.src="./images/car.png"
 
 let car ={
   x: 196,
-  y: 530
+  y: 500
 };
 
 function drawCar(){
@@ -71,24 +73,26 @@ function drawCar(){
 };
 
 document.onkeydown = function (e){
- switch (e.keyCode){
-   //case numbers represent key codes for arrows (38 up 40 down 37 left 39 right)
-  case 37:car.x -= 15; break;
-  case 38:car.y -= 15; break;
-  case 39:car.x += 15; break;
-  case 40:car.y += 15; break;
- }  
+  if (car.x > 60 && car.x < 290) {
+ //if (60 < car.x <290){ - coding magic could work sometimes but sometimes doesn't --> in this case it didn't work
+    switch (e.keyCode){
+    //case numbers represent key codes for arrows (38 up 40 down 37 left 39 right)
+    case 37:car.x -= 10; break; // so that car stays within the boundaries 
+    case 39:car.x += 10; break;
+    }  
+  }
+  else if (car.x < 60) {car.x += 10}
+  else if (car.x > 290) {car.x -= 10}
 };
 document.onkeyup = function (e){
   car.speedX=0;
-  car.speedY=0;
 };
 
 let myObstaclesArray =[];
 
 function drawObstacles() {
   for(let i = 0; i < myObstaclesArray.length; i++) {
-    myObstaclesArray[i].y += 2//Math.floor(Math.random() * 3)
+    myObstaclesArray[i].y += 2.5//Math.floor(Math.random() * 3)
     ctx.fillStyle=myObstaclesArray[i].color;
     ctx.fillRect(myObstaclesArray[i].x, myObstaclesArray[i].y, myObstaclesArray[i].width, myObstaclesArray[i].height)
   }
@@ -101,9 +105,9 @@ function updateObstacles() {
   colorArray = ['rgb(242, 123, 182)', 'rgb(117, 168, 244)', 'rgb(254, 250, 117)', 'orange', 'pink', 'rgb(199, 153, 229)']
   
   function Obstacle(){
-    this.x=  Math.floor((Math.random()* 280) + 70)
+    this.x=  Math.floor((Math.random()* 200) + 70) // doesnt let objects go past sreet
     this.y= 20
-    this.width= Math.floor((Math.random() * 80) + 20)
+    this.width= Math.floor((Math.random() * 70) + 30)
     this.height=30;
     this.color = colorArray[Math.floor(Math.random()*colorArray.length)]
   }
