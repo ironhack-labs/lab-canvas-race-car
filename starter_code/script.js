@@ -28,6 +28,7 @@ const RaceCar = {
     this.setDimensions()
     this.car = new CarPlayer(this.ctx, this.winW,this.winH,'images/car.png')
     this.drawAll()
+    this.arrayObstacles=[]
   },
   setDimensions: function(){
     this.canvasDom.setAttribute('width', window.innerWidth/2)
@@ -82,6 +83,7 @@ const RaceCar = {
 
   },
   drawAll: function (){
+    this.count = 0;
     setInterval(() => {
       this.clear()
       this.drawAsfalt()
@@ -89,7 +91,17 @@ const RaceCar = {
       this.drawWhiteLines()
       this.drawDashedLines()
       this.car.draw()
-    }, 50)
+      
+      this.arrayObstacles.forEach((obstacle) => {
+        obstacle.drawObstacleOrange()
+        obstacle.drawMovingObstacle()
+      })
+
+      if(this.count % 120 == 0){
+        this.arrayObstacles.push(new Obstacles(this.ctx, this.winW, this.winH, )) //this.randomPosition()
+      }      
+      this.count++;
+      }, 1000/60)
   },
   clear: function () {
     this.ctx.clearRect(0, 0, this.winW, this.winH)
@@ -99,9 +111,8 @@ const RaceCar = {
         if (e.keyCode === 37) this.car.moveLeft()
         if (e.keyCode === 39) this.car.moveRight()
     }
-  }
+  },
   
-
 
 }
 
@@ -113,19 +124,53 @@ class CarPlayer {
     this.winH=winH
     this.img= new Image()
     this.img.src=url
-    this.posX= this.winW/4
+    this.posX= this.winW/4-50
     
     this.vel = 10
 
   }
   draw() {
-    this.ctx.drawImage(this.img,this.posX-50, this.winH-160, 100, 160)
+    this.ctx.drawImage(this.img,this.posX, this.winH-160, 100, 160)
   }
   moveLeft() {
-    if (this.posX > 0) this.posX -= this.vel
+    if (this.posX - 65 > 0) this.posX -= this.vel
   }
 
   moveRight() {
-      if (this.posX < this.winW/2 - 100) this.posX += this.vel
+      if (this.posX + 65< this.winW/2 - 100) this.posX += this.vel
   }
+}
+
+
+class Obstacles {
+  constructor(ctx, winW, winH,randomPosition){
+    this.ctx= ctx
+    this.winW=winW
+    this.winH=winH
+    this.positionY= -10
+    this.velo=2
+    this.positionX = randomPosition
+  
+     if( Math.floor(Math.random()*2) ===1) {
+             // entre cero y uno pero nunca llega a dos
+        this.positionX = 0
+      }else{
+        this.positionX = this.winW/4
+      }
+      
+    }
+  
+  drawObstacleOrange (){
+    this.ctx.fillStyle = 'orange'
+    this.ctx.fillRect(this.positionX ,this.positionY, this.winW / 4, 10)
+  }
+ // drawObstacleBlue (){
+ //   this.ctx.fillStyle = 'blue'
+ //   this.ctx.fillRect(this.winW / 4 ,100, this.winW/2, 10)
+ // }
+
+  drawMovingObstacle(){                           //mueve en función al eje Y según velocidad
+    this.positionY += this.velo
+  }
+
 }
