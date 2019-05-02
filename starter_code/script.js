@@ -5,6 +5,7 @@ window.onload = function() {
 
   function startGame() {
     RaceCar.init("mycanvas");
+
     // RaceCar.drawRoad();
     console.log("entra");
   }
@@ -24,10 +25,31 @@ const RaceCar = {
     this.ctx = this.canvasDom.getContext("2d");
     this.setDimensions();
     // this.setHandlers();
-    this.drawRoad();
-    this.drawGreenLines();
-    this.drawWhiteLines();
-    this.drawDashedLines();
+
+    this.car = new CarPlayer(this.ctx, "images/car.png", this.winW, this.winH);
+    this.motor();
+    this.setEventListeners();
+    this.obstacles = [new Obstacules(this.ctx, this.winW, this.winH)];
+    // this.obstacles.makeObstacle();
+  },
+
+  motor: function() {
+    this.count = 0;
+    this.setInterval = setInterval(() => {
+      this.drawRoad();
+      this.drawGreenLines();
+      this.drawWhiteLines();
+      this.drawDashedLines();
+      this.drawCar();
+      this.obstacles.forEach(obstacle => {
+        obstacle.makeObstacle();
+        obstacle.drawMovingObstacle();
+      });
+      if (this.count % 100 == 0) {
+        this.obstacles.push(new Obstacules(this.ctx, this.winW, this.winH));
+      }
+      this.count++;
+    }, 1000 / 60);
   },
 
   setDimensions: function() {
@@ -81,7 +103,7 @@ const RaceCar = {
   },
 
   drawDashedLines: function() {
-    this.ctx.strokeStyle = "wihte";
+    this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
     this.ctx.setLineDash([60, 30]);
 
@@ -89,5 +111,77 @@ const RaceCar = {
     this.ctx.moveTo(250 - 5, 0);
     this.ctx.lineTo(250 - 5, this.winH);
     this.ctx.stroke();
+    this.ctx.setLineDash([0, 0]);
+  },
+  drawCar: function() {
+    this.car.draw();
+  },
+  setEventListeners: function() {
+    document.onkeydown = e => {
+      console.log(e.keyCode);
+      if (e.keyCode === 37) this.car.moveLeft();
+      if (e.keyCode === 39) this.car.moveRight();
+    };
   }
+  /*   drawMovingObstacle: function() {
+    setInterval(( )=> {
+
+    } */
 };
+
+class CarPlayer {
+  constructor(ctx, url, winW, winH) {
+    this.ctx = ctx;
+
+    this.img = new Image();
+    this.img.src = url;
+
+    this.winW = winW;
+    this.winH = winH;
+    this.posX = this.winW / 2 - 25;
+    this.vel = 8;
+
+    this.carWidth = 50;
+  }
+  draw() {
+    this.ctx.drawImage(
+      this.img,
+      this.posX,
+      this.winH - 100,
+      this.carWidth,
+      100
+    );
+  }
+
+  moveLeft() {
+    if (this.posX > 0) this.posX -= this.vel;
+  }
+
+  moveRight() {
+    if (this.posX + this.carWidth < this.winW) this.posX += this.vel;
+  }
+}
+
+class Obstacules {
+  constructor(ctx, winW, winH) {
+    this.ctx = ctx;
+    this.winW = winW;
+    this.winH = winH;
+    this.positionY = -30;
+    if (Math.floor(Math.random() * 2) == 1) {
+      this.positionX = 0;
+    } else {
+      this.positionX = this.winW / 2;
+    }
+    console.log(this.positionX);
+    this.vel = 2;
+  }
+  makeObstacle() {
+    this.ctx.fillStyle = "blue";
+    this.ctx.fillRect(this.positionX, this.positionY, this.winW / 2, 30);
+  }
+  drawMovingObstacle() {
+    this.positionY += this.vel;
+    console.log(this);
+  }
+}
