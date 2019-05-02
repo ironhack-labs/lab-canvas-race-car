@@ -23,9 +23,16 @@ const RaceCarApp = {
     window.onresize = () => this.setDimensions()
   },
   drawRoad: function () {
-    console.log('entro en drawRoad')
+    console.log('entro en drawRoad/app.js')
     this.road = new Road(this.ctx, this.winW, this.winH)
-  }
+  },
+  drawPlayer: function (url) {
+    console.log('entro en drawPlayer/app.js')
+    this.player = new Player(this.ctx, url, this.winW, this.winH)
+    setInterval(() => {
+      this.player.drawPlayer()
+    }, 50)
+  },
 
 
 }
