@@ -1,4 +1,4 @@
-const DrawApp = {
+const Race = {
   version: "1.0",
   name: "Car Race",
   description: "app to Race Point Challenge",
@@ -13,7 +13,9 @@ const DrawApp = {
     this.ctx = this.canvasDom.getContext("2d");
     this.setDimensions();
     this.setHandlers();
-    this.car = new RaceCar(this.ctx, "images/car.png", this.winW, this.winH);
+    this.car = new RaceCar(this.ctx, "images/car.png", 50, 50);
+    this.drawAll();
+    this.setEventListeners();
   },
   setDimensions: function() {
     this.canvasDom.setAttribute("width", window.innerWidth);
@@ -53,7 +55,22 @@ const DrawApp = {
     this.ctx.closePath();
   },
   drawAll: function() {
-    this.car.draw();
+    setInterval(() => {
+      this.clear();
+      this.drawFilledSquares();
+      this.drawLine();
+      this.car.draw();
+    }, 1000);
+  },
+  setEventListeners: function() {
+    document.onkeyup = e => {
+      alert(e.keyCode);
+      if (e.keyCode === 37) this.car.moveLeft();
+      if (e.keyCode === 39) this.car.moveRight();
+    };
+  },
+  clear: function() {
+    this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
 };
 
@@ -66,13 +83,13 @@ class RaceCar {
     this.winH = winH;
 
     this.winW = winW;
-    this.posX = 0;
+    this.posX = 450;
     this.vel = 10;
 
     this.carWidth = 700;
   }
   draw() {
-    this.ctx.drawImage(this.img, this.posX, 450, 0, 0);
+    this.ctx.drawImage(this.img, this.posX, 700, 100, 100);
   }
 
   moveLeft() {
@@ -90,9 +107,6 @@ window.onload = function() {
   };
 
   function startGame() {
-    DrawApp.init("mycanvas");
-    DrawApp.drawFilledSquares();
-    DrawApp.drawLine();
-    DrawApp.drawAll();
+    Race.init("mycanvas");
   }
 };
