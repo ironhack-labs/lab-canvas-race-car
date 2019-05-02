@@ -3,16 +3,18 @@ const RaceCarApp = {
   name: 'Race Car app',
   description: 'App de carrera de obstáculos en coche en  HTML5 Canvas',
   author: 'Leti',
-  canvasDom: undefined,
-  ctx: undefined,
   winW: 600,
   winH: window.innerHeight,
-  road: undefined,
+
   init: function (id) {
     this.canvasDom = document.getElementById(id)
     this.ctx = this.canvasDom.getContext('2d')
+    this.road = new Road(this.ctx, this.winW, this.winH)
+    this.player = new Player(this.ctx, this.winW, this.winH)
     this.setDimensions()
     this.setHandlers()
+    this.setEventListeners()
+    this.draw()
   },
   setDimensions: function () {
     this.canvasDom.setAttribute('width', this.winW)
@@ -22,17 +24,29 @@ const RaceCarApp = {
   setHandlers: function () {
     window.onresize = () => this.setDimensions()
   },
-  drawRoad: function () {
-    console.log('entro en drawRoad/app.js')
-    this.road = new Road(this.ctx, this.winW, this.winH)
-  },
-  drawPlayer: function (url) {
-    console.log('entro en drawPlayer/app.js')
-    this.player = new Player(this.ctx, url, this.winW, this.winH)
+  draw: function () {
+    // console.log('entro en drawPlayer/app.js')
+    // console.log('Jugador creado', this.player)
+
     setInterval(() => {
+      this.clear()
+      this.road.drawRoad()
       this.player.drawPlayer()
-    }, 50)
+    }, 400)
+    /* setInterval(() => {
+      this.player.drawPlayer()
+    }, 50) */
   },
+  clear: function () {
+    this.ctx.clearRect(0, 0, this.winW, this.winH)
+  },
+  setEventListeners: function () {
+    document.onkeyup = e => {
+      console.log(e)
+      if (e.keyCode === 37) this.player.moveLeft()
+      if (e.keyCode === 39) this.player.moveRight()
+    }
+  }
 
 
 }

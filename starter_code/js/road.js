@@ -6,10 +6,10 @@ class Road {
     this.height = height
     this.posX = 40
     console.log('carretera creada')
-    this.drawLane()
+    //this.drawLane()
   }
 
-  drawLane() {
+  drawRoad() {
     //console.log('entro en drawLanes()')
     /* Fondo gris */
     this.ctx.fillStyle = 'gray' // cambia los colores de relleno

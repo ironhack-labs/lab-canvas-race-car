@@ -6,7 +6,6 @@ window.onload = function () {
   function startGame() {
     RaceCarApp.init('game-board')
     console.log("juego iniciado")
-    RaceCarApp.drawRoad()
-    RaceCarApp.drawPlayer('images/car.png')
+
   }
 };
