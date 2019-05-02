@@ -94,11 +94,11 @@ const RaceCar = {
       
       this.arrayObstacles.forEach((obstacle) => {
         obstacle.drawObstacleOrange()
-        obstacle.drawMovingObstacle()
+        obstacle.movingObstacle()
       })
 
-      if(this.count % 120 == 0){
-        this.arrayObstacles.push(new Obstacles(this.ctx, this.winW, this.winH, )) //this.randomPosition()
+      if(this.count % 360 == 0){
+        this.arrayObstacles.push(new Obstacles(this.ctx, this.winW, this.winH, )) //cada cuanto tiempo salen los obstáculos
       }      
       this.count++;
       }, 1000/60)
@@ -148,11 +148,11 @@ class Obstacles {
     this.winW=winW
     this.winH=winH
     this.positionY= -10
-    this.velo=2
+    this.velo=1
     this.positionX = randomPosition
   
      if( Math.floor(Math.random()*2) ===1) {
-             // entre cero y uno pero nunca llega a dos
+                                                  // entre cero y uno pero nunca llega a dos
         this.positionX = 0
       }else{
         this.positionX = this.winW/4
@@ -169,7 +169,7 @@ class Obstacles {
  //   this.ctx.fillRect(this.winW / 4 ,100, this.winW/2, 10)
  // }
 
-  drawMovingObstacle(){                           //mueve en función al eje Y según velocidad
+  movingObstacle(){                           //mueve en función al eje Y según velocidad
     this.positionY += this.velo
   }
 
