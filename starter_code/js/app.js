@@ -11,8 +11,9 @@ const RaceCarApp = {
     this.ctx = this.canvasDom.getContext('2d')
     this.road = new Road(this.ctx, this.winW, this.winH)
     this.player = new Player(this.ctx, this.winW, this.winH)
+    this.obstacles = []
+    this.vel = 2
     this.setDimensions()
-    this.setHandlers()
     this.setEventListeners()
     this.draw()
   },
@@ -21,21 +22,34 @@ const RaceCarApp = {
     this.canvasDom.setAttribute('height', this.winH)
     this.canvasDom.style.backgroundColor = '#008100'
   },
-  setHandlers: function () {
-    window.onresize = () => this.setDimensions()
-  },
   draw: function () {
     // console.log('entro en drawPlayer/app.js')
     // console.log('Jugador creado', this.player)
 
+    this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
+    this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
+    this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
+    this.count = 0
     setInterval(() => {
+      //console.log(this.count)
       this.clear()
       this.road.drawRoad()
+
       this.player.drawPlayer()
-    }, 400)
-    /* setInterval(() => {
-      this.player.drawPlayer()
-    }, 50) */
+      if (this.count % 100 == 0) {
+        this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
+        console.log(this.obstacles)
+        // this.obstacles.shift()
+      }
+      if (this.obstacles.length === 6) this.obstacles.shift()
+      if (this.obstacles[0])
+        this.count++;
+      this.obstacles.forEach(obstacle => {
+        obstacle.drawObstacle()
+        obstacle.moveObstacle()
+      })
+    }, 1000 / 60)
+
   },
   clear: function () {
     this.ctx.clearRect(0, 0, this.winW, this.winH)
@@ -46,6 +60,7 @@ const RaceCarApp = {
       if (e.keyCode === 37) this.player.moveLeft()
       if (e.keyCode === 39) this.player.moveRight()
     }
+
   }
 
 

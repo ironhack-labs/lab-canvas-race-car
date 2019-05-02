@@ -10,6 +10,7 @@ class Player {
     this.avatar.width = 158 / 2 //original img width
     this.avatar.height = 319 / 2 //original img height
 
+    this.initialPosY = this.avatar.height
     this.vel = 10
   }
 
@@ -17,6 +18,7 @@ class Player {
     /*  this.avatar.onload = () => {
        this.ctx.drawImage(this.avatar, this.initialPosX, this.winH - this.avatar.height, this.avatar.width, this.avatar.height)
      } */
+    this.initialPosY -= 100
     this.ctx.drawImage(this.avatar, this.initialPosX, this.winH - this.avatar.height, this.avatar.width, this.avatar.height)
     //console.log('Dibujo player')
   }
