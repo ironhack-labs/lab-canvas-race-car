@@ -6,10 +6,8 @@ window.onload = function() {
 
 function startGame(id){
     RaceCar.init('myCanvas')
-    RaceCar.drawAsfalt()
-    RaceCar.drawGreenLines()
-    RaceCar.drawWhiteLines()
-    RaceCar.drawDashedLines()
+    RaceCar.setEventListeners()
+   
 }
 };
 
@@ -23,10 +21,13 @@ const RaceCar = {
   ctx: undefined,
   winW: undefined,
   winH: undefined,
+  car: undefined,
   init: function (id){
     this.canvasDom=document.getElementById(id)
     this.ctx=this.canvasDom.getContext('2d')
     this.setDimensions()
+    this.car = new CarPlayer(this.ctx, this.winW,this.winH,'images/car.png')
+    this.drawAll()
   },
   setDimensions: function(){
     this.canvasDom.setAttribute('width', window.innerWidth/2)
@@ -76,10 +77,55 @@ const RaceCar = {
     this.ctx.moveTo(this.winW/4, 0)
     this.ctx.lineTo(this.winW/4, this.winH)
     this.ctx.stroke()
+    this.ctx.setLineDash([0, 0])                //para evitar que al hacer el setInterval todas las 
+                                                //líneas se conviertan en dashed!!!!!
+
+  },
+  drawAll: function (){
+    setInterval(() => {
+      this.clear()
+      this.drawAsfalt()
+      this.drawGreenLines()
+      this.drawWhiteLines()
+      this.drawDashedLines()
+      this.car.draw()
+    }, 50)
+  },
+  clear: function () {
+    this.ctx.clearRect(0, 0, this.winW, this.winH)
+  },
+  setEventListeners: function () {
+    document.onkeyup = e => {
+        if (e.keyCode === 37) this.car.moveLeft()
+        if (e.keyCode === 39) this.car.moveRight()
+    }
   }
-
-
   
 
 
+}
+
+
+class CarPlayer {
+  constructor(ctx, winW, winH, url){
+    this.ctx= ctx
+    this.winW=winW
+    this.winH=winH
+    this.img= new Image()
+    this.img.src=url
+    this.posX= this.winW/4
+    
+    this.vel = 10
+
+  }
+  draw() {
+    this.ctx.drawImage(this.img,this.posX-50, this.winH-160, 100, 160)
+  }
+  moveLeft() {
+    if (this.posX > 0) this.posX -= this.vel
+  }
+
+  moveRight() {
+      if (this.posX < this.winW/2 - 100) this.posX += this.vel
+  }
 }
