@@ -6,6 +6,7 @@ class Road {
     this.height = height
     this.posX = 40
     this.posY = 0
+    this.posYLine = 30
     this.vel = vel
     console.log('carretera creada')
     //this.drawLane()
@@ -33,13 +34,14 @@ class Road {
     this.ctx.setLineDash([40, 20])
 
     this.ctx.beginPath()
-    this.ctx.moveTo(this.width / 2, this.posY)
-    this.ctx.lineTo(this.width / 2, this.height)
+    this.ctx.moveTo(this.width / 2, this.posYLine)
+    this.ctx.lineTo(this.width / 2, this.height + 50)
     this.ctx.stroke()
+    this.moveLine()
   }
 
   moveLine() {
-    this.posY -= this.vel
+    this.posYLine -= 3
   }
 
 }

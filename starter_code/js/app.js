@@ -25,28 +25,39 @@ const RaceCarApp = {
   draw: function () {
     // console.log('entro en drawPlayer/app.js')
     // console.log('Jugador creado', this.player)
-
     this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
     this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
     this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
     this.count = 0
-    setInterval(() => {
+    this.score = 0
+    const start = setInterval(() => {
       //console.log(this.count)
       this.clear()
       this.road.drawRoad()
 
+
       this.player.drawPlayer()
       if (this.count % 100 == 0) {
         this.obstacles.push(new Obstacle(this.ctx, this.winW, this.winH, this.vel))
+
         console.log(this.obstacles)
         // this.obstacles.shift()
       }
-      if (this.obstacles.length === 6) this.obstacles.shift()
-      if (this.obstacles[0])
-        this.count++;
+      if (this.obstacles.length === 6) {
+        this.obstacles.shift()
+        this.score++
+      }
+      console.log(this.points)
+      console.log('obstaculo Y', this.obstacles[0].posY)
+      console.log('Player Y', this.player.initialPosY)
+      this.count++;
       this.obstacles.forEach(obstacle => {
         obstacle.drawObstacle()
         obstacle.moveObstacle()
+        // console.log(obstacle.posY)
+        // if (obstacle.posY == this.player.initialPosY && obstacle.posX + obstacle.width == this.player.initialPosX) {
+        //   alert('choque')
+        // }
       })
     }, 1000 / 60)
 
