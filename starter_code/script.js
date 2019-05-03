@@ -20,6 +20,7 @@ const RaceCar = {
   ctx: undefined,
   winW: undefined,
   winH: undefined,
+  velDashed: 0,
   init: function(id) {
     this.canvasDom = document.getElementById(id);
     this.ctx = this.canvasDom.getContext("2d");
@@ -30,6 +31,7 @@ const RaceCar = {
     this.motor();
     this.setEventListeners();
     this.obstacles = [];
+    // ctx.setLineDash([4, 16]);
     // this.obstacles.makeObstacle();
   },
 
@@ -96,6 +98,7 @@ const RaceCar = {
 
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
+    //this.ctx.lineDashOffset = 4;
     this.ctx.beginPath();
     this.ctx.moveTo(this.winW - 65, 0);
     this.ctx.lineTo(this.winW - 65, this.winH);
@@ -110,8 +113,10 @@ const RaceCar = {
     this.ctx.beginPath();
     this.ctx.moveTo(250 - 5, 0);
     this.ctx.lineTo(250 - 5, this.winH);
+    this.ctx.lineDashOffset = this.velDashed;
     this.ctx.stroke();
     this.ctx.setLineDash([0, 0]);
+    this.velDashed -= 2;
   },
   drawCar: function() {
     this.car.draw();
