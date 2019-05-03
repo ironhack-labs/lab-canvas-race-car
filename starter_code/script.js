@@ -46,12 +46,12 @@ const Race = {
     this.ctx.strokeStyle = "green";
     this.ctx.lineWidth = 20;
     this.ctx.setLineDash([60, 30]);
-    this.ctx.linedashoffset = this.velroad;
 
     this.ctx.beginPath();
     this.ctx.strokeStyle = "white";
     this.ctx.moveTo(450, 0);
     this.ctx.lineTo(450, this.winW);
+
     this.ctx.stroke();
     this.ctx.fill();
     this.ctx.closePath();
@@ -60,6 +60,7 @@ const Race = {
     this.ctx.strokeStyle = "white";
     this.ctx.moveTo(450, 0);
     this.ctx.lineTo(450, this.winW);
+
     this.ctx.stroke();
     this.ctx.fill();
     this.ctx.closePath();
