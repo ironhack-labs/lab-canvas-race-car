@@ -100,6 +100,7 @@ const RaceCar = {
       this.arrayObstacles.forEach((obstacle) => {
         obstacle.drawObstacleOrange()
         obstacle.movingObstacle()
+        obstacle.collisionObstacle()
       })
 
       if(this.count % 360 == 0){
@@ -155,6 +156,8 @@ class Obstacles {
     this.positionY= -10
     this.velo=1
     this.positionX = randomPosition
+    this.carPositionY= this.winH-160
+    this.carPositionX=this.winW/4-50
   
      if( Math.floor(Math.random()*2) ===1) {
                                                   // entre cero y uno pero nunca llega a dos
@@ -176,6 +179,23 @@ class Obstacles {
 
   movingObstacle(){                           //mueve en función al eje Y según velocidad
     this.positionY += this.velo
+  }
+  collisionObstacle(){
+   // if(this.positionY==this.carPositionY && this.positionX) this.velo=0
+//
+   //if(this.positionX<this.carPositionX+100 &&
+   // this.positionX+this.winW / 4>this.carPositionX &&
+   // this.positionY<this.carPositionY+160 &&
+   // 10+this.positionY>this.carPositionY ){
+   //   alert('Choque')
+   // }
+
+    //if( this.positionX > this.carPositionX+100 && 
+    //  this.positionX+this.winW / 4 < this.carPositionX &&
+    //  this.positionY > this.carPositionY+100 &&
+    //  this.positionY+10 < this.carPositionY ) {
+    //    alert('collision')
+    //  }
   }
 
 }
