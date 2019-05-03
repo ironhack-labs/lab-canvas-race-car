@@ -22,6 +22,7 @@ const RaceCar = {
   winW: undefined,
   winH: undefined,
   car: undefined,
+  
   init: function (id){
     this.canvasDom=document.getElementById(id)
     this.ctx=this.canvasDom.getContext('2d')
@@ -73,22 +74,26 @@ const RaceCar = {
   drawDashedLines: function(){
     this.ctx.strokeStyle = 'white'
     this.ctx.lineWidth = 20
-    this.ctx.setLineDash([60, 30])
+    this.ctx.setLineDash([80, 40])
     this.ctx.beginPath()
+    this.ctx.lineDashOffset=this.vel
     this.ctx.moveTo(this.winW/4, 0)
     this.ctx.lineTo(this.winW/4, this.winH)
     this.ctx.stroke()
     this.ctx.setLineDash([0, 0])                //para evitar que al hacer el setInterval todas las 
                                                 //líneas se conviertan en dashed!!!!!
-
+    this.vel-=1
   },
   drawAll: function (){
-    this.count = 0;
+    this.count = 0
+    this.vel=0
     setInterval(() => {
       this.clear()
       this.drawAsfalt()
       this.drawGreenLines()
       this.drawWhiteLines()
+     // this.lineDashedY+=5             
+
       this.drawDashedLines()
       this.car.draw()
       
