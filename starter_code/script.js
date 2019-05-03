@@ -5,9 +5,16 @@ const Race = {
   author: "Manuel",
   canvasDom: undefined,
   car: undefined,
+  obstacle: [],
   ctx: undefined,
   winW: undefined,
   winH: undefined,
+  velRoad: 0,
+  obstacleWidth: 150,
+  obstacleHeight: 50,
+  obstaclePadding: 10,
+  G: 0.98,
+
   init: function(id) {
     this.canvasDom = document.getElementById(id);
     this.ctx = this.canvasDom.getContext("2d");
@@ -16,7 +23,9 @@ const Race = {
     this.car = new RaceCar(this.ctx, "images/car.png", 50, 50);
     this.drawAll();
     this.setEventListeners();
+    this.velRoad -= 5;
   },
+
   setDimensions: function() {
     this.canvasDom.setAttribute("width", window.innerWidth);
     this.canvasDom.setAttribute("height", window.innerHeight);
@@ -37,6 +46,7 @@ const Race = {
     this.ctx.strokeStyle = "green";
     this.ctx.lineWidth = 20;
     this.ctx.setLineDash([60, 30]);
+    this.ctx.linedashoffset = this.velroad;
 
     this.ctx.beginPath();
     this.ctx.strokeStyle = "white";
@@ -54,17 +64,39 @@ const Race = {
     this.ctx.fill();
     this.ctx.closePath();
   },
+  createObstacles: function() {
+    for (x = 0; x < 4; x++) {
+      let obX = 200 * x + Math.round(Math.random() * 150);
+      let obY = 50 + Math.round(Math.random() * 400);
+      this.obstacle.push({ x: obX, y: obY });
+    }
+  },
+
+  drawObstacles: function() {
+    this.createObstacles();
+
+    this.ctx.beginPath();
+    for (x = 0; x < 4; x++) {
+      let obX = this.obstacle[x].x;
+      let obY = this.obstacle[x].y;
+      this.ctx.rect(obX, obY, this.obstacleWidth, this.obstacleHeight);
+    }
+    this.ctx.fillStyle = "red";
+    this.ctx.fill();
+    this.ctx.closePath();
+  },
+
   drawAll: function() {
     setInterval(() => {
       this.clear();
       this.drawFilledSquares();
       this.drawLine();
       this.car.draw();
-    }, 1000);
+      this.drawObstacles();
+    }, 100);
   },
   setEventListeners: function() {
     document.onkeyup = e => {
-      alert(e.keyCode);
       if (e.keyCode === 37) this.car.moveLeft();
       if (e.keyCode === 39) this.car.moveRight();
     };
@@ -88,6 +120,7 @@ class RaceCar {
 
     this.carWidth = 700;
   }
+
   draw() {
     this.ctx.drawImage(this.img, this.posX, 700, 100, 100);
   }
@@ -97,7 +130,7 @@ class RaceCar {
   }
 
   moveRight() {
-    if (this.posX < this.winW - this.carWidth) this.posX += this.vel;
+    if (this.posX < 1500 - this.carWidth) this.posX += this.vel;
   }
 }
 
