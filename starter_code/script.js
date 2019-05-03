@@ -29,7 +29,7 @@ const RaceCar = {
     this.car = new CarPlayer(this.ctx, "images/car.png", this.winW, this.winH);
     this.motor();
     this.setEventListeners();
-    this.obstacles = [new Obstacules(this.ctx, this.winW, this.winH)];
+    this.obstacles = [];
     // this.obstacles.makeObstacle();
   },
 
@@ -45,7 +45,7 @@ const RaceCar = {
         obstacle.makeObstacle();
         obstacle.drawMovingObstacle();
       });
-      if (this.count % 100 == 0) {
+      if (this.count % 200 == 0) {
         this.obstacles.push(new Obstacules(this.ctx, this.winW, this.winH));
       }
       this.count++;
@@ -122,6 +122,11 @@ const RaceCar = {
       if (e.keyCode === 37) this.car.moveLeft();
       if (e.keyCode === 39) this.car.moveRight();
     };
+
+    /*  colisionCarObs: function() {
+      if(this.car.positionX == )
+    }
+  */
   }
   /*   drawMovingObstacle: function() {
     setInterval(( )=> {
@@ -139,9 +144,11 @@ class CarPlayer {
     this.winW = winW;
     this.winH = winH;
     this.posX = this.winW / 2 - 25;
+    this.posY = this.windH - 80;
     this.vel = 8;
 
     this.carWidth = 50;
+    this.cardHeight = 80;
   }
   draw() {
     this.ctx.drawImage(
