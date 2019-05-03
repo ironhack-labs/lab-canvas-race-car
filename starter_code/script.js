@@ -8,7 +8,8 @@ window.onload = function() {
     DrawApp.setDimensions()
     DrawApp.drawFilledSquares()
     DrawApp.drawControlledCar("images/car.png")
-    DrawApp.setEventListeners()
+    DrawApp.setEventListeners() 
+    DrawApp.drawObstacles() 
   }
 };
     const DrawApp = {
@@ -89,8 +90,19 @@ window.onload = function() {
               if (e.keyCode === 37) this.car.moveLeft()
               if (e.keyCode === 39) this.car.moveRight()
           }
+        },
+        // ==== OBSTACLE ======
+        drawObstacles: function(){
+          this.obstacles = new Obstacles(this.ctx)
+          setInterval(() => {
+            this.clear()
+            this.obstacles.draw()
+            
+            }, 5)
+          },
+
         }
-}
+
 
 // === CAR CONSTRUCTOR ====
 class Car {
@@ -116,4 +128,19 @@ class Car {
       this.posX += this.vel
     }
 
+}
+class Obstacles {
+  constructor(ctx){
+    this.ctx = ctx
+    this.posX = 100
+    this.posY = 100
+    this.vel = 10
+    this.carWidth = 50
+  }
+  draw() {
+
+    this.ctx.fillStyle = 'green'                                             // cambia los colores de relleno
+    //this.ctx.fillRect(30, 100, 150, 30)
+    this.ctx.fillRect(300, 300, 150, 30)
+  }
 }
