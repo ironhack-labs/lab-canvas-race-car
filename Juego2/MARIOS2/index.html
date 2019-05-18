@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title> 
+    <link rel="stylesheet" href="styles.css">
+  
+</head>
+<style>
+        .button {
+          background-color: black;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+           width: 100px;
+  height: 50px;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        </style>
+<body>
+        <h1>Mario Forest</h1>  
+        <audio loop="true" autostart="true" controls preload='auto'>
+            <source src='https://www.youtube.com/audiolibrary_download?vid=452bfba08f1978fb'>
+        </audio>
+        <button class="button" value="Refresh Page" onClick="history.go(0)">Inicio</button>
+    <canvas id="canvas" width="600" height="420"></canvas>
+   
+    <script src="./main.js"></script>
+   
+</body>
+</html>
+
