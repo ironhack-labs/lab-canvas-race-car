@@ -1,8 +1,8 @@
 import {GameEntity} from "./GameEntity.js";
 import {Vector} from "./Vector.js";
-import {ConfigGame} from "./ConfigGame.js";
 
-export class FactoryCar {
+
+export class FactoryObstaculo {
 
     constructor(canvas) {
 
@@ -12,30 +12,22 @@ export class FactoryCar {
 
     }
 
-    exe(context,image) {
+    exe(context, y) {
 
-        let c = new GameEntity(image);
 
-        const relwh = image.width / image.height;
-        let carH = ConfigGame.carH;
-        let carW = carH * relwh;
+        let obstaculo = new GameEntity(null);
 
-        let xIni = (this.canvasW - carW) / 2;
-        let yIni = (this.canvasH - carH *1.1);
+      //  obstaculo.w=Math.random(this.canvasW-)
 
         //son 5pox para los espejos de lcarro
-        let limitePista1 = ConfigGame.limiteXIni(this.canvasW)+5;
-        let limitePista2 = ConfigGame.limiteXFin(this.canvasW)-carW+5;
-
-        let rangoMovX = [limitePista1, limitePista2];
+        let limitePista1 = ConfigGame.limiteXIni(this.canvasW);
+        let limitePista2 = ConfigGame.limiteXFin(this.canvasW);
 
 
-
-        c.posicion.set(xIni, yIni);
-
+        obstaculo.posicion.set(xIni, yIni);
 
 
-        c.draw = function () {
+        obstaculo.draw = function () {
 
             const img = this.getImage();
 
@@ -52,7 +44,7 @@ export class FactoryCar {
 
         };
 
-        c.updateVelocidadX = function (deltaX) {
+        obstaculo.updateVelocidadX = function (deltaX) {
             this.velocidad.x = deltaX;
             this.posicion.x += this.velocidad.x;
 
@@ -66,28 +58,28 @@ export class FactoryCar {
         };
 
 
-        c.moveR = function () {
+        obstaculo.moveR = function () {
           this.updateVelocidadX(10);
         };
 
-        c.moveL = function () {
+        obstaculo.moveL = function () {
             this.updateVelocidadX(-10);
         };
 
-        c.updateVelocidadY = function (deltaY) {
+        obstaculo.updateVelocidadY = function (deltaY) {
             this.velocidad.y = deltaY;
             this.posicion.y += this.velocidad.y;
             this.draw();
         };
 
-        c.moveU = function () {
+        obstaculo.moveU = function () {
             this.updateVelocidadY(-10);
         };
 
-        c.moveD = function () {
+        obstaculo.moveD = function () {
             this.updateVelocidadY(10);
         };
 
-        return c;
+        return obstaculo;
     }
 }

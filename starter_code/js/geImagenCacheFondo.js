@@ -1,7 +1,4 @@
-export let ConfigFondo =
-{
-    deltaPista:25
-}
+import {ConfigGame} from './ConfigGame.js';
 
 export function getImagenCacheFondo(canvas) {
 
@@ -13,8 +10,8 @@ export function getImagenCacheFondo(canvas) {
 
     let canvasW = canvas.width;
     let canvasH = canvas.height;
-    let deltaPista = ConfigFondo.deltaPista;
-    let rayaW = 10;
+    let deltaPista = ConfigGame.deltaPista;
+    let rayaW = ConfigGame.rayaW;
     let rayaCentroH = 10;
 
     ctx.fillStyle = '#808080';
@@ -23,12 +20,14 @@ export function getImagenCacheFondo(canvas) {
     //las rayas
     ctx.fillStyle = '#FFFFFF';
     //izq
-    ctx.fillRect(deltaPista + rayaW, 0, rayaW, canvasH);
+    ctx.fillRect(ConfigGame.limiteXIni(canvasW), 0, rayaW, canvasH);
     //dere
-    ctx.fillRect(canvasW - deltaPista - rayaW * 2, 0, rayaW, canvasH);
+    ctx.fillRect(ConfigGame.limiteXFin(canvasW), 0, rayaW, canvasH);
+
+
     //centro
     let numCentro = Math.floor(canvasH / rayaCentroH) + 1;
-    let xRayaCentro = (canvasW + rayaW / 2) / 2;
+    let xRayaCentro = (canvasW + rayaW) / 2;
 
     for (let i = 1; i < numCentro; i++) {
         ctx.fillRect(xRayaCentro, (i - 0.5) * rayaCentroH, rayaW / 2, rayaCentroH / 2);
