@@ -43,7 +43,7 @@ window.onload = function () {
 
             let key = event.key;
 
-            console.log(key);
+            console.log( event);
 
             if (key === "ArrowLeft") {
                 fondo.draw();
@@ -52,6 +52,13 @@ window.onload = function () {
             } else if (key === "ArrowRight") {
                 fondo.draw();
                 car.moveR();
+
+            } else if (key === "ArrowUp") {
+                fondo.draw();
+                car.moveU();
+            } else if (key === "ArrowDown") {
+                fondo.draw();
+                car.moveD();
             }
 
         };

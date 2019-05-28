@@ -55,12 +55,27 @@ export class FactoryCar {
             this.draw();
         };
 
+
         c.moveR = function () {
-          this.updateVelocidadX(30);
+          this.updateVelocidadX(10);
         };
 
         c.moveL = function () {
-            this.updateVelocidadX(-30);
+            this.updateVelocidadX(-10);
+        };
+
+        c.updateVelocidadY = function (deltaY) {
+            this.velocidad.y = deltaY;
+            this.posicion.y += this.velocidad.y;
+            this.draw();
+        };
+
+        c.moveU = function () {
+            this.updateVelocidadY(-10);
+        };
+
+        c.moveD = function () {
+            this.updateVelocidadY(10);
         };
 
         return c;
