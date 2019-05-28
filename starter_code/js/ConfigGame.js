@@ -1,6 +1,7 @@
 export let ConfigGame =
     {
         deltaPista: 25,
+        numObstaculos:3,
         rayaW: 10,
         limiteXIni: function () {
             return ConfigGame.deltaPista + ConfigGame.rayaW*2

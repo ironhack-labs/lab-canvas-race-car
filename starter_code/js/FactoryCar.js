@@ -46,12 +46,10 @@ export class FactoryCar {
 
             const img = this.getImage();
 
-
             context.drawImage(
                 img,
                 0, 0,
                 img.width, img.height,
-
                 this.posicion.x, this.posicion.y,
                 carW, carH
             );

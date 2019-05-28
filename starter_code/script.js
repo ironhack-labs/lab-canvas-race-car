@@ -5,6 +5,7 @@ import {FactoryFondo} from "./js/FactoryFondo.js";
 import {FactoryObstaculo} from "./js/FactoryObstaculo.js";
 import {ConfigGame} from "./js/ConfigGame.js";
 
+
 window.onload = function () {
 
     /*1 aspcoar listener*/
@@ -42,7 +43,22 @@ window.onload = function () {
 
         let carW = factoryCar.getCarW();
         let listaObstaculos = [];
-        listaObstaculos.push(factoryObs.exe(ctx, carW, 100))
+
+        /* crear los obstaculos ****************************** */
+        let yObstaculo = 400;
+        listaObstaculos.push(factoryObs.exe(ctx, carW, yObstaculo));
+
+
+        let distancia = 2*ConfigGame.carH ;
+
+        for (let i = 1; i < ConfigGame.numObstaculos; i++) {
+
+
+
+            listaObstaculos.push(factoryObs.exe(ctx, carW,  yObstaculo - distancia * i));
+
+
+        }
 
 
         listaObstaculos.draw = function () {
@@ -57,9 +73,9 @@ window.onload = function () {
             });
         };
 
-        let contadorFrame=0;
+        let contadorFrame = 0;
 
-        function renderFrame( ){
+        function renderFrame() {
 
             listaObstaculos.onAvanzaTiempo();
             fondo.onAvanzaTiempo();
@@ -72,7 +88,7 @@ window.onload = function () {
 
             contadorFrame++;
 
-            if(contadorFrame % 10 ===0){
+            if (contadorFrame % 10 === 0) {
                 console.log(`frame ${contadorFrame}`);
             }
 
@@ -86,7 +102,6 @@ window.onload = function () {
             let key = event.key;
 
 
-
             if (key === "ArrowLeft") {
                 car.moveL();
 
@@ -97,7 +112,7 @@ window.onload = function () {
 
         };
 
-       renderFrame();
+        renderFrame();
     }
 
 

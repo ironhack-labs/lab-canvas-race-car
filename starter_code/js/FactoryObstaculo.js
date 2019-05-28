@@ -67,6 +67,7 @@ export class FactoryObstaculo {
 
         obstaculo.posicion.set(limitePista1 + libre1, y);
 
+        console.log(y);
 
         obstaculo.draw = function () {
 
@@ -77,7 +78,6 @@ export class FactoryObstaculo {
 
 
         obstaculo.onAvanzaTiempo=function(){
-
             this.posicion.y+=this.velocidad.y;
         };
 
