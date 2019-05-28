@@ -18,7 +18,7 @@ export class FactoryObstaculo {
 
         let obstaculo = new GameEntity(null);
 
-        //  obstaculo.w=Math.random(this.canvasW-)
+        obstaculo.velocidad.set(0,ConfigGame.velocidadScreen);
 
         //son 5pox para los espejos de lcarro
         let limitePista1 = ConfigGame.limiteXIni()+10;
@@ -70,10 +70,6 @@ export class FactoryObstaculo {
 
 
         obstaculo.draw = function () {
-
-
-            console.log(`${this.width}, ${this.height}`);
-
 
             // context.fillStyle('red');
             context.fillRect(this.posicion.x, this.posicion.y, this.width, this.height);

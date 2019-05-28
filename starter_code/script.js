@@ -51,13 +51,30 @@ window.onload = function () {
             });
         };
 
+        let contadorFrame=0;
+
+        function renderFrame( ){
+
+            fondo.draw();
+            listaObstaculos.draw();
+            car.draw();
+
+            contadorFrame++;
+
+            if(contadorFrame % 10 ===0){
+                console.log(`frame ${contadorFrame}`);
+            }
+
+            requestAnimationFrame(renderFrame);
+        }
+
 
         document.onkeydown = function (event) {
 
 
             let key = event.key;
 
-            console.log(event);
+
 
             if (key === "ArrowLeft") {
                 car.moveL();
@@ -67,15 +84,15 @@ window.onload = function () {
                 car.moveR();
             }
 
-            fondo.draw();
-            listaObstaculos.draw();
-            car.draw();
+
+
+            renderFrame();
+
+
 
         };
 
-        fondo.draw();
-        listaObstaculos.draw();
-        car.draw();
+       renderFrame();
     }
 
 
