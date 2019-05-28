@@ -10,7 +10,6 @@ export class FactoryObstaculo {
         this.canvasH = canvas.height;
         this.canvasW = canvas.width;
 
-
     }
 
     exe(context, carW, y) {
@@ -45,7 +44,6 @@ export class FactoryObstaculo {
 
         if (libre1 < espacioLibre && libre2 < espacioLibre) {
 
-
             if (Math.random() > 0.5) {
                 libre2 = espacioLibre;
             } else {
@@ -73,7 +71,6 @@ export class FactoryObstaculo {
 
             // context.fillStyle('red');
             context.fillRect(this.posicion.x, this.posicion.y, this.width, this.height);
-
 
         };
 
