@@ -76,21 +76,21 @@ window.onload = function () {
 
         function renderFrame() {
 
-            /* evaluar el estado del juego - terminado */
-            let numObstaculosTerminados = listaObstaculos.filter(o => {
+            /* evaluar el estado del juego - terminado ***** */
+            let numObstaculosCompletados = listaObstaculos.filter(o => {
                 return o.estado === 'completado';
             }).length;
 
-            if(numObstaculosTerminados===ConfigGame.numObstaculos){
+            if (numObstaculosCompletados === ConfigGame.numObstaculos) {
                 alert('juego terminado');
                 return;
             }
 
-            /* efecto del tiempo  */
+            /* efecto del tiempo *************************** */
             listaObstaculos.onAvanzaTiempo();
             fondo.onAvanzaTiempo();
 
-            /* dibujar capas*/
+            /* dibujar capas  ***************************** */
             fondo.draw();
             listaObstaculos.draw();
             car.draw();
@@ -100,7 +100,7 @@ window.onload = function () {
 
 
             if (contadorFrame % 10 === 0) {
-                console.log(`frame ${contadorFrame} numObstaculosTerminados ${numObstaculosTerminados}`);
+                console.log(`frame ${contadorFrame} numObstaculosTerminados ${numObstaculosCompletados}`);
             }
 
             requestAnimationFrame(renderFrame);
