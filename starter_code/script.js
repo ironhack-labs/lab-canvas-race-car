@@ -16,7 +16,7 @@ window.onload = function () {
     const ctx = canvas.getContext('2d');
 
     const factoryFondo=new FactoryFondo();
-    const factoryCar=new FactoryCar();
+    const factoryCar=new FactoryCar(canvas);
 
 
     /* 3 solicitar recursos y cargar el juego*/

@@ -9,12 +9,9 @@ export class GameEntity{
         this.cacheImage=image;
     }
 
-    getSprite(){
+    getImage(){
         return this.cacheImage;
     }
 
-    draw(context){
 
-        context.drawImage(this.getSprite() , this.posicion.x, this.posicion.y)
-    }
 }
