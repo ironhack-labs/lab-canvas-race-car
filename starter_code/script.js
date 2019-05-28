@@ -49,13 +49,12 @@ window.onload = function () {
         listaObstaculos.push(factoryObs.exe(ctx, carW, yObstaculo));
 
 
-        let distancia = 2*ConfigGame.carH ;
+        let distancia = 2 * ConfigGame.carH;
 
         for (let i = 1; i < ConfigGame.numObstaculos; i++) {
 
 
-
-            listaObstaculos.push(factoryObs.exe(ctx, carW,  yObstaculo - distancia * i));
+            listaObstaculos.push(factoryObs.exe(ctx, carW, yObstaculo - distancia * i));
 
 
         }
@@ -77,19 +76,31 @@ window.onload = function () {
 
         function renderFrame() {
 
+            /* evaluar el estado del juego - terminado */
+            let numObstaculosTerminados = listaObstaculos.filter(o => {
+                return o.estado === 'completado';
+            }).length;
+
+            if(numObstaculosTerminados===ConfigGame.numObstaculos){
+                alert('juego terminado');
+                return;
+            }
+
+            /* efecto del tiempo  */
             listaObstaculos.onAvanzaTiempo();
             fondo.onAvanzaTiempo();
 
+            /* dibujar capas*/
             fondo.draw();
-            fondo.onValidarScroll();
-
             listaObstaculos.draw();
             car.draw();
 
+
             contadorFrame++;
 
+
             if (contadorFrame % 10 === 0) {
-                console.log(`frame ${contadorFrame}`);
+                console.log(`frame ${contadorFrame} numObstaculosTerminados ${numObstaculosTerminados}`);
             }
 
             requestAnimationFrame(renderFrame);

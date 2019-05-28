@@ -12,6 +12,8 @@ export class FactoryFondo {
         f.posicion.set(0, 0);
         f.velocidad.set(0, ConfigGame.velocidadScreen);
 
+
+
         let rayaW = ConfigGame.rayaW;
 
         let cacheRayas = document.createElement('canvas');
@@ -21,6 +23,7 @@ export class FactoryFondo {
         let rayaCentroH = 35;
 
         let ctxCache = cacheRayas.getContext('2d');
+
         //centro
         let separacion = 18;
         let numCentro = Math.floor(image.height / (rayaCentroH + separacion)) + 1;
@@ -50,8 +53,6 @@ export class FactoryFondo {
             );
 
 
-
-
             //las rayas se van moviendo y se dibujan dos veces
             context.drawImage(
                 cacheRayas,
@@ -70,10 +71,6 @@ export class FactoryFondo {
 
         };
 
-        f.onValidarScroll = function () {
-
-
-        };
 
 
         f.onAvanzaTiempo = function () {

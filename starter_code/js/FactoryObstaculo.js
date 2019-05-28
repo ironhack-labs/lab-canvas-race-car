@@ -17,6 +17,9 @@ export class FactoryObstaculo {
 
 
         let obstaculo = new GameEntity(null);
+        obstaculo.estado='iniciado';
+        obstaculo.canvasH=this.canvasH;
+        obstaculo.canvasW=this.canvasW;
 
         obstaculo.velocidad.set(0,ConfigGame.velocidadScreen);
 
@@ -67,7 +70,6 @@ export class FactoryObstaculo {
 
         obstaculo.posicion.set(limitePista1 + libre1, y);
 
-        console.log(y);
 
         obstaculo.draw = function () {
 
@@ -78,7 +80,13 @@ export class FactoryObstaculo {
 
 
         obstaculo.onAvanzaTiempo=function(){
-            this.posicion.y+=this.velocidad.y;
+            this.posicion.y +=this.velocidad.y;
+
+
+
+            if(this.posicion.y>this.canvasH){
+                this.estado ='completado';
+            }
         };
 
         return obstaculo;
