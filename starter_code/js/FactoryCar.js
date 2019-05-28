@@ -21,15 +21,14 @@ export class FactoryCar {
         let carW = carH * relwh;
 
         let xIni = (this.canvasW - carW) / 2;
-        let yIni = (this.canvasH - carH);
+        let yIni = (this.canvasH - carH *1.1);
 
-        let limitePista = ConfigFondo.deltaPista * 1.1;
-        let rangoMovX = [limitePista, this.canvasW - limitePista];
+        let limitePista = ConfigFondo.deltaPista * 1.5;
+        let rangoMovX = [limitePista, this.canvasW - limitePista*2.2];
 
 
         c.posicion.set(xIni, yIni);
 
-        // console.log( `${carW}, ${carH}`);
 
 
         c.draw = function () {
@@ -52,6 +51,13 @@ export class FactoryCar {
         c.updateVelocidadX = function (deltaX) {
             this.velocidad.x = deltaX;
             this.posicion.x += this.velocidad.x;
+
+            if(this.posicion.x< rangoMovX[0]){
+                this.posicion.x=rangoMovX[0];
+            }
+            if(this.posicion.x> rangoMovX[1]){
+                this.posicion.x=rangoMovX[1];
+            }
             this.draw();
         };
 

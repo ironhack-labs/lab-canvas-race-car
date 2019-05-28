@@ -52,13 +52,13 @@ window.onload = function () {
             } else if (key === "ArrowRight") {
                 fondo.draw();
                 car.moveR();
-
-            } else if (key === "ArrowUp") {
-                fondo.draw();
-                car.moveU();
-            } else if (key === "ArrowDown") {
-                fondo.draw();
-                car.moveD();
+            //
+            // } else if (key === "ArrowUp") {
+            //     fondo.draw();
+            //     car.moveU();
+            // } else if (key === "ArrowDown") {
+            //     fondo.draw();
+            //     car.moveD();
             }
 
         };
