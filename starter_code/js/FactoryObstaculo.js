@@ -75,6 +75,11 @@ export class FactoryObstaculo {
         };
 
 
+        obstaculo.onAvanzaTiempo=function(){
+
+            this.posicion.y+=this.velocidad.y;
+        };
+
         return obstaculo;
     }
 }

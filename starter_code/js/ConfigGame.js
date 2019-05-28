@@ -10,5 +10,5 @@ export let ConfigGame =
         },
         carH:100,
         obstaculoH:20,
-        velocidadScreen:40
+        velocidadScreen:1
     };

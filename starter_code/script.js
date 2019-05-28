@@ -51,9 +51,17 @@ window.onload = function () {
             });
         };
 
+        listaObstaculos.onAvanzaTiempo = function () {
+            listaObstaculos.forEach(o => {
+                o.onAvanzaTiempo();
+            });
+        };
+
         let contadorFrame=0;
 
         function renderFrame( ){
+
+            listaObstaculos.onAvanzaTiempo();
 
             fondo.draw();
             listaObstaculos.draw();
@@ -83,12 +91,6 @@ window.onload = function () {
             } else if (key === "ArrowRight") {
                 car.moveR();
             }
-
-
-
-            renderFrame();
-
-
 
         };
 
