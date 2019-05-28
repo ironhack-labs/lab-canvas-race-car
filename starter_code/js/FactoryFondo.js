@@ -5,11 +5,11 @@ export class FactoryFondo {
     constructor() {
     };
 
-    exe(image) {
+    exe(context,image) {
         let f = new GameEntity(image);
         f.posicion.set(0, 0);
 
-        f.draw = function (context) {
+        f.draw = function () {
 
             context.drawImage(this.getImage(),
                 0, 0,

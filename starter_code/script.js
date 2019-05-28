@@ -13,31 +13,51 @@ window.onload = function () {
 
     /*2 variables principales*/
     let canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
 
-    const factoryFondo=new FactoryFondo();
-    const factoryCar=new FactoryCar(canvas);
+
+    const factoryFondo = new FactoryFondo();
+    const factoryCar = new FactoryCar(canvas);
 
 
     /* 3 solicitar recursos y cargar el juego*/
     Promise.all([
         loadCar()
     ]).then(([imageCar]) => {
-        runGame(canvas, imageCar);
+
+        const ctx = canvas.getContext('2d');
+        runGame(ctx, imageCar);
     });
 
 
-
-    function runGame(canvas, imageCar) {
+    function runGame(ctx, imageCar) {
         console.log('rungame');
 
         const imgcacheFondo = getImagenCacheFondo(canvas);
 
-        let fondo= factoryFondo.exe(imgcacheFondo);
-        let car= factoryCar.exe(imageCar);
+        let fondo = factoryFondo.exe(ctx,imgcacheFondo);
+        let car = factoryCar.exe(ctx, imageCar);
 
-        fondo.draw(ctx);
-        car.draw(ctx);
+
+        document.onkeydown = function (event) {
+
+
+            let key = event.key;
+
+            console.log(key);
+
+            if (key === "ArrowLeft") {
+                fondo.draw();
+                car.moveL();
+
+            } else if (key === "ArrowRight") {
+                fondo.draw();
+                car.moveR();
+            }
+
+        };
+
+        fondo.draw();
+        car.draw();
     }
 
 

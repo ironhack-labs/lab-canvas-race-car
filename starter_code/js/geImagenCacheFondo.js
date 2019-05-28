@@ -1,14 +1,19 @@
+export let ConfigFondo =
+{
+    deltaPista:25
+}
+
 export function getImagenCacheFondo(canvas) {
 
-    const cache= document.createElement('canvas');
-    cache.width=canvas.width;
-    cache.height=canvas.height;
+    const cache = document.createElement('canvas');
+    cache.width = canvas.width;
+    cache.height = canvas.height;
 
     let ctx = cache.getContext('2d');
 
     let canvasW = canvas.width;
     let canvasH = canvas.height;
-    let deltaPista = 25;
+    let deltaPista = ConfigFondo.deltaPista;
     let rayaW = 10;
     let rayaCentroH = 10;
 
@@ -22,11 +27,11 @@ export function getImagenCacheFondo(canvas) {
     //dere
     ctx.fillRect(canvasW - deltaPista - rayaW * 2, 0, rayaW, canvasH);
     //centro
-    let numCentro = Math.floor(canvasH / rayaCentroH)+1;
-    let xRayaCentro = (canvasW + rayaW/2) / 2;
+    let numCentro = Math.floor(canvasH / rayaCentroH) + 1;
+    let xRayaCentro = (canvasW + rayaW / 2) / 2;
 
     for (let i = 1; i < numCentro; i++) {
-        ctx.fillRect(xRayaCentro, (i-0.5) * rayaCentroH  , rayaW / 2, rayaCentroH / 2);
+        ctx.fillRect(xRayaCentro, (i - 0.5) * rayaCentroH, rayaW / 2, rayaCentroH / 2);
     }
 
     return cache;
