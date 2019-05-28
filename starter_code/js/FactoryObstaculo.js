@@ -1,6 +1,7 @@
 import {GameEntity} from "./GameEntity.js";
-import {Vector} from "./Vector.js";
 import {ConfigGame} from "./ConfigGame.js";
+
+
 
 
 export class FactoryObstaculo {
@@ -69,7 +70,7 @@ export class FactoryObstaculo {
 
         obstaculo.draw = function () {
 
-            // context.fillStyle('red');
+            context.fillStyle='#870007';
             context.fillRect(this.posicion.x, this.posicion.y, this.width, this.height);
 
         };

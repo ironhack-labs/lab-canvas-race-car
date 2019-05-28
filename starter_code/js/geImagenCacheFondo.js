@@ -25,14 +25,6 @@ export function getImagenCacheFondo(canvas) {
     ctx.fillRect(ConfigGame.limiteXFin(canvasW), 0, rayaW, canvasH);
 
 
-    //centro
-    let numCentro = Math.floor(canvasH / rayaCentroH) + 1;
-    let xRayaCentro = (canvasW + rayaW) / 2;
-
-    for (let i = 1; i < numCentro; i++) {
-        ctx.fillRect(xRayaCentro, (i - 0.5) * rayaCentroH, rayaW / 2, rayaCentroH / 2);
-    }
-
     return cache;
 
 }

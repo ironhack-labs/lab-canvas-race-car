@@ -62,8 +62,11 @@ window.onload = function () {
         function renderFrame( ){
 
             listaObstaculos.onAvanzaTiempo();
+            fondo.onAvanzaTiempo();
 
             fondo.draw();
+            fondo.onValidarScroll();
+
             listaObstaculos.draw();
             car.draw();
 
