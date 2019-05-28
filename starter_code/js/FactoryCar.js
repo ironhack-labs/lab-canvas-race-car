@@ -8,8 +8,13 @@ export class FactoryCar {
 
         this.canvasH = canvas.height;
         this.canvasW = canvas.width;
+        this.carW=null;
 
 
+    }
+
+    getCarW(){
+        return this.carW;
     }
 
     exe(context,image) {
@@ -19,6 +24,8 @@ export class FactoryCar {
         const relwh = image.width / image.height;
         let carH = ConfigGame.carH;
         let carW = carH * relwh;
+
+        this.carW=carW;
 
         let xIni = (this.canvasW - carW) / 2;
         let yIni = (this.canvasH - carH *1.1);
@@ -62,7 +69,7 @@ export class FactoryCar {
             if(this.posicion.x> rangoMovX[1]){
                 this.posicion.x=rangoMovX[1];
             }
-            this.draw();
+
         };
 
 
@@ -77,7 +84,7 @@ export class FactoryCar {
         c.updateVelocidadY = function (deltaY) {
             this.velocidad.y = deltaY;
             this.posicion.y += this.velocidad.y;
-            this.draw();
+
         };
 
         c.moveU = function () {

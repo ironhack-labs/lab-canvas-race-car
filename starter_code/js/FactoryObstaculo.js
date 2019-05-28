@@ -1,5 +1,6 @@
 import {GameEntity} from "./GameEntity.js";
 import {Vector} from "./Vector.js";
+import {ConfigGame} from "./ConfigGame.js";
 
 
 export class FactoryObstaculo {
@@ -12,73 +13,52 @@ export class FactoryObstaculo {
 
     }
 
-    exe(context, y) {
+    exe(context, carW, y) {
 
 
         let obstaculo = new GameEntity(null);
 
-      //  obstaculo.w=Math.random(this.canvasW-)
+        //  obstaculo.w=Math.random(this.canvasW-)
 
         //son 5pox para los espejos de lcarro
-        let limitePista1 = ConfigGame.limiteXIni(this.canvasW);
+        let limitePista1 = ConfigGame.limiteXIni();
         let limitePista2 = ConfigGame.limiteXFin(this.canvasW);
 
+        let espacioLibre=carW*1.2;
 
-        obstaculo.posicion.set(xIni, yIni);
+        let maxW = limitePista2 - limitePista1 - espacioLibre;
+
+
+
+        let margenX1 = Math.random() * maxW;
+        let margenX2 = Math.random() * maxW;
+
+        if (margenX1 < espacioLibre) {
+            margenX1 = ConfigGame.deltaPista/2;
+        }
+
+        if (margenX2 < espacioLibre && margenX1===ConfigGame.deltaPista/2) {
+            margenX2 = espacioLibre;
+        }
+
+        obstaculo.width = limitePista2 - margenX2 -margenX1;
+        obstaculo.height=ConfigGame.obstaculoH;
+
+        obstaculo.posicion.set(limitePista1+margenX1, y);
 
 
         obstaculo.draw = function () {
 
-            const img = this.getImage();
 
-            console.log(`${img.width}, ${img.height}`);
+            console.log(`${this.width}, ${this.height}`);
 
-            context.drawImage(
-                img,
-                0, 0,
-                img.width, img.height,
 
-                this.posicion.x, this.posicion.y,
-                carW, carH
-            );
+           // context.fillStyle('red');
+            context.fillRect(this.posicion.x, this.posicion.y, this.width , this.height);
+
 
         };
 
-        obstaculo.updateVelocidadX = function (deltaX) {
-            this.velocidad.x = deltaX;
-            this.posicion.x += this.velocidad.x;
-
-            if(this.posicion.x< rangoMovX[0]){
-                this.posicion.x=rangoMovX[0];
-            }
-            if(this.posicion.x> rangoMovX[1]){
-                this.posicion.x=rangoMovX[1];
-            }
-            this.draw();
-        };
-
-
-        obstaculo.moveR = function () {
-          this.updateVelocidadX(10);
-        };
-
-        obstaculo.moveL = function () {
-            this.updateVelocidadX(-10);
-        };
-
-        obstaculo.updateVelocidadY = function (deltaY) {
-            this.velocidad.y = deltaY;
-            this.posicion.y += this.velocidad.y;
-            this.draw();
-        };
-
-        obstaculo.moveU = function () {
-            this.updateVelocidadY(-10);
-        };
-
-        obstaculo.moveD = function () {
-            this.updateVelocidadY(10);
-        };
 
         return obstaculo;
     }

@@ -2,6 +2,8 @@ import {loadCar} from "./js/loaders.js";
 import {getImagenCacheFondo} from "./js/geImagenCacheFondo.js";
 import {FactoryCar} from "./js/FactoryCar.js";
 import {FactoryFondo} from "./js/FactoryFondo.js";
+import {FactoryObstaculo} from "./js/FactoryObstaculo.js";
+import {ConfigGame} from "./js/ConfigGame.js";
 
 window.onload = function () {
 
@@ -17,6 +19,7 @@ window.onload = function () {
 
     const factoryFondo = new FactoryFondo();
     const factoryCar = new FactoryCar(canvas);
+    const factoryObs = new FactoryObstaculo(canvas);
 
 
     /* 3 solicitar recursos y cargar el juego*/
@@ -34,8 +37,19 @@ window.onload = function () {
 
         const imgcacheFondo = getImagenCacheFondo(canvas);
 
-        let fondo = factoryFondo.exe(ctx,imgcacheFondo);
+        let fondo = factoryFondo.exe(ctx, imgcacheFondo);
         let car = factoryCar.exe(ctx, imageCar);
+
+        let carW = factoryCar.getCarW();
+        let listaObstaculos = [];
+        listaObstaculos.push(factoryObs.exe(ctx, carW, 100))
+
+
+        listaObstaculos.draw = function () {
+            listaObstaculos.forEach(o => {
+                o.draw();
+            });
+        };
 
 
         document.onkeydown = function (event) {
@@ -43,27 +57,24 @@ window.onload = function () {
 
             let key = event.key;
 
-            console.log( event);
+            console.log(event);
 
             if (key === "ArrowLeft") {
-                fondo.draw();
                 car.moveL();
 
+
             } else if (key === "ArrowRight") {
-                fondo.draw();
                 car.moveR();
-            //
-            // } else if (key === "ArrowUp") {
-            //     fondo.draw();
-            //     car.moveU();
-            // } else if (key === "ArrowDown") {
-            //     fondo.draw();
-            //     car.moveD();
             }
+
+            fondo.draw();
+            listaObstaculos.draw();
+            car.draw();
 
         };
 
         fondo.draw();
+        listaObstaculos.draw();
         car.draw();
     }
 
