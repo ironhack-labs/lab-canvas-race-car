@@ -10,7 +10,7 @@ export class GameEntity{
     }
 
     getSprite(){
-        return image;
+        return this.cacheImage;
     }
 
     draw(context){

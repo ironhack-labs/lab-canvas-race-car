@@ -9,3 +9,12 @@ export function loaderImage(url) {
         image.src = url;
     })
 }
+
+
+export function loadCar() {
+    return loaderImage('images/car.png').then(
+        image => {
+            return image;
+        }
+    )
+}

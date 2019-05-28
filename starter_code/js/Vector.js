@@ -7,4 +7,9 @@ export class Vector {
         this.x=x;
         this.y=y;
     }
+
+    setVector(v){
+        this.x=v.x;
+        this.y=v.y;
+    }
 }
