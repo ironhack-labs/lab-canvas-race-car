@@ -1,8 +1,10 @@
+/* Main Styling */
+
 body {
   padding: 0;
   text-align: center;
 }
-
+/* Game intro Styling */
 .game-intro {
   float: left;
   padding: 0% 10%;
@@ -10,16 +12,21 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
+
+/* Logo */
 
 .logo-img {
   width: 350px;
 }
+/* Img */
 
 .arrows-img {
   width: 150px;
 }
+
+/* Button styling */
 
 body button {
   font-size: 30px;
@@ -32,9 +39,11 @@ body button {
   margin-bottom: 20px;
 }
 
+/* Game Board and Canvas */
+
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }
 
 canvas {
@@ -44,5 +53,4 @@ canvas {
 
 #car-canvas {
   border: red solid 10px;
-
 }
