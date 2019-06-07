@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <style>
-    
-  </style>
-  <script type="text/javascript" src="script.js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style></style>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="game-intro">
+      <img src="./images/logo.png" alt="" class="logo-img" />
+      <br />
+      <button id="start-button">StartGame</button>
+      <p>Use the left and right arrow to control the car!</p>
+      <img src="./images/arrows.png" alt="" class="arrows-img" />
+    </div>
+    <div id="game-board">
+      <canvas id="canvas" width="550" height="800"></canvas>
+      <h2>SCORE: <span id="score">0</span></h2>
+    </div>
 
-  </script>
-  <link rel="stylesheet" href="style.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="game-intro">
-    <img src="./images/logo.png" alt="" class="logo-img">
-    <br>
-    <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
-    <img src="./images/arrows.png" alt="" class="arrows-img">
-  </div>
-  <div id="game-board">
-    <canvas id="canvas" width="550" height="800"></canvas>
-    <h2>SCORE: <span id="score">0</span></h2>
-    
-  </div>
-  
-</body>
+    <!-- Race Car Lab Project - Ironhack 2019 -->
+    <!-- This was one of my favorite labs. Used several tricks, including the track duplication and scroll, to achieve the goals. -->
+  </body>
 </html>
