@@ -1,19 +1,22 @@
 /** @type HTMLCanvasElement */
  class Game {
    constructor() {
-     this.canvasDOMEl = undefined
-     this.ctx = undefined
-     this.w = 600
-     this.h = 600
-     this.greenField 
-     this.greyRoad
-     this.offset = 0;
-     this.car = new Image()
-     this.car.src = "./images/car.png"
-     this.background = "green"
-  
-  
-
+    this.canvasDOMEl = undefined;
+    this.ctx = undefined;
+    this.w = 600;
+    this.h = 600;
+    this.car = new Image();
+    this.car.src = "images/car.png"
+    this.driver = new Image();
+    this.driver.src = "images/sitoDriver.png"
+    this.background = "green"
+    this.dataModel = {
+      x: this.w/2 - 35,
+      y: this.h - 100
+    }
+    this.intervalId = undefined;
+    this.counter = 0;
+    
 
    }
 
@@ -24,14 +27,23 @@
      this.canvasDOMEl.setAttribute("height", this.h);
      this.canvasDOMEl.setAttribute("width", this.w)
      
-     
-     this.setDimensions()
-     //  this.drawAll()
+     this.intervalId = setInterval(() => {
+     this.counter++;
+     this.clearRoad();
+     this.drawAll();
+     this.carMovement()
+
+
+     }, 1000/60)
+
+    
+    
+
+
    }
 
    setDimensions = () => {
      //Verde
-     console.log("hola")
      this.canvasDOMEl.style.backgroundColor = this.background
 
      //Grey
@@ -52,94 +64,51 @@
 
    }
 
-  // drawAll = () => {
-  //   this.drawCar()
-    
-  // }
+   offsetLine() {
+    this.ctx.beginPath()
+    this.ctx.setLineDash([40,30])
+    this.ctx.lineDashOffset = -this.counter;
+    this.ctx.moveTo(this.w/2-this.w/120, 0)
+    this.ctx.lineTo(this.w/2-this.w/120, this.h)
+    this.ctx.lineWidth = this.w/60
+    this.ctx.strokeStyle = `rgb(255,255,255)`
+    this.ctx.stroke()
+   }
+   
+   clearRoad = () => {
+    this.ctx.clearRect(0,0, this.w, this.h)
+   }
 
- 
+   drawCar = () => {
+     this.ctx.drawImage(this.car, this.dataModel.x, this.dataModel.y, this.w/10, this.h/10)
+     this.ctx.drawImage(this.driver, this.dataModel.x, this.dataModel.y, this.w/20, this.h/20)
+   }
 
-
-
-
-
-
+  drawAll = () => {
+    this.setDimensions()
+    this.offsetLine()
+    this.drawCar() 
+    //obstaculos
   }
 
+  carMovement = () => {
+    const positionInc = 90;
+    document.onkeydown = (e) => {
+      switch (e.keyCode) {
+        case 39: //goes to the right
+          if (this.dataModel.x < 420) {
+            this.dataModel.x += positionInc
+            break;
+          }
 
+        case 37: //goes to the left
+        if (this.dataModel.x > 90) {
+            this.dataModel.x -= positionInc
+            break;
+        }
+      }
+    }
+    this.drawAll()
+  }
 
-
-
-
-
-// var canvasDOMEl = document.getElementById("#canvas");
-
-// /** @type CanvasRenderingContext2D */
-// var ctx = canvasDOMEl.getContext("2d");
-
-
-// var w = window.innerWidth;
-// var h = window.innerHeight;
-// var w2 = w / 2;
-// var h2 = h / 2;
-
-// canvasDOMEl.setAttribute("height", h2);
-// canvasDOMEl.setAttribute("width", w2);
-
-// function clearScreen() {
-//     ctx.clearRect(0, 0, w, h);
-// }
-
-// const squareDimensions = 100
-
-// // this holds the object position in the screen
-// // and has to be updated everytime we press the cursors
-// let dataModel = {
-//     x: w2 - squareDimensions/2,
-//     y: h2 - squareDimensions/2
-// }
-
-// window.onkeydown = function (e) {
-//     console.log(e.keyCode)
-
-//     const positionInc = 30
-
-//     switch (e.keyCode) {
-//         case 39: //goes to the right
-//             dataModel.x+=positionInc
-//             break;
-
-//         case 37: //goes to the left
-//             dataModel.x-=positionInc
-//             break;
-
-//         case 38: //goes up
-//             dataModel.y-=positionInc
-//             break;
-
-//         case 40: //goes down
-//             dataModel.y+=positionInc
-//             break;
-//     }
-
-//     // to be completed by my favourite students :)
-//     if (dataModel.y < -squareDimensions) {
-//         dataModel.y = h
-//     }
-
-//     paintSquare()
-
-// }
-
-// paintSquare()
-
-// function paintSquare() {
-//     clearScreen()
-
-//     ctx.beginPath();
-//     ctx.rect(dataModel.x, dataModel.y, squareDimensions, squareDimensions)
-//     ctx.fill();
-//     ctx.closePath();
-
-
-// }
+}
