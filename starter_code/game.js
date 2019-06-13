@@ -28,10 +28,10 @@ function setCanvasDim () {
 setCanvasDim()
 drawRectGrey()
 drawGreenLines()
-drawWhiteLines()
+// drawWhiteLines()
 drawWhiteMidLine()
-drawCar()
 // moveMidLine ()
+// drawCar()
 
 function drawRectGrey() {
   ctx.fillStyle = `#808080`
@@ -66,15 +66,34 @@ function drawWhiteLines () {
   ctx.closePath();
 }
 function drawWhiteMidLine() {
-  ctx.strokeStyle = `#FFFFFF`
-  ctx.lineWidth = 10;
-  ctx.beginPath();
-ctx.setLineDash([30, 30]);
-ctx.lineDashOffset = 0
-ctx.moveTo(w/2,0)
-  ctx.lineTo(w/2,h)
-  ctx.stroke()
-  ctx.closePath();
+//   ctx.strokeStyle = `#FFFFFF`
+//   ctx.lineWidth = 10;
+//   ctx.beginPath();
+// ctx.setLineDash([30, 30]);
+// ctx.lineDashOffset = 10
+// ctx.moveTo(w/2,h)
+// // dashedLineY ++
+//   ctx.lineTo(w/2,h)
+//   ctx.stroke()
+//   ctx.closePath();
+// ctx.beginPath()
+// ctx.lineWidth = 4
+// ctx.strokeStyle = "#f2f2f2"
+// ctx.setLineDash([50, 10])
+// ctx.moveTo(w / 2 , 800)
+// // dashedLineY ++
+// ctx.lineTo(w / 2, 0)
+// ctx.stroke()
+ctx.beginPath()
+ctx.moveTo(w/2,separatorY)
+ctx.setLineDash([20,8])
+ctx.strokeStyle = "white"
+ctx.lineWidth = 5;
+ctx.lineTo(w/2,0)
+ctx.stroke()
+ctx.closePath();
+
+
 }
 // 
 function drawCar() {
@@ -108,13 +127,28 @@ window.onkeydown = function (e) {
   }
   drawCar()
 }
+var separatorY = 700
 
-// function moveMidLine (){
-//   setInterval (() => {
-//     // clearInterval()
-//     ctx.lineDashOffset+=50
-//     drawWhiteMidLine()
-//   },)}
+function moveMidLine (){
+  setInterval (() => {
+   
+    separatorY += 2
+//     ctx.strokeStyle = `#FFFFFF`
+//   ctx.lineWidth = 10;
+//   ctx.beginPath();
+// ctx.setLineDash([30, 30]);
+// ctx.lineDashOffset = i 
+// // ctx.translate(i,dataCar.y)
+// ctx.moveTo(w/2,0)
+//   ctx.lineTo(w/2,h)
+//   ctx.stroke()
+//   ctx.closePath();
+// drawWhiteMidLine()
+drawCar()
+   
+  },60)}
+
+  moveMidLine()
   
 
 
