@@ -8,20 +8,24 @@ const images = {
   background: 'images/car.png',
   car: 'http://pluspng.com/img-png/car-png-top-view-png-hatchback-car-top-view-png-clipart-1092.png'
 }
+let obsArr = []
+let frames = 0
+let interval
+let points = 0
 
 
 //CLASES
-class RaceTrack {
-  constructor(img) {
-    this.x = 0
-    this.y = 0
-    this.width = canvas.width
-    this.height = canvas.height
-    this.img = new Image()
-    this.img.src = img
+class Obstacle {
+  constructor(x, width) {
+    this.x = x
+    this.y = -100
+    this.width = width
+    this.height = 40;
   }
-  draw() {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+  draw(){
+    ctx.fillStyle = "darkred"
+    ctx.fillRect(this.x,this.y, this.width, this.height)
+    this.y+=3
   }
 }
 
@@ -38,12 +42,20 @@ class Car {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
   }
   moveRight(){
-    if(this.x > canvas.width - this.width - 30) return
-    this.x += 10
+    if(this.x > canvas.width - this.width - 15) return
+    this.x += 15
   }
   moveLeft(){
-    if(this.x < 0 + 30) return
-    this.x -= 10
+    if(this.x < 0 + 12) return
+    this.x -= 15
+  }
+  isTouching(obstacle) {
+    return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.y + this.height > obstacle.y
+    )
   }
 }
 
@@ -61,11 +73,12 @@ window.onload = function() {
 };
 
 function startGame() {
-  setInterval(update, 1000/60)
+  if(interval) return
+  interval = setInterval(update, 1000/100)
 }
 
 function drawTrack (){
-  ctx.fillStyle = 'green'
+  ctx.fillStyle = 'grey'
   ctx.fillRect(0,0, canvas.width, canvas.height)
   ctx.beginPath()
   ctx.strokeStyle = 'white'
@@ -85,6 +98,45 @@ function update() {
   ctx.clearRect(0,0, canvas.width, canvas.height)
   drawTrack()
   car.draw()
+  drawObstacles()
+  checkCollision()
+  checkPoints()
+  console.log(" alskjflasjfdljasljdfl ", points)
+  frames++
+}
+
+function generateObstacles() {
+  let rndX = Math.random() * canvas.width - 10
+  let rndW = Math.random() * (canvas.width - 300) +20
+  obsArr.push(new Obstacle(rndX, rndW))
+}
+
+function drawObstacles() {
+  if(frames % 200 === 0) {
+    generateObstacles()
+  }
+  obsArr.map(obstacle => {
+    obstacle.draw()
+  })
+}
+
+function checkCollision(){
+  obsArr.map(obstacle => {
+    if(car.isTouching(obstacle)) {
+      gameOver()
+    }
+  })
+}
+function checkPoints(){
+  obsArr.map(obstacle =>{
+    if(obstacle.y > canvas.height){
+      points++;
+    }
+  })
+}
+function gameOver(){
+  clearInterval(interval)
+  interval = false
 }
 
 //EVENTS
