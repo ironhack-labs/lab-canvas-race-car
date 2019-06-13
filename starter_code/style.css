@@ -38,8 +38,7 @@ body button {
 }
 
 canvas{
-  border: black 2px solid;
-  display: flex;
+  border: 2px solid black;
 }
 canvas div .green{
   background-color: green;
