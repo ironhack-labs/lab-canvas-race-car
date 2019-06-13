@@ -36,3 +36,15 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+canvas{
+  border: black 2px solid;
+  display: flex;
+}
+canvas div .green{
+  background-color: green;
+  width: 100vw;
+  height: 100vh;
+  position: absolute
+
+}
