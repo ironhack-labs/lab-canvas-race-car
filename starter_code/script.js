@@ -29,6 +29,25 @@ window.onload = function() {
         paintCar()
     }
 
+    window.onkeydown = function(e) {
+        const positionInc = 15
+        switch (e.keyCode) {
+            case 39:
+                dataCar.x += positionInc
+                break;
+            case 37:
+                dataCar.x -= positionInc
+                break;
+        }
+        if (dataCar.x < 0) {
+            dataCar.x = 0
+        }
+        if (dataCar.x > canvasWidth - carWidth) {
+            dataCar.x = canvasWidth - carWidth
+        }
+        paintCar()
+    }
+
     function startGame() {
 
     }
