@@ -2,7 +2,10 @@ body {
   padding: 0;
   text-align: center;
 }
-
+.container{
+  display: flex;
+  justify-content: space-around;
+}
 .game-intro {
   float: left;
   padding: 0% 10%;
