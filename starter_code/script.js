@@ -10,8 +10,25 @@ window.onload = function() {
     canvasDOMEl.setAttribute("width", canvasWidth)
     canvasDOMEl.setAttribute("height", canvasHeight)
         //offset for the middle
-    var offset = 0
+    var counter = 0
+    var offset = counter
 
+    //FIRST PAINTING THE ROAD
+    loadBoard()
+    drawMiddleLine()
+
+    //EVENTS
+    document.getElementById("start-button").onclick = function() {
+        startGame();
+    };
+
+    function startGame() {
+        movingTheLine()
+        initObstacles()
+        moveObstacles()
+    }
+
+    //CAR INFORMATION ========================
     var car = new Image();
     car.src = "./images/car.png"
     const carWidth = 50
@@ -20,26 +37,23 @@ window.onload = function() {
         x: canvasWidth / 2 - carWidth / 2,
         y: canvasHeight - carHeigth - 20
     }
-
-    let obstacle = {
-        widthObstacle: Math.floor(Math.random() * (270 - carWidth + 1) + carWidth),
-        xPos: Math.floor(Math.random() * ((70 - carWidth) + 1) + 70),
-        yPos: 0,
-        thicknessObstacle: 10
-    }
-    let arrayObstacles = []
-
-    loadBoard()
-    movingTheLine()
-
-
-    document.getElementById("start-button").onclick = function() {
-        startGame();
-    };
-
     car.onload = function() {
         paintCar()
     }
+
+    //OBSTACLE INFORMATION ========================
+    var intervalID
+
+    class obstacle {
+        constructor() {
+            this.widthObstacle = Math.floor(Math.random() * (270 - carWidth + 1) + carWidth)
+            this.xPos = Math.floor(Math.random() * ((270 - carWidth) + 1) + 70)
+            this.yPos = 0
+            this.thicknessObstacle = 10
+        }
+    }
+
+    var arrayObstacles = []
 
     window.onkeydown = function(e) {
         const positionInc = 15
@@ -60,10 +74,7 @@ window.onload = function() {
         paintCar()
     }
 
-    function startGame() {
-
-    }
-
+    //BOARD METHODS
     function loadBoard() {
         //Grass
         ctx.beginPath()
@@ -121,38 +132,10 @@ window.onload = function() {
         }, 35);
     }
 
+
+    //CAR METHODS
     function paintCar() {
         ctx.drawImage(car, dataCar.x, dataCar.y, carWidth, carHeigth)
-    }
-
-    function initObstacles() {
-        for (cont = 0; cont < arrayObstacles.length; cont++) {
-            arrayObstacles[cont] = new obstacle;
-        }
-    }
-
-    function removeObstacle() {
-        arrayObstacles.shift
-    }
-
-    function addObstacle() {
-        arrayObstacles.pop
-    }
-
-    function moveObstacle(increment) {
-        for (cont = 0; cont < arrayObstacles.length; cont++) {
-            arrayObstacles[cont].yPos += increment
-        }
-    }
-
-    function printObstacle() {
-        for (cont = 0; cont < arrayObstacles.length; cont++) {
-            ctx.beginPath()
-            ctx.rect(arrayObstacles.xPos, arrayObstacles.yPos, arrayObstacles.width, arrayObstacles.height)
-            ctx.fillStyle = "rgb(135,0,7)"
-            ctx.fill()
-            ctx.closePath()
-        }
     }
 
     function hasColisioned() {
@@ -167,5 +150,60 @@ window.onload = function() {
             return false
         }
     }
+
+    //OBSTACLES METHODS
+    function initObstacles() {
+        for (cont = 0; cont < 1; cont++) {
+            addObstacle()
+        }
+    }
+
+    function removeObstacle() {
+        arrayObstacles.shift
+    }
+
+    function addObstacle() {
+        let newObstacle = new obstacle
+        arrayObstacles.push(newObstacle)
+    }
+
+    function moveObstacle(increment) {
+        for (cont = 0; cont < arrayObstacles.length; cont++) {
+            arrayObstacles[cont].yPos += increment
+        }
+    }
+
+    function printObstacle() {
+        for (cont = 0; cont < arrayObstacles.length; cont++) {
+            ctx.save()
+            ctx.beginPath()
+            ctx.rect(arrayObstacles[cont].xPos, arrayObstacles[cont].yPos, arrayObstacles[cont].widthObstacle, arrayObstacles[cont].thicknessObstacle)
+            ctx.fillStyle = "rgb(135,0,7)"
+            ctx.fill()
+            ctx.closePath()
+            ctx.restore()
+        }
+    }
+
+    function moveObstacles() {
+        intervalID = setInterval(() => {
+            ctx.save()
+            clearRoad()
+            loadBoard()
+            drawMiddleLine()
+                // movingTheLine()
+            moveObstacle(counter)
+            printObstacle()
+            paintCar()
+            if (arrayObstacles[0].yPos > canvasDOMEl.height + arrayObstacles[0].thicknessObstacle) {
+                removeObstacle()
+                addObstacle()
+            }
+            counter++;
+            ctx.restore()
+        }, 60)
+    }
+
+
 
 };
