@@ -6,28 +6,11 @@ window.onload = function () {
     startGame();
   };
 
+  // Images
   let img = {
     imgCar: './images/car.png'
   }
 
-  // Draw Line function
-  const drawLine = (xMove, yMove, xLine, yLine, strokeWidth, color) => {
-    context.beginPath()
-    context.lineWidth = strokeWidth
-    context.moveTo(xMove, yMove)
-    context.strokeStyle = color
-    context.lineTo(xLine, yLine)
-    context.stroke()
-  }
-
-
-  const middleLines = (num) => {
-    let sum = 0
-    for (let i = 0; i < num; i++) {
-      drawLine(canvas.width / 2, 20+sum, canvas.width / 2, 50+sum, 5, 'white')
-      sum += 50
-    }
-  }
   class Car {
     constructor(x, y, img) {
       this.x = x
@@ -42,7 +25,7 @@ window.onload = function () {
     } 
     
     moveRight() {
-      if(this.x > canvas.width - this.width - 10) return
+      // if(this.x > canvas.width - this.width - 10) return
       this.x += 10
     }
     
@@ -72,6 +55,25 @@ window.onload = function () {
 
   const car = new Car(100, 100, img.imgCar)
 
+    // Draw Line function
+    const drawLine = (xMove, yMove, xLine, yLine, strokeWidth, color) => {
+      context.beginPath()
+      context.lineWidth = strokeWidth
+      context.moveTo(xMove, yMove)
+      context.strokeStyle = color
+      context.lineTo(xLine, yLine)
+      context.stroke()
+    }
+  
+  
+    const middleLines = (num) => {
+      let sum = 0
+      for (let i = 0; i < num; i++) {
+        drawLine(canvas.width / 2, 20+sum, canvas.width / 2, 50+sum, 5, 'white')
+        sum += 50
+      }
+    }
+
   // Init
   const drawRoad = () => {
     // Background
@@ -90,10 +92,32 @@ window.onload = function () {
     // Middle lines
     middleLines(12)
 
+    // Car
     car.draw()
   }
   
-  function startGame() {
+  // Update function. 
+  function update() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
     drawRoad()
+    car.draw()
   }
+
+  function startGame() {
+    setInterval(update, 1000/120)
+  }
+
+
+addEventListener("keydown", (e) => {
+  if (e.keyCode === 39) {
+    car.moveRight()       
+  } else if(e.keyCode === 38) {
+    car.moveUp()
+  } else if(e.keyCode === 40) {
+    car.moveDown()
+  } else if(e.keyCode === 37) {
+    car.moveLeft()
+    }
+  })
+
 };
