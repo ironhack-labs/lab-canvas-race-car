@@ -1,17 +1,33 @@
 window.onload = function() {
     /** @type HTMLCanvasElement */
+    const canvasWidth = 420
+    const canvasHeight = 700
     var canvasDOMEl = document.querySelector("#road");
     var ctx = canvasDOMEl.getContext("2d")
-    canvasDOMEl.setAttribute("width", 420)
-    canvasDOMEl.setAttribute("height", 700)
+    canvasDOMEl.setAttribute("width", canvasWidth)
+    canvasDOMEl.setAttribute("height", canvasHeight)
     var offset = 0
+
+    var car = new Image();
+    car.src = "./images/car.png"
+    const carWidth = 60
+    const carHeigth = 100
+    let dataCar = {
+        x: canvasWidth / 2 - carWidth / 2,
+        y: canvasHeight - carHeigth - 20
+    }
 
     loadBoard()
     movingTheLine()
 
+
     document.getElementById("start-button").onclick = function() {
         startGame();
     };
+
+    car.onload = function() {
+        paintCar()
+    }
 
     function startGame() {
 
@@ -20,7 +36,7 @@ window.onload = function() {
     function loadBoard() {
         //Grass
         ctx.beginPath()
-        ctx.rect(0, 0, 420, 700)
+        ctx.rect(0, 0, canvasWidth, canvasHeight)
         ctx.fillStyle = "rgb(0, 128, 0)"
         ctx.fill()
 
@@ -46,8 +62,9 @@ window.onload = function() {
         ctx.setLineDash([20, 40])
         ctx.strokeStyle = 'white'
         ctx.lineDashOffset = -offset
-        ctx.moveTo(205, 0)
-        ctx.lineTo(205, 700)
+        ctx.moveTo(canvasWidth / 2, 0)
+        ctx.lineTo(canvasWidth / 2, 700)
+        ctx.lineWidth = 3
         ctx.stroke()
     }
 
@@ -65,6 +82,12 @@ window.onload = function() {
             clearRoad()
             loadBoard()
             movingTheLine()
+            paintCar()
         }, 35);
+    }
+
+    function paintCar() {
+
+        ctx.drawImage(car, dataCar.x, dataCar.y, carWidth, carHeigth)
     }
 };
