@@ -69,12 +69,12 @@ function clearScreen(){
 ///////////////////////////////////////////
 ///////Parte Delorean
 var imgDelorean = new Image();
-imgDelorean.src ='./images/car.png';
+imgDelorean.src ='./images/car.png'; ///./images/DeloreanR.png
 
 imgDelorean.onload = function(){
   paintDelorean()
 }
-var deloreanSize = 60
+var deloreanSize = 60 
 
 
 //var obstacle = 100
