@@ -36,3 +36,13 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.score {
+  width: 100%;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -8,18 +8,24 @@
 
   </script>
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Island Racer</title>
 </head>
 <body>
-  <div class="game-intro">
-    <img src="./images/logo.png" alt="" class="logo-img">
-    <br>
-    <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
-    <img src="./images/arrows.png" alt="" class="arrows-img">
-  </div>
-  <div id="game-board">
-    <canvas height="600" width="400"></canvas>
+  <div class="container">
+    <div class="score">
+      <p>SCORE</p>
+      <p id="score">0</p>
+    </div>
+    <div class="game-intro">
+      <img src="./images/logo.png" alt="" class="logo-img">
+      <br>
+      <button id="start-button">StartGame</button>
+      <p>Use the left and right arrow to control the car!</p>
+      <img src="./images/arrows.png" alt="" class="arrows-img">
+    </div>
+    <div id="game-board">
+      <canvas height="550" width="400"></canvas>
+    </div>
   </div>
 </body>
 </html>
