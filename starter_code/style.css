@@ -34,5 +34,10 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 0px 0px;
+    border: 1px solid black;
 }
+
+/* canvas{
+  background-color: green;
+}  */

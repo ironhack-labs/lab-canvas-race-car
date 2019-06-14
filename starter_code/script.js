@@ -1,9 +1,15 @@
+let game = new Game();
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    startGame();
+    // setCanvasDimensions();
+    startGame()
   };
 
-  function startGame() {
 
+
+
+  function startGame() {
+    var canvas = document.querySelector("#ourGame")
+    game.init(canvas)
   }
 };
