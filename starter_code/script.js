@@ -1,47 +1,88 @@
 window.onload = function () {
   let canvas = document.querySelector('canvas')
   let context = canvas.getContext('2d')
+  let obstacles = []
+  let frames=0
 
-  document.getElementById("start-button").onclick = function () {
+  let button = document.getElementById("start-button")
+  button.onclick = function (e) {
+    button.disabled = true; 
     startGame();
-  };
+  }
 
   // Images
   let img = {
     imgCar: './images/car.png'
   }
 
+//crear rectangulo
+
+
+  class Obstacles {
+    constructor(x, y, xf,yf) {
+      this.x = x
+      this.y = y
+      this.xf=xf
+      this.yf=yf
+    }
+
+    draw() {
+      context.beginPath()
+      context.fillStyle="brown"
+      context.fillRect(this.x, this.y, this.xf, this.yf);
+      context.stroke()
+      this.y++
+    }
+  }
+  function drawObstacles() {
+    if(frames % 250 === 0) {
+    generateObstacles()    
+  } 
+    obstacles.forEach(obst => {
+    obst.draw()
+  })
+}
+
+  function generateObstacles() {
+    let rndX= Math.floor((Math.random() * 50) + 61);
+    let rndXa= Math.floor((Math.random() * 80) + 110);
+
+    let random = Math.random() * canvas.width / 2 + 10
+    obstacles.push(new Obstacles(rndXa, 0,rndX, 20))
+  }
+
   class Car {
     constructor(x, y, img) {
       this.x = x
       this.y = y
-      this.width = 25
-      this.height = 35
+      this.width = 30
+      this.height = 45
       this.img = new Image()
       this.img.src = img
     } 
     draw() {
       context.drawImage(this.img, this.x, this.y, this.width, this.height)
     } 
+
     
     moveRight() {
-      // if(this.x > canvas.width - this.width - 10) return
+      if(this.x > ((canvas.width / 4) - this.width / 3) * 3) return
       this.x += 10
     }
     
     moveLeft() {
-      if(this.x < 0) return
+      if(this.x < canvas.width / 4 ) return
       this.x -= 10
     }
     
     moveUp() {
-      if(this.y < 0 + this.height - 40) return
-      this.y -= 100 
+      if(this.y < 0 + this.height) return
+      this.y -= 10 
     }
     
     moveDown() {
       if (this.y > canvas.height - (this.height + this.height / 2)) return
-      this.y += 50
+      this.y += 10
     }
     isTouching(blocks) {
       return (
@@ -53,7 +94,7 @@ window.onload = function () {
     }
   }
 
-  const car = new Car(100, 100, img.imgCar)
+  const car = new Car((canvas.width / 2) - 12, canvas.height - 70, img.imgCar)
 
     // Draw Line function
     const drawLine = (xMove, yMove, xLine, yLine, strokeWidth, color) => {
@@ -91,16 +132,15 @@ window.onload = function () {
 
     // Middle lines
     middleLines(12)
-
-    // Car
-    car.draw()
   }
   
   // Update function. 
   function update() {
+    frames++
     context.clearRect(0, 0, canvas.width, canvas.height)
     drawRoad()
     car.draw()
+    drawObstacles()
   }
 
   function startGame() {
