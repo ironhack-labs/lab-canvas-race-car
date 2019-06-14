@@ -1,8 +1,8 @@
 const canvas = document.querySelector('#background')
 const ctx = canvas.getContext('2d')
 let interval = 0
-let bars = []
-let frames
+//let bars = []
+//let frames
 
 class Car {
 
@@ -44,9 +44,9 @@ class Bars {
     
 function generateBars() {
   let rndX = Math.random() * canvas.width
-  let rndHeight = Math.random() * canvas.height
+  let rndHeight = Math.random() * canvas.height 
   ctx.fillStyle = 'red'
-  ctx.fillRect(rndX,0,rndHeight,5)
+  ctx.fillRect(rndX,rndHeight,rndX,10)
 
 }
   /*
@@ -79,7 +79,7 @@ window.onload = function() {
   function startGame() {
     
     if (interval) return
-    interval = setInterval(update, 1000/120)
+    interval = setInterval(update, 1000/2)
    
 
   }
@@ -90,15 +90,16 @@ function update() {
   background()
   car.draw()
   generateBars()
+ 
      }
 
 
 addEventListener('keydown', (e) => {
   if (e.keyCode === 39 ) {
-     car.x += 25
+     car.x += 20
   }  
  
   else if(e.keyCode === 37) {
-   car.x-=25
+   car.x-=20
    } 
 })
