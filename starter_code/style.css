@@ -1,3 +1,7 @@
+#car {
+  display: none;
+}
+
 body {
   padding: 0;
   text-align: center;
