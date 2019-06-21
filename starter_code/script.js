@@ -6,6 +6,7 @@ window.onload = function() {
     raceCar.startGame();
     obstacles = [];
     raceCar.frames = 0;
+    raceCar.score = 0;
     player = new Player(raceCar.canvas.width / 2 - 25, raceCar.canvas.height - 140);
   };
 };
@@ -14,6 +15,7 @@ let raceCar = {
   count: 0,
   ctx: 0,
   frames: 0,
+  score: 0,
   canvas: document.createElement('canvas'),
   startGame: function () {
     this.canvas.width = 350;
@@ -21,7 +23,9 @@ let raceCar = {
     this.ctx = this.canvas.getContext('2d');
     document.querySelector('body').appendChild(this.canvas);
     this.drawMap();
-    this.interval = setInterval(() => {updateGame(); this.frames += 1;}, 15);
+    this.interval = setInterval(() => {updateGame(); 
+      this.frames += 1;
+    }, 15);
   },
   drawMap: function () {
     this.ctx.fillStyle = 'gray';
@@ -42,9 +46,6 @@ let raceCar = {
       }
     }
     if (this.count === 0) {
-      // this.ctx.beginPath();
-      // this.ctx.moveTo(this.width / 2, 0);
-      // this.ctx.lineTo();
       this.ctx.beginPath();
       this.ctx.strokeStyle = 'white';
       this.ctx.lineWidth = 4;
@@ -54,9 +55,6 @@ let raceCar = {
       this.ctx.stroke();
       this.ctx.closePath();
     } else {
-      // this.ctx.beginPath();
-      // this.ctx.moveTo(this.width / 2, 10);
-      // this.ctx.lineTo();
       this.ctx.beginPath();
       this.ctx.strokeStyle = 'white';
       this.ctx.lineWidth = 4;
@@ -70,7 +68,16 @@ let raceCar = {
   clean: function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
-  
+}
+
+const updateScore = () => {
+  if(raceCar.frames % 20 === 0) {
+    raceCar.score += 1;
+  }
+  let ctx = raceCar.ctx;
+  ctx.font = "18px serif";
+  ctx.fillStyle = 'rgba(166, 0, 0, 1)';
+  ctx.fillText("Score: " + raceCar.score, 50, 30);
 }
 
 class Player { 
@@ -96,7 +103,14 @@ class Player {
   isItACrash(obstacle) {
     if (this.y < obstacle.y + obstacle.height && this.y + 100 > obstacle.y) {
       if (!((this.x < obstacle.x && this.x + 50 < obstacle.x) || (this.x > obstacle.x + obstacle.width && this.x + 50 > obstacle.x + obstacle.width))) { 
+        let ctx = raceCar.ctx;
         clearInterval(raceCar.interval);
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, raceCar.canvas.width, raceCar.canvas.height);
+        ctx.font = '40px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Score = ' + raceCar.score, 85, raceCar.canvas.height / 2);
       }
     }
   }
@@ -144,6 +158,7 @@ const updateGame = () => {
   raceCar.drawMap();
   player.refresh();
   player.speedUp();
+  updateScore();
   createObstacle();
 }
 
