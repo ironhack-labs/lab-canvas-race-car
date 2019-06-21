@@ -11,6 +11,7 @@ window.onload = function() {
 };
 
 let raceCar = {
+  count: 0,
   ctx: 0,
   frames: 0,
   canvas: document.createElement('canvas'),
@@ -31,18 +32,45 @@ let raceCar = {
     this.ctx.fillStyle = 'white';
     this.ctx.fillRect(40, 0, 8, this.canvas.height);
     this.ctx.fillRect(this.canvas.width - 48, 0, 8, this.canvas.height);
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = 'white';
-    this.ctx.lineWidth = 4;
-    this.ctx.setLineDash([20, 10]);
-    this.ctx.moveTo(this.canvas.width / 2, 0);
-    this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
-    this.ctx.stroke();
-    this.ctx.closePath();
+    // lines in the middle
+    if (this.frames % 15 === 0) {
+      console.log(this.frames);
+      if(this.count === 0) {
+        this.count = 1;
+      } else {
+        this.count = 0
+      }
+    }
+    if (this.count === 0) {
+      // this.ctx.beginPath();
+      // this.ctx.moveTo(this.width / 2, 0);
+      // this.ctx.lineTo();
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = 'white';
+      this.ctx.lineWidth = 4;
+      this.ctx.setLineDash([20, 10]);
+      this.ctx.moveTo(this.canvas.width / 2, 0);
+      this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
+      this.ctx.stroke();
+      this.ctx.closePath();
+    } else {
+      // this.ctx.beginPath();
+      // this.ctx.moveTo(this.width / 2, 10);
+      // this.ctx.lineTo();
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = 'white';
+      this.ctx.lineWidth = 4;
+      this.ctx.setLineDash([20, 10]);
+      this.ctx.moveTo(this.canvas.width / 2, 10);
+      this.ctx.lineTo(this.canvas.width / 2, this.canvas.height);
+      this.ctx.stroke();
+      this.ctx.closePath();
+    }
   },
   clean: function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
+  
 }
 
 class Player { 
@@ -60,15 +88,12 @@ class Player {
   }
   
   speedUp() {
-    this.x += this.speedX;
+    if (!(this.x + this.speedX < 30 || this.x + this.speedX > 270)){ 
+      this.x += this.speedX;
+    }
   }
   
   isItACrash(obstacle) {
-    // if (this.x < obstacle.x + obstacle.width ||
-    //   this.x + 50 > obstacle.x ||
-    //   this.y < obstacle.y + obstacle.height) {
-    //     clearInterval(raceCar.interval);
-    //   }
     if (this.y < obstacle.y + obstacle.height && this.y + 100 > obstacle.y) {
       if (!((this.x < obstacle.x && this.x + 50 < obstacle.x) || (this.x > obstacle.x + obstacle.width && this.x + 50 > obstacle.x + obstacle.width))) { 
         clearInterval(raceCar.interval);
