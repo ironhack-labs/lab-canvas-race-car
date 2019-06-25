@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  </script>
-  <link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
   <title>Document</title>
 </head>
+
 <body>
-  <div class="game-intro">
-    <img src="./images/logo.png" alt="" class="logo-img">
-    <br>
-    <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
-    <img src="./images/arrows.png" alt="" class="arrows-img">
+  <div class="row">
+    <div class="col-6">
+      <div class="game-intro">
+        <img src="./images/logo.png" alt="" class="logo-img" />
+        <br />
+        <button id="start-button">StartGame</button>
+        <p>Use the left and right arrow to control the car!</p>
+        <img src="./images/arrows.png" alt="" class="arrows-img" />
+      </div>
+    </div>
+    <div id="game-board" class="col-6">
+      <canvas id="race-game"> </canvas>
+    </div>
   </div>
-  <div id="game-board">
-<canvas id='mycanvas'></canvas>
- 
-</div>
-  <script src="script.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
+
 </html>
