@@ -13,11 +13,11 @@ body {
   font-family: "Verdana"
 }
 
-.logo-img {
+#logo-img {
   width: 350px;
 }
 
-.arrows-img {
+#arrows-img {
   width: 150px;
 }
 
