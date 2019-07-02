@@ -150,11 +150,9 @@ function update() {
   eraseObstacles();
   movingObstacles();
 }
-
 window.addEventListener("keydown", e => {
   if (e.keyCode === 39) car.moveRight();
   if (e.keyCode === 37) car.moveLeft();
   if (e.keyCode === 38) car.moveUp();
   if (e.keyCode === 40) car.moveDown();
 });
-
