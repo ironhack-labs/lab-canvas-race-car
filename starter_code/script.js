@@ -106,7 +106,7 @@ class Car {
   }
 }
 class Obstacles {
-  constructor(x,y) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
     this.w = Math.random() * (+300 - +30) + +30;
@@ -116,43 +116,32 @@ class Obstacles {
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, this.w, this.h);
   }
-  movingDown(){
+  movingDown() {
     this.y += 2;
   }
 }
 
+function bunchOfObstacles() {
+  obstacles.forEach(array => array.draw());
+  let x = Math.random() * (+620 - +140) + +140;
+  let y = Math.random() * (+300 - +10) + +10;
 
-
-function bunchOfObstacles(){
-
-obstacles.forEach(array => array.draw());
-let x = Math.random() * (+560 - +140) + +140;
-let y = Math.random() * (+300 - +10) + +10;
-
-if (frames % 100 === 0) obstacles.push(new Obstacles(x,y));
-
-
+  if (frames % 100 === 0) obstacles.push(new Obstacles(x, y));
 }
-function eraseObstacles(){
-  obstacles.forEach(i =>{
-    if ( obstacles.length === 6){
-       obstacles.splice(i,1);
-    }
-  })
+function eraseObstacles() {
+  obstacles.forEach(i => {
+    if (obstacles.length === 8) obstacles.splice(i, 1);
+  });
 }
-function movingObstacles(){
-  obstacles.forEach( array => array.movingDown());  
+function movingObstacles() {
+  obstacles.forEach(array => array.movingDown());
 }
-
 
 let board = new Board(),
   car = new Car(400, 700, 80, 140);
- 
 
 function update() {
-  if (frames % 10 === 0) {
-    currentFrame = ++currentFrame % 4;
-  }
+  if (frames % 10 === 0) currentFrame = ++currentFrame % 4;
   frames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   board.draw();
@@ -160,7 +149,6 @@ function update() {
   bunchOfObstacles();
   eraseObstacles();
   movingObstacles();
-  
 }
 
 window.addEventListener("keydown", e => {
@@ -169,3 +157,4 @@ window.addEventListener("keydown", e => {
   if (e.keyCode === 38) car.moveUp();
   if (e.keyCode === 40) car.moveDown();
 });
+
