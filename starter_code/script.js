@@ -93,10 +93,10 @@ class Car {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
   moveRight() {
-    if (this.x < 680) this.x += 12;
+    if (this.x < 680) this.x += 14;
   }
   moveLeft() {
-    if (this.x > 137) this.x -= 12;
+    if (this.x > 137) this.x -= 14;
   }
   moveUp() {
     if (this.y > 5) this.y -= 12;
@@ -116,6 +116,9 @@ class Obstacles {
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, this.w, this.h);
   }
+  movingDown(){
+    this.y += 2;
+  }
 }
 
 
@@ -124,13 +127,11 @@ function bunchOfObstacles(){
 
 obstacles.forEach(array => array.draw());
 let x = Math.random() * (+560 - +140) + +140;
-let y = Math.random() * (+600 - +10) + +10;
+let y = Math.random() * (+300 - +10) + +10;
 
-if (frames % 150 === 0) obstacles.push(new Obstacles(x,y));
+if (frames % 100 === 0) obstacles.push(new Obstacles(x,y));
 
-if ( obstacles.length <= 5){
-   obstacles.splice();
-}
+
 }
 function eraseObstacles(){
   obstacles.forEach(i =>{
@@ -138,6 +139,9 @@ function eraseObstacles(){
        obstacles.splice(i,1);
     }
   })
+}
+function movingObstacles(){
+  obstacles.forEach( array => array.movingDown());  
 }
 
 
@@ -153,11 +157,10 @@ function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   board.draw();
   car.draw();
-  
   bunchOfObstacles();
-
   eraseObstacles();
- 
+  movingObstacles();
+  
 }
 
 window.addEventListener("keydown", e => {
