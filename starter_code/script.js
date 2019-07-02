@@ -5,7 +5,8 @@ window.onload = function() {
 };
 let inicio,
   frames = 0,
-  currentFrame = 0;
+  currentFrame = 0,
+  obstacles = [];
 
 function startGame() {
   let logo = document.getElementById("logo-img"),
@@ -119,52 +120,44 @@ class Obstacles {
 
 
 
-// function bunchOfObstacles(){
-//   let obstacles = [];
+function bunchOfObstacles(){
 
-// obstacles.forEach(array => array.draw());
+obstacles.forEach(array => array.draw());
+let x = Math.random() * (+560 - +140) + +140;
+let y = Math.random() * (+600 - +10) + +10;
 
-// if ( frames % 550 === 0) obstacles.push(new Obstacles());
+if (frames % 150 === 0) obstacles.push(new Obstacles(x,y));
 
-// }
-// let obstacles = [];
-// function updateObstacles() {
-//   for (var i = 0; i < obstacles.length; i++) {
-//     obstacles[i].draw();
-//   }
-//   if (frames % 1 === 0) {
-//     if (obstacles.length < 5) {
-//       obstacles.push(new Obstacles());
-//     }
-//   }
-// }
-// function movingObstacles() {
-//   for (let i = 0; i < obstacles.length; i++) {
-//     obstacles[i].movingRight();
-//   }
-// }
+if ( obstacles.length <= 5){
+   obstacles.splice();
+}
+}
+function eraseObstacles(){
+  obstacles.forEach(i =>{
+    if ( obstacles.length === 6){
+       obstacles.splice(i,1);
+    }
+  })
+}
+
 
 let board = new Board(),
-  car = new Car(400, 700, 80, 140),
-  obstacle1 = new Obstacles(140,30);
-  obstacle2 = new Obstacles(540,220);
-  obstacle3 = new Obstacles(140,400);
-  obstacle4 = new Obstacles(140,30);
+  car = new Car(400, 700, 80, 140);
+ 
 
 function update() {
-  if (frames % 3500 === 0) {
+  if (frames % 10 === 0) {
     currentFrame = ++currentFrame % 4;
   }
+  frames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   board.draw();
   car.draw();
-  //updateObstacles();
-  //bunchOfObstacles();
-  //movingObstacles();
-  obstacle1.draw();
-  obstacle2.draw();
-  obstacle3.draw();
-  obstacle4.draw();
+  
+  bunchOfObstacles();
+
+  eraseObstacles();
+ 
 }
 
 window.addEventListener("keydown", e => {
