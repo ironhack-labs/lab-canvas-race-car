@@ -36,3 +36,10 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#carRoad{
+  border: 1px solid red;
+  background-image: url("images/gameRoad.png");
+  background-size: 400px 800px;
+  
+}
