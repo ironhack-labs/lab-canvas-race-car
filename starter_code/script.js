@@ -75,7 +75,7 @@ class Car extends Element{
   }
 }
 
-let player = new Car(300,450,80,160,'/images/car.png');
+let player = new Car(300,450,80,160,'images/car.png');
 gameBoard.start();
 
 window.onkeydown=(e)=>{  
