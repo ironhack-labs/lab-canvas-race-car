@@ -1,54 +1,45 @@
 window.onload = ()=>{
   document.getElementById("start-button").onclick = function() {
 
-let gameBoard = {
+const numberObstacle = 95;
+
+let gameBoard = { 
     canvas : document.createElement("canvas"),
     score : 0,   
     start: function(){
       this.canvas.width = 700;
-      this.canvas.height = 500;
+      this.canvas.height = 700;
       this.context = this.canvas.getContext("2d");
       document.body.append(this.canvas);
-      let board = document.querySelector("#game-board");
-      board.append(this.canvas);
+      document.querySelector("#game-board").append(this.canvas);
       this.frames = 0;
       this.interval = setInterval(updateGameBoard,20);
     },
     background:function(){
       this.context.fillStyle = "green";
-      this.context.fillRect(0,0,700,500);
+      this.context.fillRect(0,0,this.canvas.width,this.canvas.height);
       this.context.fillStyle = "gray";
-      this.context.fillRect(60,0,580,500);
+      this.context.fillRect(60,0,580,this.canvas.height);
       this.context.fillStyle = "white";
       this.context.fillRect(80,0,20,this.canvas.height)
       this.context.fillRect(600,0,20,this.canvas.height)
-      this.context.font = "30px Arial"
-      this.context.fillText(`Score: ${Math.round(this.score)} Bars: ${obstaclesArray.length}`,400,50,200,50)
+      this.context.font = "25px Arial"
+      this.context.fillText(`Score: ${this.getScore()}`,480,50,200,50)
     },
     clear:function(){
       this.context.clearRect(0,0,this.canvas.width, this.canvas.height) 
+    },
+    getScore: function(){
+      return Math.floor(this.frames/numberObstacle);
     }
 }
 
-class Car {
-  constructor(x,y,width,height,source){
-    this.image = new Image();
+class Element{
+  constructor(x,y,width,height){
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.source = source;
-    this.dx = 0;
-  }
-  draw(){
-    this.image.src =this.source;
-    gameBoard.context.drawImage(this.image,this.x,this.y,this.width,this.height)
-  }
-  newPos(){
-    if((this.dx > 0 && this.x < 560) || (this.dx < 0 && this.x >= 100))
-     this.x += this.dx;  
-     else
-     this.dx = 0; 
   }
   left(){
     return this.x;
@@ -64,30 +55,47 @@ class Car {
   }
 
 }
-let player = new Car(230,300,40,80,'/images/car.png');
+
+class Car extends Element{
+  constructor(x,y,width,height,source){
+    super(x,y,width,height)
+    this.image = new Image();
+    this.source = source;
+    this.dx = 0;
+  }
+  draw(){
+    this.image.src = this.source;
+    gameBoard.context.drawImage(this.image,this.x,this.y,this.width,this.height)
+  }
+  newPos(){
+    if((this.dx > 0 && this.x < 520) || (this.dx < 0 && this.x >= 100))
+    this.x += this.dx;  
+    else
+    this.dx = 0;  
+  }
+}
+
+let player = new Car(300,450,80,160,'/images/car.png');
 gameBoard.start();
 
 window.onkeydown=(e)=>{  
   switch(e.keyCode){
     case 37:
-      player.dx = -5; 
+        player.dx = -5.5; 
     break;
     case 39:
-     player.dx = 5;
+        player.dx = 5.5;   
     break;
   }
 }
+
 window.onkeyup = ()=>{
   player.dx = 0;
 }
   
-
- class Component{
+ class Component extends Element{
      constructor(x,y,width,height,color){
-       this.x = x;
-       this.y = y;
-       this.width = width;
-       this.height = height;
+       super(x,y,width,height) 
        this.color = color; 
        this.dy = 5;
      }
@@ -98,19 +106,6 @@ window.onkeyup = ()=>{
      newPos(){
        this.y += this.dy;
      }
-      left(){
-        return this.x;
-      }
-      right(){
-        return this.x + this.width;
-      }
-      top(){
-        return this.y;
-      }
-      bottom(){
-        return this.y + this.height;
-      }
-  
   }
 
   let middleLinesArray = [];
@@ -130,58 +125,55 @@ window.onkeyup = ()=>{
   const maxXpositionLeft = 600;
   const minXpositionRight = 100;
   const maxXpositionRight = 250;
-  let minWidth = 70;
+  let minWidth = 100;
   let maxWidth = 200;
     
+  
+  let colors = ["red", "yellow", "blue"];//obstacles colors
   let obstaclesArray = [];
 
-  let colors = ["red", "yellow", "blue"];
-
   function obstacles (){
-      obstaclesArray.forEach((obstacle)=>{
+      obstaclesArray.forEach((obstacle,index)=>{
         obstacle.update();
         obstacle.newPos();
+        if(checkCollision(obstacle)){
+          gameOver();
+        }
       });
-      if(gameBoard.frames % 55 === 0){
+      if(gameBoard.frames % numberObstacle === 0){ //create obstacles every certain amount of frames
         if(obstaclesArray.length % 2 == 0 ){
           let width = Math.random() * maxWidth + minWidth;
           let xPosition = Math.random() * (maxXpositionRight-minXpositionRight) + minXpositionRight;
           let color = Math.floor(Math.random() * (colors.length));
-          obstaclesArray.push(new Component(xPosition ,-20,width,10,colors[color]));
+          obstaclesArray.push(new Component(xPosition ,-20,width,20,colors[color]));
         }else{
           let width = Math.random() * maxWidth + minWidth;
           let xPosition = Math.random() * (maxXpositionLeft-minXpositionLeft) + minXpositionLeft;
           let color = Math.floor(Math.random() * (colors.length));
-          obstaclesArray.push(new Component(xPosition-width,-20,width,10,colors[color]))
+          obstaclesArray.push(new Component(xPosition-width,-20,width,20,colors[color]))
         }
       }
   }
 
   function checkCollision(obstacle){
-    return!(player.top() > obstacle.bottom()||
+    return!(player.top() + 5 > obstacle.bottom()||
             player.bottom() < obstacle.top() ||
             player.right() < obstacle.left() ||
             player.left() > obstacle.right());
   }
 
-  
-let previousIndex = 0;
 
-  function getScore(){
-  let newObstacle = false;
-    let collision = obstaclesArray.some((obstacle, index)=>{
-      if(previousIndex !== index){
-        newObstacle = true;
-        previousIndex = index;
-      }
-      return checkCollision(obstacle);
-    });
-    if(gameBoard.frames % 55 === 0){
-      gameBoard.score += 1;
-    }
-    if(collision && newObstacle){
-      gameBoard.score -= 2;
-      }
+  let startButton = document.querySelector("#start-button")
+  startButton.onclick =()=>{
+    window.location.reload();//reload the game
+  }
+  
+  function gameOver(){
+    clearInterval(gameBoard.interval)  //stop game
+    let sign = document.createElement("div")//create a div and insert it with a game-over message
+    sign.classList.add("game-over")
+    sign.innerHTML = `<h1>GAME OVER</h1> <h2>Your final score is: <span>${gameBoard.getScore()}<span></h2>`
+    document.querySelector("#game-board").append(sign); 
   }
     
   function updateGameBoard(){
@@ -191,7 +183,6 @@ let previousIndex = 0;
     player.newPos();
     obstacles ();
     player.draw();
-    getScore();
     gameBoard.frames += 1;
   }
   
