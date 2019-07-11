@@ -3,6 +3,9 @@ body {
   text-align: center;
 }
 
+.container{
+  display: flex;
+}
 .game-intro {
   float: left;
   padding: 0% 10%;
