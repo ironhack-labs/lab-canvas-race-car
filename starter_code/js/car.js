@@ -29,13 +29,16 @@ let myCar = {
     },
 
     goLeft : function () {
-        console.log(this.width)
-        this.width -= this.speed
-        console.log(this.width)
+        
+        if (this.width>50) {
+        this.width -= this.speed}
+        
     },
 
     goRight : function () {
+        if (this.width<350) {
         this.width += this.speed
-        console.log(this.width)
+    }
+        
     }
 }

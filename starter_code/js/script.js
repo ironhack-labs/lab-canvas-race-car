@@ -133,14 +133,7 @@
       
     },
 
-    // generateRigthObstacles: function(){  
-    //   this.obstacles.push(new Component(this.winW - Math.floor(Math.random() * 50 + 200), 0, "brown", this.winW, 40))  //Generamos obstaculos en el array. El math.Random sirve para que tengan diferentes tamanios.
-
-      
-        
-      
-    // },
-
+  
     clearObstacles: function() {
       
       this.obstacles.forEach((obs, idx) => {
