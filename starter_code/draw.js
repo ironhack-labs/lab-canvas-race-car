@@ -80,8 +80,11 @@ const Game = {
     generateObstacles: function() {
         console.log("se genera obstaculo")
         console.log(this.obstacles)
-        this.obstacles.push(new Component(0, 0, "red", 300, 50))  //Generamos obstaculos en el array. El math.Random sirve para que tengan diferentes tamanios.
+        let a = Math.floor(Math.random() * 100 + 200)
+        this.obstacles.push(new Component(0, 0, "red", Math.floor(Math.random() * 100 + 200), 50))  //Generamos obstaculos en el array. El math.Random sirve para que tengan diferentes tamanios.
+        this.obstacles.push(new Component(a, Math.floor(Math.random() * (-100) + 200), "red", a, 50))  //Generamos obstaculos en el array. El math.Random sirve para que tengan diferentes tamanios.
     },
+
     clear: function() {
         this.ctx.clearRect(0, 0, this.winW, this.winH);
     },

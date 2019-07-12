@@ -5,7 +5,7 @@ class Component {
         this.color = color;
         this.width = width;
         this.height = height;
-        this.vel = 5;
+        this.vel = 2;
     }
 
     draw() {
