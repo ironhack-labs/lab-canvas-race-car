@@ -51,6 +51,8 @@ window.onload = function () {
         this.drawStyleLine()
         this.car.draw()
         this.obstacles.forEach(obstacles => obstacles.draw())
+        this.obstacles.forEach(obstacles => obstacles.moveObstacle())
+
         //this.obs.draw()
       }, 5)
     },
@@ -66,7 +68,7 @@ window.onload = function () {
     },
     generateObstacles: function () {
       console.log("se genera obstaculo")
-      this.obstacles.push(new Obj(this.canvas, Math.floor(Math.random() * 100 + 200, 10, "red", 30)))
+      this.obstacles.push(new Obj(this.ctx, 10, 10, "red", 30, Math.floor(Math.random() * 100 + 200)))
     },
     clearObstacles: function () {
       this.obstacles.forEach((obs, idx) => {
