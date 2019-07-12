@@ -4,22 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
+  <!-- <script type="text/javascript" src="js/script.js"> -->
 
-  </script>
+<!-- </script> -->
   <link rel="stylesheet" href="style.css">
+  
+  <script src="./js/component.js"></script>
+  <script src="./js/script.js"></script>
+  <script src="./js/init.js"></script>
+  <script src="./js/car.js"></script>
+  
   <title>Document</title>
 </head>
 <body>
-  <div class="game-intro">
-    <img src="./images/logo.png" alt="" class="logo-img">
-    <br>
-    <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
-    <img src="./images/arrows.png" alt="" class="arrows-img">
+  <div class="container">
+      <div class="game-intro">
+          <img src="./images/logo.png" alt="" class="logo-img">
+          <br>
+          <button id="start-button">StartGame</button>
+          <p>Use the left and right arrow to control the car!</p>
+          <img src="./images/arrows.png" alt="" class="arrows-img">
+      </div>
+      <div id="game-board">
+        <canvas id="mycanvas" ></canvas>
+      </div>
+      
+        
+      
   </div>
-  <div id="game-board">
+ 
 
-  </div>
+  <script>
+
+      // Game.setDimensions()
+      // Game.drawGrass()
+      //Game.drawFilledSquares()
+      //Game.drawLinearSquare()
+      //Game.drawLine()
+      //Game.drawStyleLine()
+      //Game.drawMultipleLines(20, 100)
+      //Game.drawCircle()
+      //Game.writeText('Hi there!')
+      //Game.showImage('img/basketball.png')
+
+
+      //animateApp.init('mycanvas')
+      //animateApp.setDimensions()
+      //animateApp.drawBall('img/basketball.png')
+
+      // controlsApp.init('mycanvas')
+      // controlsApp.setDimensions()
+      // controlsApp.drawBall('img/basketball.png')
+  </script>
 </body>
 </html>
