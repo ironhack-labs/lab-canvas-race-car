@@ -35,4 +35,9 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    height: 510px;
+}
+
+.container {
+  display: flex
 }

@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
+  <script type="text/javascript" src="./coche.js"></script>    
+  <script type="text/javascript" src="./components.js"></script>    
+  <script type="text/javascript" src="./draw.js"></script>  
+  <script type="text/javascript" src="./script.js"></script>
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
 <body>
+<div class = "container">
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
@@ -18,8 +20,16 @@
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
-  <div id="game-board">
-
+<!-- <div id="game-board"> -->
+    <canvas id = "canvas"></canvas>
   </div>
+  <script>
+  Game.init("canvas")
+  Game.setDimensions()
+  Game.drawRect()
+  Game.drawLine()
+  Game.drawCar('car.png')
+  </script>
+<!-- </div> -->
 </body>
 </html>
