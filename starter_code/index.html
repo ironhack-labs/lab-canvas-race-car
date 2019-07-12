@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-reboot.min.css" integrity="sha256-dARYuC3pd0wa/7R4Hkt/sR2zfLHCgbnVAQ2sPwhNe0A=" crossorigin="anonymous" />
+  <script type="text/javascript" src="./obstacles.js"></script>
+  <script type="text/javascript" src="./game.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="car.js"></script>
+ 
+  
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
@@ -18,8 +22,12 @@
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
-  <div id="game-board">
-
+  <div class="play">
+    <div id="game-board">
+    <div>  
+      <canvas id="canvas"></canvas>
+    </div>
   </div>
+</div>
 </body>
 </html>
