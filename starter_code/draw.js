@@ -99,9 +99,11 @@ const Game = {
         })
     },
     isCollision: function() {
+        console.log(this.car._posX)
+        console.log(this.car._carWidth)
         return this.obstacles.some(obstacle => {        //Comprobamos si alguno de los obstaculos colisiona.
           return (
-            ((this.car._posX + this.carWidth) >= obstacle.x &&     //Choque con lado izquierdo del obstaculo
+            ((this.car._posX + this.car._carWidth) >= obstacle.x &&     //Choque con lado izquierdo del obstaculo
               this.car._posX < (obstacle.x + obstacle.width) &&        //Choque con lado derecho del obstaculo
               this.car._posY < (obstacle.y + obstacle.height)          //Choque con lado de abajo del obstaculo
               )
