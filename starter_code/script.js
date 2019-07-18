@@ -150,7 +150,7 @@ function updateObstacles() {
   }
 
   myGameArea.frames += 1;
-  if (myGameArea.frames % 180 === 0) {
+  if (myGameArea.frames === 1 || myGameArea.frames % 180 === 0) {
     const y = canvas.height;
     const minHeight = 150;
     const maxHeight = 200;
