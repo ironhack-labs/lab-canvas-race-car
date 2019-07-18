@@ -9,11 +9,12 @@ const myObstacles = [];
 const myGameArea = {
   canvas: document.createElement("canvas"),
   frames: 0,
+  totalScore: 0,
   start: function() {
     this.canvas.width = 450;
     this.canvas.height = 600;
     this.context = this.canvas.getContext("2d");
-    document.getElementById('game-board').appendChild(this.canvas)
+    document.getElementById('game-board').appendChild(this.canvas);
     this.interval = setInterval(updateGameArea, 20);
   },
   clear: function() {
@@ -23,10 +24,11 @@ const myGameArea = {
     clearInterval(this.interval);
   },
   score: function() {
-    var points = Math.floor(this.frames / 5);
-    this.context.font = "18px serif";
-    this.context.fillStyle = "black";
-    this.context.fillText("Score: " + points, 350, 50);
+    var points = Math.floor(this.frames / 180);
+    this.totalScore = points;
+    this.context.font = "18px arial";
+    this.context.fillStyle = "white";
+    this.context.fillText("Score: " + points, 300, 50);
   },
   board: function() {
     // road
@@ -58,7 +60,6 @@ class Component {
     this.x = x;
     this.y = y;
     this.speedX = 0;
-    this.speedY = 0;
   }
 
   updateCar() {
@@ -83,8 +84,6 @@ class Component {
     if (this.x >= 368) {
       this.x = 368;
     }
-    
-    this.y += this.speedY;
   }
 
   left() {
@@ -113,7 +112,7 @@ class Component {
   }
 }
 
-const player = new Component(32, 64, "red", 217, 536);
+const player = new Component(32, 64, "red", 217, 490);
 
 function updateGameArea() {
   myGameArea.clear();
@@ -151,17 +150,20 @@ function checkGameOver() {
 
   if (crashed) {
     myGameArea.stop();
+    setTimeout(() => {
+      myGameArea.clear();
+      myGameArea.context.font = "bold 48px arial";
+      myGameArea.context.fillStyle = "darkred";
+      myGameArea.context.fillText("GAME OVER!", 70, 100);
+      myGameArea.context.fillStyle = "black";
+      myGameArea.context.fillText("Your final score is: ", 25, 200);
+      myGameArea.context.fillText(myGameArea.totalScore, 200, 250);
+    },1500)
   }
 }
 
 document.onkeydown = function(e) {
   switch (e.keyCode) {
-    case 38: // up arrow
-      player.speedY -= 1;
-      break;
-    case 40: // down arrow
-      player.speedY += 1;
-      break;
     case 37: // left arrow
       player.speedX -= 1;
       break;
@@ -173,5 +175,4 @@ document.onkeydown = function(e) {
 
 document.onkeyup = function(e) {
   player.speedX = 0;
-  player.speedY = 0;
 };
