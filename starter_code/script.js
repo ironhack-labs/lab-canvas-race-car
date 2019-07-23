@@ -22,9 +22,6 @@ function draw() {
 }
 
 
-
-//show boardGame when button clicked
-
 //arrowLeft 37 arrowRight 38
 
 
