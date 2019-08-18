@@ -2,7 +2,11 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let frames = 0;
 let interval;
+let bar;
 let bars = [];
+let barSideController = 0;
+let score = 0;
+let flagGameOver = 0;
 
 function startGame() {
   // canvas = document.getElementById("canvas");
@@ -23,6 +27,15 @@ class Car {
 
   draw() {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  }
+
+  collision(item) {
+    return (
+      this.x < item.x + item.width &&
+      this.x + this.width > item.x &&
+      this.y < item.y + item.height &&
+      this.y + this.height > item.y
+    );
   }
 }
 
@@ -71,20 +84,43 @@ class Bar {
 }
 
 function generateBars() {
-  const max = 150;
-  const min = 51;
-  if (!(frames % 150 === 0)) return;
-  const width = Math.floor(Math.random() * canvas.width * 0.3 + 55);
-  let xPos = Math.floor(Math.random() * (max - min) + min);
-  console.log("PosX: " + xPos, "Width: " + width);
-  const bar = new Bar(xPos, width);
+  const maxPos = 110;
+  const minPos = 51;
+  const maxWitdth = 158;
+  const minWitdth = 48;
+  if (!(frames % 200 === 0)) return;
+  let width = Math.floor(Math.random() * (maxWitdth - minWitdth) + minWitdth);
+  let xPos = Math.floor(Math.random() * (maxPos - minPos) + minPos);
+  if (barSideController == 0) {
+    bar = new Bar(xPos, width);
+    barSideController = 1;
+  } else {
+    xPos = 275 - xPos;
+    bar = new Bar(xPos, width);
+    barSideController = 0;
+  }
+  console.log("PosX: " + xPos, "Width: " + width, "side: " + barSideController);
+
   bars.push(bar);
 }
 
 function drawBar() {
   bars.forEach(bar => {
+    if (bar.y + bar.height > canvas.height) {
+      score += 1;
+      console.log("Your score: " + score);
+      bars.splice(0, 1);
+    }
     bar.draw();
+    if (car.collision(bar)) gameOver();
   });
+}
+
+function gameOver() {
+  flagGameOver = 1;
+  clearInterval(interval);
+  ctx.font = "30px Arial";
+  ctx.fillText("Game Over!", 120, 250);
 }
 
 document.onkeydown = function(e) {
@@ -102,10 +138,14 @@ let background = new Background();
 let car = new Car();
 function update() {
   frames++;
+  ctx.font = "15px Arial";
   background.draw();
   car.draw();
   generateBars();
   drawBar();
+
+  if (flagGameOver == 0) ctx.fillText("Score: " + score, 310, 50);
+  else ctx.fillText("Final Score: " + score, 110, 285);
 }
 
 document.getElementById("start-button").onclick = startGame;
