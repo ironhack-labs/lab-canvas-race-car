@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
   </script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../starter_code/style.css">
   <title>Document</title>
 </head>
+
 <body>
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
-    <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
+    <button id="start-button">Start Game</button>
+    <p>Use the left and right arrow to control the car.</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+    <canvas width="450" height="650" style="border: 1px solid #000000"></canvas>
+    <img id="background-img" src="../starter_code/images/racing-board_small.png" alt="">
+    <img id="car-img" src="../starter_code/images/car.png" alt="">
   </div>
+  <script type="text/javascript" src="../starter_code/script.js"></script>
 </body>
+
 </html>

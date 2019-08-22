@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#background-img {
+  display: none;
+}
+
+#car-img {
+  display: none;
+}
