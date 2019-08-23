@@ -29,7 +29,7 @@ class Game {
   reset() {
     // reset score, reset timer, reset drawing
     this.car = new Car(this);
-    //this.obstacles.push(new Obstacle(this, 100));
+    this.obstacles = [];
   }
 
   loop(timestamp) {
@@ -47,9 +47,12 @@ class Game {
     this.roadStripe += dy;
     this.draw(this.roadStripe);
 
-    // Update position of obstacles
+    // Update position of obstacles, check for collisions
     for (let obstacle of this.obstacles) {
       obstacle.yPos += dy;
+      if (this.collision(this.car, obstacle)) {
+        this.reset();
+      }
     }
 
     // Should any obstacles be cleared b/c they're off the screen?
@@ -101,6 +104,31 @@ class Game {
 
   collision (car, obstacle) {
     // Get car bounding box
+    let carX1 = car.xPosition - car.image.width*car.scale/2;
+    let carX2 = car.xPosition + car.image.width*car.scale/2;
+    let carY1 = car.yPosition;
+    let carY2 = car.yPosition + car.image.height*car.scale;
+    let carVertices = [[carX1, carY1], [carX1, carY2], [carX2, carY1], [carX2, carY2]];
     // Get obstacle bounding box
+    let obstX1 = obstacle.xPos - obstacle.width/2;
+    let obstX2 = obstacle.xPos + obstacle.width/2;
+    let obstY1 = obstacle.yPos - obstacle.height/2;
+    let obstY2 = obstacle.yPos + obstacle.height/2;
+    let obstVertices = [[obstX1, obstY1], [obstX1, obstY2], [obstX2, obstY1], [obstX2, obstY2]];
+
+    // If any corners of car are inside obstacle, return true
+    for (let vertex of carVertices) {
+      if ((obstX1 < vertex[0] && vertex[0] < obstX2) && (obstY1 < vertex[1] && vertex[1] < obstY2)) {
+        return true;
+      }
+    }
+    // if any corners of obstacle are inside car, return true
+    for (let vertex of obstVertices) {
+      if ((carX1 < vertex[0] && vertex[0] < carX2) && (carY1 < vertex[1] && vertex[1] < carY2)) {
+        return true;
+      }
+    }
+    // Return false
+    return false;
   }
 }
