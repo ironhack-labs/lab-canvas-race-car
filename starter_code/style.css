@@ -10,7 +10,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: 'Verdana';
 }
 
 .logo-img {
@@ -33,6 +33,29 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+  position: relative;
+}
+
+#lineaverde1{
+  width: 100px
+  height: 100 vh;
+  background:green
+}
+/*#number {
+  width: 70px;
+  height: 40px;
+  color: white;
+  font-family: monospace;
+  font-size: 20px;
+  position: absolute;
+  margin-left: 850px;
+  margin-top: 60px;
+}*/
+
+canvas {
+  position: fixed;
+  margin: 30px;
+  border: 3px solid #870007;
 }
