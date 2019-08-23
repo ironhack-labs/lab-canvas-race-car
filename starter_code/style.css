@@ -10,12 +10,14 @@ body {
 
 canvas{
 border:2px solid #BADA55;
+margin-left: 150px
 }
 
 #divicito{
   display:flex;
   flex-direction: row;
   justify-content:space-between;
+  
 }
 
 .game-intro {
@@ -45,6 +47,7 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  margin-top: 20px
 }
 
 #game-board {
