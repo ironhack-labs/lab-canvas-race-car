@@ -5,7 +5,7 @@ body {
 
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 0% 4%;
 }
 
 .game-intro p {
@@ -33,6 +33,59 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  background-color: darkgreen;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 70px);
+  width: 600px;
+  position: relative;
+  z-index: 1;
+}
+
+.road {
+  background-color: grey;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  height: 100%;
+  width: calc(100% - 40px);
+  position: relative;
+  z-index: 2;
+}
+
+.road:before {
+  content: '';
+  background-color: white;
+  border-left: 5px solid grey;
+  display: flex;
+  height: 100%;
+  width: 10px;
+  
+}
+
+.road:after {
+  content: '';
+  background-color: white;
+  border-right: 5px solid grey;
+  display: flex;
+  height: 100%;
+  width: 10px;
+}
+
+.lines {
+  border: 4px dashed white;
+  height: 100%;
+  position: absolute;
+  margin-left: -2px;
+  left: 50%;
+  top: 0;
+  z-index: 3;
+}
+
+canvas {
+  position: relative;
+  z-index: 4;
+  width: 100%;
 }
