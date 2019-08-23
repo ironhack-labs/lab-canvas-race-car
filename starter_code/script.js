@@ -1,9 +1,9 @@
 window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
+  //document.getElementById("start-button").onclick = function() {
+    const $canvas = document.querySelector('canvas');
+    const game = new Game($canvas); 
 
-  function startGame() {
+    game.start();
 
   }
-};
+
