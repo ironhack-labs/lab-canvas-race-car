@@ -17,7 +17,7 @@ window.onload = function() {
 let frames = 0
 let interval 
 const myObstacles = []
-
+// Obstacle Class
 class Component{
   constructor(width, height, color, x, y){
       this.width = width
@@ -58,7 +58,7 @@ class Component{
       )
   }
 }
-
+// Player Class
 class Player{
   constructor() {
       this.x = 180
@@ -209,12 +209,12 @@ function drawObstacles() {
 document.onkeydown = event => {
   console.log(event.keyCode)
   switch (event.keyCode) {
-      case 38:
-          player.moveUp()
-          break
-      case 40:
-          player.moveDown()
-          break
+    //   case 38:
+    //       player.moveUp()
+    //       break
+    //   case 40:
+    //       player.moveDown()
+    //       break
       case 37:
           player.moveLeft()
           break       
@@ -236,7 +236,7 @@ document.onkeydown = event => {
 //   player.draw()
 // }
 
-updateCanvas()
+// updateCanvas()
 
 
 document.onkeyup = e => {
