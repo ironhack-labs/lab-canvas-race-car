@@ -4,6 +4,10 @@ window.onload = function() {
   };
 
   function startGame() {
+    const $canvas = document.getElementById("game-canvas");
 
+    const game = new Game($canvas);
+
+    game.start();
   }
 };
