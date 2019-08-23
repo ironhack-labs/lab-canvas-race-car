@@ -40,19 +40,20 @@ class Carrito{
 }
 
 class Obstacle{
-    constructor(width, height, x, y){
+    constructor(y, width, height, type){
       this.width = width
       this.height = height
-      this.x = x
-      this.y = y
-      this.speedX
+      this.x = canvas.width
+      this.y 
+      this.type=type
     }
     draw(){
       ctx.fillStyle="red"
-      ctx.fillRect(canvas.width/2,0,50,10)
+      ctx.fillRect(canvas.width/2,50,canvas.width/2,10)
       ctx.stroke()
     }
-    // crasWith(obstacle){
+    
+    //crasWith(obstacle){
     //   return !(
     //       this.bottom()<obstacle.top()||
     //       this.top()>obstacle.bottom()||
@@ -62,8 +63,54 @@ class Obstacle{
     // }
 }
 
+function generateObstaculos() {
+  const min = 20
+  const max = 100
+  const ventanita = 100
+  if (frames % 200 === 0) {
+    const randomHeight = Math.floor(Math.random() * (max - min))
+    myObstacles.push(new Obstacle(0, 50, randomHeight, true))
+    myObstacles.push(
+      new Obstacle(
+        randomHeight + ventanita,
+        50,
+        canvas.height - randomHeight,
+        false
+      )
+    )
+  }
+}
+
+/*class Board {
+constructor() {
+  this.x = 0
+  this.y = 0
+  this.width = canvas.width
+  this.height = canvas.height
+  this.img = new Image()
+  this.img.src =
+    'https://github.com/ironhack-labs/lab-canvas-flappybirds/blob/master/starter_code/images/bg.png?raw=true'
+  this.img.onload = () => {
+    this.draw()
+  }
+}
+draw() {
+  this.x--
+  if (this.x < -canvas.width) {
+    this.x = 0
+  }
+  ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+  ctx.drawImage(
+    this.img,
+    this.x + canvas.width,
+    this.y,
+    this.width,
+    this.height
+  )
+}*/
 
 const carrito=  new Carrito()
+const obstaculo= new Obstacle()
 
 document.onkeydown=event=>{
   event.preventDefault()
@@ -80,15 +127,23 @@ document.onkeydown=event=>{
   updateCanvas()
 }
 
-function updateCanvas(){
-  ctx.clearRect(0,0,canvas.width,canvas.height)
-  pintaEscenario()
-  carrito.draw()
-  drawObstacles()
-  updateObstacles()
+function drawObstaculos() {
+  obstaculo.forEach(obstaculo => {
+    obstaculo.draw()
+  })
 }
 
-
+function updateCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+  
+  pintaEscenario()
+  obstaculo.draw()
+  carrito.draw()
+  drawObstacles()
+  
+  //drawObstacles()
+  //updateObstacles()
+}
 updateCanvas()
 
 function drawObstacles(){
@@ -99,7 +154,7 @@ function drawObstacles(){
 }
 
 function updateObstacles(){
-  if(frames%120===0)//cada 120 
+  if(frames%120===0)//cada 120  
   {
       //let x= canvas.width;
       let x= canvas.width;
