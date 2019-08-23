@@ -9,9 +9,10 @@
 //   context.fillRect()
     
 // window.requestAnimationFrame();
-
+// function updateEverything(){
   game.paint();
-  game.paintCar();
+//   game.paintCar();
   game.startGame();
   
+
 

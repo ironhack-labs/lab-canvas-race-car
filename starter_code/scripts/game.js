@@ -2,8 +2,7 @@ class Game{
     constructor(canvas){
         this.canvas = canvas;
         this.context = $canvas.getContext('2d');
-        this.image = new Image();
-        this.image.src = "./images/car.png";
+       
     }
     startGame(){
         // window.addEventListener('onload', function (){
@@ -15,17 +14,9 @@ class Game{
             
         // });
         // console.log("hi");
-        // window.requestAnimationFrame(() => this.startGame());
-
-
-
-        // window.onload = function() {
-            
+        // window.onload = function() {  
         //     };
-          
-        
-        //     // function startGame() {
-             
+        //     // function startGame()      
         //     // console.log("hi");
         //     // }
         //   };
@@ -38,31 +29,13 @@ class Game{
         this.context.clearRect(0, 0, width, height);
       }
     
-      paint () {
-        this.context.fillStyle = "grey";
-        this.context.fillRect(20, 0, 460, 600);
-        
-        this.context.fillStyle = "white";
-        this.context.fillRect(40, 0, 10, 600);
-        
-        this.context.fillStyle = "white";
-        this.context.fillRect(450, 0, 10, 600);
+    paint () {
+        this.board = new Board(this);
+        this.board.paint();
+        console.log("painting board");
 
-        this.context.strokeStyle= "white";
-        this.context.beginPath();
-        this.context.setLineDash([20, 15]);
-        this.context.moveTo(250, 15);
-        this.context.lineTo(250, 600);
-        // this.lineWidth = 100;
-        this.context.stroke();
-        
-      }
-
-      paintCar(){
-        this.context.drawImage(this.image, 100, 100,100,100);
-        
-        this.context.fillRect(100,100,100,100);
-        console.log("carrrrrrrrrrr");     
-      }
+        this.car = new Car(this);
+        this.car.paint();
+    }
       
 }
