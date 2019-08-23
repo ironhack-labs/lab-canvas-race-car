@@ -111,9 +111,13 @@ function updateCanvas() {
   drawObstacles()
   updateObstacles()
   checkGameOver()
-  ctx.font = '50px Georgia'
-  ctx.fillStyle = '#111'
-  ctx.fillText(`Score: ${score}`, 200, 40)
+  updateScore()
+}
+
+function updateScore() {
+  ctx.font = '22px Helvetica'
+  ctx.fillStyle = '#fff'
+  ctx.fillText(`Score: ${score}`, 82, 35)
 }
 
 // Lo mismo que el start()
@@ -183,4 +187,14 @@ function checkGameOver() {
 function stop() {
   clearInterval(interval)
   interval = null
+  blackScreenOfTheDeath()
+}
+
+function blackScreenOfTheDeath() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = '#111'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.font = '22px Helvetica'
+  ctx.fillStyle = 'red'
+  ctx.fillText(`Game over!`, canvas.width / 2 - 50, canvas.height / 2)
 }
