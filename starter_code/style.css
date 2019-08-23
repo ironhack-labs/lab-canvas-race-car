@@ -1,6 +1,21 @@
 body {
   padding: 0;
   text-align: center;
+  background-color: peru;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+canvas{
+border:2px solid #BADA55;
+}
+
+#divicito{
+  display:flex;
+  flex-direction: row;
+  justify-content:space-between;
 }
 
 .game-intro {
