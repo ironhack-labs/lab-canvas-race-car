@@ -11,11 +11,11 @@ class Controls {
         event.preventDefault();
         switch (key) {
           case 37:
-            this.car.x--;
+            this.car.x -= 5  ;
             console.log('ola');
             break;
           case 39:
-            this.car.x++;
+            this.car.x += 5;
             console.log('ola');
             break;
         }
