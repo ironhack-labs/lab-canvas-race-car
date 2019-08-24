@@ -8,6 +8,6 @@ class Game {
 
   draw() {
     this.board.drawBoard ();
-    this.player.drawPlayer (this.image, this.y, 50, 65);
+    this.player.drawPlayer ();
   }
 }

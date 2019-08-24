@@ -16,3 +16,6 @@ class Player {
     });
   }
 }
+
+// I tried different ways to print the image, but still with an error
+//saying that 'src' is not defined.. 
