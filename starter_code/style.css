@@ -1,33 +1,31 @@
 body {
   padding: 0;
   text-align: center;
-  background-color: peru;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 canvas{
 border:2px solid #BADA55;
-margin-left: 150px
 }
 
 #divicito{
   display:flex;
   flex-direction: row;
-  justify-content:space-between;
-  
 }
 
 .game-intro {
-  float: left;
+  float:center;
   padding: 0% 10%;
 }
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
+  text-align: center;
+}
+
+#game-board {
+  float: left;
+  padding: 0% 0px;
 }
 
 .logo-img {
@@ -47,10 +45,6 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
-  margin-top: 20px
 }
 
-#game-board {
-    float: left;
-    padding: 20px 0px;
-}
+

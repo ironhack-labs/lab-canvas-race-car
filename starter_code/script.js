@@ -1,232 +1,203 @@
-const canvas=document.querySelector('canvas')
-const ctx=canvas.getContext('2d')
-let frames=0
-// let interval
-const myObstacles=[]
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+let frames = 0
+let interval
+let myObstacles = []
+let score = 0
+var botonInicio = document.getElementById('start-button');
+botonInicio.onclick=start
+console.log(botonInicio)
 
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
-
-  function startGame() {
-
-  }
-};
-
-class Carrito{
-  constructor(){
-    this.x=(canvas.width/2)-30
-    this.y=canvas.height-150
-    this.width=60
-    this.height=100
-    this.img=new Image()
-    this.img.src="./images/car.png"
-    this.img.onload=()=>{
-      ctx.drawImage(this.img, this.x,this.y, this.width, this.height)
-    }
+class Board {
+  constructor() {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
   }
   draw(){
-    ctx.drawImage(this.img, this.x,this.y, this.width, this.height)
-  }
-  moveleft(){
-    this.x-=2
-  }
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.fillStyle = 'gray'
+    //dibujas un relleno
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.stroke()
+    ctx.closePath()
 
-  moveright(){
-   this.x+=2
-  }
+    //empezar el camino
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.fillStyle = 'green'
+    //dibujas un relleno
+    ctx.fillRect(0, 0, 40, canvas.height)
+    ctx.stroke()
+    ctx.closePath()
 
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.fillStyle = 'green'
+    //dibujas un relleno
+    ctx.fillRect(canvas.width - 40, 0, 40, canvas.height)
+    ctx.stroke()
+    ctx.closePath()
+
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.fillStyle = 'white'
+    //dibujas un relleno
+    ctx.fillRect(60, 0, 20, canvas.height)
+    ctx.stroke()
+    ctx.closePath()
+
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.fillStyle = 'white'
+    //dibujas un relleno
+    ctx.fillRect(canvas.width - 80, 0, 20, canvas.height)
+    ctx.stroke()
+    ctx.closePath()
+
+    ctx.beginPath();
+    //da el color al làpiz
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 10
+    ctx.setLineDash([20])
+    ctx.rect(canvas.width / 2, -10, 1000, canvas.height * 2)
+    ctx.stroke()
+    ctx.closePath()
+  }
 }
 
-class Obstacle{
-    constructor(y, width, height, type){
-      this.width = width
-      this.height = height
-      this.x = canvas.width
-      this.y 
-      this.type=type
-    }
-    draw(){
-      ctx.fillStyle="red"
-      ctx.fillRect(canvas.width/2,50,canvas.width/2,10)
-      ctx.stroke()
-    }
-    
-    //crasWith(obstacle){
-    //   return !(
-    //       this.bottom()<obstacle.top()||
-    //       this.top()>obstacle.bottom()||
-    //       this.right()<obstacle.left()||
-    //       this.left()>obstacle.right()
-    //   )
-    // }
-}
-
-function generateObstaculos() {
-  const min = 20
-  const max = 100
-  const ventanita = 100
-  if (frames % 200 === 0) {
-    const randomHeight = Math.floor(Math.random() * (max - min))
-    myObstacles.push(new Obstacle(0, 50, randomHeight, true))
-    myObstacles.push(
-      new Obstacle(
-        randomHeight + ventanita,
-        50,
-        canvas.height - randomHeight,
-        false
-      )
+class Carrito {
+    constructor(x, y) {
+    this.x = x
+    this.y = y
+    this.width = 50
+    this.height = 75
+    this.img = new Image()
+    this.img.src = './images/car.png'
+  }
+  draw() {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+  }
+    moveRight() {
+    this.x += 20
+  }
+   moveLeft() {
+    this.x -= 20
+  }
+  isTouching(obstacle) {
+      return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.y + this.height > obstacle.y
     )
   }
 }
 
-/*class Board {
-constructor() {
-  this.x = 0
-  this.y = 0
-  this.width = canvas.width
-  this.height = canvas.height
-  this.img = new Image()
-  this.img.src =
-    'https://github.com/ironhack-labs/lab-canvas-flappybirds/blob/master/starter_code/images/bg.png?raw=true'
-  this.img.onload = () => {
-    this.draw()
+//obstacle
+class Obstacle {
+  constructor(x, y, width, height, type) {
+    this.width = width
+    this.height = height
+    this.type = type
+    this.x = x
+    this.y = y
+  }
+  draw() {
+    this.y++
+    ctx.fillStyle = "#560B0B"
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+    ctx.stroke()
   }
 }
-draw() {
-  this.x--
-  if (this.x < -canvas.width) {
-    this.x = 0
-  }
-  ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-  ctx.drawImage(
-    this.img,
-    this.x + canvas.width,
-    this.y,
-    this.width,
-    this.height
-  )
-}*/
 
-const carrito=  new Carrito()
-const obstaculo= new Obstacle()
 
-document.onkeydown=event=>{
-  event.preventDefault()
-  switch (event.keyCode) {
-    case 37:
-      carrito.moveleft()
-    break;
-    case 39:
-      carrito.moveright()
-    break;
-    default:
-      break;
+const carrito = new Carrito(230, 500)
+const board = new Board()
+
+function drawScore(){
+  if (frames % 200 === 0) {
+    score += 1
   }
-  updateCanvas()
+  ctx.font = '30px Impact'
+  ctx.fillText(`Score: ${score}`, canvas.width / 2 + 20, 50)
 }
 
-function drawObstaculos() {
-  obstaculo.forEach(obstaculo => {
-    obstaculo.draw()
+function generateObstacles() {
+  const min = 200
+  const max = 500
+  const maxC = canvas.width
+  const minC = 40
+  if (frames % 200 === 0) {
+    const randomWidth = Math.floor(Math.random() * (max - min))
+    const randomX = Math.floor(Math.random() * (maxC - minC))
+    myObstacles.push(new Obstacle(randomX, 1, randomWidth, 30, true))
+  }
+}
+
+function drawObstacles() {
+  myObstacles.forEach(obstacle => {
+    obstacle.draw()
   })
 }
 
-function updateCanvas(){
-  ctx.clearRect(0,0,canvas.width,canvas.height)
-  
-  pintaEscenario()
-  obstaculo.draw()
-  carrito.draw()
+
+function iniciaEscenario(){
+   board.draw()
+}
+
+function update() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  frames++
+  generateObstacles()
+  board.draw()
   drawObstacles()
-  
-  //drawObstacles()
-  //updateObstacles()
+  checkCollition()
+  drawScore()
+  carrito.draw()
 }
-updateCanvas()
 
-function drawObstacles(){
-  myObstacles.forEach(obstacles=>{
-      obstacles.y-=1
-      obstacles.draw()
+function gameOver() {
+  ctx.font = '30px Courier'
+  ctx.fillText('Game Over "F" try again', canvas.width / 2 - 200, 200)
+  clearInterval(interval)
+}
+
+function checkCollition() {
+  myObstacles.forEach(myObstacles => {
+    if (carrito.isTouching(myObstacles)) return gameOver()
   })
 }
 
-function updateObstacles(){
-  if(frames%120===0)//cada 120  
-  {
-      //let x= canvas.width;
-      let x= canvas.width;
-      let minWidth=canvas.width*0.075
-      let maxWidth=canvas.width*0.75
-      let width=Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth)
-      obstacles.draw()
-
-      myObstacles.push(new Obstacle(10,width,'red',x,0))
-      
+function restart() {
+  if (true) {
+    location.reload()
   }
 }
 
+document.onkeydown = e => {
+  switch (e.keyCode) {
+    case 37:
+      carrito.moveLeft()
+      break
+    case 39:
+      carrito.moveRight()
+      break
+    case 70:
+      restart()
+      break
 
+    default:
+      break
+  }
+}
 
-function pintaEscenario(){
-ctx.beginPath();
-//da el color al làpiz
-ctx.fillStyle='gray'
-//dibujas un relleno
-ctx.fillRect(0,0,canvas.width,canvas.height)
-ctx.stroke()
-ctx.closePath()
+iniciaEscenario()
 
-
-//empezar el camino
-ctx.beginPath();
-//da el color al làpiz
-ctx.fillStyle='green'
-//dibujas un relleno
-ctx.fillRect(0,0,40,canvas.height)
-
-ctx.stroke()
-ctx.closePath()
-
-
-ctx.beginPath();
-//da el color al làpiz
-ctx.fillStyle='green'
-//dibujas un relleno
-ctx.fillRect(canvas.width-40,0,40,canvas.height)
-
-ctx.stroke()
-ctx.closePath()
-
-
-ctx.beginPath();
-//da el color al làpiz
-ctx.fillStyle='white'
-//dibujas un relleno
-ctx.fillRect(60,0,20,canvas.height)
-ctx.stroke()
-ctx.closePath()
-
-
-ctx.beginPath();
-//da el color al làpiz
-ctx.fillStyle='white'
-//dibujas un relleno
-ctx.fillRect(canvas.width-80,0,20,canvas.height)
-ctx.stroke()
-ctx.closePath()
-
-ctx.beginPath();
-//da el color al làpiz
-ctx.strokeStyle='white'
-ctx.lineWidth=10
-ctx.setLineDash([20])
-ctx.rect(canvas.width/2,-10,1000,canvas.height*2)
-ctx.stroke()
-ctx.closePath()
-
+function start() {
+  interval = setInterval(update, 1000 / 60)
 }
 
 
