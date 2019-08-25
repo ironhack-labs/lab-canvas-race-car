@@ -3,13 +3,15 @@ body {
   text-align: center;
   background-color: peru;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
 }
 
 canvas{
 border:2px solid #BADA55;
+
+margin-right: 15vw;
 }
 
 #divicito{

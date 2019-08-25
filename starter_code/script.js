@@ -5,6 +5,7 @@ let frames = 0
 let interval
 let myObstacles = []
 let score = 0
+let button = document.getElementById('start-button')
 
 class Board {
   constructor() {
@@ -190,7 +191,9 @@ function checkCollition() {
   })
 }
 
-start()
+button.onclick = function () {
+  start()
+}
 
 function restart() {
   if (true) {
