@@ -19,6 +19,7 @@ body {
 
 .arrows-img {
   width: 150px;
+  margin-bottom: 1rem;
 }
 
 body button {
@@ -35,4 +36,14 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+
+.arrows-img + span {
+  display: block;
+  font-size: 2rem;
+}
+
+#points {
+  display: block;
+  color: red;
 }
