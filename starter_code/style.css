@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#game {
+  border: 1px solid red;
+
+}
+#game.off {
+  display: none;
+}
