@@ -64,12 +64,12 @@ const h2 = h / 2;
     ctx.stroke();
     ctx.closePath();
   }
+  const car = new Image();
+  car.src = "images/car.png";
+  let carX = w2-50;
+  let carY = h-210;
 
   function drawCar() {
-    let carX = w2-50;
-    let carY = h-210;
-    const car = new Image();
-    car.src = "images/car.png";
     ctx.drawImage(car, carX, carY, 100, 200)
   }
 
