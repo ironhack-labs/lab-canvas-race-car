@@ -19,6 +19,7 @@ body {
 
 .arrows-img {
   width: 150px;
+  margin-top: 20px;
 }
 
 body button {
@@ -36,3 +37,7 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+/* #myCanvas {
+  border:1px solid red;
+} */
