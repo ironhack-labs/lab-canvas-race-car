@@ -38,9 +38,10 @@ body button {
 }
 
 #game {
-  border: 1px solid red;
 
 }
+
 #game.off {
   display: none;
+  
 }
