@@ -1,11 +1,16 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
 }
 
 .game-intro {
+  width: 50%;
   float: left;
-  padding: 0% 10%;
+  padding: 0% 5%;
 }
 
 .game-intro p {
@@ -34,5 +39,5 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 0px 0px;
 }
