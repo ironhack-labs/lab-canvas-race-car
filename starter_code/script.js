@@ -1,31 +1,46 @@
-window.onload = function () {
-  document.getElementById("start-button").onclick = function () {
+//window.onload = function () {
+  //document.getElementById("start-button").onclick = function () {
     startGame();
-    drawBackground();
+    //drawBackground();
 
    
 
 
-  };
+  //};
 
   var canvas = document.querySelector('#canvas')
   var ctx = canvas.getContext("2d")
 
 
-  let obstacle = {
-     yPos : 20,
+  // let obstacle = {
+  //    yPos : 20,
     
-    create: function(){
-      ctx.fillStyle = "#008100"
-      ctx.fillRect(70, this.yPos, 300, 50)
-    },
-    moveDown: function(){
-      this.yPos += 40
-      ctx.fillRect(70, this.yPos, 300, 50)
-      
+  //   create: function(){
+  //     ctx.fillStyle = "#008100"
+  //     ctx.fillRect(70, this.yPos, 300, 50)
+  //   },
+  //   moveDown: function(){
+  //     this.yPos += 40
+  //     ctx.fillRect(70, this.yPos, 300, 50)
+     
+  //   }
 
+  // }
+
+
+  class Obstacle{
+    constructor(x,y){
+      this.x = Math.random()*canvas.width;
+      this.y = -200
     }
-
+    create(){
+      ctx.fillStyle = "#008100"
+      ctx.fillRect(this.x, this.y, 300, 50) 
+    }
+    moveDown(){
+      this.y += 40
+      ctx.fillRect(this.x, this.y, 300, 50)
+    }
   }
 
 
@@ -58,20 +73,22 @@ window.onload = function () {
 
       case 37: // left arrow   
         car.xPos -= 25
-        car.clear()
-        drawBackground()
-        car.draw()
-        obstacle.create();
-        obstacle.moveDown();
+        //car.clear()
+        //drawBackground()
+        //car.draw()
+        //obstacle.create();
+        //obstacle.moveDown();
     
    
         break;
       case 39: // right arrow
 
         car.xPos += 25
-        car.clear()
-        drawBackground()
-        car.draw()
+        // car.clear()
+        //  drawBackground()
+        // car.draw()
+        //obstacle.create();
+        //obstacle.moveDown();  
 
         break;
     }
@@ -100,6 +117,26 @@ window.onload = function () {
     ctx.fillStyle = "white"
   }
 
- 
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height)
 
-};
+    drawBackground();
+    obstacles.forEach(o=>o.moveDown())
+
+    car.draw()
+    window.requestAnimationFrame(animate)
+  }
+  window.requestAnimationFrame(animate)
+
+
+//};
+
+var obstacles = []
+
+setInterval(()=>{
+
+  let obstacle =  new Obstacle()
+  obstacle.create()
+  obstacles.push( obstacle )
+
+},1000)
