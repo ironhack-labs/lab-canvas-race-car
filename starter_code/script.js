@@ -18,8 +18,12 @@ window.onload = function() {
     setInterval(() => {
       clearContent()
       drawBackground()
+      if (counter % 150 === 0) {
+        obstacles.push(new Obstacle(ctx, randomInt(60, 300), 0, 4));
+      }
+      if (obstacles.length !== 0) {
+        drawObstacles();}
       car.drawCar()
-      generateObstacles();
       counter ++
     }, 10);
   }
@@ -141,28 +145,69 @@ window.onkeydown = function(e) {
 };
 
 
+// class Obstacle {
+//   constructor() {
+//     this.width = 80;
+//     this.height = 20;
+//     this.x = randomNum(rightBoundarie, leftBoundarie);
+//     this.y = -20;
+//   }
+
+//   draw() {
+//     if (frames % 10) this.y += counter;
+//     ctx.fillStyle = "purple";
+//     ctx.fillRect(this.x, this.y, this.width, this.height);
+//   }
+// }
+
+// function randomNum(max, min) {
+//   return Math.floor(Math.random() * (max - min) + min);
+// }
+
+// function generateObstacles() {
+//   if (frames % 100 == 0) {
+//     let obs = new Obstacle();
+//     obstacles.push(obs);
+//   }
+// }
+
 class Obstacle {
-  constructor() {
-    this.width = 80;
-    this.height = 20;
-    this.x = randomNum(rightBoundarie, leftBoundarie);
-    this.y = -20;
+  constructor(ctx, x, y, speed) {
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
+    this.speed = speed
   }
 
   draw() {
-    if (frames % 10) this.y += counter;
-    ctx.fillStyle = "purple";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.ctx.beginPath();
+    this.ctx.rect(this.x, ++this.y * this.speed, 200, 20);
+    this.ctx.fillStyle = "#FF0000";
+    this.ctx.fill();
   }
 }
 
-function randomNum(max, min) {
-  return Math.floor(Math.random() * (max - min) + min);
+
+function drawObstacles() {
+  obstacles.forEach((obstacle, idx) => {
+    
+    if (
+      car.x + 100 > obstacle.x &&
+      car.x < obstacle.x + 200 &&
+      car.y - 20 <= obstacle.y * this.speed
+    ) {
+      clearInterval(intervalID)
+    }
+
+    if (obstacle.y * this.speed >= h) {
+      obstacles.splice(idx, 1);
+    }
+    obstacle.draw();
+  });
+};
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function generateObstacles() {
-  if (frames % 100 == 0) {
-    let obs = new Obstacle();
-    obstacles.push(obs);
-  }
-}
+
