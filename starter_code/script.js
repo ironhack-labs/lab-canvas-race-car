@@ -8,6 +8,7 @@ const PI = Math.PI;
 const PI_DOUBLE = Math.PI * 2;
 const PI_HALF = Math.PI / 2;
 const speed = 10;
+const obstacleSpeed = 5;
 let counter = 0;
 
 function randomFloat(min, max) {
@@ -30,9 +31,6 @@ class Car {
     this.gameCharacter = new Image();
     this.gameCharacter.src = "./images/car-red-small.png";
 
-    // this.gameCharacter.onload = () => {
-    //   ctx.drawImage(this.gameCharacter, this.positions.x, this.positions.y);
-    // };
   }
 
   drawCar() {
@@ -60,6 +58,10 @@ class Obstacle {
   drawObstacle() {
     ctx.drawImage(this.newObstacle, this.positions.x, this.positions.y);
   }
+  moveOstacle() {
+    this.positions.y += obstacleSpeed;
+  }
+
 }
 
 function drawBackground() {
@@ -102,26 +104,14 @@ function clearScreen() {
   ctx.clearRect(0, 0, 450, 700);
 }
 
-// let obstacleCounter = 0
-// function moveObstacles() {
-  
-//   setInterval(() => {
-//     obstacleCounter++
-//     obstacle.positions.y += counter;
-//   }, 100)
-  // obstacle.positions.y += counter;
-// }
-
-
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
   };
-
+  
   function startGame() {
     let car = new Car(ctx);
     let obstacle = new Obstacle(ctx);
-    //No entiendo muy bien por qué si saco esto de abajo de la función deja de funcionar todo.
     window.onkeydown = function(e) {
       switch (e.key) {
         case "ArrowLeft":
@@ -132,14 +122,14 @@ window.onload = function() {
           break;
       }
     };
-
+    
     setInterval(() => {
       clearScreen();
       drawBackground();
       counter++;
       car.drawCar();
-      obstacle.drawObstacle()
-      moveObstacles()
+      obstacle.drawObstacle();
+      obstacle.moveOstacle();
     }, 10);
   }
 };
