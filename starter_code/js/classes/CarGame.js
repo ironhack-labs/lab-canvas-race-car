@@ -1,5 +1,5 @@
 class CarGame {
-  constructor(canvas, ctxWidth, ctxHeight) {
+  constructor(canvas, ctxWidth, ctxHeight, gameSpeed, obstacleIntervalGenerator) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.w = ctxWidth;
@@ -8,10 +8,11 @@ class CarGame {
     this.h2 = ctxHeight / 2;
     this.intervalID = undefined;
     this.counter = 0;
-    this.speed = 8;
+    this.speed = gameSpeed;
     this.obstacles = [];
-    this.carSpeed = 8;
+    this.carSpeed = gameSpeed + 4;
     this.points = 0;
+    this.obstacleIntervalGenerator = obstacleIntervalGenerator
 
     this.car = new Car(this.ctx);
 
@@ -45,7 +46,7 @@ class CarGame {
       this.refresh();
       this.drawRoad();
 
-      if (this.counter % 150 === 0) {
+      if (this.counter % this.obstacleIntervalGenerator === 0) {
         this.obstacles.push(
           new Obstacle(this.ctx, this.randomInt(60, 300), 0, this.speed)
         );

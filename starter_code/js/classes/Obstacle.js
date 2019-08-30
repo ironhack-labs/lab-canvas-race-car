@@ -9,7 +9,8 @@ class Obstacle {
   draw() {
     this.ctx.beginPath();
     this.ctx.rect(this.x, ++this.y * this.speed, 200, 20);
-    this.ctx.fillStyle = "#FF0000";
+    this.ctx.fillStyle = "#990000";
     this.ctx.fill();
+    this.ctx.closePath()
   }
 }

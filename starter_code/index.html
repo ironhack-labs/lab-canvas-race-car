@@ -11,8 +11,12 @@
 <body>
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
-    <br>
-    <button id="start-button">StartGame</button>
+    <form class="game-setup">
+      <input type="text" id="game-speed" placeholder="Game speed (15 default)">
+      <input type="text" id="game-obstacles-interval" placeholder="Obstacles interval (50 default)">
+      <p class="game-recommendation">Setup recommendation <span>Game speed: 15</span><span>Obstacles interval: 50</span></p>
+      <button id="start-button">StartGame</button>
+    </form>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
     <span>
