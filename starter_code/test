@@ -1,0 +1,14 @@
+    ctx.fillStyle = "green";
+    ctx.fillRect(0, 0, w2, h);
+    ctx.fillStyle = "grey";
+    ctx.fillRect(80, 0, w2 - 150, h);
+    ctx.fillStyle = "white";
+    ctx.fillRect(100, 0, 10, h);
+    ctx.fillRect(800, 0, 10, h);
+    ctx.setLineDash([40, 10]);
+    ctx.strokeStyle = "white";
+    ctx.beginPath();
+    ctx.lineWidth = 7;
+    ctx.moveTo(w2 / 2, 0);
+    ctx.lineTo(w2 / 2, h);
+    ctx.stroke();

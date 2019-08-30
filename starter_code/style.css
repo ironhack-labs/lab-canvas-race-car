@@ -1,11 +1,18 @@
 body {
   padding: 0;
   text-align: center;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
 }
 
 .game-intro {
   float: left;
   padding: 0% 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-intro p {
