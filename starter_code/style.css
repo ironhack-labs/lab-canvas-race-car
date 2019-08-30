@@ -1,6 +1,10 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
 }
 
 .game-intro {
@@ -34,5 +38,16 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 5vh 0px;
+    height: 100vh;
+    width: 50vw;
+    box-sizing: border-box;
+
+}
+
+#myCanvas {
+  /* background: #007a10; */
+  /* height: 100vh;
+  width: 550px; */
+  padding-top:30px;
 }
