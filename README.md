@@ -1,6 +1,7 @@
 ![Ironhack Logo](https://i.imgur.com/1QgrNNw.png)
 
 # JS | Canvas RaceCar
+![demo.gif](starter_code/images/demo.gif)
 
 ## Introduction
 

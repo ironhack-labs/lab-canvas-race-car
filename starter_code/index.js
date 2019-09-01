@@ -1,16 +1,26 @@
 const C_GRASS = '#008100'
-const C_ROAD = '#808080'
+const C_ROAD = '#20201f'
 const C_ROADLINE = '#FFFFFF'
-const C_OBSTACLE = '#974E4E'
-const I_CAR = 'images/car.png'
+const C_LEVEL = '#f5543b'
+const C_UI = '#a5b1c4'
+var C_OBSTACLE = '#974E4E'
+const I_CAR = `images/car${Math.floor(Math.random()*4+1)}.png`
+var CAR_SPEED = 7
 
+
+var interval = undefined
 var canvas = document.getElementById('canvas');
+canvas.style.width = '100%'
+canvas.style.height = '100%'
+canvas.width = canvas.offsetWidth
+canvas.height = canvas.offsetHeight
+
 var ctx = canvas.getContext('2d');
 var world = undefined
 
 function choose(choices) {
-    var index = Math.floor(Math.random() * choices.length);
-    return choices[index];
+    var index = Math.floor(Math.random() * choices.length)
+    return choices[index]
 }
 
 function randBetween(x1, x2) {
@@ -27,7 +37,12 @@ class Rect {
     }
 
     get bbox() {
-        return { x: this.x, y: this.y, x2: this.x + this.width, y2: this.y + this.height }
+        return {
+            left: this.x,
+            top: this.y,
+            right: this.x + this.width,
+            bottom: this.y + this.height
+        }
     }
 
     draw() {
@@ -38,13 +53,13 @@ class Rect {
     }
 
     update(speed) {
-        // console.log('NotImplemented', speed)
+        null
     }
 
-    checkCollision(other) {
-        let tbb = this.bbox
-        let obb = other.bbox
-        return (tbb.x > obb.x2 && tbb.x2 < obb.x) && (tbb.y2 < obb.y && tbb.y > obb.y2)
+    checkCollision(rect) {
+        let self = this.bbox,
+            other = rect.bbox
+        return !(self.left > other.right || self.right < other.left || self.bottom < other.top || self.top > other.bottom)
     }
 }
 
@@ -81,57 +96,56 @@ class RoadLines extends Rect {
 class Car extends Rect {
     constructor(x, y, width, height, color, imageSource) {
         super(x, y, width, height, color)
-        this.scaleDivider = 3
+        this.scaleDivider = 4
         this.image = new Image()
         this.image.src = imageSource
-        this.image.onload = this.setup.bind(this)
+        this.image.onload = function() {
+            this.width = this.image.naturalWidth / this.scaleDivider
+            this.height = this.image.naturalHeight / this.scaleDivider
+            this.x -= this.width / 2
+            this.y -= this.height + this.height / 3
+        }.bind(this)
         this.speedX = 0
         this.speedY = 0
     }
 
-    setup() {
-        this.width = this.image.naturalWidth / this.scaleDivider
-        this.height = this.image.naturalHeight / this.scaleDivider
-        this.x -= this.width / 2
-        this.y -= this.height + this.height / 3
-    }
-
     draw() {
-        ctx.drawImage(
-            this.image,
-            0,
-            0,
-            this.image.width,
-            this.image.height,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-        );
+        ctx.save()
+        ctx.shadowOffsetX = 5;
+        ctx.shadowOffsetY = 5;
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 15;
+        ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+        ctx.restore()
     }
 
-    update() {
-        if (this.inBounds()) {
-            this.x += this.speedX
-            this.y += this.speedY
+    update(road) {
+        this.x += this.speedX
+        this.y += this.speedY
+
+        if (this.x < road.bbox.left) {
+            this.x += this.width / 2
+            this.speedX = 0
+        } else if (this.bbox.right > road.bbox.right) {
+            this.x -= this.width / 2
+            this.speedX = 0
         }
-    }
 
-    inBounds() {
-        return this.x >= 30 && this.bbox.x2 <= canvas.width - 30 && this.bbox.y2 <= canvas.height - 30 && this.bbox.y >= 30
+        if (this.y < 0) {
+            this.y += this.height / 4
+            this.speedY = 0
+        } else if (this.bbox.bottom > canvas.height) {
+            this.y -= this.height / 4
+            this.speedY = 0
+        }
     }
 }
 
 class Obstacle extends Rect {
     constructor(road, car) {
-        let randomWidth = Math.max(randBetween(road.bbox.x, road.bbox.x2 - car.width * 2), road.width / 2)
-        super(
-            choose([road.bbox.x, road.bbox.x2 - randomWidth]),
-            0,
-            randomWidth,
-            30,
-            C_OBSTACLE
-        )
+        let randomWidth = Math.max(randBetween(road.bbox.left, road.bbox.right - car.width * 4), road.width / 3)
+        let randomX = randBetween(road.bbox.left, road.bbox.right - randomWidth)
+        super(randomX, 0, randomWidth, 30, C_OBSTACLE)
     }
 
     update(speed) {
@@ -141,9 +155,12 @@ class Obstacle extends Rect {
 
 class World {
     constructor() {
+        interval = window.setInterval(this.increaseDifficulty.bind(this), 8000)
         this.distance = 0
-        this.speed = 10
-        this.obstacleInterval = 200
+        this.lastLevel = 0
+        this.level = 1
+        this.speed = 4
+        this.obstacleInterval = 700
         this.obstacleCounter = 0
         this.gameOver = false
 
@@ -153,10 +170,10 @@ class World {
 
         this.grass = new Rect(0, 0, canvas.width, canvas.height, C_GRASS)
         this.road = new Rect(this.roadMargin, 0, canvas.width - this.roadMargin * 2, canvas.height, C_ROAD)
-
         this.roadLineL = new Rect(this.road.x + this.roadLineMargin, 0, this.roadLineWidth, canvas.height, C_ROADLINE)
-        this.roadLineR = new Rect(this.road.bbox.x2 - this.roadLineWidth - this.roadLineMargin, 0, this.roadLineWidth, canvas.height, C_ROADLINE)
+        this.roadLineR = new Rect(this.road.bbox.right - this.roadLineWidth - this.roadLineMargin, 0, this.roadLineWidth, canvas.height, C_ROADLINE)
         this.roadLines = new RoadLines(canvas.width / 2 - this.roadLineWidth / 2, 0, this.roadLineWidth, canvas.height, C_ROADLINE, this.numLines)
+
         this.car = new Car(canvas.width / 2, canvas.height, 0, 0, C_GRASS, I_CAR)
 
         this.gameObjects = {
@@ -164,35 +181,76 @@ class World {
             obstacles: [],
             player: this.car
         }
+        this.update()
     }
 
     draw() {
         this.gameObjects.background.concat(this.gameObjects.obstacles).map(sprite => sprite.draw())
         this.gameObjects.player.draw()
+        this.score()
+    }
+
+    increaseDifficulty() {
+        this.obstacleInterval -= 75;
+        this.speed++;
+        this.level++;
+        CAR_SPEED += .25
     }
 
     update() {
-        this.distance += this.speed
-        this.gameObjects.player.update()
-        this.gameObjects.background.concat(this.gameObjects.obstacles).map(gameObject => {
-            gameObject.update(this.speed)
-            if (gameObject instanceof Obstacle && gameObject.checkCollision(this.car)) this.gameOver = true
-        })
+        if (!this.gameOver) {
+            this.distance += .1
+            this.gameObjects.player.update(this.road)
+            this.gameObjects.background.concat(this.gameObjects.obstacles).map(gameObject => gameObject.update(this.speed))
 
+            this.gameOver = this.gameObjects.obstacles.some(obstacle => this.car.checkCollision(obstacle))
 
-        this.obstacleCounter += 5
+            this.obstacleCounter += 5
+            if (this.lastLevel !== this.level) {
+                C_OBSTACLE = '#' + Math.floor(Math.random() * 16777215).toString(16);
+                this.lastLevel = this.level
+            }
 
-        if (!(this.obstacleCounter % this.obstacleInterval)) {
-            this.gameObjects.obstacles.push(new Obstacle(this.road, this.gameObjects.player))
+            if (!(this.obstacleCounter % this.obstacleInterval)) {
+                this.gameObjects.obstacles.push(new Obstacle(this.road, this.gameObjects.player))
+            }
+            this.draw()
+            window.requestAnimationFrame(this.update.bind(this))
+        } else {
+            this.gameIsOver()
         }
+    }
+
+    gameIsOver() {
+        window.clearInterval(interval)
+        new Rect(0, 0, canvas.width, canvas.height, '#000000').draw()
+        ctx.font = '14px "Press Start 2P"'
+        ctx.fillStyle = C_LEVEL
+        ctx.textAlign = "center"
+        ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 + 25)
+        ctx.fillStyle = C_UI
+        ctx.fillText(`You completed ${this.level} levels`, canvas.width / 2, canvas.height / 2 + 75)
+        ctx.fillText(`and went ${Math.floor(this.distance)} feet!`, canvas.width / 2, canvas.height / 2 + 100)
+    }
+
+    score() {
+        ctx.font = '14px "Press Start 2P"'
+        ctx.fillStyle = C_UI
+        ctx.textAlign = "center"
+        ctx.fillText(`Distance: ${Math.floor(this.distance)}`, canvas.width / 2, 50)
+        ctx.fillText("Level", canvas.width / 2, 75)
+        ctx.font = '30px "Press Start 2P"'
+        ctx.fillStyle = C_OBSTACLE
+        ctx.fillText(this.level, canvas.width / 2, 125)
     }
 }
 
 function main() {
-    world = (world) ? world : new World()
-    if (!world.gameOver) {
-        world.update()
-        world.draw()
-        window.requestAnimationFrame(main)
+    if (!world) {
+        world = new World()
+    } else {
+        window.clearInterval(interval)
+        delete world
+        world = new World()
     }
 }

@@ -1,29 +1,45 @@
+const keyCodes = {
+    up: 38,
+    down: 40,
+    left: 37,
+    right: 39,
+    w: 87,
+    s: 65,
+    a: 83,
+    d: 68
+}
+
 window.onload = function() {
     document.getElementById("start-button").onclick = function() {
-        startGame();
+        main();
     };
 
-    function startGame() {
-        main()
-    }
-
     document.onkeydown = function(e) {
+        console.log(e.keyCode)
         switch (e.keyCode) {
-            case 38: // up arrow
-                console.log('up')
-                world.gameObjects.player.speedY = -10;
+            case (keyCodes.up):
+                world.gameObjects.player.speedY = -CAR_SPEED;
                 break;
-            case 40: // down arrow
-                console.log('down')
-                world.gameObjects.player.speedY = 10;
+            case (keyCodes.down):
+                world.gameObjects.player.speedY = CAR_SPEED;
                 break;
-            case 37: // left arrow
-                console.log('left')
-                world.gameObjects.player.speedX = -10;
+            case (keyCodes.left):
+                world.gameObjects.player.speedX = -CAR_SPEED;
                 break;
-            case 39: // right arrow
-                console.log('right')
-                world.gameObjects.player.speedX = 10;
+            case (keyCodes.right):
+                world.gameObjects.player.speedX = CAR_SPEED;
+                break;
+            case (keyCodes.w):
+                world.gameObjects.player.speedY = -CAR_SPEED;
+                break;
+            case (keyCodes.a):
+                world.gameObjects.player.speedY = CAR_SPEED;
+                break;
+            case (keyCodes.s):
+                world.gameObjects.player.speedX = -CAR_SPEED;
+                break;
+            case (keyCodes.d):
+                world.gameObjects.player.speedX = CAR_SPEED;
                 break;
         }
     };
