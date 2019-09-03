@@ -8,9 +8,9 @@ const canvasHeight = canvas.height;
 const roadLeftBoundary = 9 / 72 * canvasWidth;
 const roadRightBoundary = 63 / 72 * canvasWidth;
 const carBumperPosition = 17 / 20 * window.innerHeight;
-
 let obstacles = [];
 let invervalID;
+let highScore = 0;
 
 let car = {
   x: 23.2 / 50 * window.innerWidth / 2,
@@ -62,7 +62,6 @@ function drawRoadMarkers() {
 function drawCar() {
   img = new Image();
   img.src = "./images/car.png";
-
   img.onload = function () {
     ctx.drawImage(img, car.x, car.y, 50, 100);
   }
@@ -84,7 +83,7 @@ function generateObstacle(){
 function updateObstacles(){
   const obstacleRed = "#890000"
 
-  if(car.distance % 1000 == 0){
+  if(car.distance % 1200 == 0){
     obstacles.push(generateObstacle());
   }
 
@@ -102,33 +101,40 @@ function updateObstacles(){
 
 function displayScore(){
   // Display the score
-  ctx.font = "18px serif";
-  ctx.fillStyle = "black";
-  ctx.fillText("Score: " + car.distance / 100, canvasWidth * 22.5 / 50, 50);
+  ctx.font = "24px serif";
+  ctx.fillStyle = "white";
+  ctx.fillText("Score: " + Math.floor(car.distance / 100), canvasWidth * 10 /72, 50);
+  ctx.fillText("High Score: " + highScore, canvasWidth * 42 /72, 50);
 }
 
 function gameOver(){
   console.log("Collision");
-  clearInterval(invervalID);
+  for(let i = 0; i <= invervalID; i++){
+    clearInterval(i);
+  } 
   document.onkeydown = null;
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  // ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
   ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  ctx.fillRect(0, canvasHeight*2/6, canvasWidth, canvasHeight/3);
   ctx.fillStyle = "#890000"
   ctx.font = "40px serif";
-  ctx.fillText("Game Over!", canvasWidth * 20 / 50, canvasHeight * 20 / 50);
+  ctx.fillText("Game Over!", canvasWidth * 18 / 50, canvasHeight * 20 / 50);
 
   ctx.fillStyle = "white"
   ctx.font = "30px serif";
-  ctx.fillText("Your Final Score: " + car.distance / 100, canvasWidth * 17 / 50, canvasHeight * 25 / 50);
+  ctx.fillText("Your Final Score: " + Math.floor(car.distance / 100), canvasWidth * 15 / 50, canvasHeight * 25 / 50);
+
+  if (highScore < Math.floor(car.distance / 100)) 
+    highScore = Math.floor(car.distance / 100);
 }
 
 function checkCollision(){
   for(let i = 0; i < obstacles.length; i++){
-    if(obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x == roadLeftBoundary && obstacles[i].length > car.x){
+    if (obstacles[i].y + 20 >= carBumperPosition && obstacles[i].y < carBumperPosition + 100)
+    if(obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x == roadLeftBoundary && obstacles[i].length + roadLeftBoundary > car.x){
       gameOver();  
-    } else if (obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x != roadLeftBoundary && obstacles[i].x + obstacles[i].length >= car.x){
+    } else if (obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x != roadLeftBoundary && obstacles[i].x < car.x + 50){
       gameOver();
     }
   }
@@ -143,6 +149,8 @@ function updateCanvas() {
   displayScore();
   checkCollision();
   car.distance += car.speed;
+
+  // requestAnimationFrame(updateCanvas);
 }
 
 window.onload = function () {
@@ -169,10 +177,10 @@ window.onload = function () {
           car.moveRight();
           break;
       }
-      updateCanvas();
+      // updateCanvas();
     }
 
-    invervalID = setInterval(updateCanvas, 50);
+    invervalID = setInterval(updateCanvas, 16);
     console.log(invervalID);
   }
 };
