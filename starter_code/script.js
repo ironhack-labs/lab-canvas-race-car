@@ -3,17 +3,26 @@ const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth / 2;
 canvas.height = window.innerHeight;
-canvasWidth = canvas.width;
-canvasHeight = canvas.height;
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const roadLeftBoundary = 9 / 72 * canvasWidth;
+const roadRightBoundary = 63 / 72 * canvasWidth;
+const carBumperPosition = 17 / 20 * window.innerHeight;
 
-const obstacles = [];
+let obstacles = [];
+let invervalID;
 
 let car = {
   x: 23.2 / 50 * window.innerWidth / 2,
   y: 17 / 20 * window.innerHeight,
-  moveLeft: function () { this.x -= 5},
-  moveRight: function () { this.x += 5},
+  moveLeft: function () {
+    this.x = this.x - 15 > roadLeftBoundary ? this.x - 15 : roadLeftBoundary;
+  },
+  moveRight: function () {
+    this.x = this.x + 65 < roadRightBoundary ? this.x + 15 : roadRightBoundary - 50;
+  },
 
+  speed: 10,
   distance: 0
 };
 
@@ -43,7 +52,7 @@ function drawRoadMarkers() {
 
   ctx.strokeStyle = markerWhite;
   ctx.lineWidth = canvasWidth / 130;
-  ctx.lineDashOffset = -car.distance*5 % 40;
+  ctx.lineDashOffset = -car.distance % 40;
   ctx.setLineDash([canvasHeight / 30, canvasWidth / 40]);
   ctx.moveTo((canvasWidth / 2), 0);
   ctx.lineTo((canvasWidth / 2), canvasHeight);
@@ -63,7 +72,7 @@ function generateObstacle(){
   const minLength = 27 / 36 * canvasWidth * 0.35;
   const maxLength = 27 / 36 * canvasWidth - 75;
   const obstacleLength = Math.floor(Math.random() * (maxLength - minLength) + 1) + minLength;
-  const obstacleSide = Math.floor(Math.random() * 2) == 0 ? 9 / 72 * canvasWidth : 63 / 72 * canvasWidth - obstacleLength;
+  const obstacleSide = Math.floor(Math.random() * 2) == 0 ? roadLeftBoundary : roadRightBoundary - obstacleLength;
 
   return {
     x: obstacleSide,
@@ -75,7 +84,7 @@ function generateObstacle(){
 function updateObstacles(){
   const obstacleRed = "#890000"
 
-  if(car.distance % 250 == 0){
+  if(car.distance % 1000 == 0){
     obstacles.push(generateObstacle());
   }
 
@@ -91,13 +100,49 @@ function updateObstacles(){
   }
 }
 
+function displayScore(){
+  // Display the score
+  ctx.font = "18px serif";
+  ctx.fillStyle = "black";
+  ctx.fillText("Score: " + car.distance / 100, canvasWidth * 22.5 / 50, 50);
+}
+
+function gameOver(){
+  console.log("Collision");
+  clearInterval(invervalID);
+  document.onkeydown = null;
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+  ctx.fillStyle = "#890000"
+  ctx.font = "40px serif";
+  ctx.fillText("Game Over!", canvasWidth * 20 / 50, canvasHeight * 20 / 50);
+
+  ctx.fillStyle = "white"
+  ctx.font = "30px serif";
+  ctx.fillText("Your Final Score: " + car.distance / 100, canvasWidth * 17 / 50, canvasHeight * 25 / 50);
+}
+
+function checkCollision(){
+  for(let i = 0; i < obstacles.length; i++){
+    if(obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x == roadLeftBoundary && obstacles[i].length > car.x){
+      gameOver();  
+    } else if (obstacles[i].y + 20 >= carBumperPosition && obstacles[i].x != roadLeftBoundary && obstacles[i].x + obstacles[i].length >= car.x){
+      gameOver();
+    }
+  }
+}
+
 function updateCanvas() {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   drawGameBoard();
   drawRoadMarkers();
   updateObstacles();
   drawCar();
-  car.distance += 5;
+  displayScore();
+  checkCollision();
+  car.distance += car.speed;
 }
 
 window.onload = function () {
@@ -110,6 +155,10 @@ window.onload = function () {
   drawCar();
 
   function startGame() {
+    obstacles = [];
+    car.x = 23.2 / 50 * window.innerWidth / 2;
+    car.y = 17 / 20 * window.innerHeight;
+    car.distance = 0;
 
     document.onkeydown = function (e) {
       switch (e.keyCode) {
@@ -120,12 +169,11 @@ window.onload = function () {
           car.moveRight();
           break;
       }
-      // car.distance -= 5;
       updateCanvas();
     }
 
-    setInterval(updateCanvas, 50);
-    // updateCanvas();
+    invervalID = setInterval(updateCanvas, 50);
+    console.log(invervalID);
   }
 };
 
