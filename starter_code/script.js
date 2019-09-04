@@ -145,7 +145,7 @@ function updateGameArea() {
   player.newPos();
   if (myGameArea.status==='stop')
     player.draw2();
-   else
+  else
 	player.draw();
   
   // update the obstacles array
@@ -160,8 +160,6 @@ function updateGameArea() {
 
 document.onkeydown = function(e) {
   switch (e.keyCode) {
-   
-   
     case 37: // left arrow
       player.speedX -= 5;
       break;
@@ -194,8 +192,6 @@ function updateObstacles() {
 	var x= Math.floor(
       Math.random() * (maxWidth - minWidth + 50) + minWidth
     );
-    
-   
     myObstacles.push(new Component(width, 20, "red", x, 0));
    
   }
@@ -213,16 +209,11 @@ function checkGameOver() {
 }
 
 
-
 window.onload = function() {
-	
   myGameArea.start(true);
-	
   document.getElementById("start-button").onclick = function() {
-	  
  	startGame();
   };
-
   function startGame() {
        myGameArea.start();
   }
