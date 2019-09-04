@@ -32,7 +32,8 @@ body button {
   margin-bottom: 20px;
 }
 
-#game-board {
-    float: left;
+#board {
     padding: 20px 0px;
+    position: fixed;
+    align-self: center;
 }
