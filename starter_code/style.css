@@ -1,6 +1,15 @@
+*, body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   padding: 0;
   text-align: center;
+}
+
+.game-intro {
+  width: 50%;
 }
 
 .game-intro {
@@ -34,5 +43,13 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    height: 100vh;
+    padding: 0;
+}
+
+.game-canvas {
+  float: right;
+  width: 50%;
+  background: gray;
+  border: 1px solid #bbb;
 }
