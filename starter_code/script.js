@@ -1,27 +1,74 @@
 var myObstacles = [];
+var img = new Image();	
+const carImg=new Image();	
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+var backgroundImage = {
+  img: img,
+  y: 0,
+  speed: 1,
+  move: function() {
+    this.y += this.speed;
+    this.y %= canvas.height;
+  },
+
+  draw: function() {
+    ctx.drawImage(this.img,  0,this.y);
+	if (this.speed < 0) {
+      ctx.drawImage(this.img, 0,this.y + canvas.height );
+    } else {
+      ctx.drawImage(this.img, 0,this.y -  canvas.height);
+	
+    }
+  },
+};
+
+function updateCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  backgroundImage.move();
+  backgroundImage.draw();
+  updateGameArea();
+  console.log(myGameArea.status);
+  if (myGameArea.status!=="stop")
+   requestAnimationFrame(updateCanvas);
+}
+
+
+
 
 var myGameArea = {
-  canvas: document.createElement("canvas"),
+   
   frames: 0,
-  start: function() {
-    this.canvas.width = 270;
-    this.canvas.height = 480;
-    this.context = this.canvas.getContext("2d");
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    // call updateGameArea() every 20 milliseconds
-    this.interval = setInterval(updateGameArea, 20);
+  start: function(first) {
+	  
+	var ele=document.getElementById('message');
+	ele.style.display='none';
+	if (first)  
+     this.status="stop";//if first time lets show one animation
+    else
+     this.status="running";
+ 
+	img.src="images/track.png";
+	img.onload = updateCanvas;
+	
   },
-  clear: function() {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  },
+  
   stop: function() {
-    clearInterval(this.interval);
+    this.status="stop";
+	myGameArea.frames= 0;
+	myObstacles=[];
+	var ele=document.getElementById('message');
+	var score=document.getElementById('score');
+	ele.style.display='block';
+	score.innerHTML=myGameArea.points;
+	
   },
   score: function() {
-    var points = Math.floor(this.frames / 5);
-    this.context.font = "18px serif";
-    this.context.fillStyle = "black";
-    this.context.fillText("Score: " + points, 350, 50);
+    this.points = Math.floor(this.frames / 5);
+    ctx.font = "48px serif";
+    ctx.fillStyle = "white";
+    ctx.fillText("Score: " + this.points, 100, 50);
   }
 };
 
@@ -35,17 +82,35 @@ class Component {
     // new speed properties
     this.speedX = 0;
     this.speedY = 0;
+	
   }
 
+   draw(){
+	   carImg.src = "images/car.png";  
+       ctx.drawImage(carImg, this.x, this.y , 50, 50);
+	  
+  }
+  draw2(){
+	   carImg.src = "images/car.png"; 
+	   var that=this;
+       carImg.onload=function(){	   
+       ctx.drawImage(carImg, that.x, that.y , 50, 50);
+	   }
+	  
+  }
+  
   update() {
-    var ctx = myGameArea.context;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   newPos() {
     this.x += this.speedX;
+    if (this.x<0)
+		 this.x=0;
     this.y += this.speedY;
+	if (this.x>680)
+		this.x=680;
   }
 
   left() {
@@ -71,30 +136,32 @@ class Component {
   }
 }
 
-var player = new Component(30, 30, "yellow", 135,400);
+
+var player = new Component(30, 30, "yellow", 345,700);
 
 function updateGameArea() {
-  myGameArea.clear();
+
   // update the player's position before drawing
   player.newPos();
-  player.update();
+  if (myGameArea.status==='stop')
+    player.draw2();
+   else
+	player.draw();
+  
   // update the obstacles array
   updateObstacles();
   // check if the game should stop
   checkGameOver();
   // update and draw the score
   myGameArea.score();
+  
 }
 
 
 document.onkeydown = function(e) {
   switch (e.keyCode) {
-    case 38: // up arrow
-      player.speedY -= 5;
-      break;
-    case 40: // down arrow
-      player.speedY += 5;
-      break;
+   
+   
     case 37: // left arrow
       player.speedX -= 5;
       break;
@@ -110,26 +177,27 @@ document.onkeyup = function(e) {
 };
 
 function updateObstacles() {
+	
   for (i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].y += 1;
+    myObstacles[i].y += 3;
     myObstacles[i].update();
   }
 
   myGameArea.frames += 1;
-  if (myGameArea.frames % 120 === 0) {
-    var y = myGameArea.canvas.height;
-    var minWidth = 20;
-    var maxWidth = 200;
+  if (myGameArea.frames % 200 === 0) {
+    var y = canvas.height;
+    var minWidth = 70;
+    var maxWidth = 300;
     var width = Math.floor(
-      Math.random() * (maxWidth - minWidth + 1) + minWidth
+      Math.random() * (maxWidth - minWidth + 50) + minWidth
     );
-    var minGap = 50;
-    var maxGap = 200;
-    var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-    myObstacles.push(new Component(width, 20, "red", 0, 0));
-   // myObstacles.push(
-   //   new Component(10, x - height - gap, "green",  height + gap,y)
-   // );
+	var x= Math.floor(
+      Math.random() * (maxWidth - minWidth + 50) + minWidth
+    );
+    
+   
+    myObstacles.push(new Component(width, 20, "red", x, 0));
+   
   }
 }
 
@@ -139,6 +207,7 @@ function checkGameOver() {
   });
 
   if (crashed) {
+	 
     myGameArea.stop();
   }
 }
@@ -146,8 +215,12 @@ function checkGameOver() {
 
 
 window.onload = function() {
+	
+  myGameArea.start(true);
+	
   document.getElementById("start-button").onclick = function() {
-    startGame();
+	  
+ 	startGame();
   };
 
   function startGame() {
