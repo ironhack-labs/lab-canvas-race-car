@@ -25,7 +25,7 @@ let gameArea= {
       var points= Math.floor(this.frames/10)
       this.ctx.font= "18px serif"
       this.ctx.fillStyle= "red"
-      this.ctx.fillText("Secret Formula: " + points, 330, 13)
+      this.ctx.fillText("Secret Formula: " + points, 330, 16)
     }
   }
 
@@ -37,9 +37,8 @@ function updateGameArea(){
     playerBounds()
     car1.newPos()
     car1.update()
-    updateObstacles()
-    checkGameOver()
     gameArea.score()
+    updateObstacles()
 
 }
 
@@ -87,14 +86,15 @@ function updateGameArea(){
       return this.y + this.height
     }
 
-    crashWith(obstacle){
-      return !(
-        (this.bottom() > obstacle.top() && this.top() > obstacle.bottom()) ||
-        (this.left() < obstacle.right() && this.right() > obstacle.left )
-      )
-    }
-
+    // crashWith(obstacle){
+    //   return !(
+    //     (this.bottom() > obstacle.top() && this.top() > obstacle.bottom()) ||
+    //     (this.left() < obstacle.right() && this.right() > obstacle.left )
+    //   )
+      
+    // }
   }
+  
 
   var car1= new component(50, 70, car, 240, 520)
 
@@ -116,11 +116,24 @@ document.onkeyup = function (e) {
   }
 }
 
+function checkCollision(rect1, rect2){
+  // var rect1 = { x: 5, y: 5, width: 50, height: 50 }
+  // var rect2 = { x: 20, y: 10, width: 10, height: 10 }
+
+  if (rect1.x < rect2.x + rect2.width &&
+    rect1.x + rect1.width > rect2.x &&
+    rect1.y < rect2.y + rect2.height &&
+    rect1.y + rect1.height > rect2.y) {
+    gameArea.stop()
+    gameArea.ctx.fillText("GAME OVER!", 200, 260)
+  }
+
+}
 
 
 function updateObstacles(){
     gameArea.frames+=1
-    if(gameArea.frames%100 === 0){
+    if(gameArea.frames%90 === 0){
       var y= 0
       var minLength = 70;
       var maxLength = 400;
@@ -128,26 +141,28 @@ function updateObstacles(){
       var minGap = 70
       var maxGap = 400
       var gap = Math.floor(Math.random()*(maxGap- minGap+1) + minGap)
-      obstacles.push(new component(length, 20, "brown", 0, y-120))
-      obstacles.push(new component(maxLength-length, 20, "brown", length+gap, y))
+      obstacles.push(new component(length, 35, "brown", 20, y-60))
+      obstacles.push(new component(maxLength-length, 35, "brown", length+gap, y))
     }
+
 
     for(let i=0; i<obstacles.length; i++){
-      obstacles[i].y += 5
+      obstacles[i].y += 2
       obstacles[i].update1()
+      checkCollision(car1, obstacles[i])
     }
 }
+let crashed = false
+// function checkGameOver(){
+//     // var crashed = obstacles.some(function(obstacle){
+//     //     return car1.crashWith(obstacle)
+//     // })
 
-function checkGameOver(){
-    var crashed = obstacles.some(function(obstacle){
-        return car1.crashWith(obstacle)
-    })
-
-    if(crashed){
-      gameArea.stop()
-      gameArea.ctx.fillText("GAME OVER!", 200, 260)
-    }
-}
+//     if(crashed){
+//       gameArea.stop()
+//       gameArea.ctx.fillText("GAME OVER!", 200, 260)
+//     }
+// }
 
   
 function playerBounds(){
@@ -191,6 +206,13 @@ function drawCanvas() {
   gameArea.ctx.fillRect(235, 550, 10, 25)
   gameArea.ctx.fillRect(235, 600, 10, 25)
 }
+
+
+
+
+
+
+
 
 
 

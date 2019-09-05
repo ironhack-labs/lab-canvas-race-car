@@ -1,11 +1,16 @@
+html{
+  background-image: url("./images/Jelly Fields.jpg");
+  background-size: 1300px 1000px
+}
+
 body {
-  padding: 0;
   text-align: center;
+  display: flex;
+  align-content: center;
 }
 
 .game-intro {
-  float: left;
-  padding: 0% 10%;
+  padding: 10%;
 }
 
 .game-intro p {
@@ -18,7 +23,7 @@ body {
 }
 
 .arrows-img {
-  width: 150px;
+  width: 130px;
 }
 
 body button {
@@ -34,6 +39,7 @@ body button {
 
 #board {
     padding: 20px 0px;
-    position: fixed;
-    align-self: center;
+    position: absolute;
+    right: 120px;
+    top: 100px
 }
