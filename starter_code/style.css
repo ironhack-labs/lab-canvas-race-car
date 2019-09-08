@@ -1,6 +1,6 @@
 html{
   background-image: url("./images/Jelly Fields.jpg");
-  background-size: 1300px 1000px
+  background-size: 1300px 850px;
 }
 
 body {
@@ -11,6 +11,9 @@ body {
 
 .game-intro {
   padding: 10%;
+  position: relative;
+  bottom: 120px;
+  left: 60px;
 }
 
 .game-intro p {
@@ -41,5 +44,5 @@ body button {
     padding: 20px 0px;
     position: absolute;
     right: 120px;
-    top: 100px
+    top: 30px;
 }
