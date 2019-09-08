@@ -1,6 +1,7 @@
 html{
   background-image: url("./images/Jelly Fields.jpg");
   background-size: 1300px 850px;
+  opacity: 0.6
 }
 
 body {
