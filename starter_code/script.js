@@ -1,3 +1,7 @@
+var a = document.getElementById("winner")
+var b = document.getElementById("go")
+var fAudio = document.getElementById("fast")
+var gAudio = document.getElementById("gOver")
 var car = new Image()
 car.src = "./images/Patty_Wagon2-removebg-preview.png"
 var obstacles = []
@@ -10,6 +14,31 @@ patty.src= "./images/krabby-patty buns.jpg"
 var bigWin = new Image()
 bigWin.src ="./images/spongebob-squarepants-20th-anniversary.png"
 
+
+function gaOver(){
+  gAudio.play()
+}
+
+function stopFast(){
+  fAudio.pause()
+}
+
+function fast(){
+  fAudio.play()
+}
+
+function stopGo(){
+  b.pause()
+}
+
+function winnerAudio(){
+a.play()
+}
+
+function goPlay(){
+  b.play()
+}
+
 let gameArea= {
    cvs : document.getElementById("board"),     
     frames: 2000,
@@ -19,6 +48,7 @@ let gameArea= {
       this.ctx= this.cvs.getContext("2d"),
       this.cvs.style = "background-color: grey"
       drawCanvas()
+      goPlay()
       this.interval = setInterval(updateGameArea, 15)
     },
     clear: function(){
@@ -49,13 +79,19 @@ function updateGameArea(){
     updateObstacles()
   if (gameArea.frames < 1100) {
   prize.update2()
+  stopGo()
+  fast()
   gameArea.ctx.font = "25px Arial"
   gameArea.ctx.fillStyle = "black"
-    gameArea.ctx.fillText("↑↑↑Get CAR to BUNS to WIN↑↑↑", 75, 599)
+  gameArea.ctx.fillText("↑↑↑Get CAR to BUNS to WIN↑↑↑", 75, 599)
   checkCollision2(car1, prize)
   }
   if (gameArea.frames <= 0){
+    gameArea.ctx.font = "60px Arial"
+    gameArea.ctx.fillText("GAME OVER!", 65, 300)
     gameArea.stop()
+    stopFast()
+    gaOver()
   }
 }
 
@@ -151,6 +187,9 @@ function checkCollision2(rect1, rect2){
     gameArea.ctx.fillStyle = "black"
     gameArea.ctx.font = "60px Arial"
     gameArea.ctx.fillText("WINNER!!!!!!!", 75, 105)
+    stopGo()
+    stopFast()
+    winnerAudio()
     document.getElementById("start-button").onclick = function(){location.reload()
     }
 
@@ -169,6 +208,9 @@ function checkCollision(rect1, rect2){
     gameArea.stop()
     gameArea.ctx.font = "60px Arial"
     gameArea.ctx.fillText("GAME OVER!", 65, 300)
+    stopGo()
+    stopFast()
+    gaOver()
     document.getElementById("start-button").onclick = function(){location.reload()
   }}}
 
