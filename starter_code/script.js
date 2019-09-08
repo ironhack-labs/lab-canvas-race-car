@@ -58,13 +58,14 @@ function drawRoadMarkers() {
   ctx.lineTo((canvasWidth / 2), canvasHeight);
   ctx.stroke();
 }
+img = new Image();
+img.src = "./images/car.png";
+img.onload = function () {
+  ctx.drawImage(img, car.x, car.y, 50, 100);
+}
 
 function drawCar() {
-  img = new Image();
-  img.src = "./images/car.png";
-  img.onload = function () {
     ctx.drawImage(img, car.x, car.y, 50, 100);
-  }
 }
 
 function generateObstacle(){
@@ -92,6 +93,7 @@ function updateObstacles(){
 
     if(obstacles[i].y > canvasHeight){
       obstacles.splice(i, 1);
+      console.log("spliced");
     }
 
     ctx.fillStyle = obstacleRed;
