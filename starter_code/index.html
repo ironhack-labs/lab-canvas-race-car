@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
+  
   </script>
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
@@ -17,9 +16,19 @@
     <button id="start-button">StartGame</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
+    <div>
+      SCORE
+      <span id="score"></span>
+    </div>
   </div>
-  <div id="game-board">
+  <div id="game-board" class="hidden">
+    <canvas id="game-canvas"style="width:550px;height:700px"></canvas>
+  </div>
+  <script src="background.js"></script>
+  <script src="car.js"></script>
+  <script src="obstacle.js"></script>
+  <script src="game.js"></script>
 
-  </div>
+  <script src="script.js"></script>
 </body>
 </html>
