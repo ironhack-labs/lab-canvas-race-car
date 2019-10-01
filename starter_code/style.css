@@ -36,3 +36,17 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#canvas {
+  width: 500px;
+  height: 500px;
+}
+
+.game {
+  display: flex;
+  align-items: center;
+}
+
+#start-button {
+  cursor: pointer;
+}
