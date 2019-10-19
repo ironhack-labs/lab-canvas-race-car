@@ -8,7 +8,7 @@ class Board {
         this.img = new Image();
         this.img.src = "./images/Carretera.png";
         
-        this.vy = 1
+        this.vy = 3
     }
 
     draw() {
@@ -32,7 +32,7 @@ class Board {
       move() {
         this.y += this.vy
     
-        if (this.y + this.h < this.ctx.canvas.height) {
+        if (this.y - this.h >= 0) {
           this.y = 0
         }
       }
