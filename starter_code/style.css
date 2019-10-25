@@ -34,3 +34,9 @@ body button {
 #game-board {
   padding: 20px 0px;
 }
+#game-board {position:relative;}
+#game-board canvas {
+  position:absolute; left:0;top:0;
+  width:100%; height:100%;
+  object-fit:contain;
+}

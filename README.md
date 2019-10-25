@@ -16,10 +16,13 @@ Remember you have the Learning Units to check any concept you might need. We are
 
 ## 1. First iteration: Draw the Game Board
 
-
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_ab5a6ba28003829bd3d8d485feeee649.png)
 
 The first thing we need is to create our board. The left side of the image is already on the HTML file, but when we click on the **StartGame** button, we need to create the canvas and display our road.
+
+The *intrisic* dimensions of the `<canvas>` **should be 1000x1500**
+
+You should add your drawing instructions inside the `main.js` `function draw() {}`.
 
 ## 2. Second Iteration: Draw Player´s Car
 
@@ -27,9 +30,19 @@ The first thing we need is to create our board. The left side of the image is al
 
 Once we have our road, we need the player´s car. On the `images` folder, you will find a `.png` file you should use for the player.
 
+You should use the `Car` class:
+- in the constructor, once image is loaded, assign `this.w`, `this.h`, `this.x` and `this.h`:
+  - `this.x` should be 100 units as width
+  - `this.h` should be computed thanks to `imgRatio` and `this.x`
+- Then implement the `draw()` method
+
+Once our `Car` class is ready, in `main.js` don't forget to create a new car 🚗 when `startGame()`! Don't also forget to draw it !
+
 ## 3. Third Iteration: Make Player´s Car move right and left
 
 In our game, the player will only be able to move the car to the right and left. Using `left` and `right` arrows, the player should be able to move the car.
+
+For that you should implement the 2 methods `moveLeft()` and `moveRight` of the `Car` class.
 
 :bulb: Remember the boundaries!
 
@@ -41,9 +54,27 @@ Now let´s make this interesting. We should create obstacles that shows up every
 
 They will always start in the position **0** of the `y` axis, but you should make them appear in a random place of the `x` axis.
 
-## 5. Fifth Iteration: Move the Obstacles
+[![](https://docs.google.com/drawings/d/e/2PACX-1vQp911dTXZuulGIzKAYlNdPjTb7h52l7FYgtaB6mQar322DnQFyUw6JfzxIWn-EjjDOgzJQDcEYc9Yx/pub?w=781&h=542)](https://docs.google.com/drawings/d/1f09QFPmbExntlXncpn1IXpgoTgUTD9BoIYhJqjP4DZg/edit?usp=sharing)
 
-For moving the obstacles, we need to continuously update our `canvas`. In this iteration you need to continuously change the position of the obstacles in every update, making them move down the road.
+You should use the `Obstacle` class:
+- in the `constructor()`, assign `this.w`, `this.h`, `this.x` and `this.h`
+- then implement the `draw()` method
+
+NB: Implement a utility `random(from, to)` function, to help you get random numbers for your obstacles.
+
+## 5. Fifth Iteration: Collisions
+
+Implement the `hits()` method into `Obstacle` class:
+ - it takes the car as parameter
+ - it should return a boolean wether the obstacle hits the car (or not).
+
+[![](https://docs.google.com/drawings/d/e/2PACX-1vSlqRxHRvi1S7_Cn_QdawnlEl-RoLGKBbxteUPuMS0DK5m-BCUkK1_UrsStmHLNQGut2rAgH1vseeE1/pub?w=626&h=409)]()
+
+NB: car hits an obstacle when car is in-between obstacle horizontally and vertically :)
+
+Once `hits()` implemented, test it against each obstacle in `main.js`.
+
+If one hits the car, pass `gameover` to `true` so it won't call `requestAnimationFrame` next frame, ie: stop the gameloop.
 
 ## 6. Bonus Iteration: Points, Points, Points
 
