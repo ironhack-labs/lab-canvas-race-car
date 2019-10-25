@@ -8,8 +8,6 @@ const W = ctx.canvas.width;
 const H = ctx.canvas.height;
 
 function draw() {
-  ctx.clearRect(0,0,W,H); // 🧽
-
   //
   // Iteration 1: road drawing
   //
