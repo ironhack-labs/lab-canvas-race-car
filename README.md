@@ -20,7 +20,7 @@ Remember you have the Learning Units to check any concept you might need. We are
 
 The first thing we need is to create our board. The left side of the image is already on the HTML file, but when we click on the **StartGame** button, we need to create the canvas and display our road.
 
-The *intrisic* dimensions of the `<canvas>` **should be 1000x1500**
+The *intrisic* dimensions of the `<canvas>` **should be 1000x1600**
 
 You should add your drawing instructions inside the `main.js` `function draw() {}`.
 
