@@ -7,8 +7,7 @@ body {
 }
 
 body {display:flex; min-height:100vh;}
-body >div:nth-child(1) {width:58%;}
-body >div:nth-child(2) {flex:1;}
+body >div {flex:1;}
 
 .game-intro {
   display:flex; flex-direction:column;
