@@ -1,6 +1,5 @@
 class Car {
   constructor() {
-    // this.img
     const img = document.createElement('img');
     img.onload = () => {
       this.img = img;
