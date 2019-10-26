@@ -31,7 +31,7 @@ You should add your drawing instructions inside the `main.js` `function draw() {
 Once we have our road, we need the player´s car. On the `images` folder, you will find a `.png` file you should use for the player.
 
 You should use the `Car` class:
-- in the constructor, once image is loaded, assign `this.w`, `this.h`, `this.x` and `this.h`:
+- in the constructor, once image is loaded, assign `this.w`, `this.h`, `this.x` and `this.y`:
   - `this.w` should be 100 units as width
   - `this.h` should be computed thanks to `imgRatio` and `this.w`
 - Then implement the `draw()` method
