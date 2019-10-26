@@ -44,6 +44,8 @@ In our game, the player will only be able to move the car to the right and left.
 
 For that you should implement the 2 methods `moveLeft()` and `moveRight` of the `Car` class.
 
+NB: Use `document.onkeydown = function (e) {...}` already defined in `main.js` to detect the key pressed.
+
 :bulb: Remember the boundaries!
 
 ## 4. Fourth Iteration: Create Obstacles
