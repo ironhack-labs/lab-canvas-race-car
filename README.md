@@ -33,7 +33,7 @@ Once we have our road, we need the player´s car. On the `images` folder, you wi
 You should use the `Car` class:
 - in the constructor, once image is loaded, assign `this.w`, `this.h`, `this.x` and `this.h`:
   - `this.w` should be 100 units as width
-  - `this.h` should be computed thanks to `imgRatio` and `this.x`
+  - `this.h` should be computed thanks to `imgRatio` and `this.w`
 - Then implement the `draw()` method
 
 Once our `Car` class is ready, in `main.js` don't forget to create a new car 🚗 when `startGame()`! Don't also forget to draw it !
