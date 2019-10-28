@@ -46,6 +46,7 @@ document.onkeydown = function (e) {
   // TODO
 }
 
+let raf;
 let frames = 0;
 function animLoop() {
   frames++;
@@ -58,6 +59,10 @@ function animLoop() {
 }
 
 function startGame() {
+  if (raf) {
+    cancelAnimationFrame(raf);
+  }
+  
   // TODO
 
   requestAnimationFrame(animLoop);
