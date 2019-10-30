@@ -1,6 +1,10 @@
 body {
   padding: 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
 }
 
 .game-intro {
@@ -35,4 +39,6 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    background-image: url('./images/68747470733a2f2f73332d65752d776573742d312e616d617a6f6e6177732e636f6d2f69682d6d6174657269616c732f75706c6f6164732f75706c6f61645f61623561366261323830303338323962643364386434383566656565653634392e706e67.png');
+    background-position: center;
 }
