@@ -11,8 +11,24 @@ window.onload = function() {
 //draw
 createRoad();
 createCar();  
-
 //move
+window.onkeydown = e => {
+  switch (e.key) {
+    case "ArrowRight":
+     px += speed;
+      if (px > w - 120) {
+        px = w - 120;
+      }
+      break;
+    case "ArrowLeft":
+      px -= speed;
+      if (px < 50) {
+        px = 50;
+      }
+      break;
+    
+  }
+}
 //obstacles
 //collitions
 //counter

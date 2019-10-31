@@ -6,8 +6,11 @@ let ctx = canvas.getContext("2d");
 
 let w = 500;
 let h = window.innerHeight;
+let px = w / 2 - 35;
+let py = h - 150;
 let counter = 1;
-  let speedOfLine = 5;
+let speedOfLine = 5;
+let speed = 5;
 
 function setCanvasDimensions() {
     canvas.setAttribute("height", h);
@@ -49,8 +52,13 @@ function createRoad() {
     ctx.closePath();
 }
 
-function createCar (){
-    let carImg = new Image ();
-    carImg.src ="images/car.png";
-    ctx.drawImage(carImg, w/2-35    , h - 150, 70, 150);
+function createCar() {
+    let carImg = new Image();
+    carImg.src = "images/car.png";
+    ctx.drawImage(carImg, px, py, 70, 150);
 }
+
+// function moveLeft (){
+
+
+// }
