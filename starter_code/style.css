@@ -2,6 +2,10 @@ body {
   padding: 0;
   text-align: center;
 }
+canvas { 
+  border:4px solid blue;
+  background: grey;
+}
 
 .game-intro {
   float: left;
