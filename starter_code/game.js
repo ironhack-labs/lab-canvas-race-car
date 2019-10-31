@@ -5,7 +5,8 @@ class Game {
         this.board = board;
         this.canvas = document.createElement("canvas");
         this.ctx = this.canvas.getContext("2d");
-
+        this.score = 0;
+        this.intervalID;
     }
 
     randomInt(min, max) {
@@ -37,13 +38,15 @@ class Game {
         })
 
         this.newCanvas();
+
         let offset = 0;
         let obstaclesCounter = 0;
 
         //set interval 
-        setInterval(() => {
-            this.ctx.clearRect(0, 0, 360, 600)
+        this.intervalID = setInterval(() => {
+            this.ctx.clearRect(0, 0, 360, 600);
             offset++;
+            this.score++;
 
             if (offset > 160) {
                 offset = 0;
@@ -60,9 +63,14 @@ class Game {
             }
 
             this.obstacles.forEach((obstacle) => {
-
                 this.ctx.fillStyle = "#880000";
-                this.ctx.fillRect(obstacle.x, obstacle.y+=2, obstacle.w, obstacle.h);
+                this.ctx.fillRect(obstacle.x, obstacle.y += 2, obstacle.w, obstacle.h);
+            })
+
+            this.obstacles = this.obstacles.filter((obstacle) => obstacle.y < 630);
+
+            this.obstacles.forEach((obstacle) => {
+                this.gameOver(obstacle);
             })
 
             obstaclesCounter++;
@@ -71,13 +79,28 @@ class Game {
 
     }
 
-    gameOver() { }
+    gameOver(obstacle) {
+        if (this.car.x + this.car.w > obstacle.x &&
+            this.car.x < obstacle.x + obstacle.w &&
+            this.car.y < obstacle.y + obstacle.h &&
+            this.car.y + this.car.h > obstacle.y) {
+
+            this.ctx.fillStyle = "#000";
+            this.ctx.fillRect(0,0,360,600);
+            this.ctx.fillStyle = "#ff0000";
+            this.ctx.font = "25px Arial";
+            this.ctx.fillText(`Game over`, 115, 280);
+
+            this.ctx.fillStyle = "#fff";
+            this.ctx.font = "15px Arial";
+            this.ctx.fillText(`Score: ${Math.floor(this.score/10)}`, 30, 30);
+
+            clearInterval(this.intervalID);
+        }
+    }
 }
 
 class Board {
-    constructor() {
-    }
-
     drawBoard(ctx, offsetFactor) {
         ctx.fillStyle = "#008100"
         ctx.fillRect(0, 0, 30, 600);
