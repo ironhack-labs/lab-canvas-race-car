@@ -8,6 +8,8 @@ class Game {
 
     }
 
+
+
     newCanvas() {
         const board = document.querySelector('#game-board');
         this.canvas.setAttribute("width", "360px")
@@ -17,22 +19,41 @@ class Game {
     }
 
     start() {
+
+        window.onkeydown = ((e) => {
+
+            switch (e.key) {
+                case "ArrowRight":
+
+                    if (this.car.x < 270) {
+                        this.car.x += 10;
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (this.car.x > 50) {
+                        this.car.x -= 10;
+                    } break;
+            }
+        })
+
         this.newCanvas();
+        let offset = 0;
 
         //set interval 
         setInterval(() => {
-            this.board.drawBoard(this.ctx);
+            this.ctx.clearRect(0, 0, 360, 600)
+            offset++;
 
-            // console.log()
+            if (offset > 160) {
+                offset = 0;
+            }
 
-            // this.car.carImg.onload = () => {
-            // }
+            this.board.drawBoard(this.ctx, offset);
+            // Draw the car 
             this.ctx.drawImage(this.car.carImg, this.car.x, this.car.y, this.car.w, this.car.h);
-
 
         }, 1000 / 60);
 
-        // display board
     }
 
     gameOver() { }
@@ -42,21 +63,22 @@ class Game {
 
 
 class Board {
-    drawBoard(ctx) {
+    constructor() {
+    }
+
+    drawBoard(ctx, offsetFactor) {
         ctx.fillStyle = "#008100"
         ctx.fillRect(0, 0, 30, 600);
         ctx.fillRect(330, 0, 30, 600);
         ctx.fillStyle = "#ffffff"
         ctx.fillRect(40, 0, 10, 600);
         ctx.fillRect(310, 0, 10, 600);
-        ctx.beginPath();
-        ctx.moveTo(180, 0);
-        ctx.lineTo(180, 600);
-        ctx.strokeStyle = "#ffffff"
-        ctx.setLineDash([40, 20]);
+
         ctx.lineWidth = 6;
-        ctx.stroke();
-        ctx.closePath();
+        ctx.strokeStyle = "#ffffff";
+        ctx.setLineDash([40, 40]);
+        ctx.lineDashOffset = -offsetFactor;
+        ctx.strokeRect(-10, -10, 190, 620);
     }
 }
 
