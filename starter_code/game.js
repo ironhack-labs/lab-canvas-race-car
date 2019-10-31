@@ -49,3 +49,8 @@ function createRoad() {
     ctx.closePath();
 }
 
+function createCar (){
+    let carImg = new Image ();
+    carImg.src ="images/car.png";
+    ctx.drawImage(carImg, w/2-35    , h - 150, 70, 150);
+}

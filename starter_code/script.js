@@ -10,7 +10,7 @@ window.onload = function() {
 
 //draw
 createRoad();
-
+createCar();  
 
 //move
 //obstacles
