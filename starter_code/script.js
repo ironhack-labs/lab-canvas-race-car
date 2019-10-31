@@ -9,11 +9,14 @@ window.onload = function() {
     wWidth: undefined,
     wHeight: undefined,
     car: undefined,
+    obstacles: [],
+    frames: 1,
     init(id) {
       this.canvasDom = document.getElementById(id);
       this.ctx = this.canvasDom.getContext("2d");
       this.setDimensions();
       this.startGame();
+      //this.manageObstacles();
       // this.drawRoad();
     },
     setDimensions() {
@@ -59,6 +62,7 @@ window.onload = function() {
     drawAll() {
       this.clearScreen();
       this.drawRoad();
+      this.manageObstacles();
       this.car.draw();
     },
 
@@ -82,6 +86,18 @@ window.onload = function() {
 
     clearScreen() {
       this.ctx.clearRect(0, 0, this.wWidth, this.wHeight);
+    },
+    manageObstacles() {
+      let random = Math.floor(Math.random() * 200);
+      for (let i = 0; i < this.obstacles.length; i++) {
+        this.obstacles[i].update();
+      }
+
+      this.frames += 1;
+
+      if (this.frames % 100 === 0) {
+        this.obstacles.push(new Obstacle(this.ctx, random, 20, random, 0));
+      }
     }
   };
 
