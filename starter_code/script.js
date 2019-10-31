@@ -1,9 +1,17 @@
 window.onload = function() {
+  let gamesito = new Game()
+
+
   document.getElementById("start-button").onclick = function() {
-    startGame();
+     gamesito.startGame()
   };
 
-  function startGame() {
+//setting up canvas
+  
 
-  }
+  
+
+  
+  
+
 };
