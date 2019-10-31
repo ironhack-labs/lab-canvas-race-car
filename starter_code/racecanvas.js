@@ -7,17 +7,18 @@ class Game {
         this.w = 400;
         this.h = 600;
 
-        this.w2 = this.w/2;
-        this.h2 = this.h/2;
+        this.w2 = this.w / 2;
+        this.h2 = this.h / 2;
 
         this.carinX = 180;
         this.carinY = 520;
 
         this.intervalID = undefined;
+        this.speed = 10;
 
         this.keyState = {
-            keyLeft : false,
-            keyRight : false
+            keyLeft: false,
+            keyRight: false
         };
 
     }
@@ -41,8 +42,8 @@ class Game {
                 if (e.keyCode === 39) {
                     this.keyState.keyRight = true;
                 }
-              })
-              document.addEventListener('keyup', (e) => {
+            })
+            document.addEventListener('keyup', (e) => {
                 e.preventDefault();
                 if (e.keyCode === 37) {
                     this.keyState.keyLeft = false;
@@ -50,14 +51,14 @@ class Game {
                 if (e.keyCode === 39) {
                     this.keyState.keyRight = false;
                 }
-              })
-          
+            })
+
             this.counter++;
         }, 1000 / 60);
     }
 
     drawBackground() {
-      
+
         //green
         this.ctx.beginPath()
         this.ctx.fillStyle = "#008100";
@@ -86,17 +87,26 @@ class Game {
         this.ctx.beginPath();
         this.ctx.lineWidth = 8;
         this.ctx.setLineDash([30, 15]);
-        this.ctx.moveTo(this.w2, 0);
-        this.ctx.lineTo(this.w2, this.h);
         this.ctx.strokeStyle = "white";
+        this.ctx.moveTo(this.w2, this.h + this.counter);
+        this.ctx.lineTo(this.w2, -this.h);
+        
         this.ctx.stroke();
+        this.ctx.closePath();
+
+
+    
+
+
+
+        //   ctx.closePath();
     }
 
     drawCar() {
 
         let image = new Image();
         image.src = "images/car.png"
-        this.ctx.drawImage(image, this.carinX,this.carinY, 40,70);
+        this.ctx.drawImage(image, this.carinX, this.carinY, 40, 70);
     }
 
 
@@ -106,26 +116,25 @@ class Game {
     }
 
 
+
     generateObstacle() {
-        this.y = (0, 600)
-        Math.random(0, 400)
 
-         this.ctx.beginPath()
-         this.ctx.fillStyle = "pink";
-         this.ctx.fillRect(0, 0, Math.random(100, 100), Math.random(50, 50));
-         this.ctx.closePath()
+        this.ctx.beginPath()
+        this.ctx.fillStyle = "pink";
+        this.ctx.fillRect(100, 100, 150, 40);
+        this.ctx.closePath()
     }
 
-    moveCar(){
-        if(this.keyState.keyLeft && this.carinX>30){
-          this.carinX -=1
+    moveCar() {
+        if (this.keyState.keyLeft && this.carinX > 30) {
+            this.carinX -= 1
         }
-        if(this.keyState.keyRight && this.carinX<300){
-          this.carinX +=1
+        if (this.keyState.keyRight && this.carinX < 300) {
+            this.carinX += 1
         }
-      }
-
     }
+
+}
 
 
 
