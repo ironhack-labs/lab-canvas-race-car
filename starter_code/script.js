@@ -22,24 +22,41 @@ window.onkeydown = e => {
   }
 }
 
+
+
 function startGame() {
-  setInterval(() => {
+  let myInterval= setInterval(() => {
     ctx.clearRect(0, 0, w, h);
 
     //draw
     createRoad();
     createCar();
     //move
- 
+
     //obstacles
-    if (counter % 240 === 0) {
+    if (counter % 120 === 0) {
       createObstacles();
     }
     obstacleArr.forEach(obst => {
-      obst.drawRect()});
-
+      obst.drawRect() 
+      if (px + 70 > obst.x &&
+        px < obst.x + obst.width &&
+        py < obst.y + obst.height &&
+        py + 150 > obst.y) {
+          console.log("Game Over");
+          alert ("Game over mamón!");
+          clearInterval(myInterval);
+          
+      }
+    });
+    
+   
     //collitions
+
     //counter
+    ctx.fillStyle = "white";
+    ctx.font = "30px Georgia";
+    ctx.fillText("Points: " + counter , 70, 95);
     counter++
   }, 1000 / 60);
 }

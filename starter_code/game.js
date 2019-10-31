@@ -10,8 +10,8 @@ let px = w / 2 - 35;
 let py = h - 150;
 let counter = 1;
 let speedOfLine = 5;
-let speed = 5;
-let obstaclesCounter = 0;
+let speed = 12;
+
 
 function setCanvasDimensions() {
     canvas.setAttribute("height", h);
@@ -71,7 +71,7 @@ class obstacles {
     drawRect() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
-        ctx.rect(this.x, this.y++, this.width, this.height)
+        ctx.rect(this.x, this.y += speedOfLine, this.width, this.height)
         ctx.fill();
         ctx.closePath();
         // console.log(ctx)
@@ -81,8 +81,8 @@ class obstacles {
 let obstacleArr = [];
 
 function createObstacles() {
-    let minWidth = 100;
-    let maxWidth = 200;
+    let minWidth = 80;
+    let maxWidth = 230;
     let obsWidth = Math.floor(
         Math.random() * (maxWidth - minWidth + 1) + minWidth
     );
@@ -95,3 +95,5 @@ function createObstacles() {
     // obstacleArr.forEach(obst => {
     //         obst.drawRect()})
     }
+
+   
