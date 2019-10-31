@@ -4,6 +4,9 @@ window.onload = function() {
   };
 
   function startGame() {
-
+    const game = new Game("car", new Board());
+    game.start();
   }
 };
+
+
