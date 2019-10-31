@@ -4,7 +4,7 @@ window.onload = function() {
   };
 
   function startGame() {
-    const game = new Game("car", new Board());
+    const game = new Game(new Car(160), new Board());
     game.start();
   }
 };

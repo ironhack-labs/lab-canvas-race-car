@@ -5,6 +5,7 @@ class Game {
         this.board = board;
         this.canvas = document.createElement("canvas");
         this.ctx = this.canvas.getContext("2d");
+
     }
 
     newCanvas() {
@@ -17,11 +18,19 @@ class Game {
 
     start() {
         this.newCanvas();
-        this.board.drawBoard(this.ctx);
-
-
 
         //set interval 
+        setInterval(() => {
+            this.board.drawBoard(this.ctx);
+
+            // console.log()
+
+            // this.car.carImg.onload = () => {
+            // }
+            this.ctx.drawImage(this.car.carImg, this.car.x, this.car.y, this.car.w, this.car.h);
+
+
+        }, 1000 / 60);
 
         // display board
     }
@@ -33,10 +42,6 @@ class Game {
 
 
 class Board {
-    constructor() {
-
-    }
-
     drawBoard(ctx) {
         ctx.fillStyle = "#008100"
         ctx.fillRect(0, 0, 30, 600);
@@ -52,5 +57,16 @@ class Board {
         ctx.lineWidth = 6;
         ctx.stroke();
         ctx.closePath();
+    }
+}
+
+class Car {
+    constructor(x) {
+        this.x = x;
+        this.y = 480;
+        this.w = 40;
+        this.h = 80;
+        this.carImg = new Image();
+        this.carImg.src = "./images/car.png"
     }
 }
