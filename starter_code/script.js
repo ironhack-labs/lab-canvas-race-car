@@ -1,21 +1,13 @@
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
+window.onload = function () {
+  document.getElementById("start-button").onclick = function () {
     startGame();
   };
 }
-  
-  function startGame() {
-    setInterval(() => {
-      ctx.clearRect(0, 0, w, h);
 
-//draw
-createRoad();
-createCar();  
-//move
 window.onkeydown = e => {
   switch (e.key) {
     case "ArrowRight":
-     px += speed;
+      px += speed;
       if (px > w - 120) {
         px = w - 120;
       }
@@ -26,12 +18,28 @@ window.onkeydown = e => {
         px = 50;
       }
       break;
-    
+
   }
 }
-//obstacles
-//collitions
-//counter
- counter++
-  }, 1000/60);
+
+function startGame() {
+  setInterval(() => {
+    ctx.clearRect(0, 0, w, h);
+
+    //draw
+    createRoad();
+    createCar();
+    //move
+ 
+    //obstacles
+    if (counter % 240 === 0) {
+      createObstacles();
+    }
+    obstacleArr.forEach(obst => {
+      obst.drawRect()});
+
+    //collitions
+    //counter
+    counter++
+  }, 1000 / 60);
 }

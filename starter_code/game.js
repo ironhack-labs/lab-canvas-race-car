@@ -11,6 +11,7 @@ let py = h - 150;
 let counter = 1;
 let speedOfLine = 5;
 let speed = 5;
+let obstaclesCounter = 0;
 
 function setCanvasDimensions() {
     canvas.setAttribute("height", h);
@@ -58,7 +59,39 @@ function createCar() {
     ctx.drawImage(carImg, px, py, 70, 150);
 }
 
-// function moveLeft (){
 
+class obstacles {
+    constructor(width, height, color, x, y) {
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.x = x;
+        this.y = y;
+    }
+    drawRect() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.rect(this.x, this.y++, this.width, this.height)
+        ctx.fill();
+        ctx.closePath();
+        // console.log(ctx)
+    };
+}
 
-// }
+let obstacleArr = [];
+
+function createObstacles() {
+    let minWidth = 100;
+    let maxWidth = 200;
+    let obsWidth = Math.floor(
+        Math.random() * (maxWidth - minWidth + 1) + minWidth
+    );
+    let obsMaxX = w - 150;
+    let obsMinX = 50;
+    let obsX = Math.floor(Math.random() * (obsMaxX - obsMinX + 1) + obsMinX);
+
+    obstacleArr.push(new obstacles(obsWidth, 30, "red", obsX, 0));
+    // console.log(obstacleArr)
+    // obstacleArr.forEach(obst => {
+    //         obst.drawRect()})
+    }
