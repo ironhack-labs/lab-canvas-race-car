@@ -8,7 +8,9 @@ class Game {
 
     }
 
-
+    randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
     newCanvas() {
         const board = document.querySelector('#game-board');
@@ -19,9 +21,7 @@ class Game {
     }
 
     start() {
-
         window.onkeydown = ((e) => {
-
             switch (e.key) {
                 case "ArrowRight":
 
@@ -38,6 +38,7 @@ class Game {
 
         this.newCanvas();
         let offset = 0;
+        let obstaclesCounter = 0;
 
         //set interval 
         setInterval(() => {
@@ -52,15 +53,26 @@ class Game {
             // Draw the car 
             this.ctx.drawImage(this.car.carImg, this.car.x, this.car.y, this.car.w, this.car.h);
 
+            if (obstaclesCounter > 200) {
+                //draw the obstacles
+                this.obstacles.push(new Obstacles(this.randomInt(0, 360), this.randomInt(50, 200)))
+                obstaclesCounter = 0;
+            }
+
+            this.obstacles.forEach((obstacle) => {
+
+                this.ctx.fillStyle = "#880000";
+                this.ctx.fillRect(obstacle.x, obstacle.y+=2, obstacle.w, obstacle.h);
+            })
+
+            obstaclesCounter++;
+
         }, 1000 / 60);
 
     }
 
     gameOver() { }
 }
-
-
-
 
 class Board {
     constructor() {
@@ -90,5 +102,14 @@ class Car {
         this.h = 80;
         this.carImg = new Image();
         this.carImg.src = "./images/car.png"
+    }
+}
+
+class Obstacles {
+    constructor(x, w) {
+        this.x = x;
+        this.y = 0;
+        this.w = w;
+        this.h = 20;
     }
 }
