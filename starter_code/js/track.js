@@ -1,9 +1,10 @@
 class Track {
-  constructor() {
+  constructor(game) {
+    this.game = game;
   }
 
-  // draw the road
-  drawTrack() {
+  paintTrack() {
+    let ctx = game.ctx;
     // green grass
     ctx.fillStyle = 'green';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -26,8 +27,7 @@ class Track {
     ctx.stroke();
     // center line
     ctx.lineWidth = 5;
-    // 10 white & grey pairs
-    ctx.setLineDash([30, 30]); /*dashes are 5px and spaces are 3px*/
+    ctx.setLineDash([30, 30]); /*dashes are 30px and spaces are 30px*/
     ctx.beginPath();
     ctx.moveTo(CENTER, 0);
     ctx.lineTo(CENTER, HEIGHT);

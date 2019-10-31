@@ -1,23 +1,17 @@
 const $canvas = document.querySelector('canvas');
-const ctx = $canvas.getContext('2d');
 
+// Road dimensions
 const HEIGHT = 600;
 const WIDTH = 400;
 const CENTER = 200;
+const WIDTH_OF_ROAD = 320;
 
-const track = new Track;
-const car = new Car;
+// Make a new game instance
+const game = new Game($canvas);
+
 
 window.onload = function() {
   document.getElementById('start-button').onclick = function() {
-    startGame();
+    game.startGame();
   };
-
 };
-
-
-function startGame() {
-  track.drawTrack();
-  car.drawCar();
-}
-
