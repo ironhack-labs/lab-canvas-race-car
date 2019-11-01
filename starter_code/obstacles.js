@@ -1,37 +1,27 @@
-const $canvas = document.querySelector('canvas');
-console.dir($canvas);
-const context = $canvas.getContext('2d');
-
-
-
 class Obstacle {
-    constructor(){
-        this.col = 100;
-        this.row = 100;
-        this.vx = 5;
-        this.vy = 2;
-        this.radius =30;
+    constructor(game){
+        this.height = game.height;
+        this.width = game.width;
+        this.game = game;
+        const a = Math.floor(Math.random() * 4);
+        const b = Math.floor(Math.random() * 4);
+        const arr1 = [200, 150, 50, 100];
+        this.vx = arr1[a]
+        this.vy = 0
+        const arr2 = [40, 50, 70, 140];
+        this.width = arr2[b]
+        this.height = 20
+        this.collisionAreaX = [];
+        this.colisionAreaY = [];
     }
 
-    setRandomPosition(){
-        this.row = Math.floor(Math.random() * 10)
-    }
-
-    drawObstacle(){
-        context.beginPath();
-        context.arc(this.col, this.row, this.radius , 0, Math.PI * 2, true);
-        context.closePath();
-        context.fillStyle = "red";
-        context.fill();
+    draw(){
+        game.context.fillStyle = "red";
+        game.context.fillRect(this.vx, this.vy, this.width, 20);
       }
 
     update(){
-        this.row += 10;
-        clearCanvas();
-        context.fillRect( 50,y1,50,50);
-        context.fillRect(150,y2,50,50);
-        context.fillRect(250,y3,50,50);  
-        window.requestAnimationFrame(updateCanvas);
+        this.vy += 5
 }
 }
 
