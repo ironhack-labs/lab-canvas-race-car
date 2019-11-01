@@ -7,6 +7,8 @@ window.onload = function() {
     canvasDom: undefined,
     ctx: undefined,
     car: undefined,
+    obstacles: [],
+    frames: 1,
 
     init(id) {
       this.canvasDom = document.getElementById(id);
@@ -68,11 +70,24 @@ window.onload = function() {
         this.canvasGray();
         this.canvasLine();
         this.canvasLineDash();
+        this.manageObstacles();
         this.car.draw();
       }, 1);
     },
     clearScreen() {
       this.ctx.clearRect(0, 0, 600, window.innerHeight);
+    },
+    manageObstacles() {
+      let random = Math.floor(Math.random() * 200);
+      for (let i = 0; i < this.obstacles.length; i++) {
+        this.obstacles[i].update();
+      }
+
+      this.frames += 1;
+
+      if (this.frames % 300 === 0) {
+        this.obstacles.push(new Obstacle(this.ctx, random, 20, random, 0));
+      }
     }
   };
 
@@ -99,14 +114,34 @@ window.onload = function() {
     }
   }
 
+  class Obstacle {
+    constructor(ctx, width, height, x, y) {
+      this._width = width;
+      this._height = height;
+      this._posX = x;
+      this._posY = y;
+      this._ctx = ctx;
+
+      this._speedX = 0;
+      this._speedY = 0;
+    }
+
+    update() {
+      this._posY += 1;
+      this._ctx.fillStyle = "brown";
+      this._ctx.fillRect(this._posX, this._posY, this._width, this._height);
+    }
+  }
+
   document.getElementById("start-button").onclick = function() {
-    raceCar.starGame();
+    raceCar.start();
   };
 
   raceCar.init("myCanvas");
-  raceCar.drawControlledCar();
   raceCar.canvasGreen();
   raceCar.canvasGray();
   raceCar.canvasLine();
   raceCar.canvasLineDash();
+  raceCar.manageObstacles();
+  raceCar.drawControlledCar();
 };
