@@ -13,6 +13,7 @@ window.onload = function () {
     frames: 1,
     intervalId: 0,
     score: 0,
+    line: -60,
     span: document.getElementsByTagName("span")[0],
     init(id) {
       this.canvasDom = document.getElementById(id)
@@ -57,7 +58,7 @@ window.onload = function () {
       this.ctx.lineWidth = 5
       this.ctx.beginPath()
       this.ctx.setLineDash([40, 20])
-      this.ctx.moveTo((this.wWidth / 2) - 2.5, 5)
+      this.ctx.moveTo((this.wWidth / 2) - 2.5, this.line)
       this.ctx.lineTo((this.wWidth / 2) - 2.5, this.wHeight)
       this.ctx.stroke()
     },
@@ -101,6 +102,7 @@ window.onload = function () {
       this.clearScreen()
       this.drawFilledRectangle()
       this.drawLine()
+      this.line <= 0 ? this.line+= 1.03 : this.line = -60
       this.drawStyleLine()
       this.manageObstacles()
       this.car.draw()
@@ -112,7 +114,7 @@ window.onload = function () {
     colision() {
       if (this.obstacles.length > 1) {
         for (let i = 0; i < this.obstacles.length; i++) {
-          if ((this.obstacles[i]._posY >= 510) && (this.obstacles[i]._posY <= 680)) {
+          if ((this.obstacles[i]._posY >= 510) && (this.obstacles[i]._posY <= 710)) {
             if (((this.car._posX + 100) > this.obstacles[i]._posX) && ((this.obstacles[i]._posX + this.obstacles[i]._width) > this.car._posX)) {
               this.gameOver()
               //parar el juego
@@ -128,7 +130,7 @@ window.onload = function () {
       }
 
       this.frames += 1
-      if (this.frames % 300 === 0) {
+      if (this.frames % 380 === 0) {
         this.obstacles.push(new Obstaculo(this.ctx, 40, 30, 50, "red"))
         if (this.obstacles.length == 4) {
           this.obstacles.shift()
@@ -143,6 +145,6 @@ window.onload = function () {
 
   game.init("myCanvas")
   document.getElementById("start-button").onclick = function () {
-    game.startGame();
+    game.startGame(); 
   };
 }
