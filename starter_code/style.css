@@ -36,3 +36,19 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#overlay {
+  background: black;
+  font-size: 100px;
+  color: green;
+  position: absolute;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s;
+}
+
+
