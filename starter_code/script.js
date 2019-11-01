@@ -11,6 +11,9 @@ window.onload = function () {
     car: undefined,
     obstacles: [],
     frames: 1,
+    intervalId: 0,
+    score: 0,
+    span: document.getElementsByTagName("span")[0],
     init(id) {
       this.canvasDom = document.getElementById(id)
       this.ctx = this.canvasDom.getContext('2d')
@@ -58,9 +61,15 @@ window.onload = function () {
       this.ctx.lineTo((this.wWidth / 2) - 2.5, this.wHeight)
       this.ctx.stroke()
     },
-    gameOver(){
+    gameOver() {
+      clearInterval(this.intervalId)
       this.ctx.fillStyle = "red"
-      this.ctx.fillRect(50, 50, this.wWidth - 100, this.wHeight/2)
+      this.ctx.font = "80px sans-serif"
+      this.ctx.fillText("GAME OVER", 50, 200, )
+      this.ctx.font = "40px sans-serif"
+      this.ctx.fillText("Your Final Score:", 80, 110)
+      this.ctx.fillStyle = "white"
+      this.ctx.fillText(Math.round(this.score), 440, 110)
     },
 
     setEventListeners() {
@@ -78,9 +87,10 @@ window.onload = function () {
 
     controlCar(name) {
       this.car = new Car(this.ctx, name)
-      setInterval(() => {
+      this.intervalId = setInterval(() => {
         this.updateGameArea()
       }, 10)
+
     },
 
     clearScreen() {
@@ -94,20 +104,17 @@ window.onload = function () {
       this.drawStyleLine()
       this.manageObstacles()
       this.car.draw()
+      this.score += 0.1
+      this.span.innerText = (Math.round(this.score))
       this.colision()
     },
 
     colision() {
       if (this.obstacles.length > 1) {
-        for(let i = 0; i <= this.obstacles.length -1; i++){
-          if (this.obstacles[i]._posY == 550) {
-            console.log(this.obstacles[i]._posX + this.obstacles[i]._width)
-            console.log(this.obstacles[i]._posX)
-            console.log(this.car._posX + 100)
-            console.log(this.car._posX)
+        for (let i = 0; i < this.obstacles.length; i++) {
+          if ((this.obstacles[i]._posY >= 510) && (this.obstacles[i]._posY <= 680)) {
             if (((this.car._posX + 100) > this.obstacles[i]._posX) && ((this.obstacles[i]._posX + this.obstacles[i]._width) > this.car._posX)) {
               this.gameOver()
-              alert("Tocaste un obstaculo")
               //parar el juego
             }
           }

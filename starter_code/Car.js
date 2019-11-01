@@ -5,7 +5,7 @@ class Car {
         this._image.src = `images/${name}`
         this._posX = 80
         this._posY = 550
-        this._vel = 50
+        this._vel = 20
     }
     draw() {
         this._ctx.drawImage(this._image, this._posX, this._posY, 100, 200)
