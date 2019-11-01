@@ -15,8 +15,14 @@ const width = $canvas.width;
 const height = $canvas.height;
 
 function drawEverything(){
+  clearCanvas()
   drawMap()
   player.drawCar()
+  drawObstacles()
+}
+
+function clearCanvas (){
+  context.clearRect(0, 0, width, height)
 }
 
 function drawMap(){
@@ -38,21 +44,37 @@ function drawMap(){
   context.stroke();
   
   }
+
+let boundaryLeft = 65;
+let boundaryRight = 385;
   
   
   class Player {
     constructor() {
-      this.position = (width / 2) - 25
+      this.positionX = (width / 2) - 25
+      this.positionY = height - 90 
     }
+    moveUp(){
+      if (this.positionY >= 55) {
+        this.positionY -= 10
+      }
+    }
+
+    moveDown(){
+      if (this.positionY <= height) {
+        this.positionY += 10
+      }
+    }
+
     moveLeft() {
-      if(this.position >= 65 ){
-      this.position -= 10
+      if(this.positionX >= boundaryLeft ){
+      this.positionX -= 10
       }
     }
     
     moveRight() {
-      if(this.position <= 385){
-      this.position += 10
+      if(this.positionX <= boundaryRight){
+      this.positionX += 10
       } 
     }
     drawCar(){
@@ -61,7 +83,7 @@ function drawMap(){
       image.src = IMG_URL;
       
       image.addEventListener('load', () => {
-        context.drawImage(image, this.position, height -90 , 50, 70);
+        context.drawImage(image, this.positionX, this.positionY , 50, 70);
       });
     }
     
@@ -73,7 +95,7 @@ function drawMap(){
   
   window.addEventListener('keydown', (event) => {
   // Stop the default behavior (moving the screen to the left/up/right/down)
-  
+    //event.preventDefault();
 
   // React based on the key pressed
   switch (event.keyCode) {
@@ -81,13 +103,46 @@ function drawMap(){
         player.moveLeft();
         drawEverything();
         console.log(player.position)
-    break;    
+      break;    
     case 39:
         player.moveRight();   
         drawEverything();   
         console.log(player.position)
-    break;
+      break;
+    /* case 40:
+      player.moveDown();
+      drawEverything();
+      break;
+    case 38:
+      player.moveUp();
+      drawEverything();
+      break; */
   }
 });
+
+
+function drawObstacles(){
+  /* let rndmObstWidth = 146
+  let rndmWidth = 146  */ 
+  let rndmObstWidth = Math.floor((Math.random() * 180) +1);
+  let rndmWidth = Math.floor((Math.random() * 250) +1);
+  
+/*   if(250 -rndmWidth < rndmObstWidth){
+    rndmObstWidth -= rndmWidth
+  }
+ */
+  context.fillStyle = 'darkred'
+  context.save()
+  context.translate(boundaryLeft, 0)
+  context.fillRect(rndmWidth, 0, rndmObstWidth, 50)
+  context.restore()
+  console.log(rndmObstWidth)
+  console.log(rndmWidth)
+}
+
+
+
+
+
 
 
