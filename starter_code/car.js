@@ -4,7 +4,7 @@ class Car {
     this._image = new Image();
     this._image.src = `images/${name}`;
     this._posX = 178;
-    this._posY = 520;
+    this._posY = 610;
     this._vel = 20;
   }
 
@@ -35,7 +35,7 @@ class Obstacle {
 
   update() {
     this._posY += 1;
-    this._ctx.fillStyle = "white";
+    this._ctx.fillStyle = "red";
     this._ctx.fillRect(this._posX, this._posY, this._width, this._height);
   }
 }

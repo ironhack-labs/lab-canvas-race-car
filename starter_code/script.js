@@ -28,19 +28,19 @@ window.onload = function() {
     },
     drawRoad() {
       this.ctx.fillStyle = "green";
-      this.ctx.fillRect(0, 25, 400, 600);
+      this.ctx.fillRect(0, 0, 400, this.wHeight);
       this.ctx.fillStyle = "grey";
-      this.ctx.fillRect(50, 25, 300, 600);
+      this.ctx.fillRect(50, 0, 300, this.wHeight);
       this.ctx.fillStyle = "white";
-      this.ctx.fillRect(60, 25, 10, 600);
+      this.ctx.fillRect(60, 0, 10, this.wHeight);
       this.ctx.fillStyle = "white";
-      this.ctx.fillRect(330, 25, 10, 600);
+      this.ctx.fillRect(330, 0, 10, this.wHeight);
       this.ctx.strokeStyle = "white";
       this.ctx.lineWidth = 8;
       this.ctx.setLineDash([30, 50]); // ['tamaño del trazo', 'espacio entre trazos']
       this.ctx.beginPath();
       this.ctx.moveTo(196, 50);
-      this.ctx.lineTo(196, 600);
+      this.ctx.lineTo(196, this.wHeight);
       this.ctx.stroke();
     },
 
@@ -87,6 +87,7 @@ window.onload = function() {
     clearScreen() {
       this.ctx.clearRect(0, 0, this.wWidth, this.wHeight);
     },
+
     manageObstacles() {
       let random = Math.floor(Math.random() * 200);
       for (let i = 0; i < this.obstacles.length; i++) {
