@@ -12,12 +12,11 @@ class Game {
 
     this.timerStamp = 0;
     this.timerStamp2 = 0;
-    this.timerStamp3 = 0;
     this.stripesSpeed = 10;
 
     this.steps = 5;
 
-    this.obstaclesCreationSpeed = 8000;
+    this.obstaclesCreationSpeed = 5000;
 
     this.controls = new Controls(this);
     this.stripes = new Stripes(this);
@@ -103,10 +102,11 @@ class Game {
   restartGame() {
     this.timerStamp = 0;
     this.timerStamp2 = 0;
-    this.timerStamp3 = 0;
+    this.stripesSpeed = 10;
+
     this.steps = 5;
-    this.stripesSpeed = 80;
-    this.obstaclesSpeed = 8000;
+
+    this.obstaclesCreationSpeed = 5000;
     this.obstaclesArray = [];
     this.score = 0;
     this.lost = false;
@@ -121,7 +121,7 @@ class Game {
   updateObstaclesArray() {
     for (let item of this.obstaclesArray) {
       item.updateObstacle();
-      if (item.positionY === 350) {
+      if (item.positionY > 350 && item.positionY < 400) {
         this.checkCollisions();
       } else if (item.positionY > 500) {
         this.obstaclesArray.shift();
@@ -132,10 +132,17 @@ class Game {
           console.log("MAIS OBSTACULOS: ", this.obstaclesCreationSpeed);
           console.log("STRIPES:", this.stripesSpeed);
         }
-
-        if (this.score == 10) {
+        if (this.score === 10) {
+            this.stripesSpeed = 10;
+            this.steps = 7;
+        }
+        if (this.score === 15) {
             this.stripesSpeed = 10;
             this.steps = 10;
+        }
+        if (this.score === 20) {
+            this.stripesSpeed = 10;
+            this.steps = 13;
         }
       }
     }

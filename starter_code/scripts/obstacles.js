@@ -20,7 +20,7 @@ class Obstacle {
       const randomNumber = Math.floor(Math.random()*300);
       const maximumSize = 400-randomNumber;
       this.positionX += randomNumber;
-      this.size = Math.min(Math.max(Math.floor(Math.random()*maximumSize),100), 250);
+      this.size = Math.min(Math.max(Math.floor(Math.random()*maximumSize),100), 200);
     }
   
     updateObstacle(){
