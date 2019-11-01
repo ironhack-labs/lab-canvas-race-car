@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
   const raceCar = {
     title: "Island Racer",
     author: "Rebecca, Nino, Victor",
@@ -9,10 +9,10 @@ window.onload = function () {
     car: undefined,
 
     init(id) {
-      this.canvasDom = document.getElementById(id)
-      this.ctx = this.canvasDom.getContext("2d")
-      this.setDimensions()
-      this.setEventListeners()
+      this.canvasDom = document.getElementById(id);
+      this.ctx = this.canvasDom.getContext("2d");
+      this.setDimensions();
+      this.setEventListeners();
     },
     setDimensions() {
       document.getElementsByTagName("body")[0].style.margin = 0;
@@ -65,9 +65,9 @@ window.onload = function () {
       setInterval(() => {
         this.clearScreen();
         this.canvasGreen();
-        this.canvasGray()
-        this.canvasLine()
-        this.canvasLineDash()
+        this.canvasGray();
+        this.canvasLine();
+        this.canvasLineDash();
         this.car.draw();
       }, 1);
     },
@@ -76,19 +76,18 @@ window.onload = function () {
     }
   };
 
-
   class CarMove {
     constructor(ctx) {
       this._ctx = ctx;
       this._image = new Image();
       this._image.src = `./images/car.png`;
       this._posX = 221;
-      this._posY = window.innerHeight - 400;
+      this._posY = window.innerHeight - 200;
       this._vel = 20;
     }
 
     draw() {
-      this._ctx.drawImage(this._image, this._posX, this._posY);
+      this._ctx.drawImage(this._image, this._posX, this._posY, 80, 160); //ANCHO & LARGO COCHE
     }
 
     goLeft() {
@@ -98,13 +97,11 @@ window.onload = function () {
     goRight() {
       this._posX += this._vel;
     }
-  };
+  }
 
-
-  document.getElementById("start-button").onclick = function () {
+  document.getElementById("start-button").onclick = function() {
     raceCar.starGame();
   };
-
 
   raceCar.init("myCanvas");
   raceCar.drawControlledCar();
