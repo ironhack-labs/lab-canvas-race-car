@@ -62,9 +62,7 @@ let road = new Rectangles((w / adj - w / (adj * 1.2)) / 2, 0, w / (adj * 1.2), h
 let lineLeft = new Rectangles(limLeft, 0, w / 80, h, "white");
 let lineRight = new Rectangles(limRight, 0, w / 80, h, "white");
 let midLine = new Rectangles(0,0,0,0,"white",0,[w / adj / 2, -h + counter - 5000], [w / adj / 2, h + counter])
-// let car = new Rectangles(coords.x, coords.y, 50, 50);
-// console.log(car);
-// console.log(car.drawCar())
+
 
 function startGame() {
   var intervalID = setInterval(() => {
@@ -78,7 +76,6 @@ function startGame() {
 
     lineRight.drawRectangle();
 
-    // midLine.drawLines();
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.setLineDash([30, 15]);
@@ -126,8 +123,11 @@ function startGame() {
         clearInterval(intervalID);
         let overlayDOMEl = document.querySelector("#overlay");
         overlayDOMEl.style.display= "flex";
+        document.querySelector("#overlay").lastElementChild.innerText= "Points "+ counter;
         }
     })
+
+
     
 
 
