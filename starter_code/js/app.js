@@ -81,6 +81,8 @@ window.onload = function () {
         carGame.drawLeftLine()
         carGame.drawRightLine()
         carGame.drawMiddleLine()
+        carGame.drawScoreBox()
+        carGame.score()
         this.manageObstacles()
         this.car.drawCar()
       }, 10)
@@ -120,7 +122,28 @@ window.onload = function () {
       }
       console.log(this.obstacles)
 
-    }
+    },
+
+    score() {
+      let points = Math.floor(this.frames/60)
+      //this.ctx.fillRect(230, 20, 120, 50)
+      this.ctx.font = "18px sans-serif"
+      //this.ctx.fillStyle = "black"
+      this.ctx.fillText("Score: " + points,250, 50) 
+    },
+
+    drawScoreBox() {
+      this.ctx.strokeStyle = 'white'
+      this.ctx.lineWidth = 40
+      this.ctx.setLineDash([0, 0])
+      this.ctx.beginPath()
+      this.ctx.moveTo(230, 45)
+      this.ctx.lineTo(350, 45)
+      this.ctx.stroke()
+
+    },
+
+  
 
   }
 
@@ -131,6 +154,7 @@ window.onload = function () {
   carGame.drawLeftLine()
   carGame.drawRightLine()
   carGame.drawMiddleLine()
+  carGame.drawScoreBox()
   
 
 
