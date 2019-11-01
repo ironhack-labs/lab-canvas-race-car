@@ -8,7 +8,10 @@ class Game {
     this.controls.setKeyBindings();
     this.car = new Car(this);
     this.road = new Road(this);
-    this.obstacle = new Obstacle (this);
+    this.obstacle = new Obstacle(this);
+    this.obstacleArray = [];
+    this.obstacleTimer = 0;
+    this.speed = 3000;
   }
 
   clear () {
@@ -19,6 +22,7 @@ class Game {
     this.clear();
     this.road.paint();
     this.car.paint();
+    this.obstacle.randomObstaclePosition();
     this.obstacle.paint();
   }
 
@@ -28,17 +32,14 @@ class Game {
 
   animation (timestamp) {
     this.paintEverything();
-    this.updateEverything(timestamp);
+    this.createObstacle(timestamp);
     window.requestAnimationFrame(timestamp => this.animation(timestamp));
   }
 
-  updateEverything (timestamp) {
-    this.road.update();
-    this.car.update();
-    if (this.obstacleTimer < timestamp - 2000) {
-      this.obstacle.push(new Obstacle (this));
+  createObstacle (timestamp) {
+    if (this.obstacleTimer < timestamp - this.speed) {
+      this.obstacleArray.push(new Obstacle (this));
       this.obstacleTimer = timestamp;
     }
   }
-
 }

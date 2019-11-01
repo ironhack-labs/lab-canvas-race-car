@@ -22,12 +22,18 @@ class Car {
   }
 
   moveLeft () {
-    this.carX -= 20;
-    console.log("LEEEFT", this.carX)
+    if (this.carX === 50) {
+      this.carX = this.carX;
+    } else {
+      this.carX -= 25;
+    }
   }
   
-  moveRight () {    
-    this.carX += 20;
-    console.log("RIGHT", this.carX)
+  moveRight () {
+    if (this.carX === 275) {
+      this.carX = this.carX;
+    } else {
+      this.carX += 25;
+    }
   }
 }

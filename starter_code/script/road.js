@@ -7,7 +7,6 @@ class Road {
 
   paint () {
     const context = this.game.context;
-    context.save();
     context.fillStyle = 'green';
     context.fillRect(0, 0, 30, this.height);
     context.fillRect(320, 0, 30, this.height);
@@ -22,7 +21,6 @@ class Road {
     context.lineTo(this.width/2, 0)
     context.stroke();
     context.closePath();
-    context.restore();
   }
 }
 
