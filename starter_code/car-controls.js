@@ -13,14 +13,14 @@ class Car {
     moveLeft() {
         if (this.horizontalPositionOfCar >= 60) {
             this.horizontalPositionOfCar = this.horizontalPositionOfCar - 10;
-            drawAll();
+            game.drawAll();
         }
     };
 
     moveRight() {
         if (this.horizontalPositionOfCar <= 340 - this.widthOfCar) {
             this.horizontalPositionOfCar = this.horizontalPositionOfCar + 10;
-            drawAll();
+            game.drawAll();
         };
     };
 }
@@ -28,11 +28,11 @@ class Car {
 window.addEventListener("keydown", event => {
     switch (event.keyCode) {
         case 37:
-            car.moveLeft()
+            game.car.moveLeft()
             console.log("car moved left")
             break;
         case 39:
-            car.moveRight()
+            game.car.moveRight()
             console.log("car moved right")
             break;
     }

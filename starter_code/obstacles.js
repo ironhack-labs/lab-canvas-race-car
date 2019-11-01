@@ -1,24 +1,37 @@
-function paintObstacle(leftStart, topStart) {
-    context.beginPath();
-    context.fillStyle = 'darkred';
-    context.fillRect(leftStart, topStart, 170, 30);
-    context.closePath();
-}
+class Obstacle {
+    constructor(game) {
+        this.obstacleHeight = 30;
+        this.obstacleWidth = this.createRandomobstacleWidth();
+        this.borderWidth = 50;
+        this.horizontalStartPoint = this.createRandomhorizontalStartPoint();
+        this.verticalStartPoint = 0;
+        this.game = game;
+    }
 
-function createRandomStartPoint() {
-    let borderWidth = 50;
-    let obstacleWidth = 170;
-    let mostRightStartPoint = 400 - borderWidth - obstacleWidth;
-    let startPointWidth = mostRightStartPoint - borderWidth;
-    return startPoint = Math.floor(Math.random() * startPointWidth) + borderWidth
-}
+    paintObstacle() {
+        context.beginPath();
+        context.fillStyle = 'darkred';
+        context.fillRect(this.horizontalStartPoint, this.verticalStartPoint, this.obstacleWidth, this.obstacleHeight);
+        context.closePath();
+    }
 
-createRandomStartPoint();
+    createRandomhorizontalStartPoint() {
+        let mostRightStartPoint = 400 - this.borderWidth - this.obstacleWidth;
+        let startPointWidth = mostRightStartPoint - this.borderWidth;
+        return this.horizontalStartPoint = Math.floor(Math.random() * startPointWidth) + this.borderWidth
+    }
 
-function drawObstacles() {
-    paintObstacle(createRandomStartPoint(), 350)
-    paintObstacle(createRandomStartPoint(), 50)
-    paintObstacle(createRandomStartPoint(), 200)
+    createRandomobstacleWidth() {
+        let maximumObstacleWidth = 200;
+        let minimumObstacleWidth = 50;
+        return this.obstacleWidth = Math.floor(Math.random() * (maximumObstacleWidth - minimumObstacleWidth)) + minimumObstacleWidth
+    }
+
+    moveObstacle() {
+        this.verticalStartPoint += 1;
+        this.paintObstacle(this.horizontalStartPoint, this.verticalStartPoint);
+        // window.requestAnimationFrame(this.moveObstacle);
+    }
 }
 
 console.log("I am connected")
