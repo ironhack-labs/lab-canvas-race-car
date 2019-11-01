@@ -1,31 +1,28 @@
 class Road {
+  constructor (game) {
+    this.game = game;
+    this.height = game.height;
+    this.width = game.width;
+  }
+
   paint () {
+    const context = this.game.context;
     context.save();
-
     context.fillStyle = 'green';
-    context.fillRect(0, 0, 30, 600);
-    context.fillRect(320, 0, 30, 600);
-
+    context.fillRect(0, 0, 30, this.height);
+    context.fillRect(320, 0, 30, this.height);
     context.fillStyle = 'white';
-    context.fillRect(40, 0, 10, 600);
-    context.fillRect(300, 0, 10, 600);
-
+    context.fillRect(40, 0, 10, this.height);
+    context.fillRect(300, 0, 10, this.height);
     context.lineWidth = 4;
     context.strokeStyle = 'white';
-    /* for (let row = 0; row < i.length; row++) {
-      for (let column = 0; column < i.length; column++) {
-        context.fillRect(i * 50, 0, 6, 30);
-      }  
-    }; */
-
-    // google draw dash line
     context.beginPath();
-    context.moveTo(175, 600)
-    context.lineTo(175, 0)
+    context.setLineDash([20, 25]);
+    context.moveTo(this.width/2, this.height)
+    context.lineTo(this.width/2, 0)
     context.stroke();
     context.closePath();
-
-    context.save();
+    context.restore();
   }
 }
 
