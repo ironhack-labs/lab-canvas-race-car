@@ -4,7 +4,7 @@ class Track {
   }
 
   paintTrack() {
-    let ctx = game.ctx;
+    let ctx = this.game.ctx;
     // green grass
     ctx.fillStyle = 'green';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);

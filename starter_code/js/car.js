@@ -3,11 +3,16 @@ class Car {
     this.game = game;
     this.position = CENTER;
     this.direction;
+    this.obstacles = this.game.obstacles;
+
+    this.CAR_WIDTH = 50;
+    this.CAR_HEIGHT = 100;
+    this.CAR_MOVEMENT_SIZE = 28;
   }
 
   //Paint
   paintCar() {
-    const ctx = game.ctx;
+    const ctx = this.game.ctx;
     const carImg = new Image;
     carImg.src = 'images/car.png';
     const CAR_OFFSET = 25;
@@ -20,26 +25,21 @@ class Car {
 
   //Logic
   move() {
-    // Track width: 310
-    const CAR_MOVEMENT_SIZE = 14;
-    const TRACK_LEFT = 30;
-    const TRACK_RIGHT = 340;
-
+    // const CAR_MOVEMENT_SIZE = 28;
     switch (this.direction) {
       case 'left':
         // check if on track
-        if (this.position > TRACK_LEFT + CAR_MOVEMENT_SIZE + 16 && this.position <= TRACK_RIGHT) {
-          this.position -= 14;
+        if (this.position > TRACK_LEFT + this.CAR_MOVEMENT_SIZE + 16 && this.position <= TRACK_RIGHT) {
+          this.position -= this.CAR_MOVEMENT_SIZE;
         }
-        console.log(this.position);
         this.direction = null;
         break;
       case 'right':
         // check if on track
-        if (this.position >= TRACK_LEFT && this.position <= TRACK_RIGHT - CAR_MOVEMENT_SIZE) {
-          this.position += 14;
+        if (this.position >= TRACK_LEFT && this.position <= TRACK_RIGHT - this.CAR_MOVEMENT_SIZE) {
+          this.position += this.CAR_MOVEMENT_SIZE;
         }
-        console.log(this.position);
+        // console.log(this.position);
         this.direction = null;
         break;
       }
