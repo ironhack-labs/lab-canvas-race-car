@@ -36,3 +36,11 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.no_display {
+  display: none;
+}
+
+.display {
+  display: display;
+}
