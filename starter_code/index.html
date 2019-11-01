@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
+  
 
   </script>
   <link rel="stylesheet" href="style.css">
@@ -12,6 +12,7 @@
 </head>
 <body>
   <div class="game-intro">
+    <!-- <canvas width=800 height=400></canvas> -->
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
     <button id="start-button">StartGame</button>
@@ -19,7 +20,11 @@
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+    <canvas width=500 height = 800></canvas>
   </div>
+  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="classes.js"></script>
+  <script type="text/javascript" src="variables.js"></script>
+  <script type="text/javascript" src="listeners.js"></script>
 </body>
 </html>
