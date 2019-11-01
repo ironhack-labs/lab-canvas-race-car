@@ -73,7 +73,7 @@ let back = new Background(-50,50,150,250,350,450);
 
 let car = new Car(115,340);
 
-let obs = new Obstacle(100, 10, 200, 290);
+let obs = new Obstacle(100, 0, 200, 320);
 
 canvas.setCanvasDimensions();
 
@@ -121,6 +121,7 @@ function startGame(){
     for(let j=0; j<obs.arrY.length; j++){
       if(obs.arrY[j] === 500){
         obs.arrY[j] = -150;
+        obs.arrX[j] = Math.floor(Math.random() * (200 -30)) + 30;
       }else{
         obs.arrY[j] +=1;
       }
