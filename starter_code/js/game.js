@@ -2,22 +2,25 @@ class Game {
   constructor($canvas) {
     this.$canvas = $canvas;
     this.ctx = this.$canvas.getContext('2d');
-
-    //Put canvas dimensions here!
-    // ---
-
-    this.controls = new Controls(this);
+    // Canvas dimensions
+    this.HEIGHT = $canvas.height;
+    this.WIDTH = $canvas.width;
+    // Road dimensions
+    this.WIDTH_OF_ROAD = 320;
+    this.TRACK_LEFT = 30;
+    this.TRACK_RIGHT = 340;
     // When new game instance is created keyboard bindings are initiated
+    this.controls = new Controls(this);
     this.controls.setKeyBindings();
+
+    this.timer;
 
     this.previousScore = 0;
     this.score = 0;
 
     this.GRID_X = 30;
     this.GRID_SQUARE = 40;
-    this.COLS = WIDTH_OF_ROAD / 40;
-
-    this.timer;
+    this.COLS = this.WIDTH_OF_ROAD / 40;
   }
 
   // Control & logic
@@ -44,7 +47,7 @@ class Game {
     const CAR_WIDTH = this.CAR_WIDTH = 50;
     const CAR_HEIGHT = this.CAR_HEIGHT = 100;
 
-    return (obstacleY >= HEIGHT - CAR_HEIGHT && 
+    return (obstacleY >= this.HEIGHT - CAR_HEIGHT && 
             carX < obstacleX + obstacleWidth &&
             carX + CAR_WIDTH > obstacleX)
   }
@@ -85,9 +88,8 @@ class Game {
   }
 
   loose() {
-    // clearTimout() doesn't work...
-    this.speed = 600000;
-    console.log('You loose!!!');
+    // window.clearTimeout(this.timer);
+    this.speed = 0;
     printLoose();
   }
 

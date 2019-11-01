@@ -1,7 +1,7 @@
 class Car {
   constructor(game){
     this.game = game;
-    this.position = CENTER;
+    this.position = this.game.WIDTH/2;
     this.direction;
     this.obstacles = this.game.obstacles;
 
@@ -25,7 +25,9 @@ class Car {
 
   //Logic
   move() {
-    // const CAR_MOVEMENT_SIZE = 28;
+    const TRACK_LEFT = this.game.TRACK_LEFT;
+    const TRACK_RIGHT = this.game.TRACK_RIGHT;
+    
     switch (this.direction) {
       case 'left':
         // check if on track

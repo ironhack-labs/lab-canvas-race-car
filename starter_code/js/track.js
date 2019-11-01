@@ -4,7 +4,9 @@ class Track {
   }
 
   paintTrack() {
-    let ctx = this.game.ctx;
+    const ctx = this.game.ctx;
+    const WIDTH = this.game.WIDTH;
+    const HEIGHT = this.game.HEIGHT;
     // green grass
     ctx.fillStyle = 'green';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -29,8 +31,8 @@ class Track {
     ctx.lineWidth = 5;
     ctx.setLineDash([30, 30]); /*dashes are 30px and spaces are 30px*/
     ctx.beginPath();
-    ctx.moveTo(CENTER, 0);
-    ctx.lineTo(CENTER, HEIGHT);
+    ctx.moveTo(WIDTH/2, 0);
+    ctx.lineTo(WIDTH/2, HEIGHT);
     ctx.stroke();
   }
 }
