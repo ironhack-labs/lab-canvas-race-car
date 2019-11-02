@@ -7,6 +7,7 @@ class Game {
         this.myControls = new Controls(this);
         this.previousTimestamp = 0;
         this.stonesArray = [];
+        this.collision = new CollisionDetection(this);
         
 
     }
@@ -18,9 +19,9 @@ class Game {
     
     animateGame(timestamp){
         this.currentTimeStamp = timestamp;
-
-        this.updateEverything(timestamp);
-        this.drawEverything(timestamp);
+        if (!this.collision.check()) 
+        {this.updateEverything(timestamp);
+        this.drawEverything(timestamp);}
         
         
         
@@ -47,8 +48,9 @@ class Game {
                 this.stonesArray.shift();
 
             }
+            
 
-
+            this.collision.check();
             this.previousTimestamp = timestamp;
         }
 

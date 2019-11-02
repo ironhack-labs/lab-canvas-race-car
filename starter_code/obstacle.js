@@ -12,7 +12,7 @@ class Obstacle  {
     
     draw(){
         
-        console.log('drawing stone')
+        
             this.context.fillStyle = 'red';
             this.context.fillRect(this.xPosition, this.yPosition, 50, 50);
                         
