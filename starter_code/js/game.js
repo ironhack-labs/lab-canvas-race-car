@@ -33,7 +33,7 @@ class Game {
     this.obstacles.generateObstacle();
     this.track = new Track(this);
     this.car = new Car(this);
-    this.speed = 500;
+    this.speed = 1000/3;
     this.loop();
   }
 
@@ -88,9 +88,8 @@ class Game {
   }
 
   loose() {
-    // window.clearTimeout(this.timer);
-    this.speed = 0;
     printLoose();
+    document.clearTimeout(this.timer);
   }
 
   // Get some animation!

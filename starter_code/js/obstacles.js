@@ -13,7 +13,7 @@ class Obstacles {
     if (this.obstaclesArray.length === 0) {
       this.obstaclesArray.push(JSON.parse(`{"xSqs" : ${obstacleX}, "ySqs" : -2, "widthSqs": ${widthSqs}}`));
     } else if (this.obstaclesArray.length < 4) {
-      let obstacleY = this.obstaclesArray[this.obstaclesArray.length-1].ySqs - 6;
+      let obstacleY = this.obstaclesArray[this.obstaclesArray.length-1].ySqs - 7;
       this.obstaclesArray.push(JSON.parse(`{"xSqs" : ${obstacleX}, "ySqs" : ${obstacleY}, "widthSqs": ${widthSqs}}`));
     }
   }
