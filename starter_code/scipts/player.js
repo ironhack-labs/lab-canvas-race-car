@@ -9,9 +9,11 @@ class Player {
         this.image.src = './images/car.png';
         this.boundaryLeft = game.boundaryLeft;
         this.boundaryRight = game.boundaryRight;
-        console.log('Player: constructor: L ' + this.boundaryLeft);
-        console.log('Player:: constructor: W ' + game.width);
-        console.log('Player:: constructor: Context ' + game.context);
+        this.playerHeight = 90;
+        this.playerWidth = 60;
+        //console.log('Player: constructor: L ' + this.boundaryLeft);
+        //console.log('Player:: constructor: W ' + game.width);
+        //console.log('Player:: constructor: Context ' + game.context);
         
         //this.context.drawImage(this.image, this.positionX, this.positionY, 50, 70);
 
@@ -31,21 +33,21 @@ class Player {
     moveLeft() {
         if (this.positionX >= this.boundaryLeft) {
             //console.log('b' + game.boundaryLeft)
-            console.log('p' + this.positionX)
-            this.positionX -= 10
+            console.log('MoveLeft, Position: ' + this.positionX)
+            this.positionX -= 20
         }
     }
 
     moveRight() {
-        console.log("position" + this.positionX)
+        console.log("MoveRight, position: " + this.positionX)
 
         if (this.positionX <= this.boundaryRight) {
-            this.positionX += 10
+            this.positionX += 20
         }
     }
     drawCar() {
-        this.context.drawImage(this.image, this.positionX, this.positionY, 50, 70);
+        this.context.drawImage(this.image, this.positionX, this.positionY, this.playerWidth, this.playerHeight);
 
     }
-
+    
 }
