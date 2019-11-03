@@ -13,8 +13,8 @@ class Game {
         this.obstaclesArray = [];
         this.obstaclesTime = 0;
         this.speed = 1500;
-        this.loose = false;
         this.score = 0;
+        this.animation;
     };
 
     paintGame() {
@@ -49,9 +49,12 @@ class Game {
     loop(timestamp) {
 
         this.drawEverything(timestamp);
+        console.log('test');
 
 
-        window.requestAnimationFrame(timestamp => this.loop(timestamp));
+        this.animation = window.requestAnimationFrame(timestamp => this.loop(timestamp));
+
+        this.checkCollision();
     }
 
 
@@ -80,13 +83,18 @@ class Game {
 
                     || (rightBorderOfObstacle <= rightBorderOfCar && rightBorderOfObstacle >= leftBorderOfCar)
 
-                    || ( leftBorderOfObstacle <= leftBorderOfCar && leftBorderOfObstacle <= rightBorderOfCar
+                    || (leftBorderOfObstacle <= leftBorderOfCar && leftBorderOfObstacle <= rightBorderOfCar
 
                         && rightBorderOfObstacle >= leftBorderOfCar && rightBorderOfObstacle >= rightBorderOfCar
-                ))) {
-
-               
-                this.loose = true;
+                    ))) {
+                this.clear();
+                this.context.fillStyle = 'red';
+                this.context.textAlign = 'center';
+                this.context.font = '30px Arial';
+                this.context.fillText(`GAME OVER!`, this.gameWidth / 2, this.gameHeight / 2);
+                this.context.fillStyle = 'black';
+                this.context.fillText(`Your score is: ${this.score}`, this.gameWidth / 2, this.gameHeight / 2 + 50);
+                cancelAnimationFrame(this.animation);
             } else if (this.car.position.y === bottomOfObstacle) {
                 this.score += 1;
                 //to make velocity of obstacles increase with time
@@ -95,24 +103,15 @@ class Game {
     };
 
     drawEverything(timestamp) {
-        if (this.loose === true) {
-            this.clear();
-            this.context.fillStyle = 'red';
-            this.context.textAlign = 'center';
-            this.context.font = '30px Arial';
-            this.context.fillText(`GAME OVER!`, this.gameWidth / 2, this.gameHeight / 2);
-            this.context.fillStyle = 'black';
-            this.context.fillText(`Your score is: ${this.score}`, this.gameWidth / 2, this.gameHeight / 2 + 50);
-        } else {
-            this.clear();
-            this.paintGame();
-            this.car.drawCar();
-            this.createObstacles(timestamp);
-            for (let i = 0; i < this.obstaclesArray.length; i++) {
-                this.obstaclesArray[i].drawObstacles();
-                this.obstaclesArray[i].movingObstacleDown();
-            }
-            this.checkCollision();
+
+        this.clear();
+        this.paintGame();
+        this.car.drawCar();
+        this.createObstacles(timestamp);
+        for (let i = 0; i < this.obstaclesArray.length; i++) {
+            this.obstaclesArray[i].drawObstacles();
+            this.obstaclesArray[i].movingObstacleDown();
+
         }
     }
 
