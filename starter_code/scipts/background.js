@@ -4,7 +4,7 @@ class Background {
         this.height = game.height
         this.width = game.width
         this.y = 0
-        this.veloY = -2
+        this.veloY = -4
 
     }
     drawMap() {

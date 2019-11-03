@@ -1,16 +1,14 @@
 class Player {
     constructor(game) {
         this.context = game.context;
-        this.width = game.width;
-        this.height = game.height;
-        this.positionX = (this.width / 2) - 25;
-        this.positionY = this.height - 90;
+        this.positionX = (game.width / 2) - 25;
+        this.positionY = game.height - 100;
         this.image = new Image();
         this.image.src = './images/car.png';
         this.boundaryLeft = game.boundaryLeft;
         this.boundaryRight = game.boundaryRight;
-        this.playerHeight = 90;
-        this.playerWidth = 60;
+        this.height = 90;
+        this.width = 60;
         //console.log('Player: constructor: L ' + this.boundaryLeft);
         //console.log('Player:: constructor: W ' + game.width);
         //console.log('Player:: constructor: Context ' + game.context);
@@ -46,7 +44,7 @@ class Player {
         }
     }
     drawCar() {
-        this.context.drawImage(this.image, this.positionX, this.positionY, this.playerWidth, this.playerHeight);
+        this.context.drawImage(this.image, this.positionX, this.positionY, this.width, this.height);
 
     }
     
