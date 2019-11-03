@@ -4,22 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script type="text/javascript" src="script.js">
-
-  </script>
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
 <body>
+  <div id="lost">You lost!</div>
   <div class="game-intro">
     <img src="./images/logo.png" alt="" class="logo-img">
     <br>
-    <button id="start-button">StartGame</button>
+    <button id="start-button">Start Game</button>
     <p>Use the left and right arrow to control the car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img">
   </div>
   <div id="game-board">
-
+    <canvas height="500px" width="350px"></canvas>
   </div>
+
+  <script src="./board.js"></script>
+  <script src="./controls.js"></script>
+  <script src="./car.js"></script>
+  <script src="./obstacles.js"></script>
+  <script src="./game.js"></script>
+  <script src="./script.js"></script>
+
 </body>
 </html>

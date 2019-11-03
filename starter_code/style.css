@@ -1,11 +1,25 @@
 body {
   padding: 0;
   text-align: center;
+  position: relative;
 }
 
 .game-intro {
   float: left;
   padding: 0% 10%;
+}
+
+#lost{
+  position: absolute;
+  border: 10px double white;
+  padding: 1em;
+  font-size: 4em;
+  margin-left: 34vw;
+  margin-top: 27vh;
+  font-family: "Verdana";
+  background-color: rgb(117, 19, 19);
+  color: #FFF;
+  visibility: hidden;
 }
 
 .game-intro p {
@@ -32,7 +46,19 @@ body button {
   margin-bottom: 20px;
 }
 
+#reset-button{
+  font-size: 30px;
+  background-color: #1940f0;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
 #game-board {
     float: left;
     padding: 20px 0px;
+    border: 1px solid black;
 }
