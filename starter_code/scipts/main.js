@@ -7,7 +7,7 @@ window.onload = function () {
     document.getElementById("start-button").onclick = function () {        
         //console.log("before: "+ game.running);
 
-        if(game.running === false){
+        if(!game.running){
             game.startGame();   
         }
 

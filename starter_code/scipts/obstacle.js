@@ -8,6 +8,7 @@ class Obstacle {
         this.veloY = 4;
         this.rndmX = Math.floor((Math.random() * this.borderRight) + 1);
         this.rndmObstWidth = Math.floor((Math.random() * this.obstMaxwidth) + 100);
+        this.colided = false;
         
     }
     
