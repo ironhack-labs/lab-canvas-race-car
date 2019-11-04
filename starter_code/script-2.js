@@ -35,16 +35,16 @@ window.onload = function() {
       }
   }
   // let obsLoad = new Obstacle(50, 90, 50, 50);
-//   function spawnObstacle(){
-//     let rX = Math.floor(Math.random() * 200);
-//     let rY = Math.floor(Math.random() * 200);
-//     let rWidth = Math.floor(Math.random() * 50) + 10;
-//     let rHeight = Math.floor(Math.random() * 50) + 10;
-//     let obsLoad = new Obstacle(rX, rY, rWidth, rHeight);
-//     obstacleArray.push(obsLoad);
-//     obsLoad.moveDownForever();
-//     // console.log(obsLoad.x);
-// }
+  function spawnObstacle(){
+    let rX = Math.floor(Math.random() * 200);
+    let rY = Math.floor(Math.random() * 200);
+    let rWidth = Math.floor(Math.random() * 50) + 10;
+    let rHeight = Math.floor(Math.random() * 50) + 10;
+    let obsLoad = new Obstacle(rX, rY, rWidth, rHeight);
+    obstacleArray.push(obsLoad);
+    obsLoad.moveDownForever();
+    // console.log(obsLoad.x);
+}
 
   // console.log(obsLoad);
   console.log(obstacleArray);
@@ -112,13 +112,13 @@ window.onload = function() {
     // this is where we draw the obstacles
     // obsLoad.drawObs();
 
-    // obstacleArray.forEach((eachObstacle)=>{
-    //   obsLoad.drawObs(eachObstacle);
-    // })
+    obstacleArray.forEach((eachObstacle)=>{
+      eachObstacle.drawObs(eachObstacle);
+    })
 
-    // if(frames % 100 === 0){
-    //   spawnObstacle();
-    // }
+    if(frames % 100 === 0){
+      spawnObstacle();
+    }
     
   }
   setTimeout(mainLoop, 100);
