@@ -7,7 +7,7 @@ window.onload = function() {
     let canvas = document.getElementById('road');
     let ctx = canvas.getContext('2d');
 
-    this.obstacleArray = [];
+    let obstacleArray = [];
 
     class Obstacle {
       constructor(x, y, width, height){
@@ -15,6 +15,11 @@ window.onload = function() {
           this.y = y;
           this.width = width;
           this.height = height;
+      }
+
+      drawObs = () => {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
       }
   
       moveDownForever(){
@@ -29,33 +34,20 @@ window.onload = function() {
           },100)
       }
   }
+  // let obsLoad = new Obstacle(50, 90, 50, 50);
+//   function spawnObstacle(){
+//     let rX = Math.floor(Math.random() * 200);
+//     let rY = Math.floor(Math.random() * 200);
+//     let rWidth = Math.floor(Math.random() * 50) + 10;
+//     let rHeight = Math.floor(Math.random() * 50) + 10;
+//     let obsLoad = new Obstacle(rX, rY, rWidth, rHeight);
+//     obstacleArray.push(obsLoad);
+//     obsLoad.moveDownForever();
+//     // console.log(obsLoad.x);
+// }
 
-  function drawSelf(u, obs){
-    if(obs){
-        ctx.fillStyle = 'tomato';
-    } 
-    ctx.fillRect(u.x, u.y, u.width, u.height);
-}
-
-function spawnObstacle(){
-  let rX = Math.floor(Math.random() * 200);
-  let rY = Math.floor(Math.random() * 200);
-  let rWidth = Math.floor(Math.random() * 50) + 10;
-  let rHeight = Math.floor(Math.random() * 50) + 10;
-  let newObstacle = new Obstacle(rX, rY, rWidth, rHeight);
-  this.obstacleArray.push(newObstacle);
-  newObstacle.moveDownForever();
-}
-
-function clearUnusedObstacles(){
-  this.obstacleArray.forEach((ob, i)=>{
-      if(ob.y > 400){
-          this.obstacleArray.splice(i, 1)
-      }
-  })
-}
-clearUnusedObstacles();
-  
+  // console.log(obsLoad);
+  console.log(obstacleArray);
 
     class Car {
       constructor(x, y, width, height){
@@ -77,7 +69,7 @@ clearUnusedObstacles();
         moveCar = (moveX) => {
           if(moveX + this.width <= 350 && moveX >= 0){
           this.x = moveX;
-          console.log(this);
+          // console.log(this);
           } 
         }
       drawCar = () => {
@@ -89,53 +81,44 @@ clearUnusedObstacles();
     carLoading.onCarLoad();
     let speed = 10;
 
-  function collisionDetect(futureX, futureY){
-    let canMove = true;
-
-    this.obstacleArray.forEach((obs)=>{
-       
-    if(futureX + carLoading.width >= obs.x && futureX <= obs.x + obs.width 
-        && futureY + carLoading.height >= obs.y && futureY <= obs.y + obs.height){
-            canMove = false;
-         }
-    })
-   
-    return canMove;
-}
-
-document.onkeydown = function(e){
-  if(e.key === "ArrowLeft"){
-    if(collisionDetect(carLoading.x - speed, carLoading.y)){
-      carLoading.moveCar(carLoading.x -= speed);
-    }
+    function collisionDetect(boundaryX){
+      let canMove = true;
+      return canMove;
   }
-  if(e.key === "ArrowRight"){
-    if(collisionDetect(carLoading.x + speed, carLoading.y)){
-      carLoading.moveCar(carLoading.x += speed);
-    }
+
+    document.onkeydown = function(e){
+      if(e.key === "ArrowLeft"){
+        if(collisionDetect(carLoading.x - speed)){
+          carLoading.moveCar(carLoading.x -= speed);
+        }
+      }
+      if(e.key === "ArrowRight"){
+        carLoading.moveCar(carLoading.x += speed);
+      }
   }
-}
 
+  let frames = 0;
 
-  
   function mainLoop(){
     requestAnimationFrame(mainLoop);
+
     frames++;
-  
+
     ctx.clearRect(0,0,350,500);
 
-  
     // this is where we draw the car
     carLoading.drawCar();
 
-    //where we draw obstacles
-    obstacleArray.forEach((eachObstacle)=>{
-      drawSelf(eachObstacle, true)
-    })
+    // this is where we draw the obstacles
+    // obsLoad.drawObs();
 
-    if(frames % 100 === 0){
-      spawnObstacle()
-    }
+    // obstacleArray.forEach((eachObstacle)=>{
+    //   obsLoad.drawObs(eachObstacle);
+    // })
+
+    // if(frames % 100 === 0){
+    //   spawnObstacle();
+    // }
     
   }
   setTimeout(mainLoop, 100);
