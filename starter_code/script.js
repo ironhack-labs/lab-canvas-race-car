@@ -4,6 +4,7 @@ window.onload = function() {
   };
 
   function startGame() {
-
-  }
+    theGame = new Game();
+    mainLoop();
+ }
 };
