@@ -1,0 +1,6 @@
+class Obstacles {
+    constructor(game) {
+
+    }
+    
+}
