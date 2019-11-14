@@ -69,8 +69,10 @@ window.onload = function() {
         moveCar = (moveX) => {
           if(moveX + this.width <= 350 && moveX >= 0){
           this.x = moveX;
-          // console.log(this);
-          } 
+          // console.log("This move is " + moveX);
+          } else {
+            console.log("out the boundaries")
+          }
         }
       drawCar = () => {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
@@ -81,26 +83,49 @@ window.onload = function() {
     carLoading.onCarLoad();
     let speed = 10;
 
-    function collisionDetect(boundaryX){
-      let canMove = true;
-      return canMove;
-  }
+    function checkCollision (aframe) {
+      obstacleArray.forEach((rock) => {
+      var rect1 = carLoading;
+      var rect2 = rock;
+
+      if (rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y) {
+          // collision detected!
+          console.log("collision!");
+          cancelAnimationFrame(aframe);
+          GameOver();
+          return true;
+      }
+      return false;
+    })
+    }
 
     document.onkeydown = function(e){
       if(e.key === "ArrowLeft"){
-        if(collisionDetect(carLoading.x - speed)){
+        if(carLoading.x - speed >= 0){
           carLoading.moveCar(carLoading.x -= speed);
         }
       }
       if(e.key === "ArrowRight"){
+        if(carLoading.x + speed <= 300){
         carLoading.moveCar(carLoading.x += speed);
+        }
       }
   }
+  let gameoverpopup = document.getElementById('gameover-screen');
 
+  function GameOver() {
+    gameoverpopup.style.display = "flex";
+  }
+
+  let score = document.getElementById("score");
+  let finalscore = document.getElementById("finalscore");
   let frames = 0;
 
   function mainLoop(){
-    requestAnimationFrame(mainLoop);
+    let aframe = requestAnimationFrame(mainLoop);
 
     frames++;
 
@@ -116,7 +141,13 @@ window.onload = function() {
       eachObstacle.drawObs(eachObstacle);
     })
 
+    if(checkCollision (aframe)) {
+      cancelAnimationFrame(aframe);
+    }
+
     if(frames % 100 === 0){
+      score.innerText = frames/100;
+      finalscore.innerText = frames/100;
       spawnObstacle();
     }
     

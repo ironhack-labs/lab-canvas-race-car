@@ -34,7 +34,8 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    margin: 20px 0px;
+    position: relative;
 }
 
 canvas {
@@ -42,4 +43,29 @@ canvas {
   background-image: url(./images/road.jpg);
   background-repeat: repeat-y;
   background-size: contain;
+}
+.scoreboard {
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  color: white;
+}
+#gameover-screen {
+  background-color: black;
+  display: none;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+#gameover-screen h2 {
+  color: red;
+}
+#gameover-screen h3 {
+  color: white;
 }
