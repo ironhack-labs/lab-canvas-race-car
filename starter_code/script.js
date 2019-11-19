@@ -8,7 +8,7 @@ window.onload = function(){
   let raceCarImage = './images/car.png';
   let frames = 0;
   let obstacles=[];
-
+  let score = 0;
   //class declaration
 
   class Line{
@@ -100,6 +100,8 @@ window.onload = function(){
     drawBoard();
     generateObstacles();
     drawObstacles();
+    printScore();
+    score+=.1;
     obstacles.forEach(obstacle =>{
       obstacle.y+=speed;
       car.checkCollition(obstacle);
@@ -117,6 +119,11 @@ window.onload = function(){
     speedway.draw();
     centraLine.draw();
     car.draw();
+  }
+  function printScore (){
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Score: "+ Math.round(score), 200, 800);
   }
   function generateObstacles(){
     let times = [200];
@@ -140,7 +147,9 @@ window.onload = function(){
     ctx.font = "60px Arial";
     ctx.fillStyle = "red";
     ctx.fillText("GAME OVER", 100, 200);
-
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("FINAL SCORE: "+ Math.round(score), 150, 400);
   }
   
   //listeners
