@@ -25,6 +25,24 @@ class BoardCanvas {
   }
 }
 
+class CarCanvas {
+  constructor(){
+    this.canvas = document.getElementById("canvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.xPos = this.canvas.width / 2;
+    this.yPos = this.canvas.height * 4 / 5;
+    this.width = 50;
+    this.height = 100;
+    this.img = new Image();
+    this.img.src = "./images/car.png";
+  }
+  createCar(){
+    this.img.onload = () => {
+      this.ctx.drawImage(this.img, this.xPos - 0.5 * this.width, this.yPos, this.width, this.height);
+    };
+  }
+}
+
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
     startGame();
@@ -33,5 +51,7 @@ window.onload = function() {
   function startGame() {
     boardCanvas = new BoardCanvas()
     boardCanvas.createBoard();
+    car = new CarCanvas();
+    car.createCar();
   }
 };
