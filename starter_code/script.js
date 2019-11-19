@@ -69,11 +69,15 @@ window.onload = function(){
       this.color = color ? color:'red';
     }
     draw(){
+      //ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.w, this.h);
       ctx.fill();
       ctx.closePath();
+    }
+    move(){
+
     }
   }
   //Instances
@@ -96,6 +100,15 @@ window.onload = function(){
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     frames++;
+    drawBoard();
+    generateObstacles();
+    drawObstacles();
+    obstacles.forEach(obstacle =>{
+      obstacle.y+=1;
+      obstacle.draw();
+    });
+  }
+  function drawBoard(){
     yardRight.draw();
     yardLeft.draw();
     lineLeft.draw();
@@ -103,10 +116,6 @@ window.onload = function(){
     speedway.draw();
     centraLine.draw();
     car.draw();
-    console.log(frames)
-    generateObstacles();
-    //}
-    drawObstacles();
   }
   function generateObstacles(){
     console.log("Inside obstacles");
@@ -114,11 +123,11 @@ window.onload = function(){
     let i = Math.floor(Math.random() * times.length);
     if (frames % times[i] !== 0) return;
 
-      let randomPosX= Math.floor(Math.random()*(400 - 60 +10)+60);
+      let randomPosX= Math.floor(Math.random()*(260 - 60 +10)+60);
       let randomPosY= Math.floor(Math.random()* (800 - 50+20)+50);
       console.log(randomPosY);
       let randomWith = Math.floor(Math.random() * 150+50);
-      //console.log(randomWith);
+      
         let newObstacle = new Obstacle (randomPosX,randomPosY,randomWith,40,"red");
         obstacles.push (newObstacle);
   }
