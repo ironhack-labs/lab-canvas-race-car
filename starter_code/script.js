@@ -37,9 +37,26 @@ class CarCanvas {
     this.img.src = "./images/car.png";
   }
   createCar(){
-    this.img.onload = () => {
       this.ctx.drawImage(this.img, this.xPos - 0.5 * this.width, this.yPos, this.width, this.height);
-    };
+  }
+
+  moveCar(){
+    window.onkeydown = (e) =>{
+      switch(e.key){
+        case "ArrowLeft":
+          this.xPos -= 20;
+          if (this.xPos <= 70){
+            this.xPos = 70;
+          }
+          break;
+        case "ArrowRight":
+          this.xPos += 20;
+          if (this.xPos >= 330){
+            this.xPos = 330;
+          }
+          break;
+      }
+    }
   }
 }
 
@@ -50,8 +67,13 @@ window.onload = function() {
 
   function startGame() {
     boardCanvas = new BoardCanvas()
-    boardCanvas.createBoard();
     car = new CarCanvas();
-    car.createCar();
+    setInterval(()=>{
+      boardCanvas.createBoard();
+      car.createCar();
+      car.moveCar()
+    }, 1000/60);
+
   }
+
 };
