@@ -2,23 +2,15 @@ window.onload = function(){
   // canvas
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext("2d");
+  let speed = 1;
 
   // global
   let raceCarImage = './images/car.png';
-
   let frames = 0;
   let obstacles=[];
 
   //class declaration
-  class Board{
-    constructor(canvas){
-      this.x = 0;
-      this.y = 0;
-      this.width = canvas.width;
-      this.height = canvas.height;
-      
-    }    
-  }
+
   class Line{
     constructor(x,y,w,h,color){
       this.x = x ? x : 0;
@@ -38,7 +30,6 @@ window.onload = function(){
     drawDottedLine(){
       ctx.beginPath();
       ctx.fillStyle = this.color;
-     
       ctx.fillRect(this.x, this.y, this.w, this.h);
       ctx.fill();
       ctx.closePath();
@@ -46,7 +37,7 @@ window.onload = function(){
   }
  
   class raceCar{
-    constructor(){
+    constructor(obstacle){
       this.x= 250;
       this.y = 700;
       this.width = 50;
@@ -54,10 +45,19 @@ window.onload = function(){
       this.image = new Image ();
       this.image.src= raceCarImage;
       this.image.onload = this.draw.bind(this);
+      this.obstacle = obstacle;
     }
     draw(){
        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+    
+    checkCollition(obstacle){
+      if(obstacle.y >= this.y -30 ){
+        gameOver();
+        return;
+      }
+    }
+    
    
   }
   class Obstacle{
@@ -69,19 +69,16 @@ window.onload = function(){
       this.color = color ? color:'red';
     }
     draw(){
-      //ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.w, this.h);
       ctx.fill();
       ctx.closePath();
     }
-    move(){
 
-    }
   }
   //Instances
-  let board = new Board(canvas);
+ 
   let car = new raceCar();
 
   
@@ -104,10 +101,14 @@ window.onload = function(){
     generateObstacles();
     drawObstacles();
     obstacles.forEach(obstacle =>{
-      obstacle.y+=1;
+      obstacle.y+=speed;
+      car.checkCollition(obstacle);
       obstacle.draw();
     });
+
   }
+
+  //Aux functions
   function drawBoard(){
     yardRight.draw();
     yardLeft.draw();
@@ -118,24 +119,30 @@ window.onload = function(){
     car.draw();
   }
   function generateObstacles(){
-    console.log("Inside obstacles");
     let times = [200];
     let i = Math.floor(Math.random() * times.length);
     if (frames % times[i] !== 0) return;
 
-      let randomPosX= Math.floor(Math.random()*(260 - 60 +10)+60);
-      let randomPosY= Math.floor(Math.random()* (800 - 50+20)+50);
-      console.log(randomPosY);
-      let randomWith = Math.floor(Math.random() * 150+50);
+      let randomPosX= Math.floor(Math.random()*250+50);
+      let randomWith = Math.floor(Math.random() * 150+80);
       
-        let newObstacle = new Obstacle (randomPosX,randomPosY,randomWith,40,"red");
+        let newObstacle = new Obstacle (randomPosX,0,randomWith,40,"#870007");
         obstacles.push (newObstacle);
   }
+
   function drawObstacles(){
     obstacles.forEach(obstacle =>{
       obstacle.draw();
     });
   }
+  function gameOver() {
+    clearInterval(interval);
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("GAME OVER", 100, 200);
+
+  }
+  
   //listeners
   addEventListener("keydown" , e =>{
     switch(e.which) {
