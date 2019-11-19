@@ -5,7 +5,9 @@ window.onload = function(){
 
   // global
   let raceCarImage = './images/car.png';
+
   let frames = 0;
+  let obstacles=[];
 
   //class declaration
   class Board{
@@ -58,6 +60,22 @@ window.onload = function(){
     }
    
   }
+  class Obstacle{
+    constructor(x,y,w,h,color) {
+      this.x = x ? x : 60;
+      this.y = y ? y : 0;
+      this.w = w ? w : 200;
+      this.h = h ? h : 60;
+      this.color = color ? color:'red';
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
   //Instances
   let board = new Board(canvas);
   let car = new raceCar();
@@ -69,7 +87,7 @@ window.onload = function(){
   let lineRight = new Line(455,0,15,canvas.height,'gray');
   let speedway = new Line(55, 0, 390, canvas.height, 'gray');
   let centraLine = new Line(250, 0, 10, canvas.height, '#fff');
-  
+
   //main functions  
   function start(){
    
@@ -85,8 +103,30 @@ window.onload = function(){
     speedway.draw();
     centraLine.draw();
     car.draw();
+    console.log(frames)
+    generateObstacles();
+    //}
+    drawObstacles();
   }
-  
+  function generateObstacles(){
+    console.log("Inside obstacles");
+    let times = [200];
+    let i = Math.floor(Math.random() * times.length);
+    if (frames % times[i] !== 0) return;
+
+      let randomPosX= Math.floor(Math.random()*(400 - 60 +10)+60);
+      let randomPosY= Math.floor(Math.random()* (800 - 50+20)+50);
+      console.log(randomPosY);
+      let randomWith = Math.floor(Math.random() * 150+50);
+      //console.log(randomWith);
+        let newObstacle = new Obstacle (randomPosX,randomPosY,randomWith,40,"red");
+        obstacles.push (newObstacle);
+  }
+  function drawObstacles(){
+    obstacles.forEach(obstacle =>{
+      obstacle.draw();
+    });
+  }
   //listeners
   addEventListener("keydown" , e =>{
     switch(e.which) {
