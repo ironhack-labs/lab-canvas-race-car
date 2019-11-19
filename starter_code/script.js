@@ -5,9 +5,12 @@ let xObsIzq = 0;
 let xObsDer = 0;
 let yObsIzq = 0;
 let yObsDer = 0;
-let largoObs = [100,90,60,130,150,200,230]
+let largoObsIzq = [100,90,60,130,150,200,230]
+let iniObsDer = [140,150,180,230,190,210,130]
+let arrayObs = []
 let frames = 0;
 let intervalId;
+let boolUnoyUno
 
 
 window.onload = function() {
@@ -24,15 +27,21 @@ window.onload = function() {
 
     intervalId = setInterval(()=> {
       frames++;
-      yObsIzq += 10
       createBoard();
-      ctx.fillStyle = "blue"
-      ctx.fillRect(56, yObsIzq, largoObs[Math.floor(Math.random()*6)], 30);
-      console.log(Math.floor(Math.random())*6)
-      if (frames % 50 == 0) {
+      paintObstacles();
+
+      if (frames % 30 == 0) {
         //console.log('entre')
-        createObstacles();
+        if (boolUnoyUno){
+          let rndDer = Math.floor(Math.random()*7)
+          arrayObs.push([iniObsDer[rndDer], 0, 344 - iniObsDer[rndDer], 30])
+          boolUnoyUno = false
+        } else {
+          arrayObs.push([56, 0, largoObsIzq[Math.floor(Math.random()*6)], 30])
+          boolUnoyUno = true
+        }
       }
+      checkColision()
       //colision
       //this.draw();
   }, 100)
@@ -41,7 +50,6 @@ window.onload = function() {
   }
 
   function createBoard() {
-    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "green"
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -62,25 +70,22 @@ window.onload = function() {
     ctx.stroke();
 
     ctx.drawImage(carImagen,xPos,yPos,50,100)
-
-    
-
   }
 
   function createKeyEvents(){
     document.onkeydown = (event) => {
         switch(event.which) {
             case 37:
-                moveMin(10,0)
+                moveMin(20,0)
                 break;
             case 38:
-                moveMin(0,10)
+                moveMin(0,20)
                 break;
             case 39:
-                movePlus(10,0)
+                movePlus(20,0)
                 break;
             case 40:
-              movePlus(0,10);
+              movePlus(0,20);
             default:
                 break;
         }
@@ -104,10 +109,28 @@ function moveMin (xMove, yMove){
   //ctx.drawImage(carImagen, xPos, yPos, 50, 100)
 }
 
-function createObstacles(){
-  //crea mas obstaculos
-
+function paintObstacles(){
+  //pinta lo obstaculos
+      arrayObs.forEach ( element => {
+        //console.log(element[0],element[1],element[2],element[3]);
+        element[1] += 10;
+        ctx.fillStyle = "blue";
+        ctx.fillRect(element[0],element[1],element[2],element[3]);
+      })
+      
 }
+
+function checkColision() {
+  //verifica que xPos y yPos no coincida con algun X y Y de los Arreglos
+  
+  arrayObs.forEach(element => {
+    //falta sumar el ancho a xpos para cuando choca con obstaculos del lado derecho
+    if (xPos >= element[0] && xPos <= ((element[0] + element[2])-3) && element[1] >= yPos && element[1] <= yPos+100 ) {
+      alert('PErdiste !!!')
+      //this.alert("perdiste !!!  xPos= " + xPos + " entre = " + element[0] + " y " + ((element[0] + element[2])-3) + ". " + element[1] + " entre yPos " + yPos + " / " + yPos+100)
+    }
+  })
+  }
 
 };
 
