@@ -58,6 +58,42 @@ class CarCanvas {
       }
     }
   }
+
+  isTouching(obstacle){
+    let x1 = this.xPos;
+    let y1 = this.yPos;
+    let w1 = this.width;
+    let h1 = this.height;
+    let x2 = obstacle.x;
+    let y2 = obstacle.y;
+    let w2 = obstacle.width;
+    let h2 = obstacle.height;
+
+    if (Math.abs(y2 - y1) <= 0.8*h2){
+      if ((x2 - 0.5*w1 <= x1) && (x1 <= x2 + w2 + 0.5 * w1)){
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+class ObstacleCanvas {
+  constructor(){
+    this.canvas = document.getElementById("canvas");
+    this.ctx = this.canvas.getContext("2d");
+
+    this.width = 50 + Math.floor(Math.random() * 150);
+    this.height = 15;
+    this.x = 80 + Math.floor(Math.random() * 300 - this.width);
+    this.y = 0;
+  }
+
+  createObs(){
+    this.ctx.fillStyle='red';
+    this.ctx.fillRect(this.x,this.y, this.width,this.height);
+    this.y += 1;
+  }
 }
 
 window.onload = function() {
@@ -68,10 +104,24 @@ window.onload = function() {
   function startGame() {
     boardCanvas = new BoardCanvas()
     car = new CarCanvas();
-    setInterval(()=>{
+    let frames = 0;
+    let obstacles = [];
+    let intervalID = setInterval(()=>{
+      frames += 1;
       boardCanvas.createBoard();
       car.createCar();
+      // car.ctx.fillText("X", car.xPos, car.yPos);
       car.moveCar()
+      obstacles.forEach(block => {
+        if(car.isTouching(block)){
+          alert("Game over");
+          clearInterval(intervalID)
+        }
+      });
+      if (frames % 300 == 0){
+        obstacles.push(new ObstacleCanvas());
+      }
+      obstacles.forEach(block => block.createObs());
     }, 1000/60);
 
   }
