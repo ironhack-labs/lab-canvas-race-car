@@ -34,37 +34,44 @@ window.onload = function(){
   
   class raceCar{
     constructor(){
-      this.x= 150;
-      this.y = 50;
+      this.x= 250;
+      this.y = 700;
       this.width = 50;
-      this.height = 40;
+      this.height = 50;
       this.image = new Image ();
       this.image.src= raceCarImage;
       this.image.onload = this.draw.bind(this);
+      //this.image.onload = ()=> ctx.drawImage(this.image, 230, 480, 50, 100);
     }
     draw(){
        //abajo
-       if (this.y < canvas.height - this.height) this.y += 2;
+       //if (this.y < canvas.height - this.height) this.y += 2;
        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+    
   }
   //instances
   let board = new Board(canvas);
+  let car = new raceCar();
+  
+  
   let yardRight = new Line(0 , 0 , 30 , canvas.height);
   let yardLeft = new Line (470 , 0,30,canvas.height);
   let lineLeft = new Line (30,0, 15, canvas.height, 'gray');
   let lineRight = new Line(455,0,15,canvas.height,'gray');
   let speedway = new Line(55, 0, 390, canvas.height, 'gray');
   let centraLine = new Line(250, 0, 10, canvas.height, '#fff');
-  //main functions
   
+  //main functions  
   function start(){
+   
     yardRight.draw();
     yardLeft.draw();
     lineLeft.draw();
     lineRight.draw();
     speedway.draw();
     centraLine.draw();
+    car.draw();
   }
   
   function update(){
