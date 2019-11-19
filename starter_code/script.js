@@ -2,17 +2,20 @@ window.onload = function(){
   // canvas
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext("2d");
+
   // global
   let raceCarImage = './images/car.png';
-  //clases declaration
+  let frames = 0;
+
+  //class declaration
   class Board{
     constructor(canvas){
       this.x = 0;
       this.y = 0;
       this.width = canvas.width;
       this.height = canvas.height;
-    }
-   
+      
+    }    
   }
   class Line{
     constructor(x,y,w,h,color){
@@ -30,8 +33,16 @@ window.onload = function(){
       ctx.fill();
       ctx.closePath();
     }
+    drawDottedLine(){
+      ctx.beginPath();
+      ctx.fillStyle = this.color;
+     
+      ctx.fillRect(this.x, this.y, this.w, this.h);
+      ctx.fill();
+      ctx.closePath();
+    }
   }
-  
+ 
   class raceCar{
     constructor(){
       this.x= 250;
@@ -41,19 +52,16 @@ window.onload = function(){
       this.image = new Image ();
       this.image.src= raceCarImage;
       this.image.onload = this.draw.bind(this);
-      //this.image.onload = ()=> ctx.drawImage(this.image, 230, 480, 50, 100);
     }
     draw(){
-       //abajo
-       //if (this.y < canvas.height - this.height) this.y += 2;
        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
-    
+   
   }
-  //instances
+  //Instances
   let board = new Board(canvas);
   let car = new raceCar();
-  
+
   
   let yardRight = new Line(0 , 0 , 30 , canvas.height);
   let yardLeft = new Line (470 , 0,30,canvas.height);
@@ -65,6 +73,11 @@ window.onload = function(){
   //main functions  
   function start(){
    
+    interval = setInterval(update, 1000 / 60);
+  }
+  function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    frames++;
     yardRight.draw();
     yardLeft.draw();
     lineLeft.draw();
@@ -74,13 +87,21 @@ window.onload = function(){
     car.draw();
   }
   
-  function update(){
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    board.draw();
-  
-  }
-  
-    document.getElementById("start-button").onclick = function() {
-      start();
-    };
+  //listeners
+  addEventListener("keydown" , e =>{
+    switch(e.which) {
+      case 37:
+          car.x -=20;
+          break;
+      case 39:
+          car.x +=20;
+          break;
+      default:
+          break;
+    }
+  });
+
+  document.getElementById("start-button").onclick = function() {
+    start();
   };
+};
