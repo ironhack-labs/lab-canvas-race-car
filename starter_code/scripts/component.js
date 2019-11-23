@@ -10,8 +10,6 @@ class Component {
     drawComponent(imgSource) {
         let daCtx = this.game.ctx;
         this.img.src = imgSource;
-        // this.img.addEventListener("load", () => {
         daCtx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        // });
     }
 }

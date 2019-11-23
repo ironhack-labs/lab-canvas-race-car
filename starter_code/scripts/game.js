@@ -2,8 +2,7 @@ class Game {
     constructor() {
         this.canvas = undefined;
         this.ctx = undefined;
-        this.car = new Player(this, 200, 550, 100, 150);
-        // this.fireball = new Component(this, 800, 200, 70, 70);
+        this.car = new Player(this, 200, 475, 100, 150);
         this.background = undefined;
         this.score = 0;
         this.backgroundImg = new Image();
@@ -29,12 +28,6 @@ class Game {
             this.drawBackground();
             this.drawMainCharacters();
             this.car.move();
-            //     this.fireball.x -= 5;
-            //     if (this.fireball.x <= -70) {
-            //         this.fireball.x = 1000;
-            //         this.fireball.y = Math.floor(Math.random() * 430); // 430 = heightOfCanvas(500) - heightOfFireball(70)
-            //     }
-            //     if (this.fireball.x === 0) this.score++;
         }, 1000 / 60);
     }
 
