@@ -1,24 +1,10 @@
 body {
   padding: 0;
   text-align: center;
-}
-
-.game-intro {
-  float: left;
-  padding: 0% 10%;
-}
-
-.game-intro p {
-  font-size: 18px;
-  font-family: "Verdana"
-}
-
-.logo-img {
-  width: 350px;
-}
-
-.arrows-img {
-  width: 150px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 body button {
@@ -33,6 +19,24 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+.game-intro {
+  float: left;
+  padding-left: 5%;
+}
+
+.game-intro p {
+  font-size: 18px;
+  font-family: "Verdana";
+}
+
+.logo-img {
+  width: 350px;
+}
+
+.arrows-img {
+  width: 150px;
 }
