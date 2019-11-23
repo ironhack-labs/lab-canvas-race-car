@@ -2,7 +2,8 @@ class Game {
     constructor() {
         this.canvas = undefined;
         this.ctx = undefined;
-        this.car = new Player(this, 200, 475, 100, 150);
+        this.car = new Player(this, 200, 450, 100, 150);
+        this.obstacles = [];
         this.background = undefined;
         this.score = 0;
         this.backgroundImg = new Image();
@@ -18,6 +19,7 @@ class Game {
         this.x = 0;
         this.y = 0;
         this.start();
+        this.createObstacles();
     }
 
     start() {
@@ -28,7 +30,22 @@ class Game {
             this.drawBackground();
             this.drawMainCharacters();
             this.car.move();
+            for (let obstacle of this.obstacles) {
+                obstacle.move();
+                obstacle.draw();
+            }
         }, 1000 / 60);
+    }
+
+    createObstacles() {
+        console.log("creating obstacle >>>>> ", this.obstacles);
+        if (Math.floor(Math.random() * 25) % 3 === 0) {
+            this.obstacles.push(new Obstacle());
+        }
+
+        setTimeout(() => {
+            this.createObstacles();
+        }, 3000);
     }
 
     drawBackground() {
