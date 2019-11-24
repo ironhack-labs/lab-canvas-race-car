@@ -6,6 +6,5 @@ window.onload = function() {
   function startGame() {
     const myGame = new Game();
     myGame.init();
-    console.log('this start button works');
   }
 };

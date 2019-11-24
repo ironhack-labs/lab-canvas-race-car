@@ -19,12 +19,12 @@ class Game {
     this.x = 0;
     this.y = 0;
     this.start();
+    this.createObstacles();
   }
 
   start() {
     this.drawBackground();
     this.drawMainCharacters();
-    this.createObstacles();
     setInterval(() => {
       this.clear();
       this.drawBackground();
@@ -34,13 +34,13 @@ class Game {
         obstacle.move();
         obstacle.draw();
       }
-    }, 10000 / 60);
+    }, 1000 / 60);
   }
 
   createObstacles() {
-    console.log('creating obstacle >>>>> ', this.obstacles);
     if (Math.floor(Math.random() * 25) % 3 === 0) {
-      this.obstacles.push(new Obstacle());
+      this.obstacles.push(new Obstacle(this));
+      console.log('obstacle == ', this.obstacles);
     }
 
     setTimeout(() => {

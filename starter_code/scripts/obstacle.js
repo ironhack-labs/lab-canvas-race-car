@@ -1,7 +1,7 @@
-class Obstacle {
-  constructor() {
-    this.canvas = undefined;
-    this.ctx = undefined;
+class Obstacle extends Component {
+  constructor(game) {
+    super(game);
+    this.game = game;
     this.x = Math.floor(Math.random() * 440 + 30);
     this.y = 150;
     this.width = 100;
@@ -10,16 +10,13 @@ class Obstacle {
   }
 
   draw() {
-    this.canvas = document.getElementById('canvas');
-    this.ctx = this.canvas.getContext('2d');
-    this.src = './images/car.png';
-    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    this.img.src = './images/redCar.png';
+    this.game.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   move() {
     if (Math.floor(Math.random() * 20) % 3 === 0) {
-      console.log('moving ---- ', this.y);
-      this.y += 0.5;
+      this.y += 5;
     }
   }
 }
