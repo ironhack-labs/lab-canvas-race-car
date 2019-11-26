@@ -1,14 +1,14 @@
 class MyCar {
-  constructor(game) {
+  constructor(game, x, y) {
     this.game = game;
-    this.car = new Image();
-    this.x = this.game.canvas.width / 2;
-    this.y = this.game.canvas.height - 150;
+    this.img = new Image();
+    this.x = x;
+    this.y = y;
   }
 
-  carImg() {
-    this.car.src = './images/car.png';
-    this.game.ctx.drawImage(this.car, this.x, this.y, 100, 150);
+  carImg(source) {
+    this.img.src = source;
+    this.game.ctx.drawImage(this.img, this.x, this.y, 100, 150);
   }
   drive() {
     document.addEventListener('keydown', event => {
