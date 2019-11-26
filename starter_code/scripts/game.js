@@ -10,7 +10,7 @@ class Game {
         this.x = undefined;
         this.y = undefined;
         this.width = 500;
-        this.height = 800;
+        this.height = 700;
     }
 
     init() {
@@ -30,15 +30,19 @@ class Game {
             this.drawBackground();
             this.drawMainCharacters();
             this.car.move();
-            for (let obstacle of this.obstacles) {
-                obstacle.move();
-                obstacle.draw();
+            for (let i = 0; i < this.obstacles.length; obstacles++) {
+                this.obstacles[i].move();
+                this.obstacles[i].draw();
+                this.car.crashCollision(this.obstacles[i]);
+                if (this.obstacles[i].y > 800) {
+                    this.obstacles.splice(i, 1);
+                }
             }
         }, 1000 / 60);
     }
 
     createObstacles() {
-        if (Math.floor(Math.random() * 25) % 3 === 0) {
+        if (Math.floor(Math.random() * 25) % 2 === 0) {
             this.obstacles.push(new Obstacle(this));
             console.log("obstacle == ", this.obstacles);
         }
