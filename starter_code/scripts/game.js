@@ -7,7 +7,9 @@ class Game {
     this.myCar = new MyCar(
       this,
       this.canvas.width / 2,
-      this.canvas.height - 150
+      this.canvas.height - 120,
+      75,
+      120
     );
     this.x = 150;
     this.y = 0;

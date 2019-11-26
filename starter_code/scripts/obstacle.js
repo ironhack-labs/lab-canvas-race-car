@@ -1,8 +1,5 @@
 class Obstacle extends MyCar {
-  constructor(game, x, y) {
-    super(game, x, y);
-    this.obstacle = new Image();
+  constructor(game, x, y, w, h) {
+    super(game, x, y, w, h);
   }
-
-  getObs() {}
 }
