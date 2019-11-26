@@ -7,6 +7,7 @@ class MyCar {
     this.height = h;
     this.img = new Image();
     this.coll = undefined;
+    this.coll2 = undefined;
     this.move = new Audio();
     this.move.src = './audio/move.mp3';
   }
@@ -18,18 +19,23 @@ class MyCar {
   drive() {
     document.addEventListener('keydown', event => {
       const key = event.keyCode;
-      if (!this.coll) {
+      // if (!this.coll) {
+      //   this.move.play();
+      // }
+      if (key === 37 && !this.coll) {
         this.move.play();
+        this.x -= 20;
+      } else if (key === 39 && !this.coll) {
+        this.move.play();
+        this.x += 20;
       }
-      if (key === 37) this.x -= 20;
-      else if (key === 39) this.x += 20;
     });
   }
   collision(otherVehicle) {
     this.coll =
-      otherVehicle.y + otherVehicle.height >= this.y &&
-      otherVehicle.x <= this.x + this.width &&
-      this.x < otherVehicle.x + otherVehicle.width;
+      otherVehicle.y + otherVehicle.height >= this.y + 15 &&
+      otherVehicle.x <= this.x + this.width - 12 &&
+      this.x < otherVehicle.x + otherVehicle.width - 10;
 
     if (this.coll) {
       return true;

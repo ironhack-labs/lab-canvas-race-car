@@ -13,7 +13,7 @@ class Game {
     this.myCar = new MyCar(
       this,
       this.canvas.width / 2,
-      this.canvas.height - 120,
+      this.canvas.height - 130,
       this.carWidth,
       this.carHeight
     );
@@ -71,15 +71,19 @@ class Game {
   }
 
   gameOver() {
-    this.clear();
+    {
+      setTimeout(() => alert('crash'), 5);
+      window.location.reload();
+    }
+    //   this.clear();
 
-    this.ctx.font = ' 45px Arial';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillText(
-      'Game Over',
-      this.canvas.width / 2,
-      this.canvas.height / 2
-    );
+    //   this.ctx.font = ' 45px Arial';
+    //   this.ctx.textAlign = 'center';
+    //   this.ctx.fillStyle = 'red';
+    //   this.ctx.fillText(
+    //     'Game Over',
+    //     this.canvas.width / 2,
+    //     this.canvas.height / 2
+    //   );
   }
 }
