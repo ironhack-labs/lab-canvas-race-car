@@ -8,6 +8,7 @@ class Game {
   }
 
   start() {
+    this.myCar.drive();
     setInterval(() => {
       this.backGround();
       this.myCar.carImg();
