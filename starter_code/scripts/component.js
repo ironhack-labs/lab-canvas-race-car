@@ -1,8 +1,6 @@
 class MyCar {
   constructor(game) {
     this.game = game;
-    // this.left = x;
-    // this.right = y;
     this.car = new Image();
     this.x = this.game.canvas.width / 2;
     this.y = this.game.canvas.height - 150;

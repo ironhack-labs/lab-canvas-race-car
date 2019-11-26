@@ -24,5 +24,9 @@ class Game {
       this.canvas.width,
       this.canvas.height
     );
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = '25px Arial';
+    this.ctx.fillText(`Score: ${this.score}`, 100, 50);
+    this.ctx.fill();
   }
 }
