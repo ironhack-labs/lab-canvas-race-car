@@ -6,6 +6,9 @@ class MyCar {
     this.width = w;
     this.height = h;
     this.img = new Image();
+    this.coll = undefined;
+    this.move = new Audio();
+    this.move.src = './audio/move.mp3';
   }
 
   carImg(source) {
@@ -15,21 +18,22 @@ class MyCar {
   drive() {
     document.addEventListener('keydown', event => {
       const key = event.keyCode;
+      if (!this.coll) {
+        this.move.play();
+      }
       if (key === 37) this.x -= 20;
       else if (key === 39) this.x += 20;
     });
   }
-  getLeftSide() {
-    return this.x;
+  collision(otherVehicle) {
+    this.coll =
+      otherVehicle.y + otherVehicle.height >= this.y &&
+      otherVehicle.x <= this.x + this.width &&
+      this.x < otherVehicle.x + otherVehicle.width;
+
+    if (this.coll) {
+      return true;
+    }
+    return false;
   }
-  getRightSide() {
-    return this.x + this.width;
-  }
-  getTop() {
-    return this.y;
-  }
-  getBottom() {
-    return this.y + this.height;
-  }
-  collision(otherVehicle) {}
 }
