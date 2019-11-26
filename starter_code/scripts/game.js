@@ -3,7 +3,7 @@ class Game {
         this.canvas = undefined;
         this.ctx = undefined;
         this.car = new Player(this, 200, 450, 100, 150);
-        this.obstacles = [];
+        this.obstacle = [];
         this.background = undefined;
         this.score = 0;
         this.backgroundImg = new Image();
@@ -30,17 +30,21 @@ class Game {
             this.drawBackground();
             this.drawMainCharacters();
             this.car.move();
-            for (let obstacle of this.obstacles) {
-                obstacle.move();
-                obstacle.draw();
+            for (let i = 0; i < this.obstacle.length; obstacle++) {
+                this.obstacle[i].move();
+                this.obstacle[i].draw();
+                this.car.crashCollision(this.obstacle[i]);
+                if (this.obstacle[i].y > 800) {
+                    this.obstacle.splice(i, 1);
+                }
             }
         }, 1000 / 60);
     }
 
     createObstacles() {
-        console.log("creating obstacle >>>>> ", this.obstacles);
+        console.log("creating obstacle >>>>> ", this.obstacle);
         if (Math.floor(Math.random() * 25) % 3 === 0) {
-            this.obstacles.push(new Obstacle());
+            this.obstacle.push(new Obstacle());
         }
 
         setTimeout(() => {
