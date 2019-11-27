@@ -19,6 +19,7 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    padding-top: 100px;
 }
 
 .game-intro {

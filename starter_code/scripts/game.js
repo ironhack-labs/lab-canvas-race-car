@@ -2,7 +2,7 @@ class Game {
     constructor() {
         this.canvas = undefined;
         this.ctx = undefined;
-        this.car = new Player(this, 200, 550, 100, 150);
+        this.car = new Player(this, 200, 475, 90, 140);
         this.obstacles = [];
         this.background = undefined;
         this.score = 0;
@@ -68,6 +68,6 @@ class Game {
     }
 
     drawMainCharacters() {
-        this.car.drawComponent("./images/car.png");
+        this.car.drawComponent("./images/motorcycle.png");
     }
 }
