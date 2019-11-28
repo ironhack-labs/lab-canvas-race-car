@@ -19,9 +19,6 @@ class MyCar {
   drive() {
     document.addEventListener('keydown', event => {
       const key = event.keyCode;
-      // if (!this.coll) {
-      //   this.move.play();
-      // }
       if (key === 37 && !this.coll) {
         this.move.play();
         this.x -= 20;
