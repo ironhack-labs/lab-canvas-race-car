@@ -7,17 +7,17 @@ const myGameArea = {
     this.canvas.height = 800;
     this.ctx = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    // this.interval = setInterval(updateGameArea, 20);
-    this.ctx.fillStyle = "grey";
-    this.ctx.fillRect(0, 0, 500, 1000);
+    this.interval = setInterval(updateGameArea, 20);
   },
   clear: function () {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   stop: function () {
     clearInterval(this.interval);
   },
   style: function () {
+    this.ctx.fillStyle = "grey";
+    this.ctx.fillRect(0, 0, 500, 1000);
     this.ctx.beginPath();
     this.ctx.moveTo(0, 0);
     this.ctx.lineTo(50, 0);
@@ -25,7 +25,7 @@ const myGameArea = {
     this.ctx.lineTo(0, 800);
     this.ctx.lineTo(0, 0);
     this.ctx.fillStyle = "green";
-    this.ctx.fillRect(0,0, 50, 800);
+    this.ctx.fillRect(0, 0, 50, 800);
     this.ctx.closePath();
 
     this.ctx.beginPath();
@@ -77,6 +77,26 @@ class Component {
     this.x = x;
     this.y = y;
   }
+  update() {
+    const context = myGameArea.ctx;
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+  newPos() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+  }
+}
+
+const myCar = new Component(30, 30, "red", 200, 800);
+console.log(myCar);
+
+function updateGameArea() {
+  console.log('updating...');
+  myGameArea.clear();
+  myGameArea.style();
+  myCar.update();
 }
 
 window.onload = function () {
@@ -86,6 +106,5 @@ window.onload = function () {
 
   function startGame() {
     myGameArea.start();
-    myGameArea.style();
   }
 }
