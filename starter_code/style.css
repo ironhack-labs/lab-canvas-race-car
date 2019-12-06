@@ -3,6 +3,11 @@ body {
   text-align: center;
 }
 
+span {
+  font-size: 12px;
+  color: gray;
+}
+
 .game-intro {
   float: left;
   padding: 0% 10%;

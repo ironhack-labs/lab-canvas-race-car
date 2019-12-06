@@ -44,10 +44,13 @@ let raceCarCanvas = {
 
   stop() {
     clearInterval(this.interval);
-  }
+  },
 
   score() {
-    let points = Math.floor(this.frames / 5);
+    this.points = Math.floor(this.frames / 5);
+    this.context.font = "18px serif";
+    this.context.fillStyle = "black";
+    this.context.fillText(this.points, 180, 30);
   }
 
 }
@@ -70,6 +73,11 @@ class Component {
     var ctx = raceCarCanvas.context;
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+  updateCar() {
+    var ctx = raceCarCanvas.context;
+    ctx.drawImage(carImg, this.x, this.y, 20, 40)
   }
 
   newPos() {
@@ -115,7 +123,7 @@ const startGame = () => {
   // reinicializa as coordenadas do carro e o desenha
   raceCar.x = 112;
   raceCar.y = 440;
-  raceCar.update();
+  raceCar.updateCar();
 }
 
 updateObstacles = () => {
@@ -124,7 +132,7 @@ updateObstacles = () => {
     myObstacles[i].y += 5;
     myObstacles[i].update();
   }
-  if (raceCarCanvas.frames % 70 === 0) {
+  if (raceCarCanvas.frames % 60 === 0) {
     let minWidth = 60;
     let maxWidth = 140;
     let width = Math.floor(Math.random()*(maxWidth - minWidth + 1) + minWidth);
@@ -141,6 +149,21 @@ const checkGameOver = () => {
 
   if (crashed) {
     raceCarCanvas.stop();
+    // tela preta
+    raceCarCanvas.context.fillStyle = "black";
+    raceCarCanvas.context.fillRect(0, 0, 250, 500)
+    // texto
+    raceCarCanvas.context.font = "30px serif";
+    raceCarCanvas.context.fillStyle = "red";
+    raceCarCanvas.context.fillText("Game Over!", 50, 150);
+    raceCarCanvas.context.font = "25px serif";
+    raceCarCanvas.context.fillStyle = "white";
+    raceCarCanvas.context.fillText(`Final score:`, 65, 250);
+    raceCarCanvas.context.font = "35px serif";
+    raceCarCanvas.context.fillText(raceCarCanvas.points, 100, 290);
+    raceCarCanvas.context.font = "15px serif";
+    raceCarCanvas.context.fillText(`Press StartGame to play again`, 35, 450);
+
   }
 }
 
@@ -148,9 +171,10 @@ const updateGameArea = () => {
   raceCarCanvas.clear();
   raceCarCanvas.update();
   raceCar.newPos();
-  raceCar.update();
+  raceCar.updateCar();
   updateObstacles();
   checkGameOver();
+  raceCarCanvas.score();
 }
 
 window.onload = function() {
