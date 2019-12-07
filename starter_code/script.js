@@ -1,5 +1,17 @@
-let requestId;
+var requestId;
+
 // helper functions
+
+// game loop
+function gameLoop(time) { // time?
+  requestId = undefined;
+  console.log('updating...');
+  // do stuff
+
+  gameGlobalBehavior.startGame();
+}
+
+// fazer uma classe helper?
 const helper = {
   drawLine(context, beginX, beginY, closeX, closeY) {
     context.beginPath();
@@ -21,10 +33,19 @@ const gameGlobalBehavior = {
   },
 
   startGame() {
-    window.requestAnimationFrame(updateGame);
+    if (!requestId) {
+      console.log('start!');
+      requestId = window.requestAnimationFrame(gameLoop);
+    }
   },
 
-  // stopGame() {},
+  stopGame() {
+    if (requestId) {
+      console.log('stop!');
+      window.cancelAnimationFrame(requestId);
+      requestId = undefined;
+    }
+  },
 
   drawBackground() {
     // eslint-disable-next-line prefer-destructuring
@@ -77,17 +98,9 @@ const gameGlobalBehavior = {
   }
 };
 
-// game loop
-function updateGame() {
-  console.log('updating...');
-  window.requestAnimationFrame(updateGame);
-}
-
 // events
 gameGlobalBehavior.build();
 // document.getElementById('start-button').onclick = gameGlobalBehavior.build;
 
-// setTimeout(() => {
-//   console.log('timeout!');
-//   window.cancelAnimationFrame(requestId);
-// }, 3000);
+setTimeout(
+  gameGlobalBehavior.stopGame, 3000);
