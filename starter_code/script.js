@@ -14,6 +14,9 @@ const myGameArea = {
     divBoardGame.insertBefore(this.canvas, divBoardGame.childNodes[0]);
     this.interval = setInterval(updateGame, 20);
   },
+  stop: function () {
+    clearInterval(this.interval);
+  }
 }
 
 // create car object
@@ -22,23 +25,50 @@ const car = {
   y: 400,
   // speed properties
   speedX: 0,
-  speedY: 0,
   update() {
     let ctx = myGameArea.context;
     let carImage = new Image();
     carImage.src = './images/car.png';
     carImage.onload = () => {
-      ctx.drawImage(carImage, this.x, this.y, 0.3 * carImage.width, 0.3 * carImage.height);
+      ctx.drawImage(carImage, this.x, this.y, 0.2 * carImage.width, 0.2 * carImage.height);
     }
+    this.height = carImage.height * 0.2;
+    this.width = carImage.width * 0.2;
   },
   newPos() {
     this.x += this.speedX;
-    this.y += this.speedY;
   },
+  // top() {
+  //   return this.y;
+  // },
+  // right() {
+  //   return this.x + car.width;
+  // },
+  // bottom() {
+  //   return this.y + car.height;
+  // },
+  // left() {
+  //   return this.x;
+  // },
+  // crashWith(obstacle) {
+  //   console.log(this.top());
+  //   console.log(this.right());
+  //   console.log(this.bottom());
+  //   console.log(this.left());
+  //   console.log(obstacle.y);
+  //   console.log(obstacle.x);
+  //   console.log(obstacle.height);
+  //   console.log(obstacle.width);
+  //   return !(
+  //     this.top() < (obstacle.y + obstacle.height) ||
+  //     this.right() < obstacle.x ||
+  //     this.bottom() > obstacle.y ||
+  //     this.left() > (obstacle.x + obstacle.width)
+  //   )
+  // }
 }
 
 // create obstacles constructor
-
 class Obstacles {
   constructor(x, y, color, width, height) {
     this.x = x;
@@ -54,7 +84,7 @@ class Obstacles {
   }
 }
 
-let allObstacles = new Obstacles();
+// let allObstacles = new Obstacles();
 
 // create background
 function setBackground() {
@@ -119,17 +149,21 @@ function updateObstacles() {
     obstaclesPosition[i].update();
   }
   myGameArea.frames += 1;
-  if (myGameArea.frames % 120 === 0) {
-    let y = myGameArea.canvas.height;
+  if (myGameArea.frames % 150 === 0) {
     let x = myGameArea.canvas.width;
-    let minWidth = 20;
-    var maxWidth = 100;
+    let minWidth = 100;
+    var maxWidth = 200;
     var width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
-    var minGap = 50;
-    var maxGap = 100;
-    var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-    obstaclesPosition.push(new Obstacles(50, 0, 'red', width, 10));
-    obstaclesPosition.push(new Obstacles((x - 50) - width - gap, 0, 'green', width + gap, 10));
+    // var minGap = 50;
+    // var maxGap = 100;
+    // var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+    var minRandomX = 100;
+    var maxRandomX = 150;
+    var randomX = Math.floor(Math.random() * (maxRandomX - minRandomX + 1) + minRandomX);
+    // obstaclesPosition.push(new Obstacles(50, 0, '#7d1a2b', width, 30));
+    // obstaclesPosition.push(new Obstacles(50 + width + gap, 0, '#7d1a2b', x - 100 - width - gap, 30));
+    obstaclesPosition.push(new Obstacles(randomX, 0, '#7d1a2b', width, 20));
+    // obstaclesPosition.push(new Obstacles(randomX, 0, '#7d1a2b', x - 100 - width - gap, 30));
   }
 }
 
@@ -140,17 +174,29 @@ function startGame() {
   car.update();
 }
 
+// function to check if we crashed
+// function checkGameOver() {
+//   let crashed = obstaclesPosition.some(function(obstacle) {
+//     return car.crashWith(obstacle);
+//   });
+
+//   if (crashed) {
+//     myGameArea.stop();
+//   }
+// }
+
 // updating the game
 function updateGame() {
   setBackground();
   car.newPos();
   car.update();
   updateObstacles();
+  // checkGameOver();
 }
 
+// events
+
 document.getElementById("start-button").onclick = function () {
-  console.log('hey button');
-  // updateGameArea();
   startGame();
 };
 
@@ -158,18 +204,27 @@ document.onkeydown = function (e) {
   switch (e.keyCode) {
     // left arrow
     case 37:
-      car.speedX -= 1;
+      if (car.x > 65) {
+        car.speedX -= 1;
+      } else {
+        car.speedX = 0;
+      }
       break;
       // right arrow
     case 39:
-      car.speedX += 1;
+      if (car.x < 300) {
+        car.speedX += 1;
+      } else {
+        car.speedX = 0;
+      }
+      break;
+    default:
       break;
   }
 }
 
 document.onkeyup = function (e) {
   car.speedX = 0;
-  car.speedY = 0;
 }
 
 // if starting with the following lines the script in the HTML don't have to be necessarily in the bottom
