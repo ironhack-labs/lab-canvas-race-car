@@ -1,6 +1,10 @@
+// array of obstacles
+let obstaclesPosition = [];
+
 // define general configuration
 const myGameArea = {
   canvas: document.createElement('canvas'),
+  frames: 0,
   start: function () {
     this.canvas.width = 400;
     this.canvas.height = 510;
@@ -108,6 +112,27 @@ function setBackground() {
   ctx.stroke();
 }
 
+// update obstacles
+function updateObstacles() {
+  for (let i = 0; i < obstaclesPosition.length; i += 1) {
+    obstaclesPosition[i].y += 1;
+    obstaclesPosition[i].update();
+  }
+  myGameArea.frames += 1;
+  if (myGameArea.frames % 120 === 0) {
+    let y = myGameArea.canvas.height;
+    let x = myGameArea.canvas.width;
+    let minWidth = 20;
+    var maxWidth = 100;
+    var width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
+    var minGap = 50;
+    var maxGap = 100;
+    var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+    obstaclesPosition.push(new Obstacles(50, 0, 'red', width, 10));
+    obstaclesPosition.push(new Obstacles((x - 50) - width - gap, 0, 'green', width + gap, 10));
+  }
+}
+
 // start the game, starting canvas and setting the game
 function startGame() {
   myGameArea.start();
@@ -120,6 +145,7 @@ function updateGame() {
   setBackground();
   car.newPos();
   car.update();
+  updateObstacles();
 }
 
 document.getElementById("start-button").onclick = function () {
