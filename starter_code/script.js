@@ -5,7 +5,7 @@ let obstaclesPosition = [];
 const myGameArea = {
   canvas: document.createElement('canvas'),
   frames: 0,
-  start: function () {
+  start() {
     this.canvas.width = 400;
     this.canvas.height = 510;
     this.context = this.canvas.getContext('2d');
@@ -14,8 +14,14 @@ const myGameArea = {
     divBoardGame.insertBefore(this.canvas, divBoardGame.childNodes[0]);
     this.interval = setInterval(updateGame, 20);
   },
-  stop: function () {
+  stop() {
     clearInterval(this.interval);
+  },
+  score() {
+    let points = Math.floor(this.frames / 20);
+    this.context.font = '25px serif';
+    this.context.fillStyle = 'black';
+    this.context.fillText('Score: ' + points, 250, 30)
   }
 }
 
@@ -182,6 +188,7 @@ function startGame() {
 
 //   if (crashed) {
 //     myGameArea.stop();
+    //show text
 //   }
 // }
 
@@ -192,6 +199,7 @@ function updateGame() {
   car.update();
   updateObstacles();
   // checkGameOver();
+  myGameArea.score();
 }
 
 // events
