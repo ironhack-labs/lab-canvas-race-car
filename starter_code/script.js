@@ -1,6 +1,4 @@
-// global var
-var requestId;
-
+let requestId;
 // helper functions
 const helper = {
   drawLine(context, beginX, beginY, closeX, closeY) {
@@ -23,18 +21,10 @@ const gameGlobalBehavior = {
   },
 
   startGame() {
-    if(!requestId) {
-      window.requestAnimationFrame(updateGame);
-    }
+    window.requestAnimationFrame(updateGame);
   },
 
-  stopGame() {
-    if (requestId) {
-      console.log('stop!')
-      window.cancelAnimationFrame(requestId);
-      requestId = undefined;
-    }
-  },
+  // stopGame() {},
 
   drawBackground() {
     // eslint-disable-next-line prefer-destructuring
@@ -89,14 +79,15 @@ const gameGlobalBehavior = {
 
 // game loop
 function updateGame() {
-  requestId = undefined;
   console.log('updating...');
   window.requestAnimationFrame(updateGame);
 }
 
 // events
 gameGlobalBehavior.build();
-document.getElementById('start-button').onclick = gameGlobalBehavior.stopGame;
-setTimeout(() => {
-  gameGlobalBehavior.stopGame();
-}, 10000);
+// document.getElementById('start-button').onclick = gameGlobalBehavior.build;
+
+// setTimeout(() => {
+//   console.log('timeout!');
+//   window.cancelAnimationFrame(requestId);
+// }, 3000);
