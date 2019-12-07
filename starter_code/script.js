@@ -8,6 +8,7 @@ const myGameArea = {
     // create the canvas in html
     let divBoardGame = document.getElementById('game-board');
     divBoardGame.insertBefore(this.canvas, divBoardGame.childNodes[0]);
+    this.interval = setInterval(updateGame, 20);
   },
 }
 
@@ -15,29 +16,41 @@ const myGameArea = {
 const car = {
   x: 180,
   y: 400,
-  update: function () {
+  // speed properties
+  speedX: 0,
+  speedY: 0,
+  update() {
     let ctx = myGameArea.context;
     let carImage = new Image();
     carImage.src = './images/car.png';
-    console.log(carImage);
     carImage.onload = () => {
       ctx.drawImage(carImage, this.x, this.y, 0.3 * carImage.width, 0.3 * carImage.height);
     }
+  },
+  newPos() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+  },
+}
+
+// create obstacles constructor
+
+class Obstacles {
+  constructor(x, y, color, width, height) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.width = width;
+    this.height = height;
+  }
+  update() {
+    let ctx = myGameArea.context;
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
-// create obstacles
-// class Obstacles {
-  //   constructor(x, y, width, height) {
-  //     this.x = x;
-  //     this.y = y;
-  //     this.width = width;
-  //     this.height = height;
-  //   }
-  //   update() {
-  //   }
-  // }
-
+let allObstacles = new Obstacles();
 
 // create background
 function setBackground() {
@@ -105,6 +118,8 @@ function startGame() {
 // updating the game
 function updateGame() {
   setBackground();
+  car.newPos();
+  car.update();
 }
 
 document.getElementById("start-button").onclick = function () {
@@ -112,6 +127,24 @@ document.getElementById("start-button").onclick = function () {
   // updateGameArea();
   startGame();
 };
+
+document.onkeydown = function (e) {
+  switch (e.keyCode) {
+    // left arrow
+    case 37:
+      car.speedX -= 1;
+      break;
+      // right arrow
+    case 39:
+      car.speedX += 1;
+      break;
+  }
+}
+
+document.onkeyup = function (e) {
+  car.speedX = 0;
+  car.speedY = 0;
+}
 
 // if starting with the following lines the script in the HTML don't have to be necessarily in the bottom
 // window.onload = function() {
