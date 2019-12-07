@@ -22,6 +22,14 @@ const myGameArea = {
     this.context.font = '25px serif';
     this.context.fillStyle = 'black';
     this.context.fillText('Score: ' + points, 250, 30)
+  },
+  gameOver() {
+    this.context.fillStyle = 'black';
+    this.context.fillRect(100, 200, 210, 100);
+    this.context.fillStyle = 'red';
+    this.context.font = '20px serif';
+    this.context.fillText('TRY HARDER, ', 140, 240);
+    this.context.fillText('YOU LOSER!', 145, 270);
   }
 }
 
@@ -44,34 +52,26 @@ const car = {
   newPos() {
     this.x += this.speedX;
   },
-  // top() {
-  //   return this.y;
-  // },
-  // right() {
-  //   return this.x + car.width;
-  // },
-  // bottom() {
-  //   return this.y + car.height;
-  // },
-  // left() {
-  //   return this.x;
-  // },
-  // crashWith(obstacle) {
-  //   console.log(this.top());
-  //   console.log(this.right());
-  //   console.log(this.bottom());
-  //   console.log(this.left());
-  //   console.log(obstacle.y);
-  //   console.log(obstacle.x);
-  //   console.log(obstacle.height);
-  //   console.log(obstacle.width);
-  //   return !(
-  //     this.top() < (obstacle.y + obstacle.height) ||
-  //     this.right() < obstacle.x ||
-  //     this.bottom() > obstacle.y ||
-  //     this.left() > (obstacle.x + obstacle.width)
-  //   )
-  // }
+  top() {
+    return this.y;
+  },
+  right() {
+    return this.x + this.width;
+  },
+  bottom() {
+    return this.y + this.height;
+  },
+  left() {
+    return this.x;
+  },
+  crashWith(obstacle) {
+    return !(
+      this.top() > obstacle.bottom() ||
+      this.right() < obstacle.left() ||
+      this.bottom() < obstacle.top() ||
+      this.left() > obstacle.right()
+    )
+  }
 }
 
 // create obstacles constructor
@@ -88,9 +88,19 @@ class Obstacles {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
+  top() {
+    return this.y;
+  }
+  right() {
+    return this.x + this.width;
+  }
+  bottom() {
+    return this.y + this.height;
+  }
+  left() {
+    return this.x;
+  }
 }
-
-// let allObstacles = new Obstacles();
 
 // create background
 function setBackground() {
@@ -160,16 +170,18 @@ function updateObstacles() {
     let minWidth = 100;
     var maxWidth = 200;
     var width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
+    var minRandomX = 70;
+    var maxRandomX = 130;
+    var randomX = Math.floor(Math.random() * (maxRandomX - minRandomX + 1) + minRandomX);
+    obstaclesPosition.push(new Obstacles(randomX, 0, '#7d1a2b', width, 20));
+
+    // how to do if we had gaps
     // var minGap = 50;
     // var maxGap = 100;
     // var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-    var minRandomX = 100;
-    var maxRandomX = 150;
-    var randomX = Math.floor(Math.random() * (maxRandomX - minRandomX + 1) + minRandomX);
     // obstaclesPosition.push(new Obstacles(50, 0, '#7d1a2b', width, 30));
     // obstaclesPosition.push(new Obstacles(50 + width + gap, 0, '#7d1a2b', x - 100 - width - gap, 30));
-    obstaclesPosition.push(new Obstacles(randomX, 0, '#7d1a2b', width, 20));
-    // obstaclesPosition.push(new Obstacles(randomX, 0, '#7d1a2b', x - 100 - width - gap, 30));
+
   }
 }
 
@@ -181,16 +193,17 @@ function startGame() {
 }
 
 // function to check if we crashed
-// function checkGameOver() {
-//   let crashed = obstaclesPosition.some(function(obstacle) {
-//     return car.crashWith(obstacle);
-//   });
+function checkGameOver() {
+  let crashed = obstaclesPosition.some(function (obstacle) {
+    return car.crashWith(obstacle);
+  });
 
-//   if (crashed) {
-//     myGameArea.stop();
-    //show text
-//   }
-// }
+  if (crashed) {
+    myGameArea.stop();
+    // show text
+    myGameArea.gameOver();
+  }
+}
 
 // updating the game
 function updateGame() {
@@ -198,7 +211,7 @@ function updateGame() {
   car.newPos();
   car.update();
   updateObstacles();
-  // checkGameOver();
+  checkGameOver();
   myGameArea.score();
 }
 
