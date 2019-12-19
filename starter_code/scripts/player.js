@@ -2,6 +2,8 @@ class Player extends Component {
     constructor(game, x, y, w, h) {
         super(game, x, y, w, h);
     }
+
+    // moves the car
     move() {
         document.onkeydown = event => {
             const key = event.keyCode;
@@ -30,33 +32,27 @@ class Player extends Component {
         };
     }
     
-    // crashCollision(ele) {
-    //     if (
-    //         (this.y + 10 < ele.y + ele.height &&
-    //             this.x + 15 < ele.x + ele.width &&
-    //             this.x + this.width - 15 > ele.x) ||
-    //         (ele.y + ele.height > this.y &&
-    //             ele.x < this.x + this.width &&
-    //             this.x < elem.x + ele.width)
-    //     ) 
-    // }
-
+    // gets the left position
     getLeft() {
-        return this.x;
+        return this.x + 15;
     }
 
+    // gets the top right position
     getRight() {
-        return this.x + this.width - 20;
+        return this.x + this.width - 15;
     }
 
+    // // gets the top position
     getTop() {
-        return this.y + 20;
+        return this.y + 15;
     }
 
+    // gets the bottom position
     getBottom() {
-        return this.y + this.height - 20;
+        return this.y + this.height - 15;
     }
 
+    // detects the collision of the car and obstacles
     detectCollision(otherComp) {
         const crossLeft = otherComp.x <= this.getRight() && otherComp.x >= this.getLeft();
 

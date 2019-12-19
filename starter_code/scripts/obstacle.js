@@ -5,24 +5,20 @@ class Obstacle extends Component {
         this.x = Math.floor(Math.random() * 440 + 30);
         this.y = 0;
         this.width = 100;
-        this.height = 150;
+        this.height = 20;
         this.img = new Image();
     }
 
+    // draws an obstacle
     draw() {
-        this.img.src = "./images/car.png";
-        this.game.ctx.drawImage(
-            this.img,
-            this.x,
-            this.y,
-            this.width,
-            this.height
-        );
+        this.game.ctx.fillStyle = 'red';
+        this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 
+    // moves the obstacle down on the y axis by 10
     move() {
         if (Math.floor(Math.random() * 20) % 3 === 0) {
-            this.y += 5;
+            this.y += 15;
         }
     }
 }

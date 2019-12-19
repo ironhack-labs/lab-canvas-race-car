@@ -38,7 +38,8 @@ body button {
     float: left;
     padding: 20px 0px;
 }
-/* 
-#canvas {
-  background-color: grey;
-} */
+
+#score {
+  font-size: 2rem;
+  margin-top: 20px;
+}

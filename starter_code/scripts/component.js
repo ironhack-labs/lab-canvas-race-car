@@ -7,6 +7,8 @@ class Component {
         this.height = h;
         this.img = new Image();
     }
+
+    // draws a component to the canvas
     drawComponent(imgSource) {
         let daCtx = this.game.ctx;
         this.img.src = imgSource;
