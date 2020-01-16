@@ -15,6 +15,7 @@ window.onload = function() {
         /*************inicioX+inicioY+tamañoX+tamañoY */
 const Canvaswidth = canvas.width/2
 const Canvasheigth = canvas.height
+const rayitas = 12;
 
 console.log('hola');
 
@@ -28,7 +29,15 @@ console.log('hola');
    ctx.fillRect(Canvaswidth+120 , 0, 15, Canvasheigth);
    ctx.fillStyle = 'white'
    ctx.fillRect(2*Canvaswidth-135 , 0, 15, Canvasheigth);
-
+   ctx.fillStyle = 'white'
+ for(let i =0; i<rayitas; i++){
+  ctx.fillRect(Canvaswidth+Canvaswidth/2 ,110*i, 5,Canvasheigth/rayitas);
+ }
+ 
+   
+   
+  //  ctx.fillRect(Canvaswidth+Canvaswidth/2 , 0, 5, Canvasheigth/12);
+   
 
  
     
