@@ -20,6 +20,8 @@ image.src = './images/car.png'
     draw(){ 
       if (this.x < $canvas.width) this.x = 0
       this.x--
+
+      
       
       ctx.fillStyle = "green";
       ctx.fillRect(0, 0, 800, 900)
@@ -58,18 +60,25 @@ image.src = './images/car.png'
       }
       goRight() {
         if (this.x > $canvas.width - 100) return
+        // ctx.clearRect(this.x,this.y,this.width,this.height)
         this.x += 10
-        this.draw()
-        
-        // this.move()
+        //this.draw()
+        this.move()
       }
       goLeft() {
+        if (this.x <= 25) return
+        ctx.clearRect(this.x,this.y,this.width,this.height)
         this.x -= 10
-        // this.move()
+        //this.draw()
+        this.move()
       }
 
       move() {
-        this.sx += 340
+        // this.x += 34
+        console.log(carrito)
+        fondo.draw()
+        this.draw()
+
       }
   }
 
@@ -98,13 +107,13 @@ image.src = './images/car.png'
 
 window.onload = function () {
   document.getElementById("start-button").onclick = function () {
-    startGame();
+    // startGame();
 
-    function startGame() {
+    // function startGame() {
       fondo.draw()
       bocho= new Car()
      bocho.draw()
-    }
+    // }
   }
 
   };
