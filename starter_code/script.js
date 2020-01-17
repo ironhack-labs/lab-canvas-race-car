@@ -3,6 +3,7 @@ let frames = 0
 let background
 let car
 let ctx = document.querySelector('canvas').getContext('2d')
+let obstacles = []
 
 
 window.onload = function() {
@@ -16,7 +17,7 @@ window.onload = function() {
     background.buildBackground()
     car.drawCar()
     if (interval) return
-    interval = setInterval(update, 1000 / 500)
+    interval = setInterval(update, 1000 / 100)
   }
 };
 
@@ -59,27 +60,57 @@ class Car {
     ctx.drawImage(this.img, this.x, 500, this.width, this.heigth)
   }
   moveRigth() {
-    if (this.x <= 343) this.x += 7
+    if (this.x <= 335) this.x += 15
   }
   moveLeft() {
-    if (this.x >= 7) this.x -= 7
+    if (this.x >= 15) this.x -= 15
+  }
+  isTouching(obstacle) {
+    console.log('si entra')
+    return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.y + this.height > obstacle.y
+    )
   }
   
 }
 
 class Obstacle {
-  constructor() {
-    this.x = Math.floor(Math.random() * 400) - 50
+  constructor(x, speed) {
+    this.x = x
     this.y = -30
-    this.width = 100
+    this.width = 120
     this.heigth = 30
+    this.speed = speed
   }
   drawObstacle() {
+    this.moveObstacle()
+    ctx.fillStyle = 'red'
     ctx.fillRect(this.x, this.y, this.width, this.heigth)
   }
   moveObstacle() {
-    
+    this.y += this.speed
   }
+
+}
+
+function generateObstacles() {
+  if (frames % 200 === 0) {
+    obstacles.push(new Obstacle(Math.floor(Math.random() * 400) - 50, Math.ceil(Math.random() * 2)))
+  }
+}
+
+function checkCollitions() {
+  obstacles.forEach((obstacle, idx) => {
+    if (car.isTouching(obstacle)) {
+      console.log('consolaaaa')
+      //if (obstacle.img.src === imgs.taco) score += 10
+      //else score -= 20
+      return obstacles.splice(idx, 1)
+    }
+  })
 }
 
 function update() {
@@ -87,8 +118,11 @@ function update() {
   ctx.clearRect(0, 0, 400, 600)
   background.buildBackground()
   car.drawCar()
-  //drawObstacles()
-  //checkCollitions()
+  generateObstacles()
+  obstacles.forEach((obstacle => {
+    obstacle.drawObstacle()
+  }))
+  checkCollitions()
   //ctx.fillText(String(score), canvas.width - 100, 100)
 }
 
