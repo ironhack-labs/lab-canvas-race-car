@@ -1,59 +1,114 @@
-window.onload = function() {
-
-  this.img = './images/car.png'
-  document.getElementById("start-button").onclick = function() {
-    startGame();
-  };
-
-;
-
+const canvas = document.querySelector('canvas')
+ctx= canvas.getContext('2d');
+const screenY = screen.height
+const screenX = screen.width
+canvas.width = screenX/2
+canvas.height = screenY
+let rayitas = 12
 
 
-  function onboard(){
-   const canvas = document.querySelector('canvas')
-        ctx= canvas.getContext('2d');
-        /*************inicioX+inicioY+tamañoX+tamañoY */
-const Canvaswidth = canvas.width/2
-const Canvasheigth = canvas.height
-const rayitas = 12;
+let movil 
 
-console.log('hola');
+ let interval;
+ let frames = 0;
+
+class background{
+  constructor(x,y){
+
+  this.x=x
+  this.y=y
+    }
+
+  draw(){
+
+    ctx.fillStyle='green'
+    ctx.fillRect(0, 0,canvas.width,canvas.height)
+
+    ctx.fillStyle='gray'
+    ctx.fillRect(100, 0,canvas.width-200,canvas.height)
+
+    ctx.fillStyle='white'
+    ctx.fillRect(110, 0,20,canvas.height)
+    ctx.fillRect(canvas.width-130, 0,20,canvas.height)
 
 
-        ctx.fillStyle = 'green'
-    ctx.fillRect(Canvaswidth, 0, Canvaswidth, Canvasheigth);
+    for (let i = 0; i < rayitas; i++) {
+      ctx.fillRect(canvas.width/2, i*100,10 ,canvas.height/20)
+     
+    }
+  }
+}
 
-   ctx.fillStyle ='gray';
-   ctx.fillRect(Canvaswidth+100 , 0, Canvaswidth-200, Canvasheigth);
-   ctx.fillStyle = 'white'
-   ctx.fillRect(Canvaswidth+120 , 0, 15, Canvasheigth);
-   ctx.fillStyle = 'white'
-   ctx.fillRect(2*Canvaswidth-135 , 0, 15, Canvasheigth);
-   ctx.fillStyle = 'white'
- for(let i =0; i<rayitas; i++){
-  ctx.fillRect(Canvaswidth+Canvaswidth/2 ,110*i, 5,Canvasheigth/rayitas);
- }
- 
-   
-   
-  //  ctx.fillRect(Canvaswidth+Canvaswidth/2 , 0, 5, Canvasheigth/12);
-   
 
- 
+class cochesillo{
+constructor(x,y){
+      this.x = 0;
+      this.y =y;
+      this.img = new Image()
+      this.img.src = 'images/car.png'
+      this.img.onload = () => {
+      this.draw()
+    }
+}
+
+
+  draw () {
+      ctx.drawImage(this.img, (canvas.width/2) -50, canvas.height-200, 100, 200)
+  }
+
+
+  moveleft(){
+    if(this.x > canvas.width-200){
+    this.x -= 10
+    return 
+    }
+    }
+    moverigth(){
+      if(this.x < canvas.width){
+      return this.x += 10
+      }
+    }
+
+    move(){
+      this.x+=200
+    }
+
+}
+function update(){
     
+  ctx.clearRect(0, 0, screenX,screenY);
+  frames++
+  carretera.draw()
+
+  movil.draw()
+
+
+  
+}
+
+function startGame() {
+  if(!interval){
+    interval = setInterval(update,1000/60)
   }
+  
+}
 
-  function startGame() {
+  window.onload = function() {
+      document.getElementById("start-button").onclick = function() {
+      startGame();
 
+      carretera = new background()
+      movil = new cochesillo()
+    
+    
+    
+      document.addEventListener('keydown',(e)=>{
 
+        if(e.keyCode==37){
+          movil.moveleft
+        }else if(e.keyCode==39)
+        movil.moverigth
+      })
+
+    };
   }
-
-
-
-  onboard()
-
-
-};
-
-
-
