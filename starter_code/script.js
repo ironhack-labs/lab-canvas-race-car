@@ -53,24 +53,25 @@ constructor(x,y){
 
 
   draw () {
-      ctx.drawImage(this.img, (canvas.width/2) -50, canvas.height-200, 100, 200)
+      ctx.drawImage(this.img, this.x, this.y, 100, 200)
   }
 
 
   moveleft(){
-    if(this.x > canvas.width-200){
+    if(this.x > 100){
     this.x -= 10
-    return 
+    this.move()
     }
     }
     moverigth(){
-      if(this.x < canvas.width){
-      return this.x += 10
+      if(this.x < canvas.width-200){
+       this.x += 10
+       this.move()
       }
     }
 
     move(){
-      this.x+=200
+      this.x+=2
     }
 
 }
@@ -98,17 +99,31 @@ function startGame() {
       startGame();
 
       carretera = new background()
-      movil = new cochesillo()
+      movil = new cochesillo((canvas.width/2) -50,canvas.height-200)
     
     
     
       document.addEventListener('keydown',(e)=>{
 
-        if(e.keyCode==37){
-          movil.moveleft
-        }else if(e.keyCode==39)
-        movil.moverigth
-      })
+      //   if(e.keyCode==37){
+      //     movil.move()
+      //   }else if(e.keyCode==39)
+      //   movil.move()
+      // })
 
-    };
-  }
+        switch(e.keyCode){
+          case 37 : 
+          return movil.moveleft()
+
+          case 39: 
+          return movil.moverigth()
+
+       }
+        
+
+
+    }
+  )
+
+}
+}
