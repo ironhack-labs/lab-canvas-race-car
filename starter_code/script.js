@@ -45,19 +45,19 @@ image.src = './images/car.png'
       this.sx = 0
       this.sy = 0
       this.width = 50;
-      this.height=100
+      this.height= 100
       this.x = ($canvas.width / 2) - (this.width / 2);
       this.y = $canvas.height -150;
       this.img = new Image()
       this.img.src = './images/car.png'
       this.img.onload = () =>{
       this.draw()
-      
       }
     }
-    draw(){
+      draw(){
         ctx.drawImage(this.img,this.x,this.y, this.width, this.height)
       }
+
       goRight() {
         if (this.x > $canvas.width - 100) return
         // ctx.clearRect(this.x,this.y,this.width,this.height)
@@ -65,9 +65,10 @@ image.src = './images/car.png'
         //this.draw()
         this.move()
       }
+
       goLeft() {
         if (this.x <= 25) return
-        ctx.clearRect(this.x,this.y,this.width,this.height)
+        // ctx.clearRect(this.x,this.y,this.width,this.height)
         this.x -= 10
         //this.draw()
         this.move()
@@ -75,18 +76,83 @@ image.src = './images/car.png'
 
       move() {
         // this.x += 34
-        console.log(carrito)
-        fondo.draw()
+        //console.log(carrito)
+        //fondo.draw()
         this.draw()
-
       }
+
+      isTouching(obstacle){
+          return (
+            this.x < obstacle.x + obstacle.width &&
+            this.x + this.width > obstacle.x &&
+            this.y < obstacle.y + obstacle.height &&
+            this.y + this.height > obstacle.y
+          )
+        }
+    }
+
+  class Obstacle{
+    constructor(x){
+      ctx.clearRect(0, 0, $canvas.width, $canvas.height)
+      this.x = x
+      this.y = 110
+      this.width = 50
+      this.height = 100
+      this.img2 = new Image()
+      this.img2.src = './images/car.png'
+      this.img2.onload = () => {
+        this.drawObstacle()
+      }
+      
+    }
+
+    drawObstacle(){
+      // ctx.clearRect(this.x,this.y,this.width,this.height)
+      this.y+=5
+      ctx.drawImage(this.img2, this.x, this.y, this.width, this.height)
+
+   
+    }
   }
 
-  const carrito = new Car(0, $canvas.heigh - 200)
+  let carrito = new Car(0, $canvas.height - 200)
+  let fondo = new Background(300, 800)
+  const obstacles = []
 
+  function createObs (){ 
+    if(frames % 70 === 0){
+      let rnd = (Math.random() * 200) + 50
+      obstacles.push(new Obstacle(rnd))
+    }
+    frames++
+    drawObstacles()
+    touch()
+  }
 
+  function drawObstacles() {
+    fondo.draw()
+    carrito.draw()
+    obstacles.forEach(obstacle => obstacle.drawObstacle())
+  }
 
-  const fondo = new Background(300, 800)
+  function touch(){
+    obstacles.forEach((panchita,idx)=>{
+      if(panchita.y > $canvas.height){
+        obstacles.splice(idx, 1) 
+      }
+      carrito.isTouching(panchita) ? gameOver() : null
+    })
+  }
+
+  function gameOver(){
+    let imgGameOver = new Image()
+    imgGameOver.src = './images/gameover.png'
+    imgGameOver.onload = () => {
+      ctx.drawImage(imgGameOver, 20, 300)
+    }
+    clearInterval(interval)
+  }
+
 
 
 
@@ -107,12 +173,13 @@ image.src = './images/car.png'
 
 window.onload = function () {
   document.getElementById("start-button").onclick = function () {
-    // startGame();
+    
 
     // function startGame() {
       fondo.draw()
-      bocho= new Car()
-     bocho.draw()
+      carrito= new Car()
+      carrito.draw()
+      interval = setInterval(createObs,1000/30)
     // }
   }
 
