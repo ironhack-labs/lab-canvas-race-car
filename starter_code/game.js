@@ -11,6 +11,7 @@ const myGame = {
     },
     objectsArray: [],
     time: undefined,
+    timeObj: undefined,
 
     start() {
         this.time = setInterval(() => {
@@ -39,14 +40,13 @@ const myGame = {
         car.initCar()
     },
     randomObj() {
-        const timeObj = setInterval(() => {
+        this.timeObj = setInterval(() => {
             this.createObject();
         }, 2000);
     },
     createObject() {
         // console.log('random')
         let posX = parseInt(Math.random() * (this.windowsSize.width - 1) + 1)
-        // AÑADIR OBSTACULOS AL ARRAY
         var newObj = new obsts(this.ctx, posX, 0, 70, 20, 3);
         newObj.drawObj()
         newObj.move()
@@ -90,24 +90,16 @@ const myGame = {
 
     },
     clearScreen() {
-        this.ctx.clearRect(0, 0, this.windowsSize.width, whit.windowsSize.height)
+        this.ctx.clearRect(0, 0, this.windowsSize.width, this.windowsSize.height)
     },
 
     moveRoad(posY, vel) {
-
-
-        // if (this._posX >= this._wWidth - 276) {this.changeDirection()}
-        // if (this._posX <= 0) {this.changeDirection()}
-
-        // this._posX >= this._wWidth - 276 || this._posX <= 0 ? this.changeDirection() : null
-
         posY += vel
         this.centralLine(posY)
-
     },
 
     collision() {
-        
+
         this.objectsArray.forEach((elm, i) => {
             if (car.posX + car.carWidth >= elm._posX &&
                 car.posY + car.carHeight >= elm._posY &&
@@ -121,10 +113,12 @@ const myGame = {
     },
 
     gameOver() {
-        //Cerra interval
-        
 
         clearInterval(this.time)
+        clearInterval(this.timeObj)
         alert('Has perdido GAÑAN')
+        this.clearScreen()
+
+
     },
 }
