@@ -9,7 +9,7 @@ const myGame = {
         width: 400,
         height: 600,
     },
-    object: undefined,
+    objectsArray: [],
     time: undefined,
 
     start() {
@@ -19,12 +19,9 @@ const myGame = {
             this.roadBackground()
             this.whiteLine()
             this.whiteLine2()
-            // this.moveRoad(0, 2)
             this.centralLine()
-            // console.log(this.ctx)
             car.drawCar(this.ctx)
-            // this.object.drawObj()
-            this.object.move()
+            this.moveObj();
             this.collision()
         }, 1000 / 60);
     },
@@ -36,17 +33,27 @@ const myGame = {
         this.setWindowsMove()
         this.start()
         this.randomObj()
+        this.createObject()
         // this.object = new obsts(this.ctx, 60, 0, 70, 20, 3)
 
         car.initCar()
     },
     randomObj() {
         const timeObj = setInterval(() => {
-            console.log('random')
-            let posX = parseInt(Math.random() * (this.windowsSize.width - 1) + 1)
-            new obsts(this.ctx, posX, 0, 70, 20, 3)
-
-        }, 5000);
+            this.createObject();
+        }, 2000);
+    },
+    createObject() {
+        // console.log('random')
+        let posX = parseInt(Math.random() * (this.windowsSize.width - 1) + 1)
+        // AÑADIR OBSTACULOS AL ARRAY
+        var newObj = new obsts(this.ctx, posX, 0, 70, 20, 3);
+        newObj.drawObj()
+        newObj.move()
+        this.objectsArray.push(newObj)
+    },
+    moveObj() {
+        this.objectsArray.forEach(el => el.move());
     },
     setDimensions() {
         this.canvasDom.width = this.windowsSize.width
@@ -100,22 +107,22 @@ const myGame = {
     },
 
     collision() {
-        // console.log(car.posY)
-        // console.log('collision')
-        if (car.posX + car.carWidth >= this.object._posX &&
-            car.posY + car.carHeight >= this.object._posY &&
-            car.posX <= this.object._posX + this.object._wWidth &&
-            car.posY <= this.object._posY + this.object._wHeight) {
-            return this.gameOver()
-        }
+        
+        this.objectsArray.forEach((elm, i) => {
+            if (car.posX + car.carWidth >= elm._posX &&
+                car.posY + car.carHeight >= elm._posY &&
+                car.posX <= elm._posX + elm._wWidth &&
+                car.posY <= elm._posY + elm._wHeight) {
+                return this.gameOver()
+            }
+        })
 
 
     },
 
     gameOver() {
         //Cerra interval
-        console.log('Hola');
-        console.log(this.time)
+        
 
         clearInterval(this.time)
         alert('Has perdido GAÑAN')
