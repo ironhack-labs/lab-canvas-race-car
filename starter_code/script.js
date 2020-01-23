@@ -1,9 +1,11 @@
 window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
+    document.getElementById("start-button").onclick = function() {
+    let canvas = document.getElementById('canvas');
+    startGame(canvas);
   };
 
-  function startGame() {
-
+  function startGame(canvas) {
+    let game = new Game(canvas);
+    game.startGame();
   }
 };
