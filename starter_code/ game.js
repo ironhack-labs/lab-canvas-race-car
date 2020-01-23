@@ -12,16 +12,31 @@ class Game{
         this.h = 650;
         this.intervalId;
         this.carW;
-        this.cardH;
-        this.carX;
-        this.carY;
+        this.carH;
+        this.carX=195;
+        this.carY=500;
+        this.offset = 0;
+        this.obstaclesArr = [];
+        this.gameOver === false;
+        this.counter = 0;
+        
+
     }
 
     start(){
         this.intervalId = setInterval(() => {
+
             this.board();
             this.drawCar();
-            // this.moveCar();
+            this.pushObstacle();
+            this.drawObstacles();
+            this.offset -= 7;
+            this.moveCar();
+            if(this.gameOver === true){
+                clearInterval(this.intervalId);
+            }
+            this.counter++;
+          
             // this.gameOver();
         }, 1000/60);
     }
@@ -36,75 +51,88 @@ class Game{
         this.ctx.fillStyle = "rgb(255,255, 255)";
         this.ctx.fillRect(40, 0, 17, this.h);
         this.ctx.fillStyle = "rgb(255,255, 255)";
-        this.ctx.fillRect(this.w - 40, 0, -17, this.h);
+        this.ctx.setLineDash([25, 15]);
+        this.ctx.moveTo(this.w/2, 0);
+        this.ctx.lineTo(this.w/2, this.h);
+        this.ctx.lineWidth = 6;
+        this.ctx.lineDashOffset = this.offset;
+        this.ctx.strokeStyle = "white";
+
+        this.ctx.stroke();
+        
+
+
 
     }
 
     drawCar(){
+
         this.car = new Image();
+        this.car.src = "./images/car.png";
+        this.carW = 60;
+        this.carH = 120;
+        this.ctx.drawImage(this.car, this.carX, this.carY, this.carW, this.carH);
+
 
     }
-   
+
+    moveCar() {
+        window.onkeydown = e => {
+          
+            if (e.keyCode === 39) {
+            console.log("derecha");
+            if (this.carX > 360) {
+              this.carX = 360;
+            } else {
+              this.carX += 20;
+            }
+          }
+          if (e.keyCode === 37) {
+            console.log("izquierda");
+            if (this.carX < 30) {
+              this.carX = 30;
+            } else {
+              this.carX -= 20;
+            }
+          }
+        };
+
+
+    }
+
+
+    drawObstacles(){
+           
+        this.obstaclesArr.forEach((obstacle) => {
+            console.log(obstacle);
+            this.ctx.fillStyle = "rgb(136, 0, 0)";
+            this.ctx.fillRect(obstacle.obstaclesX, obstacle.obstaclesY, obstacle.obstaclesW, obstacle.obstaclesY);
+        });
+    }
+      
+pushObstacle(){
+
+    if(this.counter % 30 === 0){
+        this.obstaclesArr.push(new Obstacles(this.counter));
+    }
 }
 
 
+    
+
+}
+
+class Obstacles{
+    constructor(counter){
+        this.obstaclesX = 200;
+        this.obstaclesY = counter;
+        this.obstaclesW = 100;
+        this.obstaclesH = 20;
+
+    }
+ }
 
 
-
-
-
-
-// class Board{
-
-//     constructor(w, h){
-
-//         this.w = w;
-//         this.h = h;
-
-
-        
-//     }
-
-//     paint(){
-//         const canvasDOMEL = document.createElement("canvas");
-
-
-//     }
-
-   
-// }
-
-
-
-
-
-
-
-
-// function paintBoard(){
-
-//   const h = 650;
-//   const w = 350;
-
-
-//     const canvasDomel = document.createElement("canvas");
-
-//     canvasDomel.classList.add("canvas");
-
-//     canvasDomel.setAttribute("height", h);
-
-//   canvasDomel.setAttribute("width", w);
-
-//   document.querySelector("#game-board").appendChild(canvasDomel);
-
-
-
-// }
-
-
-// let ctx = canvasDomel.getContext("2d");
-
-// paintBoard();
 
 
 
