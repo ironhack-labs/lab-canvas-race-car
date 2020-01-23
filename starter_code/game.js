@@ -45,9 +45,10 @@ const myGame = {
         }, 2000);
     },
     createObject() {
-        // console.log('random')
         let posX = parseInt(Math.random() * (this.windowsSize.width - 1) + 1)
-        var newObj = new obsts(this.ctx, posX, 0, 70, 20, 3);
+        let velOb = parseInt(Math.random() * (5 - 2) + 2)
+
+        const newObj = new obsts(this.ctx, posX, 0, 70, 20, velOb);
         newObj.drawObj()
         newObj.move()
         this.objectsArray.push(newObj)
@@ -116,9 +117,10 @@ const myGame = {
 
         clearInterval(this.time)
         clearInterval(this.timeObj)
+
         alert('Has perdido GAÑAN')
         this.clearScreen()
-
+        this.objectsArray = []
 
     },
 }

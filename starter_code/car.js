@@ -3,7 +3,7 @@ const car = {
     carWidth: 50,
     carHeight: 80,
     car: new Image(),
-    vel: 25,
+    vel: 10,
     posX: undefined,
     posY: 600 - 100,
     initCar() {
@@ -24,7 +24,7 @@ const car = {
         this.vel *= -1
     },
     setEventKeyboard() {
-        document.onkeyup = e => {
+        document.onkeydown = e => {
             e.keyCode == 37 ? this.moveCar('left') : null
             e.keyCode == 39 ? this.moveCar('right') : null
 
