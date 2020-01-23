@@ -123,8 +123,8 @@ class Game {
   //   }
 
   createObstacles() {
-    if (this.counter % 300 === 0) {
-      let randomX = Math.floor(Math.random() * 175) + 1;
+    if (this.counter % 400 === 0) {
+      let randomX = Math.floor(Math.random() * 200) + 1;
       let randomW = Math.floor(Math.random() * 100) + 50;
       this.obstacles.push(new Obstacle(randomX, 0, randomW, 30));
     }
@@ -156,7 +156,7 @@ class Game {
             this.carX + 66 > obstacle.posX &&
             this.carY < obstacle.posY + 30 &&
             this.carY + 134 > obstacle.posY) {
-             console.log("muerte")
+             alert("Hello! Bienvenido al infierno")
          }
     })
  
