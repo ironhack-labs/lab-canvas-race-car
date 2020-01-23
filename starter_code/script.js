@@ -1,9 +1,12 @@
 window.onload = function() {
   document.getElementById("start-button").onclick = function() {
-    startGame();
+    let canvas = document.getElementById("canvas")
+    startGame(canvas);
   };
 
-  function startGame() {
-
+  function startGame(canvasParam) {
+    let game = new Game(canvasParam);
+    game.startGame();
+// crear el juego y un coche y el escenario
   }
 };
