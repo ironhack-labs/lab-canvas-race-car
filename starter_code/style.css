@@ -36,3 +36,13 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.crash {
+  display: none;
+}
+
+.crashreal {
+    position: absolute;
+    display: flex;
+    padding-left: 771px;
+}
