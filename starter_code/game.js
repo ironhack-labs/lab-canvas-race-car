@@ -33,11 +33,12 @@ class Game {
     this.aleatorioX = Math.floor(Math.random() * 175) + 1;
     this.aleatorioW = Math.floor(Math.random() * 100) + 50;
     this.car = {
-      carX: 140,
-      carY: 350,
       image: new Image()
     };
     this.obstacles = [];
+    this.carX=140;
+    this.carY=350;
+
   }
 
   startGame() {
@@ -53,9 +54,9 @@ class Game {
       this.createObstacles();
       this.drawObstacles();
 
-      //       this.obstacleCol();
+            this.obstacleCol();
       this.counter -= 2;
-      console.log(this.obstacles);
+    //   console.log(this.obstacles);
       //       if (this.endgame === true) {
       //         clearInterval(intervalID);
       //       }
@@ -88,28 +89,28 @@ class Game {
 
   drawCar() {
     this.car.image.src = "./images/car.png";
-    this.ctx.drawImage(this.car.image, this.car.carX, this.car.carY, 66, 134);
-    console.log("derecha");
+    this.ctx.drawImage(this.car.image, this.carX, this.carY, 66, 134);
+    // console.log("derecha");
     // console.log("dentro");
   }
 
   moveCar() {
     window.onkeydown = e => {
       if (e.keyCode === 39) {
-        console.log("derecha");
-        if (this.car.carX > 260) {
-          this.car.carX = 260;
+        // console.log("derecha");
+        if (this.carX > 260) {
+          this.carX = 260;
         } else {
-          this.car.carX += 5;
+          this.carX += 5;
         }
       }
 
       if (e.keyCode === 37) {
-        console.log("izquierda");
-        if (this.car.carX < 35) {
-          this.car.carX = 35;
+        // console.log("izquierda");
+        if (this.carX < 35) {
+          this.carX = 35;
         } else {
-          this.car.carX -= 5;
+          this.carX -= 5;
         }
       }
     };
@@ -146,12 +147,19 @@ class Game {
   }
 
   obstacleCol(){
-  if (rect1.x < rect2.x + rect2.width &&
-      rect1.x + rect1.width > rect2.x &&
-      rect1.y < rect2.y + rect2.height &&
-      rect1.y + rect1.height > rect2.y) {
-       // collision detected!
-   }
+    this.obstacles.forEach((obstacle) => {
+        console.log(this.carX)
+        console.log(obstacle.posX)
+        console.log(obstacle.width)
+        console.log(this.carY)
+        if (this.carX < obstacle.posX + obstacle.width &&
+            this.carX + 66 > obstacle.posX &&
+            this.carY < obstacle.posY + 30 &&
+            this.carY + 134 > obstacle.posY) {
+             console.log("muerte")
+         }
+    })
+ 
 
   }
 
@@ -161,3 +169,5 @@ class Game {
 
   // }
 }
+
+// EN ALGUM MOMENTO HABRA QUE HACER POP
