@@ -1,9 +1,7 @@
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
-    startGame();
+window.onload = function () {
+  document.getElementById("start-button").onclick = function () {
+    islandRacer.startGame();
   };
 
-  function startGame() {
-
-  }
+  islandRacer.init('islandRacer')
 };
