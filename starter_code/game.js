@@ -11,8 +11,10 @@ const game = {
         height: 600
     },
     time: undefined,
-
+    arrObstacles: [],
+    
     start(id) {
+        let count = 0
 
 
         this.canvas = document.getElementById(id)
@@ -24,11 +26,20 @@ const game = {
         background.drawGreen()
         background.drawLine()
         background.drawDashline()
-        obstacles.DrawObstacles()
         this.time = setInterval(() => {
-            this.drawAll()
-            obstacles.move()
-            this.colisionObstacles()
+            if (count % 100 == 0) {
+                this.createObstacles()
+            }
+            count += 1
+        this.arrObstacles.forEach(e => {
+                e.move()
+                this.drawAll(e)
+                this.colisionObstacles(e)
+
+
+
+            });
+
 
         }, 100) //1000/60 para quitar el efecto
 
@@ -55,8 +66,7 @@ const game = {
 
     },
 
-    drawAll() {
-
+    drawAll(elm) {
         // car.drawCar()
         this.clear()
         background.drawRoad()
@@ -64,16 +74,15 @@ const game = {
         background.drawLine()
         background.drawDashline()
         car.drawCar()
-        obstacles.DrawObstacles()
-
+        elm.DrawObstacles()
     },
 
-    colisionObstacles() {
+    colisionObstacles(elm) {
 
-        if ((car.posX + car.width) >= obstacles.posX &&
-            car.posY <= (obstacles.posY + obstacles.height) &&
-            car.posX <= (obstacles.posX + obstacles.width) &&
-            (car.posY + car.height) >= obstacles.posY) {
+        if ((car.posX + car.width) >= elm.posX &&
+            car.posY <= (elm.posY + elm.height) &&
+            car.posX <= (elm.posX + elm.width) &&
+            (car.posY + car.height) >= elm.posY) {
             this.gameOver()
             alert("GAME OVER")
         }
@@ -83,6 +92,11 @@ const game = {
 
     gameOver() {
         clearInterval(this.time)
+    },
+
+    createObstacles() {
+        let newObstacles = new obstacles()
+        this.arrObstacles.push(newObstacles)
     }
 
 
