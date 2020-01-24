@@ -55,7 +55,11 @@ const game = {
         }
     },
     gameOver() {
-        alert(`PERDISTE! Tu score ha sido ${this.score}`)
+        if (confirm(`PERDISTE! Tu score ha sido ${this.score}. Jugar otra vez?`)) {
+            window.location.reload()
+        } else {
+            window.location = "http://google.es"
+        }
 
     },
     scoreAdd(elem) {
