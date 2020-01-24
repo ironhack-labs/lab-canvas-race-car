@@ -1,4 +1,6 @@
     const background = {
+        posX: 150,
+        posY: -100,
 
         drawRoad() {
 
@@ -39,10 +41,18 @@
             game.ctx.strokeStyle = "white"
             game.ctx.setLineDash([20, 10])
             game.ctx.beginPath()
-            game.ctx.moveTo(150, 0)
-            game.ctx.lineTo(150, 600)
+            game.ctx.moveTo(this.posX, this.posY)
+            game.ctx.lineTo(150, 800)
             game.ctx.stroke()
             game.ctx.setLineDash([0])
 
         },
+
+        moveLine() {
+            console.log("N")
+            this.posY <= 0 ? this.posY += 20 : this.posY = -100
+
+
+        }
+
     }

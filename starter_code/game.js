@@ -12,9 +12,9 @@ const game = {
     },
     time: undefined,
     arrObstacles: [],
-    
+    count: 0,
+
     start(id) {
-        let count = 0
 
 
         this.canvas = document.getElementById(id)
@@ -26,22 +26,24 @@ const game = {
         background.drawGreen()
         background.drawLine()
         background.drawDashline()
+
         this.time = setInterval(() => {
-            if (count % 100 == 0) {
+            if (this.count % 100 == 0) {
                 this.createObstacles()
             }
-            count += 1
-        this.arrObstacles.forEach(e => {
+            this.score()
+            this.count += 1
+            background.moveLine()
+            this.arrObstacles.forEach(e => {
                 e.move()
                 this.drawAll(e)
                 this.colisionObstacles(e)
 
 
-
             });
 
 
-        }, 100) //1000/60 para quitar el efecto
+        }, 1000 / 60) //1000/60 para quitar el efecto
 
     },
 
@@ -68,6 +70,7 @@ const game = {
 
     drawAll(elm) {
         // car.drawCar()
+
         this.clear()
         background.drawRoad()
         background.drawGreen()
@@ -79,12 +82,12 @@ const game = {
 
     colisionObstacles(elm) {
 
-        if ((car.posX + car.width) >= elm.posX &&
-            car.posY <= (elm.posY + elm.height) &&
-            car.posX <= (elm.posX + elm.width) &&
-            (car.posY + car.height) >= elm.posY) {
+        if ((car.posX + car.width) >= elm._posX &&
+            car.posY <= (elm._posY + elm._height) &&
+            car.posX <= (elm._posX + elm._width) &&
+            (car.posY + car.height) >= elm._posY) {
             this.gameOver()
-            alert("GAME OVER")
+            alert(`GAME OVER. Conseguistes ${this.count} puntos`)
         }
 
 
@@ -97,7 +100,10 @@ const game = {
     createObstacles() {
         let newObstacles = new obstacles()
         this.arrObstacles.push(newObstacles)
-    }
+    },
 
+    score() {
+        document.querySelector('#score').innerText = this.count
+    }
 
 }
