@@ -9,9 +9,12 @@ window.onload = function () {
     game.init()
     let intervalId = setInterval((elem) => {
       counter++
+
       game.clearScreen()
       car.drawCar()
       background.drawBrackground()
+      background.drawDashLine()
+      background.moveLine()
       if (counter % 30 == 0) {
         game.generateObstacles()
       }
