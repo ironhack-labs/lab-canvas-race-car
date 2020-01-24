@@ -75,6 +75,7 @@ const islandRace = {
             this.player.draw()
             this.obstacle.drawObstacle();
             this.obstacle.fallObstacle()
+            this.player.checkColition()
 
 
             // if (count % 40 == 0) {

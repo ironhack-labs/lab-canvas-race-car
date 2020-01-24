@@ -4,6 +4,7 @@ class Car {
         this._posX = posX
         this._posY = posY
         this._speed = 5
+        this._colition = false
 
     }
     init() {
@@ -20,4 +21,12 @@ class Car {
         dir === "left" && this._posX > 30 ? this._posX -= this._speed : null
 
     }
+    checkColition() {
+        if ((this._posX + 60) >= Obstacle.posX && this._posX <= (Obstacle._posX + 90) && (this._posY + 90) >= Obstacle.posY && this._posY <= (Obstacle._posY + 10)) {
+            return alert("Has perdido!")
+        } else {
+            true
+        }
+    }
+
 }
