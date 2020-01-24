@@ -16,8 +16,8 @@ class Game {
         this.endGame = false;
         this.car = {
             image: new Image(),
-            carW: 60,
-            carH: 120,
+            carW: 40,
+            carH: 80,
             carPosX: 170,
             carPosY: 390
         }
@@ -91,13 +91,13 @@ class Game {
     moveCar() {
         window.onkeydown = e => {
             if (e.keyCode === 39) {
-                this.car.carPosX += 50;
+                this.car.carPosX += 10;
             }
 
             if (this.car.carPosX > 310) this.car.carPosX = 310;
 
             if (e.keyCode === 37) {
-                this.car.carPosX -= 50;
+                this.car.carPosX -= 10;
             }
             if (this.car.carPosX < 30) this.car.carPosX = 30;
         }
@@ -109,7 +109,7 @@ class Game {
 
     createObst() {
         if (this.counter % 300 === 0) {
-            this.obstaclesArr.push(new Obst(randomInt(50, 220), 60, 0, 0));            
+            this.obstaclesArr.push(new Obst(randomInt(50, 220), 60, randomInt(100, 220), 0));            
         }
 
 
