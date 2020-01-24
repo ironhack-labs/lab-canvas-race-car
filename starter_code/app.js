@@ -21,34 +21,30 @@ const islandRacer = {
         this.canvasDom.width = this.wSize.width
         this.canvasDom.height = this.wSize.height
         this.setEventListeners()
-        //Contexto
+
         //Coche
         this.car = new Car(this.ctx, this.wSize.width)
-        this.obs = new Obs(this.ctx, 50)
-
         this.car.init()
 
         //Obstáculos
-        // this.obs.drawFilledRectangle()
+        this.obs = new Obs(this.ctx, 50)
+
     },
 
     startGame() {
         this.refresh = setInterval(() => {
 
             if (this.fpsCounter % 100 === 0) {
-                // Crea objeto
+                // Crea obscátulo
                 this.newObstacle()
-
             }
-            // clearFullScreen()
+
             this.drawBackground()
             this.drawRoad()
             this.drawLines(50)
             this.drawLines(350)
             this.drawDashedLine()
             this.car.drawCar()
-            // this.obs.drawObs()
-            // this.obs.moveObs()
             this.obsArr.forEach(elm => {
                 elm.drawObs()
                 elm.moveObs()
@@ -56,7 +52,7 @@ const islandRacer = {
             })
 
             this.fpsCounter++
-            console.log(this.fpsCounter)
+
         }, 10)
 
 
@@ -87,36 +83,32 @@ const islandRacer = {
         this.ctx.lineTo(position, this.wSize.height)
         this.ctx.stroke()
         this.ctx.closePath()
-
     },
 
     drawDashedLine() {
+        let velDashedLine = -60
         this.ctx.lineWidth = 7
         this.ctx.strokeStyle = 'white'
         this.ctx.setLineDash([30, 30])
         this.ctx.beginPath()
-        this.ctx.moveTo(this.wSize.width / 2, 0)
-        this.ctx.lineTo(this.wSize.width / 2, this.wSize.height)
+        this.ctx.moveTo(this.wSize.width / 2, velDashedLine)
+        this.ctx.lineTo(this.wSize.width / 2, this.wSize.height + 100)
         this.ctx.stroke()
         this.ctx.closePath()
         this.ctx.setLineDash([0, 0])
-
     },
 
     setEventListeners() {
         document.onkeydown = e => {
             e.keyCode == 37 ? this.car.move('left') : null
             e.keyCode == 39 ? this.car.move('right') : null
-
         }
     },
 
     newObstacle() {
-
         let posX = Math.floor(Math.random() * (270 - 30) + 30)
         let newObject = new Obs(this.ctx, posX)
         this.obsArr.push(newObject)
-
     },
 
     checkCollision(elm) {
@@ -135,10 +127,6 @@ const islandRacer = {
 
         }
 
-
-
-
     }
-
 
 }

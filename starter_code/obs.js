@@ -15,7 +15,6 @@ class Obs {
     }
 
     moveObs() {
-
         this._oPosY += this._oVel
     }
 
