@@ -2,7 +2,7 @@
 const background = {
     position: {
         x: game.wSize.width / 2,
-        y: -5000
+        y: 0 - game.wSize.height
     },
 
     drawBrackground() {
@@ -16,8 +16,8 @@ const background = {
         game.ctx.lineWidth = 10
         game.ctx.strokeStyle = "#fff"
         game.ctx.beginPath()
-        game.ctx.moveTo(45, 0)
-        game.ctx.lineTo(45, game.wSize.height)
+        game.ctx.moveTo(game.maple, 0)
+        game.ctx.lineTo(game.maple, game.wSize.height)
         game.ctx.stroke()
 
         game.ctx.moveTo(game.wSize.width - game.maple, 0)
@@ -36,6 +36,6 @@ const background = {
     },
     moveLine() {
         console.log("N")
-        this.position.y <= 0 ? this.position.y += 10 : this.posY = -5000
+        this.position.y <= 0 ? this.position.y += 10 : this.position.y = 0 - game.wSize.height
     }
 }
