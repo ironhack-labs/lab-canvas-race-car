@@ -6,7 +6,7 @@ window.onload = function() {
   const $canvas = document.querySelector('canvas');
   const context = $canvas.getContext('2d');
 
-  //--ROW CONSTRUCTION
+  //--ROAD CONSTRUCTION
   const drawRow = () => {
     context.fillStyle = 'green';
     context.fillRect(0, 0, 600, 600);
@@ -50,6 +50,8 @@ window.onload = function() {
     context.lineTo(300, 600);
     context.stroke();
     context.closePath();
+
+    context.restore();
   };
 
   //--CAR-------------------------------------------------
@@ -70,23 +72,23 @@ window.onload = function() {
         switch (event.keyCode) {
           case 37:
             console.log('LEFT');
-            if (this.positionX > 0) {
-              console.log('teste no left');
+            if (this.positionX > 50) {
+              //console.log('teste no left');
               this.positionX -= this.speed;
-              console.log(this.positionX + ' left');
+              ///console.log(this.positionX + ' left');
             }
 
             break;
 
           case 39:
             console.log('Right');
-            if (this.positionX < context.canvas.width) {
-              console.log('test Right');
+            if (this.positionX < context.canvas.width-100) {
+              //console.log('test Right');
               this.positionX += this.speed;
-              console.log(this.positionX + ' right');
+              //console.log(this.positionX + ' right');
             }
             break;
-        }
+          }
       });
     }
 
@@ -94,10 +96,8 @@ window.onload = function() {
       const carUrl = './images/car.png';
       const imageCar = new Image();
       imageCar.src = carUrl;
-      imageCar.addEventListener('load', () => {
-        context.drawImage(imageCar, this.positionX, 500, 50, 100);
-      });
-      console.log(this.positionX + '!!!!!!!!! in the car.paint()');
+      context.drawImage(imageCar, this.positionX, 500, 50, 100);//STATIC!!!!!!!!!!!!!!!!!
+      //console.log(this.positionX + '!!!!!!!!! in the car.paint()');
     }
   }
 
@@ -107,6 +107,7 @@ window.onload = function() {
   //---CLEAN CANVAS---------------------------
   const cleanCanvas = () => {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
   };
 
   //--OBSTACLES-------------------------------------------------
@@ -149,13 +150,16 @@ window.onload = function() {
     }*/
 
     runLogic() {
-      this.positionY -= 10;
+      this.positionY -= 1.5;
       console.log('Position Obstac. ' + this.positionY);
       //this.checkCollision();
     }
 
     paint() {
+      context.save();
+      context.fillStyle = 'red';
       context.fillRect(this.positionX, this.positionY, this.width, this.height);
+
     }
   }
 
@@ -180,24 +184,25 @@ window.onload = function() {
   //---PAINT ALL FUNCTION
   const paint = () => {
     cleanCanvas();
-    //drawRow();
-
+    drawRow();
     car.paint();
 
     //Paint Obstaculos
-
     for (let obstacle of obstacles) {
       obstacle.paint();
     }
   };
 
   const loop = timestamp => {
-    runLogic();
     paint();
+    runLogic();
+    
 
     /*if (gameIsRunning) {
       window.requestAnimationFrame(loop);
     }*/
+
+    window.requestAnimationFrame(loop);
   };
 
   function startGame() {
