@@ -3,6 +3,8 @@ window.onload = function() {
     startGame();
   };
 
+  let gameIsRunning = true;
+
   const $canvas = document.querySelector('canvas');
   const context = $canvas.getContext('2d');
 
@@ -82,7 +84,7 @@ window.onload = function() {
 
           case 39:
             console.log('Right');
-            if (this.positionX < context.canvas.width-100) {
+            if (this.positionX < context.canvas.width-50) {
               //console.log('test Right');
               this.positionX += this.speed;
               //console.log(this.positionX + ' right');
@@ -127,12 +129,12 @@ window.onload = function() {
       this.width = 100 + Math.random() * 100;
     }
 
-    /*
+    
     checkCollision () {
-      const blockX = block.positionX;
-      const blockY = block.positionY;
-      const blockWidth = block.dimensions;
-      const blockHeight = block.dimensions;
+      const carX = car.positionX;
+      const carY = 500;
+      const carWidth = 50;
+      const carHeight = 100;
   
       const obstacleX = this.positionX;
       const obstacleY = this.positionY;
@@ -140,19 +142,19 @@ window.onload = function() {
       const obstacleHeight = this.height;
       
       if (
-        blockX + blockWidth > obstacleX &&
-        blockX < obstacleX + obstacleWidth &&
-        blockY + blockHeight > obstacleY &&
-        blockY < obstacleY + obstacleHeight
-      ) {
+        carX + carWidth > obstacleX &&
+        carX < obstacleX + obstacleWidth &&
+        carY + carHeight > obstacleY &&
+        carY < obstacleY + obstacleHeight){
         gameIsRunning = false;
       }
-    }*/
+    }
 
     runLogic() {
-      this.positionY -= 1.5;
-      console.log('Position Obstac. ' + this.positionY);
-      //this.checkCollision();
+      this.positionY += 1.5;
+      console.log('teste do logic');
+      //console.log('Position Obstac. ' + this.positionY);
+      this.checkCollision();
     }
 
     paint() {
@@ -170,7 +172,7 @@ window.onload = function() {
   //-------------------------------------------
 
   for (let i = 0; i < 100; i++) {
-    const obstacle = new Obstacle(i * 200);
+    const obstacle = new Obstacle(i * 200 * -1); ///--------OBSTACLE NEED TO BE NEGATIVE
     obstacles.push(obstacle);
   }
 
@@ -198,11 +200,11 @@ window.onload = function() {
     runLogic();
     
 
-    /*if (gameIsRunning) {
+    if (gameIsRunning) {
       window.requestAnimationFrame(loop);
-    }*/
+    }
 
-    window.requestAnimationFrame(loop);
+    //window.requestAnimationFrame(loop);
   };
 
   function startGame() {
