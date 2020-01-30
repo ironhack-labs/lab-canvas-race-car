@@ -20,7 +20,7 @@ window.onload = function() {
     context.strokeStyle = 'white';
     context.lineWidth = 10;
     context.beginPath();
-    context.setLineDash([]);
+    context.setLineDash([]); /// NECESSITA COLOCAR PARA NÃO GERAR NOVA LINHA
     //inicio do desenho da linha
     context.moveTo(50, 0);
     //primeiro ponto
@@ -55,24 +55,35 @@ window.onload = function() {
   //--CAR-------------------------------------------------
   class Car {
     constructor() {
-      this.positionX = 270;
+      this.positionX = 100;
       this.positionY = 500;
-      this.speed = 20;
+      this.speed = 50;
 
       this.setKeyboardEventListeners();
     }
 
     setKeyboardEventListeners() {
       window.addEventListener('keydown', event => {
-        switch (event.key) {
-          case 'ArrowLeft':
+        // Stop the default behavior (moving the screen to the left/up/right/down)
+        event.preventDefault();
+
+        switch (event.keyCode) {
+          case 37:
+            console.log('LEFT');
             if (this.positionX > 0) {
-              this.positionX += this.speed;
-            }
-            break;
-          case 'ArrowRight':
-            if (this.positionX < context.canvas.width) {
+              console.log('teste no left');
               this.positionX -= this.speed;
+              console.log(this.positionX + ' left');
+            }
+
+            break;
+
+          case 39:
+            console.log('Right');
+            if (this.positionX < context.canvas.width) {
+              console.log('test Right');
+              this.positionX += this.speed;
+              console.log(this.positionX + ' right');
             }
             break;
         }
@@ -83,7 +94,10 @@ window.onload = function() {
       const carUrl = './images/car.png';
       const imageCar = new Image();
       imageCar.src = carUrl;
-      context.drawImage(imageCar, this.positionX, this.positionY, 50, 100);
+      imageCar.addEventListener('load', () => {
+        context.drawImage(imageCar, this.positionX, 500, 50, 100);
+      });
+      console.log(this.positionX + '!!!!!!!!! in the car.paint()');
     }
   }
 
@@ -95,24 +109,91 @@ window.onload = function() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   };
 
-  //--CAR-------------------------------------------------
+  //--OBSTACLES-------------------------------------------------
 
-  //---PAINT FUNCTION
-  const paint = () => {
-    cleanCanvas();
-    drawRow();
-    car.paint();
+  class Obstacle {
+    constructor(positionY) {
+      this.positionX = 0;
+      this.positionY = positionY;
+      this.height = 30;
+      this.width = 0;
+
+      this.setRandomPosition();
+    }
+
+    setRandomPosition() {
+      this.positionX = Math.random() * 400;
+      this.width = 100 + Math.random() * 100;
+    }
 
     /*
+    checkCollision () {
+      const blockX = block.positionX;
+      const blockY = block.positionY;
+      const blockWidth = block.dimensions;
+      const blockHeight = block.dimensions;
+  
+      const obstacleX = this.positionX;
+      const obstacleY = this.positionY;
+      const obstacleWidth = this.width;
+      const obstacleHeight = this.height;
+      
+      if (
+        blockX + blockWidth > obstacleX &&
+        blockX < obstacleX + obstacleWidth &&
+        blockY + blockHeight > obstacleY &&
+        blockY < obstacleY + obstacleHeight
+      ) {
+        gameIsRunning = false;
+      }
+    }*/
+
+    runLogic() {
+      this.positionY -= 10;
+      console.log('Position Obstac. ' + this.positionY);
+      //this.checkCollision();
+    }
+
+    paint() {
+      context.fillRect(this.positionX, this.positionY, this.width, this.height);
+    }
+  }
+
+  //-------------------------------------------
+
+  const obstacles = [];
+
+  //-------------------------------------------
+
+  for (let i = 0; i < 100; i++) {
+    const obstacle = new Obstacle(i * 200);
+    obstacles.push(obstacle);
+  }
+
+  //-------------------------------------------
+  const runLogic = () => {
+    for (let obstacle of obstacles) {
+      obstacle.runLogic();
+    }
+  };
+
+  //---PAINT ALL FUNCTION
+  const paint = () => {
+    cleanCanvas();
+    //drawRow();
+
+    car.paint();
+
+    //Paint Obstaculos
+
     for (let obstacle of obstacles) {
       obstacle.paint();
-    }*/
+    }
   };
 
   const loop = timestamp => {
-    //runLogic();
+    runLogic();
     paint();
-    //rowConstruction();
 
     /*if (gameIsRunning) {
       window.requestAnimationFrame(loop);
