@@ -1,12 +1,43 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
+//---CLEAN CANVAS---------------------------
+const cleanCanvas = () => {
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+};  //----end of clean canvas -----<
+
+
 window.onload = function () {
   document.getElementById("start-button").onclick = function () {
     startGame();
+    cleanCanvas();
   }
 };
 
+//---ROAD:------------------------
+const drawRoad = () => {
+  context.strokeStyle = "#fff"
+  context.fillStyle = 'green'
+  context.fillRect(0, 0, 420, 600)
+  context.fillStyle = "gray"
+  context.fillRect(30, 0, 360, 600)
+  context.setLineDash([0])
+  context.lineWidth = 10
+  context.beginPath()
+  context.moveTo(40, 0)
+  context.lineTo(40, 600)
+  context.stroke()
+  context.beginPath()
+  context.moveTo(380, 0)
+  context.lineTo(380, 600)
+  context.stroke()
+  context.beginPath()
+  context.lineWidth = 5
+  context.setLineDash([30, 20])
+  context.moveTo(211, 610);
+  context.lineTo(211, 0);
+  context.stroke();
+};
 
 let gameIsRunning = true;
 //--CAR-------------------------
@@ -43,108 +74,95 @@ class Car {
   }
 }
 
+//---New Car:------------------------
+const car = new Car();
+
+
+
+//--------------car done--------------------<
+
+//--------------Obstacles--------------------->
+
 class Obstacle {
   constructor(positionY) {
     this.positionX = 0;
     this.positionY = positionY;
-    this.height = 30;
-    this.width = 400;
+    this.height = 10;
+    this.width = 100;
     this.setRandomPosition();
   }
 
   setRandomPosition() {
-    this.positionY = Math.random() * 300;
-    this.width = 70 + Math.random() * 200;
+    this.positionX = Math.random() * 250;
+    this.width = 100 + Math.random() * 100;
   }
-  moveObstacle() {
-    obstacle.positionY += 0.5;
-    // this.checkCollision();
-  }
-  paint() {
-    context.fillStyle = "orange"
+
+  drawObstacle() {
+    context.fillStyle = "greenyellow"
     context.fillRect(this.positionX, this.positionY, this.width, this.height)
   }
 
+  checkCollision() {
+    const carX = car.carX;
+    const carY = car.carY;
+    const carWidth = 100;
+    const carHeight = 150;
+
+    const obstacleX = this.x;
+    const obstacleY = this.y;
+    const obstacleWidth = this.width;
+    const obstacleHeight = this.height;
+
+    if (
+      carX + carWidth > obstacleX &&
+      carX < obstacleX + obstacleWidth &&
+      carY + carHeight > obstacleY &&
+      carY < obstacleY + obstacleHeight
+    ) {
+      gameIsRunning = false;
+      console.log('Hit');
+    }
+  }
+  runLogic() {
+    this.positionY += 2.5;
+    this.checkCollision();
+  }
 
 };
 
-const obstacle = new Obstacle();
 
-
-//---New Car:------------------------
-const car = new Car();
-
-//---CLEAN CANVAS---------------------------
-const cleanCanvas = () => {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-};
-
-
-
-//---ROAD:------------------------
-const drawRoad = () => {
-  context.strokeStyle = "#fff"
-  context.fillStyle = 'green'
-  context.fillRect(0, 0, 420, 600)
-  context.fillStyle = "gray"
-  context.fillRect(30, 0, 360, 600)
-  context.setLineDash([0])
-  context.lineWidth = 10
-  context.beginPath()
-  context.moveTo(40, 0)
-  context.lineTo(40, 600)
-  context.stroke()
-  context.beginPath()
-  context.moveTo(380, 0)
-  context.lineTo(380, 600)
-  context.stroke()
-  context.beginPath()
-  context.lineWidth = 5
-  context.setLineDash([30, 20])
-  context.moveTo(211, 610);
-  context.lineTo(211, 0);
-  context.stroke();
-};
-
-const obstacles = [];
-for (let i = 0; i < 100; i++) {
-  console.log("teste de obst")
-  const obstacle = new Obstacle(i * 100)
+let obstacles = [];
+for (let i = 0; i < 50; i++) {
+  let obstacle = new Obstacle(i * -200);
   obstacles.push(obstacle);
-};
+}
 
+
+let runLogic = () => {
+  for (let obstacle of obstacles) {
+    obstacle.runLogic();
+  }
+};
+//>--------------------obstaclesdone---------------<
 const paintAll = () => {
   drawRoad();
   car.paint();
-  moveObstacles();
-
-  /*for (let obstacle of obstacles) {
-    obstacle.paint();
-  }*/
-};
-
-
-const moveObstacles = () => {
   for (let obstacle of obstacles) {
-    obstacle.moveObstacle();
+    obstacle.drawObstacle();
   }
 };
 
-const loop = (timestamp) => {
+
+let loop = (timestamp) => {
+  runLogic();
   paintAll();
-  moveObstacles();
   if (gameIsRunning) {
     window.requestAnimationFrame(loop);
   }
 };
 
 
+
 const startGame = () => {
   loop();
-  // ----- move to the game logic or the loop
-  /*for (let obstacle of loadobstacles) {
-    obstacle.moveObstacle();
-  }
-  */
 }
-
