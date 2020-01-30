@@ -6,14 +6,18 @@ window.onload = function () {
     startGame();
   }
 };
-let gameIsRunning = true;
 
+
+let gameIsRunning = true;
 //--CAR-------------------------
 class Car {
   constructor() {
     this.positionX = 220;
     this.positionY = 420;
-    this.speed = 20;
+    this.speed = 50;
+    this.carUrl = './images/car.png';
+    this.imageCar = new Image();
+    this.imageCar.src = this.carUrl;
     this.setKeyboardEventListeners();
   }
 
@@ -21,27 +25,51 @@ class Car {
     window.addEventListener('keydown', event => {
       switch (event.key) {
         case 'ArrowLeft':
-          console.log("Left")
           this.positionX -= this.speed
+          console.log("Left");
+          // paintAll();
           break;
         case 'ArrowRight':
-          console.log("Right")
           this.positionX += this.speed
+          console.log("Right")
+          // paintAll();
           break;
       }
     });
   }
 
   paint() {
-    const carUrl = './images/car.png';
-    const imageCar = new Image();
-    imageCar.src = carUrl;
-    console.log("paint has been called")
-    imageCar.addEventListener("load", () => {
-      context.drawImage(imageCar, this.positionX, this.positionY, 50, 100);
-    })
+    context.drawImage(this.imageCar, this.positionX, this.positionY, 50, 100);
   }
 }
+
+class Obstacle {
+  constructor(positionY) {
+    this.positionX = 0;
+    this.positionY = positionY;
+    this.height = 30;
+    this.width = 400;
+    this.setRandomPosition();
+  }
+
+  setRandomPosition() {
+    this.positionY = Math.random() * 300;
+    this.width = 70 + Math.random() * 200;
+  }
+  moveObstacle() {
+    obstacle.positionY += 0.5;
+    // this.checkCollision();
+  }
+  paint() {
+    context.fillStyle = "orange"
+    context.fillRect(this.positionX, this.positionY, this.width, this.height)
+  }
+
+
+};
+
+const obstacle = new Obstacle();
+
 
 //---New Car:------------------------
 const car = new Car();
@@ -50,6 +78,8 @@ const car = new Car();
 const cleanCanvas = () => {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 };
+
+
 
 //---ROAD:------------------------
 const drawRoad = () => {
@@ -76,18 +106,45 @@ const drawRoad = () => {
   context.stroke();
 };
 
-const loop = timestamp => {
+const obstacles = [];
+for (let i = 0; i < 100; i++) {
+  console.log("teste de obst")
+  const obstacle = new Obstacle(i * 100)
+  obstacles.push(obstacle);
+};
+
+const paintAll = () => {
   drawRoad();
   car.paint();
-  cleanCanvas();
+  moveObstacles();
 
+  /*for (let obstacle of obstacles) {
+    obstacle.paint();
+  }*/
+};
+
+
+const moveObstacles = () => {
+  for (let obstacle of obstacles) {
+    obstacle.moveObstacle();
+  }
+};
+
+const loop = (timestamp) => {
+  paintAll();
+  moveObstacles();
   if (gameIsRunning) {
     window.requestAnimationFrame(loop);
   }
-
 };
 
-function startGame() {
+
+const startGame = () => {
   loop();
-};
+  // ----- move to the game logic or the loop
+  /*for (let obstacle of loadobstacles) {
+    obstacle.moveObstacle();
+  }
+  */
+}
 
