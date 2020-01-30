@@ -1,71 +1,72 @@
 const $canvas = document.querySelector('canvas');
 const context = $canvas.getContext('2d');
-let gameIsRunning = false;
-let gameEnd = true;
+let gameIsRunning = true;
+
 
 class Car {
   constructor() {
-    this.positionX = context.canvas.width / 2;
-    this.positionY = context.canvas.height - 75;
-    this.dimensionsX = 50;
-    this.dimensionsY = 75;
-    this.speed = 20;
+    this.positionX = 135;
+    this.positionY = 450;
+    this.width = 45;
+    this.height = 80;
 
     this.setKeyboardEventListeners();
   }
+
   paint() {
-    const imageUrl = './images/car.png';
-    const image = new Image();
-    image.src = imageUrl;
-    context.drawImage(image, this.positionX, this.positionY, 50, 75);
+    const carPath = './images/car.png';
+    const car = new Image();
+    car.src = carPath;
+
+    context.drawImage(car, this.positionX, this.positionY, this.width, this.height);
+   
   }
 
   setKeyboardEventListeners() {
     window.addEventListener('keydown', event => {
-      switch (event.key) {
-        case 'ArrowRight':
-          if (this.positionX + this.dimensionsX < context.canvas.width - 50) {
-            this.positionX += this.speed;
+      switch (event.keyCode) {
+        case 37:
+          if (this.positionX > 0) {
+            this.positionX -= 10;
           }
+     
           break;
-        case 'ArrowLeft':
-          if (this.positionX + this.dimensionsX > 0) {
-            this.positionX -= this.speed;
+        case 39:
+          if (this.positionX + this.width < context.canvas.width) {
+            this.positionX += 10;
           }
+       
           break;
       }
     });
   }
 }
-const car = new Car();
+const newCar = new Car();
 class Obstacle {
   constructor(positionY) {
     this.positionX = 0;
     this.positionY = positionY;
-    this.height = 30;
-    this.width = 30;
+    this.height = 20;
+    this.width = 0;
 
     this.setRandomPosition();
   }
 
-  setRandomPosition() {
-    this.positionX = Math.random() * 400;
-    this.width = 100 + Math.random() * 100;
-  }
-
   paint() {
+    context.fillStyle = 'red';
     context.fillRect(this.positionX, this.positionY, this.width, this.height);
   }
 
-  runLogic() {
-    this.positionY += 1.5;
-    this.checkCollision();
+  setRandomPosition() {
+    this.positionX = Math.random() * 200;
+    this.width = 90 + Math.random() * 100;
   }
+
   checkCollision() {
-    const carX = car.positionX;
-    const carY = car.positionY;
-    const carWidth = car.dimensions;
-    const carHeight = car.dimensions;
+    const carX = newCar.positionX;
+    const carY = newCar.positionY;
+    const carWidth = newCar.width;
+    const carHeight = newCar.height;
 
     const obstacleX = this.positionX;
     const obstacleY = this.positionY;
@@ -78,8 +79,14 @@ class Obstacle {
       carY + carHeight > obstacleY &&
       carY < obstacleY + obstacleHeight
     ) {
-      gameEnd = false;
+      gameIsRunning = false;
+      console.log('Hit');
     }
+  }
+
+  runLogic() {
+    this.positionY += 2.5;
+    this.checkCollision();
   }
 }
 
@@ -90,34 +97,32 @@ for (let i = 0; i < 100; i++) {
   obstacles.push(obstacle);
 }
 
+const cleanCanvas = () => {
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+};
+
 const runLogic = () => {
   for (let obstacle of obstacles) {
     obstacle.runLogic();
   }
-};
+}; 
 
-window.onload = function() {
-  document.getElementById('start-button').onclick = function() {
-    gameIsRunning = true;
 
-    const paint = () => {
+const paint = () => {
+      cleanCanvas();
       drawBackground();
-      car.paint();
+      newCar.paint();
 
       for (let obstacle of obstacles) {
         obstacle.paint();
       }
     };
 
-    function startGame() {
-      paint();
-    }
 
-    const cleanCanvas = () => {
-      startGame();
-    };
+ 
+    
 
-    startGame();
+ 
 
     function drawBackground() {
       context.beginPath();
@@ -152,13 +157,21 @@ window.onload = function() {
     }
 
     const loop = timestamp => {
-      if (gameIsRunning && gameEnd) {
-        paint();
-        runLogic();
+      runLogic();
+      paint();
+      if (gameIsRunning){
+       window.requestAnimationFrame(loop);
       }
-      window.requestAnimationFrame(loop);
     };
 
-    loop();
-  };
-};
+    window.onload = function() {
+      document.getElementById("start-button").onclick = function() {
+   
+        startGame();
+      };
+    
+      function startGame() {
+    
+        loop();
+      }
+    };
