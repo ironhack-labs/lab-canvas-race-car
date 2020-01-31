@@ -3,6 +3,13 @@ window.onload = function() {
     startGame();
   };
 
+  
+  const scoreTeste = 1;
+  const score  = document.getElementById('score');
+  
+  
+  
+
   let gameIsRunning = true;
 
   const $canvas = document.querySelector('canvas');
@@ -112,6 +119,7 @@ window.onload = function() {
 
   };
 
+  let score1 =0;
   //--OBSTACLES-------------------------------------------------
 
   class Obstacle {
@@ -120,6 +128,7 @@ window.onload = function() {
       this.positionY = positionY;
       this.height = 30;
       this.width = 0;
+      this.score = 0;
 
       this.setRandomPosition();
     }
@@ -146,15 +155,38 @@ window.onload = function() {
         carX < obstacleX + obstacleWidth &&
         carY + carHeight > obstacleY &&
         carY < obstacleY + obstacleHeight){
-        gameIsRunning = false;
-      }
+          gameIsRunning = false;
+      } 
+
+    }
+
+    checkScore(){
+
+        const carX = car.positionX;
+        const carY = 500;
+        const carWidth = 50;
+        const carHeight = 100;
+    
+        const obstacleX = this.positionX;
+        const obstacleY = this.positionY;
+        const obstacleWidth = this.width;
+        const obstacleHeight = this.height;
+        const scoreCheck = this.score;
+        
+        if (carY === obstacleY){
+            score1++;
+            document.getElementById('score').innerHTML = score1;
+            console.log('obstacleY: '+ obstacleY)
+            console.log('SCOREE '+score1);
+        } 
     }
 
     runLogic() {
-      this.positionY += 1.5;
-      console.log('teste do logic');
+      this.positionY += 2;
+      //console.log('teste do logic');
       //console.log('Position Obstac. ' + this.positionY);
       this.checkCollision();
+      this.checkScore();
     }
 
     paint() {
