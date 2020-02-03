@@ -15,6 +15,7 @@ window.onload = function() {
     timerT();
   };
 };
+//loop
 const startGame = timestamp => {
   drawBoard();
   for (let obstacles of loadObst) {

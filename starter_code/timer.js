@@ -8,3 +8,12 @@ const timerT = () => {
     }
   }, 1000);
 };
+/*
+const restart =()=>{
+  let carImg = new Image();
+  carImg.src = './images/car.png';
+  for (let i = 0; i < 100; i++) {
+    let obst = new Obstacle(i * -500 + Math.random() * -100);
+    loadObst.push(obst);
+  }
+};*/
