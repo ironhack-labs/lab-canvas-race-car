@@ -3,12 +3,8 @@ window.onload = function() {
     startGame();
   };
 
-  
   const scoreTeste = 1;
-  const score  = document.getElementById('score');
-  
-  
-  
+  const score = document.getElementById('score');
 
   let gameIsRunning = true;
 
@@ -91,13 +87,13 @@ window.onload = function() {
 
           case 39:
             console.log('Right');
-            if (this.positionX < context.canvas.width-50) {
+            if (this.positionX < context.canvas.width - 50) {
               //console.log('test Right');
               this.positionX += this.speed;
               //console.log(this.positionX + ' right');
             }
             break;
-          }
+        }
       });
     }
 
@@ -105,7 +101,7 @@ window.onload = function() {
       const carUrl = './images/car.png';
       const imageCar = new Image();
       imageCar.src = carUrl;
-      context.drawImage(imageCar, this.positionX, 500, 50, 100);//STATIC!!!!!!!!!!!!!!!!!
+      context.drawImage(imageCar, this.positionX, 500, 50, 100); //STATIC!!!!!!!!!!!!!!!!!
       //console.log(this.positionX + '!!!!!!!!! in the car.paint()');
     }
   }
@@ -116,10 +112,9 @@ window.onload = function() {
   //---CLEAN CANVAS---------------------------
   const cleanCanvas = () => {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
   };
 
-  let score1 =0;
+  let score1 = 0;
   //--OBSTACLES-------------------------------------------------
 
   class Obstacle {
@@ -138,47 +133,45 @@ window.onload = function() {
       this.width = 100 + Math.random() * 100;
     }
 
-    
-    checkCollision () {
+    checkCollision() {
       const carX = car.positionX;
       const carY = 500;
       const carWidth = 50;
       const carHeight = 100;
-  
+
       const obstacleX = this.positionX;
       const obstacleY = this.positionY;
       const obstacleWidth = this.width;
       const obstacleHeight = this.height;
-      
+
       if (
         carX + carWidth > obstacleX &&
         carX < obstacleX + obstacleWidth &&
         carY + carHeight > obstacleY &&
-        carY < obstacleY + obstacleHeight){
-          gameIsRunning = false;
-      } 
-
+        carY < obstacleY + obstacleHeight
+      ) {
+        gameIsRunning = false;
+      }
     }
 
-    checkScore(){
+    checkScore() {
+      const carX = car.positionX;
+      const carY = 500;
+      const carWidth = 50;
+      const carHeight = 100;
 
-        const carX = car.positionX;
-        const carY = 500;
-        const carWidth = 50;
-        const carHeight = 100;
-    
-        const obstacleX = this.positionX;
-        const obstacleY = this.positionY;
-        const obstacleWidth = this.width;
-        const obstacleHeight = this.height;
-        const scoreCheck = this.score;
-        
-        if (carY === obstacleY){
-            score1++;
-            document.getElementById('score').innerHTML = score1;
-            console.log('obstacleY: '+ obstacleY)
-            console.log('SCOREE '+score1);
-        } 
+      const obstacleX = this.positionX;
+      const obstacleY = this.positionY;
+      const obstacleWidth = this.width;
+      const obstacleHeight = this.height;
+      const scoreCheck = this.score;
+
+      if (carY === obstacleY) {
+        score1++;
+        document.getElementById('score').innerHTML = score1;
+        console.log('obstacleY: ' + obstacleY);
+        console.log('SCOREE ' + score1);
+      }
     }
 
     runLogic() {
@@ -193,7 +186,6 @@ window.onload = function() {
       context.save();
       context.fillStyle = 'red';
       context.fillRect(this.positionX, this.positionY, this.width, this.height);
-
     }
   }
 
@@ -230,7 +222,6 @@ window.onload = function() {
   const loop = timestamp => {
     paint();
     runLogic();
-    
 
     if (gameIsRunning) {
       window.requestAnimationFrame(loop);
