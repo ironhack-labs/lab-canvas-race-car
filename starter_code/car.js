@@ -1,5 +1,5 @@
-var $canvas = document.querySelector('canvas');
-var context = $canvas.getContext('2d');
+// var $canvas = document.querySelector('canvas');
+// var context = $canvas.getContext('2d');
 
 class Car {
   constructor(x) {
@@ -33,7 +33,7 @@ class Car {
     window.addEventListener('keydown', event => {
       switch (event.keyCode) {
         case 37:
-          console.log('im left');
+          //console.log('im left');
           if (this.x > 10) {
             this.moveLeft();
           }
@@ -42,7 +42,7 @@ class Car {
           }
           break;
         case 39:
-          console.log('im right');
+          //console.log('im right');
           if (this.x < 400) {
             this.moveRight();
           }

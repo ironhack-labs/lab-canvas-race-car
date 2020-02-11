@@ -1,4 +1,8 @@
-var $canvas = document.querySelector('canvas');
+const $canvas = document.querySelector('canvas');
+
+const game = new Game($canvas);
+
+//var $canvas = document.querySelector('canvas');
 var context = $canvas.getContext('2d');
 const width = $canvas.width;
 const height = $canvas.height;
