@@ -3,7 +3,7 @@ window.onload = () => {
     startGame();
   };
   let ctx = document.getElementById("canvas").getContext("2d");
-
+  let runningGame = true
   let car = {
     x: 220,
     y: 500,
@@ -55,6 +55,16 @@ window.onload = () => {
         break;
     }
   };
+  // document.onkeydown = function (e) {
+  //   if (e.keyCode === 'ArrowRight') {
+  //     car.leftPressed();
+
+  //   }
+  //   if (e.keyCode === ' ArrowLeft') {
+  //     car.rightPressed();
+
+  //   }
+  // };
 
   function startGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -67,10 +77,14 @@ window.onload = () => {
       e.update()
     })
     if (counter % 120 === 0) {
-      obstaclesArr.push(new Obstacle(0, 200))
-      obstaclesArr.push(new Obstacle(400, 100))
-      obstaclesArr.push(new Obstacle(300, 50))
+      let randomHeight = Math.floor(Math.random() * (600 - 100))
+      let randomWidth = Math.floor(Math.random() * (400 - 100))
+      obstaclesArr.push(new Obstacle(randomHeight, randomWidth))
+      obstaclesArr.push(new Obstacle(randomHeight, randomWidth))
+      obstaclesArr.push(new Obstacle(randomHeight, randomWidth))
     }
-    window.requestAnimationFrame(startGame);
+    if (runningGame) {
+      window.requestAnimationFrame(startGame);
+    }
   }
 };
