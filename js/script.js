@@ -4,6 +4,8 @@ const ctx = canvas.getContext('2d');
 let frames = 0;
 let timerId;
 let obstacles = [];
+let score = 0
+ctx.font = '600 40px Arial';
 
 // Build classes
 class Vehicle {
@@ -21,10 +23,13 @@ class Vehicle {
     }
 
     detectCollision(obstacle) {
+        const toleranceWidth = this.width - 10
+        const toleranceHeight = this.width - 10
+
         if (this.x < obstacle.x + obstacle.width &&
-            this.x + this.width > obstacle.x &&
+            this.x + toleranceWidth > obstacle.x &&
             this.y < obstacle.y + obstacle.height &&
-            this.y + this.height > obstacle.y) {
+            this.y + toleranceHeight > obstacle.y) {
             return true
         }
     }
@@ -91,7 +96,12 @@ function generateObstacles() {
 }
 
 function drawObstacles() {
-    obstacles.forEach((obstacle) => {
+    obstacles.forEach((obstacle, index) => {
+        if (obstacle.y > canvas.height) {
+            score++
+            return obstacles.splice(index, 1)
+        }
+
         obstacle.draw()
 
         if (car.detectCollision(obstacle)) {
@@ -110,6 +120,7 @@ function update() {
 
     generateObstacles();
     drawObstacles()
+    ctx.fillText(score, 32, 64)
 
     if (timerId) {
         timerId = requestAnimationFrame(update);
