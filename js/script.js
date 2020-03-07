@@ -1,9 +1,11 @@
+// Declare variables
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let frames = 0;
 let timerId;
 let obstacles = [];
 
+// Build classes
 class Vehicle {
     constructor(x, y) {
         this.x = x;
@@ -16,6 +18,15 @@ class Vehicle {
 
     draw() {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    }
+
+    detectCollision(obstacle) {
+        if (this.x < obstacle.x + obstacle.width &&
+            this.x + this.width > obstacle.x &&
+            this.y < obstacle.y + obstacle.height &&
+            this.y + this.height > obstacle.y) {
+            return true
+        }
     }
 }
 
@@ -37,6 +48,16 @@ class Background {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         ctx.drawImage(this.img, this.x, this.y - canvas.height, this.width, this.height);
     }
+
+    gameOver() {
+        clearInterval(timerId);
+
+        ctx.font = "30px Avenir";
+        ctx.fillText("Game Over", 180, 320);
+        timerId = undefined;
+
+        return true
+    }
 }
 
 class Obstacle {
@@ -57,10 +78,11 @@ class Obstacle {
 const road = new Background();
 const car = new Vehicle((canvas.width / 2) - 40, canvas.height - 160 - 40);
 
+//Utilities
 function generateObstacles() {
     if (frames % 100 === 0) {
         const minWidth = canvas.width / 3
-        const maxWidth = canvas.width - car.width - 110
+        const maxWidth = canvas.width - 250
         const randomWidth = minWidth + Math.random() * (maxWidth - minWidth)
         const randomX = 55 + Math.random() * ((canvas.width - randomWidth) - 55)
         const obstacle = new Obstacle(randomX, 0, randomWidth)
@@ -69,8 +91,12 @@ function generateObstacles() {
 }
 
 function drawObstacles() {
-    obstacles.forEach((obstacle, index) => {
+    obstacles.forEach((obstacle) => {
         obstacle.draw()
+
+        if (car.detectCollision(obstacle)) {
+            road.gameOver();
+        }
     })
 }
 
@@ -85,7 +111,9 @@ function update() {
     generateObstacles();
     drawObstacles()
 
-    timerId = requestAnimationFrame(update);
+    if (timerId) {
+        timerId = requestAnimationFrame(update);
+    }
 }
 
 // Event listener
@@ -108,6 +136,6 @@ window.onload = () => {
             }
         })
 
-        requestAnimationFrame(update);
+        timerId = requestAnimationFrame(update);
     }
 };
