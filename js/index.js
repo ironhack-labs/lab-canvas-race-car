@@ -48,10 +48,6 @@ window.onload = () => {
   // }
   // img.onload = updateCanvas;
 
-
-  const scoreTeste = 1;
-  const score = document.getElementById('score');
-
   let gameIsRunning = true;
 
 
