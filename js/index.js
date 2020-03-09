@@ -2,6 +2,8 @@ window.onload = () => {
 
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext('2d');
+  canvas.height = 700;
+  canvas.width = 500;
 
   let backgroundRoad = new Image();
   backgroundRoad.src = "./images/road.png";
@@ -28,11 +30,11 @@ window.onload = () => {
   //   },
 
   //   // draw: function() {
-  //   //   ctx.drawImage(this.img, this.x, 0);
+  //   //   ctx.drawImage(this.backgroundRoad, this.x, 0);
   //   //   if (this.speed < 0) {
-  //   //     ctx.drawImage(this.img, this.x + canvas.width, 0);
+  //   //     ctx.drawImage(this.backgroundRoad, this.x + canvas.width, 0);
   //   //   } else {
-  //   //     ctx.drawImage(this.img, this.x - this.img.width, 0);
+  //   //     ctx.drawImage(this.backgroundRoad, this.x - this.backgroundRoad.width, 0);
   //   //   }
   //   },
   // };
@@ -46,9 +48,7 @@ window.onload = () => {
   //   requestAnimationFrame(updateCanvas);
 
   // }
-  // img.onload = updateCanvas;
-
-  let gameIsRunning = true;
+  // backgroundRoad.onload = updateCanvas;
 
 
   function startGame() {
@@ -56,12 +56,15 @@ window.onload = () => {
     draw();
   }
 
+  let gameIsRunning = true;
+
   let carObj = {
 
     x: 180,
     y: 450,
     width: 60,
     height: 120,
+
     turnLeft: function () {
 
       if (this.x > -45) {
@@ -110,9 +113,9 @@ window.onload = () => {
       const obstacleHeight = this.height;
   
       if (
-        carX + carWidth > obstacleX &&
-        carX < obstacleX + obstacleWidth &&
-        carY + carHeight > obstacleY &&
+        carX + carWidth > obstacleX ||
+        carX < obstacleX + obstacleWidth ||
+        carY + carHeight > obstacleY ||
         carY < obstacleY + obstacleHeight
       ) {
         gameIsRunning = false;
@@ -156,7 +159,11 @@ window.onload = () => {
 
     if (gameIsRunning) {
       window.requestAnimationFrame(draw);
+
+      checkCollision();
     }
+
+  
   
   }
 
