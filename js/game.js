@@ -4,10 +4,12 @@ class Game {
     this.context = canvas.getContext("2d");
     this.width = canvas.width;
 		this.height = canvas.height;
-    this.Background = new Background (this)
+    this.background = new Background (this)
+    this.player = new Player (this)
   }
   start() {
-    this.Background.draw()
+    this.background.draw()
+    this.player.draw()
     // this.Background.draw()
   }
 }
