@@ -15,12 +15,29 @@ class Player {
 
     draw() {
         this.context.save();
-        this.context.drawImage(this.image,this.x, this.y, this.width, this.height);
+        this.context.drawImage(this.image, this.x, this.y, this.width, this.height);
         this.context.restore();
     }
 
     update() {
         this.x += this.speedX;
+        if (this.x < this.width * 2) {
+            this.speedX = 0;
+            this.x = this.width * 2;
+
+        }
+
+        if (this.x + (this.width * 3) > game.width) {
+            this.speedX = 0;
+            this.x = game.width - (this.width * 3);
+        }
+        // if (this.x <= 80) {
+        //     this.speedX = 0;
+        // }
+
+        // if (this.x >= game.width - 40 - 160) {
+        //     this.speedX = 0;
+        // }
 
     }
 
@@ -30,18 +47,18 @@ class Player {
 
                 case 39: // right key
                     this.speedX = 3;
-                    if (this.x + (this.width * 3) > game.width) {
-                        this.speedX = 0;
-                        this.x = game.width - (this.width *3);
-                    }
+                    // if (this.x + (this.width * 3) > game.width) {
+                    //     this.speedX = 0;
+                    //     this.x = game.width - (this.width *3);
+                    // }
                     break;
                 case 37: // left key
                     this.speedX = -3;
-                    if (this.x < this.width*2) {
-                        this.speedX = 0;
-                        this.x = this.width * 2;
+                    // if (this.x < this.width*2) {
+                    //     this.speedX = 0;
+                    //     this.x = this.width * 2;
 
-                    }
+                    // }
                     break;
             }
         });

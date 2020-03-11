@@ -3,8 +3,8 @@ class Obstacle {
         this.context = game.context;
         this.xMin = 80;
         this.xMax = game.width - 160;
-        this.wMin = 60;
-        this.wMax = game.width / 2 - 80;
+        this.wMin = 80;
+        this.wMax = 150;
         this.width = Math.floor(Math.random() * (this.wMax - this.wMin + 1)) + this.wMin;
         this.height = 20;
         this.x = Math.floor(Math.random() * (this.xMax - this.xMin + 1)) + this.xMin;

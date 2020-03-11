@@ -21,6 +21,7 @@ class Game {
         this.startingLine.width = this.width - 160;
         this.score = 0;
         this.difficultyLevel = 120;
+        this.lives = 3;
     }
 
     start() {
@@ -47,7 +48,7 @@ class Game {
         this.context.fillStyle = "white";
         this.context.font = "25px monospace";
         this.context.fillText(`Score: ${this.score}`, 105, 80);
-        
+
         if (this.difficultyLevel === 120) {
             this.context.fillStyle = "green";
             this.context.fillText(`Difficulty: Easy`, 105, 120);
@@ -70,7 +71,7 @@ class Game {
         this.obstacles = [];
         // this.obstacle = new Obstacle (this);
         this.frame = 0;
-        this.score= 0;
+        this.score = 0;
         this.difficultyLevel = 120;
         this.gameOn = true;
     }
@@ -118,29 +119,29 @@ class Game {
         this.startingLine.update();
 
 
-        
+
         if (this.frame % this.difficultyLevel === 0) {
             this.obstacles.push(new Obstacle(this));
         }
-        
+
         if (this.frame % 30 === 0) {
             this.road.push(new Road(this));
         }
-        
+
         for (let i = 0; i < this.road.length; i++) {
             this.road[i].update();
             if (this.road[i].y + this.road[i].height > this.height) {
                 this.road.shift();
             }
-            
+
         }
-        
+
         for (let i = 0; i < this.obstacles.length; i++) {
             this.obstacles[i].update();
             if (this.obstacles[i].y + this.obstacles[i].height > this.height) {
                 this.obstacles.shift();
             }
-            
+
             if (this.obstacles[i].y === this.player.y) {
                 this.score++;
                 if (this.score % 10 === 0) {
@@ -153,11 +154,16 @@ class Game {
             }
             if (this.player.crashWith(this.obstacles[i])) {
                 // stop the animation if it detects a collision and draws game over text
+                this.lives -= 1;
+                this.obstacles.splice(i,1);
+                console.log(this.lives)
                 
-                this.gameOver();
-                
+                if (this.lives === 0) {
+                    this.gameOver();
+                }
+
             }
-            
+
         }
     }
 
@@ -174,4 +180,17 @@ class Game {
         });
 
     }
-} 
+
+    renderLives() {
+        if (this.lives === 3) {
+
+        } else if (this.lives === 2) {
+
+        } else if (this.lives === 1) {
+
+        }
+    }
+
+
+
+}
