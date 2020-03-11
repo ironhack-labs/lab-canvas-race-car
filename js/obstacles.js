@@ -2,7 +2,7 @@ class Obstacle {
 	constructor(game) {
     this.game = game
 		this.context = game.context;
-		this.width = 3;
+		this.width = Math.floor(Math.random() * 200);
 		this.height = 20;
 		this.x = Math.floor(Math.random() * this.game.width);
 		this.y = -20
