@@ -1,14 +1,14 @@
 class Obstacle {
 	constructor(game) {
+    this.game = game
 		this.context = game.context;
-		this.width = 20;
-		this.height = 50;
-		this.x = Math.floor(Math.random() * game.width);
-		this.y = game.height + this.height;
-		this.speed = 1;
+		this.width = 3;
+		this.height = 20;
+		this.x = Math.floor(Math.random() * this.game.width);
+		this.y = -20
+		this.speed = 3;
 	}
 	draw () {
-		console.log(obstacle)
 		this.context.save();
 		this.context.fillStyle = "red";
 		this.context.fillRect(this.x, this.y, this.width, this.height);
@@ -17,25 +17,4 @@ class Obstacle {
 	update() {
 		this.y += this.speed;
 	}
-	left() {
-    return this.x;
-  }
-  right() {
-    return this.x + this.width;
-  }
-  top() {
-    return this.y;
-  }
-  bottom() {
-    return this.y + this.height;
-  }
-
-  crashWith(obstacle) {
-    return !(
-      this.bottom() < obstacle.top() ||
-      this.top() > obstacle.bottom() ||
-      this.right() < obstacle.left() ||
-      this.left() > obstacle.right()
-    );
-  }
 }
