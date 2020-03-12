@@ -63,6 +63,7 @@ window.onload = () => {
 
 
   let interval = setInterval(updateGameArea, 20);
+  
   function startGame() {
     let imgRoad = new Image();
     imgRoad.src = `images/road.png`;
@@ -98,11 +99,11 @@ window.onload = () => {
       case 39:
         if (playerLeft <= 400) {
           playerLeft += 5;
-          playerRight = playerLeft + 50;
         }
         break;
-    }
-
+      }
+      
+      playerRight = playerLeft + 50;
   }
 
   function updatePlayer() {
