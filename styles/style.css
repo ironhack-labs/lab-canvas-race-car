@@ -36,3 +36,34 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+canvas{
+  background-image: url("/images/road.png");
+  background-size: cover;
+}
+
+.score{
+  color:brown;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.score h2 {
+  border: 2px solid brown;
+  width: 100px;
+  margin-left: 160px;
+
+}
+
+
+.time-count {
+  color:brown;
+  font-size: 20px;
+  font-family: "Verdana";
+}
+
+.time-count h2 {
+  border: 2px solid brown;
+  width: 100px;
+  margin-left: 160px;
+}
+
