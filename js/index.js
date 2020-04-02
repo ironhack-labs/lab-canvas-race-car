@@ -1,7 +1,7 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    app.startGame('canvas');
+    app.drawImage('car.png')
   };
-
-  function startGame() {}
 };
+
