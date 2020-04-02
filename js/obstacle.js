@@ -1,12 +1,13 @@
 class Obstacle {
       constructor(ctx, canvasSize, roadWidth, carWidth, grassWidth) {
+            //Información del canvas
             this.ctx = ctx
             this.canvasSize = {
                   width: canvasSize.width,
                   height: canvasSize.height
             }
-
-            this.speed = 1
+            //Velocidad
+            this.speed = 2
 
             this.height = 30
             //Se establece un ancho que sea superable por el vehiculo independientemente de la posicion horizontal
@@ -17,9 +18,8 @@ class Obstacle {
             this.posX = Number(Math.random() * (roadWidth - this.width)) + grassWidth
 
       }
-
+      //Pinta y mueve los obstaculos
       update() {
-
             this.draw()
             this.move()
       }

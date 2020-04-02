@@ -4,6 +4,7 @@ window.onload = () => {
     startGame();
   };
   function startGame() {
+    //Se comprueba que no haya un juego en curso
     !game.isplaying ? game.start('canvas') : null
 
   }

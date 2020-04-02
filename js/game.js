@@ -58,14 +58,21 @@ const game = {
       },
       //Método actualización del juego
       update() {
+            //Limpia el canvas
             this.clearScreen()
+            //Si hay una partida en juego
             if (this.isplaying) {
+                  //Pinta el fondo
                   this.drawRoad()
+                  //Mueve el coche y lo pinta
                   this.car.update()
+                  //Actualiza posición de bloques y los pinta
                   this.updateObstacles(this.timer)
+                  //Actualiza la puntuación
                   this.updateScore()
+                  //Actualiza el timer
                   this.timer += this.deltaTime
-            } else if (this.isGameOver) {
+            } else if (this.isGameOver) {                   //Si el jugador a perdido
                   this.showGameOver()
             }
       },
@@ -103,7 +110,7 @@ const game = {
 
       updateObstacles(timer) {
             //Cada 5 segundos crea un nuevo obstaculo y lo añade al final del array
-            timer % 5000 === 0 ? this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.roadWidth, this.car.width, this.grassWidth)) : null
+            timer % 2500 === 0 ? this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.roadWidth, this.car.width, this.grassWidth)) : null
 
             //Llama al método update() de cada obstaculo
             this.obstacles.forEach(elm => elm.update())
