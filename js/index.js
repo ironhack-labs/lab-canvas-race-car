@@ -3,5 +3,8 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  gameCar.init('canvas')
+  gameCar.drawBackground()
+  // function startGame() {}
+
 };
