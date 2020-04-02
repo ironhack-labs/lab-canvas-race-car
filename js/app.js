@@ -5,6 +5,7 @@ let gameApp = {
   car: undefined,
   canvasWidth: 500,
   canvasHeight: 700,
+  frames: undefined,
 
   init(id) {
     this.canvasDom = document.getElementById(id)
@@ -22,18 +23,33 @@ let gameApp = {
     this.background.drawBermLines()
   },
 
+  clearCanvas() {
+    this.ctx.clearRect(0,0,this.canvasWidth, this.canvasHeight)
+  },
+
   drawCar() {
-    this.car = new Car(this.ctx, this.canvasWidth/2-35, this.canvasHeight-160, 75, 160)
+    this.car = new Car(
+      this.ctx,
+      this.canvasWidth / 2 - 35,
+      this.canvasHeight - 160,
+      75,
+      160
+    )
     this.car.init()
+    setInterval(() => {
+      this.frames++
+      this.clearCanvas()
+      this.drawBackground()
+      this.car.draw()
+    })
   },
 
   setEventListeners() {
     document.onkeydown = e => {
-      e.keyCode === 37 ? this.car.move("left") : null
-      e.keyCode === 39 ? this.car.move("right") : null
+      e.keyCode === 37 ? this.car.move('left') : null
+      e.keyCode === 39 ? this.car.move('right') : null
     }
   }
-
 }
 
 class Background {
@@ -99,6 +115,7 @@ class Car {
       height: 700
     }
     this.car = undefined
+    this.vel = 10
   }
 
   draw() {
@@ -108,12 +125,13 @@ class Car {
   init() {
     this.car = new Image()
     this.car.src = 'images/car.png'
-    console.log("initialized!")
+    console.log('initialized!')
     this.car.onload = () =>
       this.ctx.drawImage(this.car, this.posX, this.posY, this.carW, this.carH)
   }
 
   move(dir) {
-    dir === "right" ? console.log("right") : console.log("left")
+    dir === 'right' ? (this.posX += this.vel) : null
+    dir === 'left' ? (this.posX -= this.vel) : null
   }
 }
