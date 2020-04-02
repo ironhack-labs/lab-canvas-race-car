@@ -7,6 +7,7 @@ let gameApp = {
   background: undefined,
   car: undefined,
   interval: undefined,
+  obstaclesDodged: 0,
   canvasWidth: 500,
   canvasHeight: 700,
   frames: 0,
@@ -46,7 +47,7 @@ let gameApp = {
       this.frames++
       this.clearCanvas()
       this.drawBackground()
-      this.frames % 150 === 0
+      this.frames % 100 === 0
         ? this.obstacles.push(new Obstacle(this.ctx))
         : null
       this.obstacles != 0
@@ -54,6 +55,10 @@ let gameApp = {
             elm.moveObstacle()
             elm.drawObstacle()
             elm.isCollision(this.car, elm) ? this.gameOver() : null
+            if (elm.posY > 700) {
+              this.obstaclesDodged ++
+              this.obstacles.shift()
+            }
           })
         : null
 
