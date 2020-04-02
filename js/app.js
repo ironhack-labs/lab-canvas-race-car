@@ -2,11 +2,15 @@ let gameApp = {
   canvasDom: undefined,
   ctx: undefined,
   background: undefined,
+  car: undefined,
+  canvasWidth: 500,
+  canvasHeight: 700,
 
   init(id) {
     this.canvasDom = document.getElementById(id)
     this.ctx = this.canvasDom.getContext('2d')
     this.drawBackground()
+    this.drawCar()
   },
 
   drawBackground() {
@@ -15,6 +19,11 @@ let gameApp = {
     this.background.drawHedges()
     this.background.drawMiddleLine()
     this.background.drawBermLines()
+  },
+
+  drawCar() {
+    this.car = new Car(this.ctx, this.canvasWidth/2-35, this.canvasHeight-160, 75, 160)
+    this.car.init()
   }
 }
 
@@ -49,7 +58,7 @@ class Background {
     this.ctx.closePath()
   }
 
-  drawBermLines(){
+  drawBermLines() {
     //left berm
     this.ctx.strokeStyle = '#DADADA'
     this.ctx.lineWidth = 10
@@ -67,5 +76,31 @@ class Background {
     this.ctx.stroke()
     this.ctx.closePath()
   }
+}
 
+class Car {
+  constructor(ctx, posX, posY, carW, carH) {
+    this.ctx = ctx
+    this.posX = posX
+    this.posY = posY
+    this.carW = carW
+    this.carH = carH
+    this.bgSize = {
+      width: 500,
+      height: 700
+    }
+    this.car = undefined
+  }
+
+  draw() {
+    this.ctx.drawImage(this.car, this.posX, this.posY, this.carW, this.carH)
+  }
+
+  init() {
+    this.car = new Image()
+    this.car.src = 'images/car.png'
+    console.log("initialized!")
+    this.car.onload = () =>
+      this.ctx.drawImage(this.car, this.posX, this.posY, this.carW, this.carH)
+  }
 }
