@@ -13,7 +13,6 @@ let gameApp = {
   frames: 0,
   obstacles: [],
 
-
   init(id) {
     this.canvasDom = document.getElementById(id)
     this.ctx = this.canvasDom.getContext('2d')
@@ -56,19 +55,19 @@ let gameApp = {
             elm.drawObstacle()
             elm.isCollision(this.car, elm) ? this.gameOver() : null
             if (elm.posY > 700) {
-              this.obstaclesDodged ++
+              this.obstaclesDodged++
               this.obstacles.shift()
             }
           })
         : null
-
+      score.innerText = gameApp.obstaclesDodged
       this.car.draw()
     }, 10)
   },
 
   gameOver() {
-    alert("CRASH! Game over")
-    document.location.reload();
+    alert(`CRASH! Game over. Your final score is ${this.obstaclesDodged}!`)
+    document.location.reload()
     window.clearInterval(this.interval)
   },
 
