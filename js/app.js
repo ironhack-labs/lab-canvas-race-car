@@ -6,10 +6,12 @@ let gameApp = {
   ctx: undefined,
   background: undefined,
   car: undefined,
+  interval: undefined,
   canvasWidth: 500,
   canvasHeight: 700,
   frames: 0,
   obstacles: [],
+
 
   init(id) {
     this.canvasDom = document.getElementById(id)
@@ -40,7 +42,7 @@ let gameApp = {
       160
     )
     this.car.init()
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.frames++
       this.clearCanvas()
       this.drawBackground()
@@ -51,12 +53,18 @@ let gameApp = {
         ? this.obstacles.forEach(elm => {
             elm.moveObstacle()
             elm.drawObstacle()
-            elm.isCollision(this.car, elm) ? console.log("CRASH!") : null
+            elm.isCollision(this.car, elm) ? this.gameOver() : null
           })
         : null
 
       this.car.draw()
     }, 10)
+  },
+
+  gameOver() {
+    alert("CRASH! Game over")
+    document.location.reload();
+    window.clearInterval(this.interval)
   },
 
   setEventListeners() {
