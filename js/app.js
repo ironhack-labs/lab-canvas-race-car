@@ -44,10 +44,14 @@ let gameApp = {
       this.frames++
       this.clearCanvas()
       this.drawBackground()
-      this.frames % 150 === 0 ? this.obstacles.push(new Obstacle(this.ctx)) : null
-      this.obstacles != 0 ? this.obstacles.forEach(elm => {
+      this.frames % 150 === 0
+        ? this.obstacles.push(new Obstacle(this.ctx))
+        : null
+      this.obstacles != 0
+        ? this.obstacles.forEach(elm => {
             elm.moveObstacle()
             elm.drawObstacle()
+            elm.isCollision(this.car, elm) ? console.log("CRASH!") : null
           })
         : null
 
@@ -142,7 +146,11 @@ class Car {
   }
 
   move(dir) {
-    dir === 'right' ? !this.isBorderCollisionWithRight() ? (this.posX += this.vel) : null : null
+    dir === 'right'
+      ? !this.isBorderCollisionWithRight()
+        ? (this.posX += this.vel)
+        : null
+      : null
     dir === 'left'
       ? !this.isBorderCollisionWithLeft()
         ? (this.posX -= this.vel)
@@ -162,10 +170,10 @@ class Car {
 class Obstacle {
   constructor(ctx) {
     this.ctx = ctx
-    this.posX = Math.floor(Math.random() * gameApp.canvasWidth) -50
+    this.posX = Math.floor(Math.random() * gameApp.canvasWidth) - 50
     this.posY = 0
-    this.obstacleWidth = Math.floor(Math.random() * 200) + 50
-    this.obstacleHeight = 45
+    this.width = Math.floor(Math.random() * 200) + 50
+    this.height = 45
     this.bgSize = {
       width: gameApp.canvasWidth,
       height: gameApp.canvasHeight
@@ -175,16 +183,19 @@ class Obstacle {
 
   drawObstacle() {
     this.ctx.fillStyle = '#D5BA12'
-    this.ctx.fillRect(
-      this.posX,
-      this.posY,
-      this.obstacleWidth,
-      this.obstacleHeight
-    )
+    this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
   }
 
   moveObstacle() {
     this.posY += this.vel
   }
 
+  isCollision(vehicle, obstacle) {
+    return (
+      vehicle.posX < obstacle.posX + obstacle.width &&
+      vehicle.posX + vehicle.carW > obstacle.posX &&
+      vehicle.posY < obstacle.posY + obstacle.height &&
+      vehicle.posY + vehicle.carH > obstacle.posY
+    )
+  }
 }
