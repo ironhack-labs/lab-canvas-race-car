@@ -24,11 +24,6 @@ const gameCar = {
             this.car.draw()
         }, 10)
     },
-    finishGame() {
-        alert("Te has chocao, menos whisky, bacalao")
-        document.location.reload();
-        window.clearInterval(this.interval)
-    },
     drawBackground() {
         this.ctx.fillStyle = 'green'
         this.ctx.fillRect(0, 0, 500, 700)
@@ -80,6 +75,11 @@ const gameCar = {
             car.posY < obstacle.posY + obstacle.height &&
             car.posY + car.height > obstacle.posY
         )
+    },
+    finishGame() {
+        alert("Te has chocao, menos whisky, bacalao")
+        document.location.reload();
+        window.clearInterval(this.interval)
     }
 
 }
