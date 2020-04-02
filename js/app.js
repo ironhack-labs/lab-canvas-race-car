@@ -24,7 +24,7 @@ let gameApp = {
   },
 
   clearCanvas() {
-    this.ctx.clearRect(0,0,this.canvasWidth, this.canvasHeight)
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
   },
 
   drawCar() {
@@ -111,8 +111,8 @@ class Car {
     this.carW = carW
     this.carH = carH
     this.bgSize = {
-      width: 500,
-      height: 700
+      width: gameApp.canvasWidth,
+      height: gameApp.canvasHeight
     }
     this.car = undefined
     this.vel = 10
@@ -131,7 +131,15 @@ class Car {
   }
 
   move(dir) {
-    dir === 'right' ? (this.posX += this.vel) : null
-    dir === 'left' ? (this.posX -= this.vel) : null
+    dir === 'right' ? !this.isBorderCollisionWithRight() ? (this.posX += this.vel) : null : null
+    dir === 'left' ? !this.isBorderCollisionWithLeft() ? (this.posX -= this.vel) : null : null
+  }
+
+  isBorderCollisionWithLeft() {
+    return this.posX <= 45 ? true : false
+  }
+
+  isBorderCollisionWithRight() {
+    return this.posX >= 385 ? true : false
   }
 }
