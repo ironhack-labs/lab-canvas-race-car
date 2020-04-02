@@ -1,11 +1,15 @@
 let gameApp = {
+  name: 'Canvas Island Racer',
+  author: 'Elvira Ramírez',
+  license: undefined,
   canvasDom: undefined,
   ctx: undefined,
   background: undefined,
   car: undefined,
   canvasWidth: 500,
   canvasHeight: 700,
-  frames: undefined,
+  frames: 0,
+  obstacles: [],
 
   init(id) {
     this.canvasDom = document.getElementById(id)
@@ -40,8 +44,15 @@ let gameApp = {
       this.frames++
       this.clearCanvas()
       this.drawBackground()
+      this.frames % 150 === 0 ? this.obstacles.push(new Obstacle(this.ctx)) : null
+      this.obstacles != 0 ? this.obstacles.forEach(elm => {
+            elm.moveObstacle()
+            elm.drawObstacle()
+          })
+        : null
+
       this.car.draw()
-    })
+    }, 10)
   },
 
   setEventListeners() {
@@ -115,7 +126,7 @@ class Car {
       height: gameApp.canvasHeight
     }
     this.car = undefined
-    this.vel = 10
+    this.vel = 25
   }
 
   draw() {
@@ -132,7 +143,11 @@ class Car {
 
   move(dir) {
     dir === 'right' ? !this.isBorderCollisionWithRight() ? (this.posX += this.vel) : null : null
-    dir === 'left' ? !this.isBorderCollisionWithLeft() ? (this.posX -= this.vel) : null : null
+    dir === 'left'
+      ? !this.isBorderCollisionWithLeft()
+        ? (this.posX -= this.vel)
+        : null
+      : null
   }
 
   isBorderCollisionWithLeft() {
@@ -142,4 +157,34 @@ class Car {
   isBorderCollisionWithRight() {
     return this.posX >= 385 ? true : false
   }
+}
+
+class Obstacle {
+  constructor(ctx) {
+    this.ctx = ctx
+    this.posX = Math.floor(Math.random() * gameApp.canvasWidth) -50
+    this.posY = 0
+    this.obstacleWidth = Math.floor(Math.random() * 200) + 50
+    this.obstacleHeight = 45
+    this.bgSize = {
+      width: gameApp.canvasWidth,
+      height: gameApp.canvasHeight
+    }
+    this.vel = 5
+  }
+
+  drawObstacle() {
+    this.ctx.fillStyle = '#D5BA12'
+    this.ctx.fillRect(
+      this.posX,
+      this.posY,
+      this.obstacleWidth,
+      this.obstacleHeight
+    )
+  }
+
+  moveObstacle() {
+    this.posY += this.vel
+  }
+
 }
