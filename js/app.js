@@ -11,6 +11,7 @@ let gameApp = {
     this.ctx = this.canvasDom.getContext('2d')
     this.drawBackground()
     this.drawCar()
+    this.setEventListeners()
   },
 
   drawBackground() {
@@ -24,7 +25,15 @@ let gameApp = {
   drawCar() {
     this.car = new Car(this.ctx, this.canvasWidth/2-35, this.canvasHeight-160, 75, 160)
     this.car.init()
+  },
+
+  setEventListeners() {
+    document.onkeydown = e => {
+      e.keyCode === 37 ? this.car.move("left") : null
+      e.keyCode === 39 ? this.car.move("right") : null
+    }
   }
+
 }
 
 class Background {
@@ -102,5 +111,9 @@ class Car {
     console.log("initialized!")
     this.car.onload = () =>
       this.ctx.drawImage(this.car, this.posX, this.posY, this.carW, this.carH)
+  }
+
+  move(dir) {
+    dir === "right" ? console.log("right") : console.log("left")
   }
 }
