@@ -5,6 +5,7 @@ const gameCar = {
     frames: 0,
     car: undefined,
     obstacles: [],
+    score: 0,
     init(id) {
         this.canvasDom = document.getElementById(id)
         this.ctx = this.canvasDom.getContext("2d")
@@ -20,7 +21,13 @@ const gameCar = {
                 obs.draw()
                 obs.move()
                 this.isCrashing(this.car, obs) ? this.finishGame() : null
+                if (obs.posY > 700) {
+                    this.scorePoints()
+                    this.obstacles.shift()
+                    console.log(this.obstacles)
+                }
             })
+            this.drawScore()
             this.car.draw()
         }, 10)
     },
@@ -59,6 +66,11 @@ const gameCar = {
         this.car = new Car(this.ctx, 230, 610, 40, 80)
         this.car.init()
     },
+    drawScore() {
+        this.ctx.fillStyle = 'black'
+        this.ctx.font = '20px sans-serif'
+        this.ctx.fillText(`Points: ${this.score}`, 70, 50)
+    },
     clearScreen() {
         this.ctx.clearRect(0, 0, 500, 700)
     },
@@ -76,12 +88,14 @@ const gameCar = {
             car.posY + car.height > obstacle.posY
         )
     },
+    scorePoints() {
+        this.score += 100
+    },
     finishGame() {
         alert("Te has chocao, menos whisky, bacalao")
         document.location.reload();
         window.clearInterval(this.interval)
     }
-
 }
 
 class Car {
