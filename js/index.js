@@ -16,6 +16,7 @@ window.onload = () => {
     car: undefined,
     interval: undefined,
     obstacles: [],
+    score: undefined,
     init(id) {
       this.canvasDom = document.getElementById(id)
       this.canvasDom.width = this.canvasSize.width
@@ -26,15 +27,15 @@ window.onload = () => {
 
       this.setEventListeners()
       this.interval = setInterval(() => {
-        //clear
         this.clearScreen()
-        //dibujar todo
         this.drawBackground()
         this.car.draw()
         this.updateObstacles()
-        //this.obstacle.drawObstacle()
-
-        // mover todo
+        this.score()
+        this.craswhith(this.car, this.obstacles)
+        this.obstacles.forEach(elm => {
+          this.craswhith(this.car, elm) ? this.stop() : null
+        })
       }, 50)
 
     },
@@ -65,10 +66,8 @@ window.onload = () => {
       }
     },
     updateObstacles() {
-      console.log('entro primera parte')
       this.frames += 1;
       if (this.frames % 80 === 0) {
-        console.log('entro segunda parte')
         let y = 0;
         let minWidth = 50;
         let maxWidth = 100;
@@ -77,22 +76,48 @@ window.onload = () => {
         let maxGap = 320;
         let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
         this.obstacles.push(new Obstacle(this.ctx, width, 30, '#890000', gap, y));
-        //this.obstacles.push(new Obstacle(this.ctx, width + gap, 30, '#890000', x, y));
         console.log(this.obstacles)
       }
       for (i = 0; i < this.obstacles.length; i += 1) {
         this.obstacles[i].y += 3;
         this.obstacles[i].drawObstacle();
       }
-    }
+    },
+    stop() {
+      //document.location.reload();
+      clearInterval(this.interval);
+      this.ctx.fillStyle = 'black'
+      this.ctx.fillRect(0, 0, 500, 200)
+      this.ctx.font = "50px serif";
+      this.ctx.fillStyle = "red";
+      this.ctx.fillText("Game Over", 120, 95);
+    },
 
+    craswhith(car, obstacle) {
+      if (car.x < obstacle.x + obstacle.width &&
+        car.x + car.width > obstacle.x &&
+        car.y < obstacle.y + obstacle.height &&
+        car.y + car.height > obstacle.y) {
+        console.log("hey")
+        stop()
+        return true
+      }
+
+    },
+    score() {
+      let points = Math.floor(this.frames / 5);
+      this.ctx.font = "28px serif";
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText("Score: " + points, 100, 550);
+    }
   }
 
+
   class Car {
-    constructor(ctx, posx, posy, width, height) {
+    constructor(ctx, x, y, width, height) {
       this.ctx = ctx
-      this.posx = posx
-      this.posy = posy
+      this.x = x
+      this.y = y
       this.width = width
       this.height = height
       this.vel = 20
@@ -101,13 +126,21 @@ window.onload = () => {
     draw() {
       this.car = new Image()
       this.car.src = "images/car.png"
-      this.car.onload = () => { this.ctx.drawImage(this.car, this.posx, this.posy, this.width, this.height) }
+      this.car.onload = () => { this.ctx.drawImage(this.car, this.x, this.y, this.width, this.height) }
     }
     move(dir) {
-      dir === 'left' ? this.posx += this.vel : null
-      dir === 'right' ? this.posx -= this.vel : null
+      if (this.x <= 60) {
+        this.x = 60
+      }
+      if (this.x >= 375) {
+        this.x = 375
+      }
+      dir === 'left' ? this.x += this.vel : null
+      dir === 'right' ? this.x -= this.vel : null
     }
+
   }
+
 
 
   class Obstacle {
@@ -120,10 +153,6 @@ window.onload = () => {
       this.y = y
       this.speedX = 0;
       this.speedY = 0;
-      // this.canvasSize = {
-      //   width: canvasSize.width,
-      //   height: canvasSize.height
-      // }
     }
     newPos() {
       this.x += this.speedX;
@@ -133,16 +162,9 @@ window.onload = () => {
       let ctx = startGame.ctx
       ctx.fillStyle = this.color
       ctx.fillRect(this.x, this.y, this.width, this.height)
-      //this.ctx.fillRect(80, 10, 150, 30)
-
-      //this.ctx.fillStyle = '#890000'
-      //this.ctx.fillRect(320, 20, 100, 30)
     }
 
   }
-
-
-
 
 }
 
