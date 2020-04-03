@@ -20,7 +20,7 @@ const gameCar = {
             this.obstacles.forEach(obs => {
                 obs.draw()
                 obs.move()
-                this.isCrashing(this.car, obs) ? this.finishGame() : null
+                this.isCrashing(this.car, obs) ? this.finishGame(this.score) : null
                 if (obs.posY > 700) {
                     this.scorePoints()
                     this.obstacles.shift()
@@ -91,8 +91,8 @@ const gameCar = {
     scorePoints() {
         this.score += 100
     },
-    finishGame() {
-        alert("Te has chocao, menos whisky, bacalao")
+    finishGame(score) {
+        alert(`GAME OVER TRON!\nLa has liao parda.\nTu puntuación es: ${score}`)
         document.location.reload();
         window.clearInterval(this.interval)
     }
