@@ -23,27 +23,17 @@ function startGame() {
     switch(event.key){
       case "ArrowRight":
         if(car.x < 450){
-        ctx.clearRect(0,550,500,150);
         car.x += 40;
-        road.show();
-        car.show();
-        console.log(event.key)   
         break;
         }
       
       case "ArrowLeft":
         if(car.x > 30){
-          ctx.clearRect(0,550,500,150);
           car.x -= 40;
-          road.show();
-          car.show();
-          console.log(event.key) 
-          console.log(event.key)
           break;
         }
     }
   })
-
   updateGame();
 };
 
@@ -97,14 +87,15 @@ const car = {
 };
 
 function updateGame(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  road.show();
-  car.show();
-  obstacles.createObstacle();
-  obstacles.show();
-  requestAnimationFrame(updateGame);
-  if(checkColision()){
-    gameOver();
+  if (!checkColision()){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    road.show();
+    car.show();
+    obstacles.createObstacle();
+    obstacles.show();
+    requestAnimationFrame(updateGame);
+  } else if (checkColision()){
+    gameOver()
   }
 }
 
@@ -127,7 +118,6 @@ var obstacles = {
 
       newObstacle.x = Math.random()*canvas.width;
       this.obstacles.push(newObstacle);
-      console.log("New obstacle", newObstacle)
       }    
   },
 
@@ -138,7 +128,6 @@ var obstacles = {
       return obstacle;
     });
     this.obstacles.forEach(obstacle => {
-      console.log(obstacle);
       ctx.save();
       ctx.fillStyle ='red'; 
       ctx.fillRect(obstacle.x,obstacle.y,obstacle.width,obstacle.height);
@@ -150,8 +139,9 @@ var obstacles = {
 // Function to check if the car collides with an obstacle
 function checkColision(){
   return obstacles.obstacles.some(obstacle => {
-    if(obstacle.y + obstacle.height >= car.y && obstacle.y <= car.y + car.height + (car.height/2)){
+    if(obstacle.y + obstacle.height >= car.y && obstacle.y <= car.y + car.height){
       if(obstacle.x + obstacle.width >= car.x && obstacle.x <= car.x + car.width){
+        console.log("colision")
         return true;
       }
     }
@@ -161,12 +151,26 @@ function checkColision(){
 
 // Function that trigers a game over and the final score
 function gameOver(){
-  if(checkColision){
-    // Code to create a black screen and the final score
+    ctx.save()
+    ctx.fillStyle = 'black'
+    ctx.fillRect(0,0,500,700);
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = "62px Impact";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over", canvas.width/2, canvas.height/2.5);
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = "32px Impact";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(`Your score is: 123`, canvas.width/2, canvas.height/2);
+    ctx.restore();
   }
-}
 
 var score = {
-  // Code to create the scoreboard
-
+  // Code to create the
 }
