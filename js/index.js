@@ -86,19 +86,6 @@ const car = {
   }
 };
 
-function updateGame(){
-  if (!checkColision()){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    road.show();
-    car.show();
-    obstacles.createObstacle();
-    obstacles.show();
-    requestAnimationFrame(updateGame);
-  } else if (checkColision()){
-    gameOver()
-  }
-}
-
 // Creating the obstacles object
 var obstacles = {
   obstacles: [],
@@ -136,6 +123,41 @@ var obstacles = {
   }
 };
 
+// Creating the score object
+var score = {
+  points: 0, 
+
+  show: function(){
+    ctx.save();
+    ctx.font = "24px Impact";
+    ctx.fillStyle = "white";
+    ctx.fillText(`SCORE: ${this.points}`, 70, 40);
+    ctx.restore();
+  },
+
+  addPoints: function(){
+    this.points ++;
+  },
+}
+
+
+// Function to permenantly update the game canvas
+function updateGame(){
+  if (!checkColision()){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    road.show();
+    score.show();
+    score.addPoints();
+    car.show();
+    obstacles.createObstacle();
+    obstacles.show();
+    requestAnimationFrame(updateGame);
+  } else if (checkColision()){
+    gameOver()
+  }
+}
+
+
 // Function to check if the car collides with an obstacle
 function checkColision(){
   return obstacles.obstacles.some(obstacle => {
@@ -167,10 +189,6 @@ function gameOver(){
     ctx.font = "32px Impact";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(`Your score is: 123`, canvas.width/2, canvas.height/2);
+    ctx.fillText(`Your score is: ${score.points}`, canvas.width/2, canvas.height/2);
     ctx.restore();
   }
-
-var score = {
-  // Code to create the
-}
