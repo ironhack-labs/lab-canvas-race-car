@@ -1,29 +1,30 @@
 class Car {constructor (game) {
     this.game = game;
     this.direction = '';
-    this.x = 140;
+    this.x = 290;
     this.y = 500;
       }    
 
 
     draw () {
         const context = this.game.context;
-        this.imageCar = new Image();
+        const imageCar = new Image();
 
-        this.carWidth = 40;
-        this.carHeight = 80;
-        this.imageCar.src = 'images/car.png';
-
-        console.log('x ' +this.x)
-        console.log('y ' +this.y)
-        console.log('Width ' + this.carWidth)
-        console.log('Height ' + this.carHeight)
+        const carWidth = 40;
+        const carHeight = 80;
+        imageCar.src = 'images/car.png';
 
 
-        this.imageCar.addEventListener('load', () => {
-            context.drawImage(this.imageCar, this.x, this.y, this.carWidth, this.carHeight);
+        // console.log('x ' +this.x)
+        // console.log('y ' +this.y)
+        // console.log('Width ' + this.carWidth)
+        // console.log('Height ' + this.carHeight)
+
+
+        window.addEventListener('load', () => {
+            context.drawImage(imageCar, this.x, this.y, carWidth, carHeight);
             });
-            context.drawImage(this.imageCar, this.x, this.y, this.carWidth, this.carHeight);
+            context.drawImage(imageCar, this.x, this.y, carWidth, carHeight);
             
         }
 

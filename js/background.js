@@ -17,14 +17,14 @@ class Background {
     imageBackground.src =  'images/road.png';
     
     context.drawImage(imageBackground, this.x, this.y)
-    context.drawImage(imageBackground, this.x, this.y + imageBackground.height);
-    context.drawImage(imageBackground, this.x, this.y + imageBackground.height * 2)
+    // context.drawImage(imageBackground, this.x, this.y + imageBackground.height);
+    // context.drawImage(imageBackground, this.x, this.y + imageBackground.height * 2)
   }
   
   loop = () => {
      this.y--;
      if (this.y < 0) {
-       this.y = this.y % this.image.height;
+       this.y = this.y % imageBackground.height;
       } 
       this.draw();
       setTimeout(this.loop, 1000 / 100);
