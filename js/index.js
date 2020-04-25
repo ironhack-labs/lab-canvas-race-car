@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
+//const obstacles = [];
 
 const road = {
   x: 0,
@@ -7,6 +8,8 @@ const road = {
   speed: 1/16,
   width: canvas.width,
   height: canvas.height,
+  obstacles : [],
+  score: 0,
   img: new Image(),
   move: function() {
     road.y += road.speed;
@@ -38,14 +41,47 @@ const car = {
   }
 }
 
+class Obstacle {
+  constructor() {
+    this.x = Math.floor(Math.random()*150 + 70);
+    this.y = 0;
+    this.width = Math.floor(Math.random()*canvas.width*0.05 + canvas.width*0.4);
+    this.height = 20;
+  }
+}
+
 function updateRoad() {
   context.save();
   road.move();
   context.clearRect(0 , 0, canvas.width, canvas.height);
   road.draw();
   car.carDraw();
+  context.fillStyle = 'red';
+  updateObstacles();
+  updateScore();
   context.restore();
   //requestAnimationFrame(updateRoad);
+}
+
+function createObstacles() {
+  const obst = new Obstacle();
+  road.obstacles.push(obst);
+}
+
+function updateObstacles() {
+  road.obstacles.forEach(obst => obst.y += road.speed);
+  road.obstacles.forEach(obst => context.fillRect(obst.x, obst.y, obst.width, obst.height));
+}
+function updateScore() {
+  road.obstacles.forEach(obst => {
+    if (obst.y > road.height) {
+      road.score++;
+      road.obstacles.shift();
+    }
+  });
+  context.font = '24px sans-serif';
+  context.fillStyle = 'white';
+  context.fillText('Score: ' + road.score, 300, 40);
 }
 
 function handleKeyEvent(event) {
@@ -63,7 +99,8 @@ window.onload = () => {
   function startGame() {
     road.img.addEventListener('load', updateRoad);
     //requestAnimationFrame(updateRoad);
-    setInterval(updateRoad,16);
+    setInterval(updateRoad, 16);
+    setInterval(createObstacles, 1000);
     document.addEventListener('keydown', handleKeyEvent);
   }
 };
