@@ -12,14 +12,14 @@ const road = {
   img: new Image(),
   // Método para poder realizar la carretera infinita
   move: function() {
-    road.y += road.speed;
-    road.y %= road.height;
+    this.y += this.speed;
+    this.y %= this.height;
   },
   // Dibuja la carretera
   draw: function() {
-    road.img.src = './images/road.png';
-    context.drawImage(road.img, road.x, road.y, road.width, road.height);
-    context.drawImage(road.img, road.x, road.y - road.height, road.width, road.height);
+    this.img.src = './images/road.png';
+    context.drawImage(this.img, this.x, this.y, this.width, this.height);
+    context.drawImage(this.img, this.x, this.y - this.height, this.width, this.height);
   },
   // Función que crea obstáculos y los añade en el array
   createObstacles: function() {
@@ -29,24 +29,24 @@ const road = {
   // Desplaza y dibuja los obstáculos creados
   updateObstacles: function() {
     context.fillStyle = 'red';
-    road.obstacles.forEach(obst => obst.y += road.speed);
-    road.obstacles.forEach(obst => context.fillRect(obst.x, obst.y, obst.width, obst.height));
+    this.obstacles.forEach(obst => obst.y += this.speed);
+    this.obstacles.forEach(obst => context.fillRect(obst.x, obst.y, obst.width, obst.height));
   },
   // Aumenta  el marcador cada vez que desaparece un obstáculo y dibuja el marcador
   updateScore: function() {
-    road.obstacles.forEach(obst => {
-      if (obst.y > road.height) {
-        road.score++;
-        road.obstacles.shift();
+    this.obstacles.forEach(obst => {
+      if (obst.y > this.height) {
+        this.score++;
+        this.obstacles.shift();
       }
     });
     context.font = '24px sans-serif';
     context.fillStyle = 'white';
-    context.fillText('Score: ' + road.score, 300, 40);
+    context.fillText('Score: ' + this.score, 300, 40);
   },
   // Dibuja una imagen the game over y muestra el marcador final
   gameOver: function() {
-    road.draw();
+    this.draw();
     const img = new Image();
     img.src = './images/gameover.png';
     img.addEventListener('load', function() {
@@ -55,7 +55,7 @@ const road = {
     context.font = '96px sans-serif';
     context.fillStyle = 'white';
     context.fillText('Score: ', 109, 500);
-    context.fillText(road.score, 310, 600);
+    context.fillText(this.score, 310, 600);
   }
 }
 
@@ -67,22 +67,22 @@ const car = {
   img: new Image(),
   // Dibuja el coche al final de la carretera
   carDraw: function() {
-    car.img.src = './images/car.png';
-    context.drawImage(car.img, car.x, car.y, car.width, car.height);
+    this.img.src = './images/car.png';
+    context.drawImage(this.img, this.x, this.y, this.width, this.height);
   },
   // Desplaza en el eje horizontal el coche
   moveCar: function(dir) {
     if (dir === 'left') {
-      car.x -= 20;
+      this.x -= 20;
     } else if (dir === 'right') {
-      car.x += 20;
+      this.x += 20;
     }
   },
   // Comprueba si el coche ha colisionado con algún obstáculo
   checkCrash: function() {
     if (road.obstacles[0] != undefined) {
-      if (road.obstacles[0].y > car.y - road.obstacles[0].height && road.obstacles[0].y < car.y + car.height) {
-        for (let i = car.x; i < car.x + car.width; i++) {
+      if (road.obstacles[0].y > this.y - road.obstacles[0].height && road.obstacles[0].y < this.y + this.height) {
+        for (let i = this.x; i < this.x + this.width; i++) {
           if (i > road.obstacles[0].x && i < road.obstacles[0].x + road.obstacles[0].width) {
             return true;
           }
