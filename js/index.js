@@ -23,7 +23,7 @@ const auto = {
   img: null,
   x: parseInt(canvas.width) / 2 - 30,
   y: canvas.height / 2 + 160,
-  speedX: 5,
+  speedX: 6,
   width: 0,
   height: 0,
   inicializar: function(){
@@ -38,35 +38,64 @@ const auto = {
   }
 }
 
-
-function update(){
-  ctx.save();
-  camino.dibujar();
-  auto.dibujar();
-  ctx.restore();
+const obstaculos = {
+  obstaculos: [],
+  fps: 0,
+  crear: function(){
+      let unObstaculo = {
+        x: 0,
+        y: 0,
+        height: 15,
+        width: 0,
+      }
+      unObstaculo.x = (Math.random() * canvas.width);
+      unObstaculo.width = (Math.floor(Math.random() * canvas.width * 0.30)) + auto.width;
+      this.obstaculos.push(unObstaculo);
+  },
+  dibujar: function(){
+    this.obstaculos.map(obstaculo => {
+      obstaculo.y += 3;
+      return obstaculo;
+    });
+    this.obstaculos.forEach(obstaculo => {
+      ctx.save();
+      ctx.fillStyle = 'rgb(128,0,64)';
+      ctx.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height);
+      ctx.restore();
+    });
+  }
 }
 
-function checkTecla(event){
+
+function update(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  camino.dibujar();
+  auto.dibujar();
+  obstaculos.dibujar();
+  requestAnimationFrame(update);
+}
+
+//Mover el auto
+function moverAuto(event){
   if (event.code == "ArrowLeft" && auto.x >= 0){
     auto.x -= auto.speedX;
   }
   if (event.code == "ArrowRight" && auto.x + auto.width <= canvas.width) {
     auto.x += auto.speedX;
   }
-  update();
 }
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
+    setInterval(() => {
+      obstaculos.crear()
+    }, 1500);
   };
-
-  document.onkeydown = checkTecla;
-
+  document.onkeydown = moverAuto;
   function startGame() {
-    camino.inicializar()
-    camino.dibujar();
-    auto.inicializar();
-    auto.dibujar();
+    requestAnimationFrame(update);
   }
+  camino.inicializar();
+  auto.inicializar();
 };
