@@ -1,5 +1,9 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+this.imgRoad = new Image();
+this.imgRoad.src = '/images/road.png';
+this.imgCar = new Image();
+this.imgCar.src = '/images/car.png';
 
 const road = {
   img: null,
@@ -7,9 +11,8 @@ const road = {
   y: 0,
   width: 0,
   height: 0,
-  init: function () {
-    this.img = new Image();
-    this.img.src = '/images/road.png';
+  init: function (_img) {
+    this.img = _img;
     this.width = canvas.width;
     this.height = canvas.height;
     this.show();
@@ -25,13 +28,12 @@ const car = {
   y: 0,
   width: 0,
   height: 0,
-  init: function (_x, _y) {
-    this.x = (canvas.width / 2);
-    this.y = canvas.height - 100 - 319;
-    this.img = new Image();
-    this.img.src = '/images/car.png';
+  init: function (_img) {
+    this.img = _img;
     this.width = 80;
     this.height = (319 / 158) * this.width;
+    this.x = (canvas.width / 2) - (this.width/2);
+    this.y = canvas.height - 25 - this.height;
     this.show();
   },
   show: function () {
@@ -46,7 +48,7 @@ window.onload = () => {
   };
 
   function startGame() {
-    road.init();
-    car.init(canvas.width / 2, canvas.height - 100);
+    road.init(this.imgRoad);
+    car.init(this.imgCar);
   }
 };
