@@ -33,7 +33,6 @@ const road = {
   },
 
   score: function(){
-    //if(){}
     ctx.font = "16px Arial";
     ctx.fillStyle = "#fff";
     ctx.fillText("Score: "+ this.score, 350, 50);
@@ -81,7 +80,6 @@ const car = {
   }, 
 
   colision: function (){
-
   }
 }
 
