@@ -26,14 +26,12 @@ const obstacle = {
     randomX = Math.floor(Math.random() * canvas.width) + 0;
     let length = Math.floor(Math.random() * canvas.width/3) + 1;  
 
-    ctx.lineWidth = 50;
-    ctx.strokeStyle = "darkred";
-    ctx.beginPath();
-    ctx.moveTo(randomX, 0);
-    ctx.lineTo(length, 0);
-    ctx.stroke();
-
-    obstacle.x += 100
+    ctx.fillStyle = "darkred";
+    ctx.fillRect(randomX, 0, length, 20);  
+  },
+  move: function() {
+    obstacle.y += 10;
+    requestAnimationFrame(obstacle.move);
   }
 }
 
@@ -41,7 +39,6 @@ function startGame() {
   document.getElementById("game-board").style.visibility = "visible";
   car.loadImg();
   let newObstacle = setInterval(obstacle.creation, 5000); 
-
 }
 
 function updateGame() {  
@@ -49,6 +46,7 @@ function updateGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(car.img, car.x, car.y, car.width, car.height);
   ctx.restore();
+  requestAnimationFrame(obstacle.move);
 }
 
 function keyboard(event) {
