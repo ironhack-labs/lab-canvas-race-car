@@ -19,9 +19,29 @@ const car = {
   }
 }
 
+const obstacle = {
+  x: 0,
+  y: 0,
+  creation: function() {
+    randomX = Math.floor(Math.random() * canvas.width) + 0;
+    let length = Math.floor(Math.random() * canvas.width/3) + 1;  
+
+    ctx.lineWidth = 50;
+    ctx.strokeStyle = "darkred";
+    ctx.beginPath();
+    ctx.moveTo(randomX, 0);
+    ctx.lineTo(length, 0);
+    ctx.stroke();
+
+    obstacle.x += 100
+  }
+}
+
 function startGame() {
   document.getElementById("game-board").style.visibility = "visible";
   car.loadImg();
+  let newObstacle = setInterval(obstacle.creation, 5000); 
+
 }
 
 function updateGame() {  
@@ -56,6 +76,5 @@ window.onload = () => {
   };
 
 document.onkeydown = keyboard;
-
   
 };
