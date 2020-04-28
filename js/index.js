@@ -13,12 +13,12 @@ const car = {
   },
   moveRight: function () {
     if (this.x < canvas.width - 50) {
-      this.x += 10;
+      this.x += 15;
     }
   },
   moveLeft: function () {
     if (this.x > 10) {
-      this.x -= 10
+      this.x -= 15
     }
   }
 }
@@ -83,31 +83,82 @@ const obstacles = {
   }
 }
 
-let points = 0;
+const score = {
+  points: 0,
+  increasePoints: function () {
+    this.points += 1
+  },
+  showPoints: function () {
+    ctx.font = '30px Verdana';
+    ctx.fillText(`SCORE: ${this.points}`, canvas.width - 150, 50);
+  },
+  finalScore: function () {
+    let h1 = document.createElement('h1')
+    let h1Text = document.createTextNode('GAME OVER')
+    h1.appendChild(h1Text);
+    let p = document.createElement('p');
+    let pText = document.createTextNode(`SCORE: ${this.points}`)
+    p.appendChild(pText);
+
+    document.querySelector('div.game-intro').appendChild(h1);
+    document.querySelector('div.game-intro').appendChild(p);
+  }
+}
+
+
+
 
 function start() {
   road.show();
   car.show();
-  setInterval(function () { obstacles.createObstacle() }, 2000);
+
+  //Create first obstacle and initialize the game
+  setInterval(function () {
+    obstacles.createObstacle();
+  }, 2000);
+
+  //Run game
   const playGame =
     setInterval(function () {
       obstacles.destroyObstacle();
-      points += 1
+      score.increasePoints();
     }, 100);
+
+  //Show Points
+  setInterval(function () {
+    score.showPoints();
+  }, 1);
+
+  // Check if have a collision and stop game if is it true
+
   setTimeout(function () {
-    setInterval(function () {
+    const checkGameover = setInterval(function () {
       if (obstacles.checkCollision()) {
         clearInterval(playGame)
-        canvas.style.display = 'none'
+        canvas.style.display = 'none';
+        clearInterval(checkGameover);
+        score.finalScore();
       }
     }, 50)
-
   }, 2000)
-
-
-
 }
-setInterval(function () { updateGame() }, 30)
+
+
+function updateGame() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  road.show();
+  car.show();
+  obstacles.items.forEach(e => {
+    obstacles.show(e)
+    obstacles.go(e)
+  });
+}
+
+
+document.getElementById('start-button').onclick = () => {
+  start();
+};
+
 window.addEventListener('keydown', event => {
   switch (event.key) {
     case 'ArrowRight':
@@ -119,17 +170,6 @@ window.addEventListener('keydown', event => {
   }
 })
 
-
-function updateGame() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  road.show();
-  car.show();
-  obstacles.items.forEach(e => obstacles.show(e));
-  obstacles.items.forEach(e => obstacles.go(e));
-}
-document.getElementById('start-button').onclick = () => {
-  start();
-};
-
+setInterval(function () { updateGame() }, 30)
 
 
