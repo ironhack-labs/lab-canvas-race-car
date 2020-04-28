@@ -12,15 +12,13 @@ const car = {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   },
   moveRight: function () {
-    if (this.x < canvas.width - 90) {
+    if (this.x < canvas.width - 50) {
       this.x += 10;
-      //updateGame();
     }
   },
   moveLeft: function () {
-    if (this.x > 50) {
+    if (this.x > 10) {
       this.x -= 10
-      //updateGame();
     }
   }
 }
@@ -39,86 +37,99 @@ const road = {
 
 const obstacles = {
   items: [],
-  position: 0,
   determineSize: function () {
     let size = Math.random() * canvas.width;
-    if (size > 350) {
-      size = 350
+    if (size > 400) {
+      size = 400
     } else if (size < 150) {
       size = 150
     }
     return size
   },
-  createObstacle: function (x, y, size) {
+  createObstacle: function () {
     let obstacle = {
-      x: x, //Math.random() * 250,
-      y: y,
-      size: size,
+      x: Math.random() * canvas.width / 2,
+      y: 0,
+      size: this.determineSize(),
       height: 40
     }
     this.items.push(obstacle);
-    this.position += 1
   },
   destroyObstacle: function () {
-
+    if (this.items.length >= 4) {
+      this.items.shift();
+    }
   },
   show: function (item) {
-    if (this.items.length > 1) {
+    ctx.save();
+    ctx.fillStyle = 'red';
+    ctx.fillRect(item.x, item.y, item.size, item.height);
+    ctx.restore();
+  },
+  go: function (obstacle) {
+    obstacle.y += 3
+  },
+  checkCollision: function () {
+    let carX = car.x + car.width;
+    let carY = Math.round(car.y - car.height / 2);
+    let obstacleX = this.items[0].x;
+    let obstacleSize = obstacleX + this.items[0].size
+    let obstacleY = this.items[0].y;
 
+    if (carX > obstacleX + 5 && carX < obstacleSize && obstacleY >= carY) {
+      return true
     }
-    if (this.items.length % 2 === 0) {
-      this.createObstacle(Math.random() * 250, this.position, this.determineSize());
-    } else {
-      this.createObstacle(canvas.width - Math.random() * 250, this.position, -this.determineSize());
-    }
-
-    item = this.items[this.items.length - 1];
-    if (item.y > 100) {
-      ctx.save();
-      tx.fillStyle = 'red';
-      ctx.fillRect(item.x, item.y, item.size, item.height);
-      ctx.restore();
-    }
-
+    return false
   }
 }
 
-
+let points = 0;
 
 function start() {
   road.show();
   car.show();
-  obstacles.show();
-  document.addEventListener('keydown', event => {
-    switch (event.key) {
-      case 'ArrowRight':
-        car.moveRight();
-        updateGame();
-        break;
-      case 'ArrowLeft':
-        car.moveLeft();
-        updateGame();
-        break;
-    }
-  })
+  setInterval(function () { obstacles.createObstacle() }, 2000);
+  const playGame =
+    setInterval(function () {
+      obstacles.destroyObstacle();
+      points += 1
+    }, 100);
+  setTimeout(function () {
+    setInterval(function () {
+      if (obstacles.checkCollision()) {
+        clearInterval(playGame)
+        canvas.style.display = 'none'
+      }
+    }, 50)
+
+  }, 2000)
+
 
 
 }
+setInterval(function () { updateGame() }, 30)
+window.addEventListener('keydown', event => {
+  switch (event.key) {
+    case 'ArrowRight':
+      car.moveRight();
+      break;
+    case 'ArrowLeft':
+      car.moveLeft();
+      break;
+  }
+})
+
 
 function updateGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   road.show();
   car.show();
-  obstacles.show();
+  obstacles.items.forEach(e => obstacles.show(e));
+  obstacles.items.forEach(e => obstacles.go(e));
 }
+document.getElementById('start-button').onclick = () => {
+  start();
+};
 
-function keyboard(event) {
-
-}
 
 
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    start();
-  };
-}
