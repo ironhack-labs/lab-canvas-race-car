@@ -39,14 +39,14 @@ function startGame() {
   document.getElementById("game-board").style.visibility = "visible";
   car.loadImg();
   let newObstacle = setInterval(obstacle.creation, 5000); 
+  requestAnimationFrame(obstacle.move);
 }
 
 function updateGame() {  
-  ctx.save();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.clearRect(0, car.y, canvas.width, car.height);
   ctx.drawImage(car.img, car.x, car.y, car.width, car.height);
-  ctx.restore();
-  requestAnimationFrame(obstacle.move);
+
 }
 
 function keyboard(event) {
