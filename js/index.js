@@ -31,11 +31,35 @@ const car = {
   width: 0,
   height: 0,
   speedX: 15,
-  show: function () {
+  show: function() {
     this.img.src = '/images/car.png';
     this.width = 80;
     this.height = (this.img.height / this.img.width) * this.width;
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+}
+
+const obstacles = {
+  obstacles: [],
+  fps: 0,
+  initialize: function(){
+    let singleObstacle = {
+      x: 0,
+      y: 0,
+      minWidth: 30,
+      maxWidth: canvas.width - (car.width * 4),
+      height: 15
+    }
+    singleObstacle.x = Math.random() * canvas.width;
+    singleObstacle.width = Math.floor(Math.random() * (singleObstacle.maxWidth - singleObstacle.minWidth + 1) + singleObstacle.minWidth);
+    this.obstacles.push(singleObstacle);
+  },
+  show: function(){
+    this.obstacles.forEach(obs => obs.y += 4);
+    this.obstacles.forEach(obs => {
+      ctx.fillStyle = 'brown';
+      ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+    })
   }
 }
 
@@ -44,21 +68,20 @@ const car = {
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
+    setInterval(function(){obstacles.initialize()}, 1500)
     document.onkeydown = driveCar;
+    function startGame() {
+      requestAnimationFrame(updateCanvas);
+    }
   };
 };
 
-function startGame() {
-  requestAnimationFrame(updateCanvas);
-}
-
 function updateCanvas() {
-  ctx.save();
-  road.move();
   ctx.clearRect(0,0,canvas.width, canvas.height);
+  road.move();
   road.show();
   car.show();
-  ctx.restore();
+  obstacles.show();
   requestAnimationFrame(updateCanvas);
 }
 
