@@ -129,9 +129,6 @@ const game = {
         this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height)
     },
 
-    // ---------------------------------------------
-
-    // Set Key Event Listeners     
 
     setEventListeners() {
 

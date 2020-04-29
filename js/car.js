@@ -39,8 +39,6 @@ class Car {
     }
 
     checkCollisionRoad(direction) {
-        //En este caso utilizo valores fijos porque la pantalla no se mueve, pero en un ejemplo "real", habría que utilizar el leftSide.pos, 
-        // que previamente habríamos guardado en una propiedad del objeto "ROAD"
 
         return direction === "right" ? this.posX + this.carWidth < 450 : this.posX > 50
 
