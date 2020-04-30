@@ -1,3 +1,5 @@
+
+
 //ROAD GAME
 
 class RoadGame {
@@ -8,6 +10,7 @@ class RoadGame {
     this.width = canvas.width;
     this.height = canvas.height;
     this.counter = 0;
+    this.isGameOver = false;
   }
 
   drawBackground() {
@@ -16,21 +19,23 @@ class RoadGame {
     ctx.drawImage(imgBackground, 0, 0, this.width, this.height);
   }
 
+
+
   startLoop() {
     this.player = new Car();
 
     const loop = () => {
-        ++this.counter;
-      if (this.counter > 120) {
+      ++this.counter;
+      if (this.counter > 100) {
         this.enemies.push(new Obstacle());
         this.counter = 0;
       }
 
       this.drawBackground();
-      //this.checkAllCollisions();
       this.updateCanvas();
       this.clearCanvas();
       this.drawCanvas();
+      this.checkAllCollisions();
       if (!this.isGameOver) {
         window.requestAnimationFrame(loop);
       }
@@ -59,21 +64,16 @@ class RoadGame {
     });
   }
 
-  //   checkAllCollisions() {
-  //     this.player.checkScreen();
-  //     this.enemies.forEach((enemy, index) => {
-  //       if (this.player.checkCollisionEnemy(enemy)) {
-  //         this.player.loseLive();
-  //         this.enemies.splice(index, 1);
-  //         if (this.player.lives === 0) {
-  //           this.isGameOver = true;
-  //           this.onGameOver();
-  //         }
-  //       }
-  //     });
-  //   }
 
-  //   gameOverCallback(callback) {
-  //     this.onGameOver = callback;
-  //   }
+  checkAllCollisions() {
+    let player = this.player;
+    let enemies = this.enemies;
+    enemies.forEach((enemy, index) => {
+      player.checkCollisionEnemy(enemy, index);
+    });
+  }
+
+  gameOverCallback(callback) {
+    this.onGameOver = callback;
+  }
 }

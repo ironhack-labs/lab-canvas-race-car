@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -36,3 +37,34 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+
+.game-over {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-over h1 {
+  color: tomato;
+  font-size: 60px;
+}
+
+.game-over p {
+  font-size: 22px;
+}
+
+#main {
+  margin: 0px;
+  padding: 0px;
+}
+
