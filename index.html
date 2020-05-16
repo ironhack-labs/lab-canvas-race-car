@@ -11,13 +11,27 @@
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
-      <button id="start-button">StartGame</button>
+      <button id="start-button">Start Game</button>
       <p>Use the left and right arrow to control the car!</p>
       <img src="./images/arrows.png" alt="" class="arrows-img" />
     </div>
 
-    <div id="game-board">
-      
+    <div id="game-board" class="">
+      <img src="./images/road.png" alt="This is the road for the car to drive on.">
+    </div>
+
+    <div id="car" class="">
+      <img src="./images/car.png" alt="This is the car who is the key player in the game.">
+    </div>
+
+    <div id="score" class="">
+      Scratches: <span>0</span>
+    </div>
+
+    <div id="game-over" class="">
+      <p class="knock-out">Total loss!</p>
+      <p>With <span></span> car dents and scratches.</p>
+      <button id="start-over"> Start over</button>
     </div>
 
     <script type="text/javascript" src="js/index.js"></script>

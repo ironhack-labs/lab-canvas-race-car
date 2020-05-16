@@ -1,38 +1,118 @@
 body {
-  padding: 0;
-  text-align: center;
+    padding: 0;
+    text-align: center;
 }
 
 .game-intro {
-  float: left;
-  padding: 0% 10%;
+    float: left;
+    padding: 0% 10%;
 }
 
 .game-intro p {
-  font-size: 18px;
-  font-family: "Verdana"
+    font-size: 18px;
+    font-family: "Verdana"
 }
 
 .logo-img {
-  width: 350px;
+    width: 350px;
 }
 
 .arrows-img {
-  width: 150px;
+    width: 150px;
 }
 
 body button {
-  font-size: 30px;
-  background-color: #870007;
-  color: #fff;
-  padding: 20px 40px;
-  border: 0;
-  box-shadow: 0;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
+    font-size: 30px;
+    background-color: #00853c;
+    color: #fff;
+    padding: 20px 40px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    }
 
 #game-board {
     float: left;
     padding: 20px 0px;
+    visibility: hidden;
+}
+
+#game-board.active {
+    visibility: visible;
+}
+
+
+#car{
+    position: fixed;
+    width: 50px;
+    height: 100px;
+    left: 800px;
+    top: 250px;
+    visibility: hidden;
+}
+
+#car.active {
+    visibility: visible;
+}
+
+#car img{
+    width: 50px;
+    height: auto;
+}
+
+.obstacle{
+    position: fixed;
+    top: 0px;
+    left: 678px;
+    width: 50px;
+    height: 15px;
+    background-color: lightcoral;
+}
+
+#score{
+    position: fixed;
+    font-family: "verdana";
+    top: 40px;
+    left: 550px;
+    color:black;
+    visibility: hidden;
+}
+
+#score.active {
+    visibility: visible;
+}
+
+#game-over {
+    position: fixed;
+    font-family: "verdana";
+    font-weight: bold;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+#game-over p.knock-out{
+    color: red;
+    font-size: 40px;
+}
+
+#game-over p span {
+    color: lightcoral;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#game-over button{
+    width: 50%;
 }
