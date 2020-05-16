@@ -15,7 +15,6 @@ class Game {
     }   
 
     stop(){
-        console.log('test');
         location.reload();
         return false;
     }
@@ -34,12 +33,6 @@ class Game {
             this.obstacles.push(new Obstacle());
             this.obstacles.push(new Obstacle());
         }, 4000);
-
-        // setInterval(() => {
-        //     clearInterval(intervalObstacleMove);
-        //     clearInterval(intervalObstacleCreation);
-        // }, 10000);
-        return intervalObstacleCreation;
     }
 }
 
