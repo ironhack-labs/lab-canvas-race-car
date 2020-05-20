@@ -1,0 +1,63 @@
+body {
+  text-align: center;
+}
+body, html {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.game-intro {
+  float: left;
+  padding: 0% 10%;
+}
+
+.game-intro p {
+  font-size: 18px;
+  font-family: "Verdana"
+}
+
+.logo-img {
+  width: 350px;
+}
+
+.arrows-img {
+  width: 150px;
+}
+
+body button {
+  font-size: 30px;
+  background-color: #870007;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.road {
+  float: left;
+  height: 100vh;
+}
+
+#game-board {
+  float: left;
+  height: 100vh;
+  background-image: url("../images/road.png");
+  width: 500px;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+#car {
+  width: 50px;
+  position: absolute;
+}
+
+.obstacle {
+  height: 50px;
+  background-color: black;
+  position: absolute;
+  z-index: 9999;
+}
