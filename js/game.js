@@ -13,7 +13,8 @@ class Game {
         this._clear()
         this._draw()
         this._move()
-      }, 1000 / 60);
+      }, 1000 / 60)
+      this._initKeyEvents()
     }
   
     _clear() {
@@ -28,5 +29,35 @@ class Game {
     _move() {
       this._road.move()
       this._car.move()
+    }
+
+    _initKeyEvents() {
+        document.addEventListener('keydown', event => {
+            switch (event.keyCode) {
+                case RIGHT_KEY:
+                    console.log('right key down')
+                    this._car.vx = 0
+                    this._car.vx += this._car.ax
+                    break
+                case LEFT_KEY:
+                    console.log('left key down')
+                    this._car.vx = 0
+                    this._car.vx += -this._car.ax
+                    break
+            }
+        })
+
+        document.addEventListener('keyup', event => {
+            switch (event.keyCode) {
+                case RIGHT_KEY:
+                    console.log('right key up')
+                    this._car.vx = 0
+                    break
+                case LEFT_KEY:
+                    console.log('left key up')
+                    this._car.vx = 0
+                    break
+            }
+        })
     }
 }
