@@ -32,6 +32,7 @@ class Game {
     _move() {
         // this._bg.move()
         this._car.move()
+        this._bg.move()
     }
     
     _moveKeys() {

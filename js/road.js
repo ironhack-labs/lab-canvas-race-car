@@ -6,7 +6,10 @@ class Road {
         this.y = 0
 
         this.vx = 0
-        this.vy = 0
+        this.vy = 5
+
+        this.ax = 0
+        this.ay = 0
 
         this.w = this._ctx.canvas.width
         this.h = this._ctx.canvas.height
@@ -23,6 +26,25 @@ class Road {
             this._ctx.canvas.width,
             this._ctx.canvas.height
         )
+
+        this._ctx.drawImage(
+            this._img,
+            this.x,
+            this.y - this._ctx.canvas.height,
+            this._ctx.canvas.width,
+            this._ctx.canvas.height
+        )
     }
 
+    move() {
+        this.vx += this.ax
+        this.vy += this.ay
+
+        this.x += this.vx
+        this.y += this.vy
+
+        if (this.y > this._ctx.canvas.height) {
+            this.y = 0
+        }
+    }
 }
