@@ -4,7 +4,7 @@ class Obstacle {
         this.ctx = ctx
 
         this.w = Math.random() * (this.ctx.canvas.width / 2) + 30
-        this.h = 15
+        this.h = 10
 
         this.x = Math.random() * (this.ctx.canvas.width - 40 - this.w - 40) + 40
         this.y = 0        

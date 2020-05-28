@@ -7,7 +7,7 @@ class Car {
         this.img.src = './images/car.png'
 
         this.x = this.ctx.canvas.width / 2 - 25
-        this.y = this.ctx.canvas.height - 140
+        this.y = this.ctx.canvas.height - 150
         this.w = 50
         this.h = 80
     }
