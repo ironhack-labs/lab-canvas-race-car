@@ -6,11 +6,12 @@ body {
 .game-intro {
   float: left;
   padding: 0% 10%;
+  position: relative;
 }
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -19,6 +20,24 @@ body {
 
 .arrows-img {
   width: 150px;
+}
+
+.right-arrow,
+.left-arrow {
+  width: 50px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.6);
+  bottom: 4px;
+  position: absolute;
+  display: none;
+}
+
+.left-arrow {
+  left: 256px;
+}
+
+.right-arrow {
+  left: 358px;
 }
 
 body button {
@@ -33,6 +52,10 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+#canvas {
+  border: 1px dotted #333;
 }

@@ -8,7 +8,7 @@ class Background {
     this.h = this._ctx.canvas.height
 
     this.vx = 0
-    this.vy = 0
+    this.vy = 4
 
     this.ax = 0
     this.ay = 0
@@ -20,7 +20,7 @@ class Background {
   draw() {
     //Se pinta una imagen luego de otra, la segunda se pinta en x=ancho de la imagen
     this._ctx.drawImage(this._img, this.x, this.y, this.w, this.h)
-    //this._ctx.drawImage(this._img, this.x + this.w, this.y, this.w, this.h)
+    this._ctx.drawImage(this._img, this.x, this.y - this.h, this.w, this.h)
   }
 
   move() {
@@ -31,8 +31,8 @@ class Background {
     this.y += this.vy
 
     // if image out of canvas.... restart!
-    if (this.x + this.w <= 0) {
-      this.x = 0
+    if (this.y - this.h >= 0) {
+      this.y = 0
     }
   }
 }
