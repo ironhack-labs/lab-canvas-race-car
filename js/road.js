@@ -7,17 +7,12 @@ class Road {
         this.h = ctx.canvas.height
 
         this.car = new Car(ctx)
+
+        this.obs = new Obstacle(ctx)
+        this.intervalObs = 0
     }
 
     draw() {
-        setInterval(()=>{
-            this._clearRoad()
-            this._drawRoad()
-            this.car.draw()
-        }, 1000 / 60)
-    }
-
-    _drawRoad() {
         this.ctx.fillStyle = 'green'
         this.ctx.fillRect(0, 0, this.w, this.h)
 
@@ -45,14 +40,4 @@ class Road {
         this.ctx.stroke()
         this.ctx.closePath()
     }
-
-    moveCar(direction) {
-        this.car.move(direction)
-    }
-
-    _clearRoad() {
-        this.ctx.clearRect(0, 0, this.w, this.h)
-    }
-
-
 }

@@ -20,10 +20,10 @@ class Car {
         if (this. _checkLimits()){
             switch (direction) {
                 case 'left':
-                    this.x -= 5;
+                    this.x -= 20;
                     break;
                 case 'right':
-                    this.x += 5;
+                    this.x += 20;
                     break;
             }
     
