@@ -31,11 +31,11 @@ class Car {
     }
 
     _checkLimits() {
-        if (this.x < 40 ) {
-            this.x = 40
+        if (this.x < 50 ) {
+            this.x = 50
             return false
-        } else if (this.x + this.w> this.ctx.canvas.width - 40 ) {
-            this.x = this.ctx.canvas.width - 40 - this.w
+        } else if (this.x + this.w> this.ctx.canvas.width - 50 ) {
+            this.x = this.ctx.canvas.width - 50 - this.w
             return false
         }
         return true
