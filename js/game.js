@@ -14,14 +14,17 @@ class Game {
         this.difficulty = 1
 
         this.score = 0
+
+        this.intervalId = null
     }
 
     draw() {
         
-        setInterval(()=>{
+        this.intervalId = setInterval(()=>{
             if (this._checkCrash()) {
                 this._clearRoad()
                 this._drawElements()
+                this._drawScore()
                 if (!(this.count % this.spaceObstacles)) {
                     this.obstacles.push(new Obstacle(ctx))
                     this.score++
@@ -31,6 +34,7 @@ class Game {
                 }
                 this.count++
             } else {
+                clearInterval(this.intervalId)
                 this._gameOver()
             } 
         }, 1000 / 60)
@@ -68,6 +72,12 @@ class Game {
         return noCrash
     }
 
+    _drawScore() {
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '14px Arial'
+        this.ctx.fillText(`Score: ${this.score}`, 60, 20, 100)
+    }
+
     _gameOver() {
         this.ctx.clearRect(0, 0, this.w, this.h)
         this.ctx.fillStyle = 'black'
@@ -75,12 +85,12 @@ class Game {
 
         this.ctx.fillStyle = 'red'
         this.ctx.textAlign = 'center'
-        this.ctx.font = '30px'
-        this.ctx.fillText('GAME OVER!', this.w / 2 - (this.gameOverWidth / 2), this.h / 2,  400)
-        console.log(this.w / 2 - this.gameOverWidth / 2); 
+        this.ctx.font = '48px Arial'
+        this.ctx.fillText('GAME OVER!', this.w / 2, this.h / 2, 400)
 
         this.ctx.fillStyle = 'white'
         this.ctx.textAlign = 'center'
-        this.ctx.font = '30px'
+        this.ctx.font = '48px Arial'
+        this.ctx.fillText(`Your final score: ${this.score}`, this.w / 2, this.h / 2 + 40, 400)
     }
 }
