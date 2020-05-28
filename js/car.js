@@ -7,10 +7,10 @@ class Car {
     this.cw = this._ctx.canvas.width
     this.ch = this._ctx.canvas.height
 
-    this.w = 75
-    this.h = 150
-    this.x = this.cw * 0.5 - this.w * 1.7
-    this.y = this.ch * 0.5
+    this.w = 70
+    this.h = 145
+    this.x = this.cw * 0.52
+    this.y = this.ch * 0.6
 
     this.vx = 0
     this.vy = 0
@@ -44,10 +44,10 @@ class Car {
     document.onkeydown = (e) => {
       if (e.keyCode === RIGHT_KEY) {
         document.querySelector(".right-arrow").style.display = "block"
-        this.vx = 5
+        this.vx = 8
       } else if (e.keyCode === LEFT_KEY) {
         document.querySelector(".left-arrow").style.display = "block"
-        this.vx = -5
+        this.vx = -8
       }
     }
 

@@ -14,7 +14,7 @@ class Background {
     this.ay = 0
 
     this._img = new Image()
-    this._img.src = "./images/road.png"
+    this._img.src = "./images/road.svg"
   }
 
   draw() {
