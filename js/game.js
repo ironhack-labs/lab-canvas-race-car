@@ -9,6 +9,18 @@ class Game {
     this._car = new Car(ctx)
 
     this.add = 0
+
+    this._imgArr = [
+      "./images/giphy-01.gif",
+      "./images/giphy-02.gif",
+      "./images/giphy-03.gif",
+      "./images/giphy-04.gif"
+    ]
+
+    this._img = new Image()
+    this._img.src = this._imgArr[
+      Math.floor(Math.random() * this._imgArr.length)
+    ]
   }
 
   start() {
@@ -16,6 +28,7 @@ class Game {
       this._clear()
       this._draw()
       this._move()
+      this._collide()
     }, 1000 / 60)
   }
 
@@ -40,5 +53,30 @@ class Game {
     this._bg.move()
     this._car.move()
     this._obs.forEach((el) => el.move())
+  }
+
+  _collide() {
+    this._obs.forEach((el) => {
+      if (
+        el.x < this._car.x + this._car.w &&
+        el.x + el.w > this._car.x &&
+        el.y < this._car.y + this._car.h &&
+        el.y + el.h > this._car.y
+      ) {
+        this._gameOver()
+      }
+    })
+  }
+
+  _gameOver() {
+    clearInterval(this._intervalId)
+    this._clear()
+
+    this._ctx.
+    this._ctx.fillText(
+      "GAME OVER",
+      this._ctx.canvas.width / 2,
+      this._ctx.canvas.height / 2
+    )
   }
 }
