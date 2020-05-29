@@ -18,8 +18,4 @@ window.onload = () => {
         break;
   }
   });
-
-  function startGame() {}
-
-};
-
+}

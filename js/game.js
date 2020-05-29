@@ -19,13 +19,20 @@ class Game {
     }
 
     draw() {
-        
+
         this.intervalId = setInterval(()=>{
             if (this._checkCrash()) {
                 this._clearRoad()
                 this._drawElements()
                 this._drawScore()
-                this._createObstacles()
+                if (!(this.count % this.spaceObstacles)) {
+                    this.obstacles.push(new Obstacle(ctx))
+                    this.score++
+                } 
+                if (this.count > 0 && !(this.count % 1000)) {
+                    this.spaceObstacles /= 2
+                }
+                this.count++
             } else {
                 clearInterval(this.intervalId)
                 this._gameOver()
@@ -45,17 +52,6 @@ class Game {
         this.road.draw()
         this.car.draw()
         this.obstacles.forEach(obs => obs.draw());
-    }
-
-    _createObstacles() {
-        if (!(this.count % this.spaceObstacles)) {
-            this.obstacles.push(new Obstacle(ctx))
-            this.score++
-        } 
-        if (this.count > 0 && !(this.count % 1000)) {
-            this.spaceObstacles /= 2
-        }
-        this.count++
     }
 
     _clearRoad() {
@@ -97,4 +93,4 @@ class Game {
         this.ctx.font = '48px Arial'
         this.ctx.fillText(`Your final score: ${this.score}`, this.w / 2, this.h / 2 + 40, 400)
     }
-}
+} 

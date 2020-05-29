@@ -10,6 +10,9 @@ class Car {
         this.y = this.ctx.canvas.height - 150
         this.w = 50
         this.h = 80
+
+        this.vx = 20
+        this.vy = 0
     }
 
     draw() {
@@ -20,13 +23,13 @@ class Car {
         if (this. _checkLimits()){
             switch (direction) {
                 case 'left':
-                    this.x -= 20;
+                    this.x -= this.vx;
                     break;
                 case 'right':
-                    this.x += 20;
+                    this.x += this.vx;
                     break;
             }
-    
+
         }
     }
 
@@ -40,4 +43,4 @@ class Car {
         }
         return true
     }
-}
+} 

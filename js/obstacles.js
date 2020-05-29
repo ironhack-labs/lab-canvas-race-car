@@ -7,7 +7,9 @@ class Obstacle {
         this.h = 10
 
         this.x = Math.random() * (this.ctx.canvas.width - 40 - this.w - 40) + 40
-        this.y = 0        
+        this.y = 0   
+        
+        this.vy = 5
     }
 
     draw() {
@@ -17,6 +19,6 @@ class Obstacle {
     }
 
     _move() {
-        this.y += 5
+        this.y += this.vy
     }
-}
+} 
