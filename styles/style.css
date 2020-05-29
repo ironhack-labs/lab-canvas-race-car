@@ -60,6 +60,20 @@ body {
   margin-left: 10px;
 }
 
+.besties {
+  padding: 0;
+}
+
+.besties li {
+  list-style: none;
+  margin: 20px auto;
+}
+
+.besties li:before {
+  counter-increment: bestie-counter;
+  content: counter(bestie-counter) ". ";
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;

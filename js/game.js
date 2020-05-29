@@ -46,7 +46,7 @@ class Game {
 
     this.add++
 
-    if (this.add > 30) {
+    if (this.add > 60) {
       this.add = 0
       this._obs.push(new Obstacles(this._ctx))
     }
@@ -104,5 +104,7 @@ class Game {
       this._ctx.canvas.width / 2,
       this._ctx.canvas.height / 2
     )
+
+    //bestScore.push(this._currentScore())
   }
 }
