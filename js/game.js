@@ -17,10 +17,7 @@ class Game {
       "./images/giphy-04.gif"
     ]
 
-    this._img = new Image()
-    this._img.src = this._imgArr[
-      Math.floor(Math.random() * this._imgArr.length)
-    ]
+    this._img = this._imgArr[Math.floor(Math.random() * this._imgArr.length)]
   }
 
   start() {
@@ -28,11 +25,17 @@ class Game {
       this._clear()
       this._draw()
       this._move()
+      this._currentScore()
       this._collide()
     }, 1000 / 60)
   }
 
   _clear() {
+    const giphy = document.querySelector(".giphy")
+    if (giphy) {
+      giphy.remove()
+    }
+
     this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height)
   }
 
@@ -43,10 +46,24 @@ class Game {
 
     this.add++
 
-    if (this.add > 100) {
+    if (this.add > 30) {
       this.add = 0
       this._obs.push(new Obstacles(this._ctx))
     }
+  }
+
+  _currentScore() {
+    let score = 0
+
+    this._obs.forEach((el) => {
+      if (el.y >= this._ctx.canvas.height) {
+        score += 100
+        el.ay++
+      }
+    })
+    document.querySelector(".score span").innerText = score
+
+    return score
   }
 
   _move() {
@@ -72,6 +89,16 @@ class Game {
     clearInterval(this._intervalId)
     this._clear()
 
+    document.getElementById("canvas").style.background =
+      "rgba(24, 77, 152, 0.5)"
+    const giphy = document.createElement("div")
+    giphy.className = "giphy"
+    giphy.innerHTML = `<img src="${this._img}" alt="crash car gif" />`
+    document.getElementById("game-board").appendChild(giphy)
+
+    this._ctx.fillStyle = "#fff"
+    this._ctx.font = "40px Open Sans"
+    this._ctx.textAlign = "center"
     this._ctx.fillText(
       "GAME OVER",
       this._ctx.canvas.width / 2,

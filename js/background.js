@@ -8,7 +8,7 @@ class Background {
     this.h = this._ctx.canvas.height
 
     this.vx = 0
-    this.vy = 4
+    this.vy = 6
 
     this.ax = 0
     this.ay = 0

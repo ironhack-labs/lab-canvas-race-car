@@ -43,20 +43,24 @@ class Car {
   _setListeners() {
     document.onkeydown = (e) => {
       if (e.keyCode === RIGHT_KEY) {
-        document.querySelector(".right-arrow").style.display = "block"
+        document.querySelector(".arrows-img").style.backgroundPosition =
+          "right center"
         this.vx = 8
       } else if (e.keyCode === LEFT_KEY) {
-        document.querySelector(".left-arrow").style.display = "block"
+        document.querySelector(".arrows-img").style.backgroundPosition =
+          "left center"
         this.vx = -8
       }
     }
 
     document.onkeyup = (e) => {
       if (e.keyCode === RIGHT_KEY) {
-        document.querySelector(".right-arrow").style.display = "none"
+        document.querySelector(".arrows-img").style.backgroundPosition =
+          "center center"
         this.vx = 0
       } else if (e.keyCode === LEFT_KEY) {
-        document.querySelector(".left-arrow").style.display = "none"
+        document.querySelector(".arrows-img").style.backgroundPosition =
+          "center center"
         this.vx = 0
       }
     }

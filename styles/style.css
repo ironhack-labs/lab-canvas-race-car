@@ -1,12 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   text-align: center;
+  counter-reset: bestie-counter;
 }
 
 .game-intro {
   float: left;
   padding: 0% 10%;
-  position: relative;
 }
 
 .game-intro p {
@@ -20,24 +26,38 @@ body {
 
 .arrows-img {
   width: 150px;
+  background: url(../images/arrows.png) no-repeat center center / cover;
+  width: 212.5px;
+  height: 102px;
+  margin: auto;
 }
 
-.right-arrow,
-.left-arrow {
-  width: 50px;
-  height: 35px;
-  background: rgba(255, 255, 255, 0.6);
-  bottom: 4px;
+.giphy img {
+  width: 60%;
+  height: auto;
   position: absolute;
-  display: none;
+  top: 15%;
+  left: 50%;
+  margin-left: -30%;
+  border: 10px solid #184d98;
+  padding: 10px;
+  background: #fff;
+  border-radius: 150px;
 }
 
-.left-arrow {
-  left: 256px;
+.score {
+  color: #333;
+  font-family: "Press Start 2P", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto;
 }
 
-.right-arrow {
-  left: 358px;
+.score span {
+  font-size: 24px;
+  color: #184d98;
+  margin-left: 10px;
 }
 
 body button {
@@ -54,8 +74,10 @@ body button {
 #game-board {
   float: left;
   padding: 20px 0px;
+  position: relative;
 }
 
 #canvas {
-  border: 1px dotted #333;
+  border: 10px solid #184d98;
+  background: rgba(24, 77, 152, 0.548);
 }
