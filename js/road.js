@@ -17,6 +17,7 @@ class Road {
         this.ctx.fillStyle = 'grey'
         this.ctx.fillRect(40,  this.y, this.w - 80, this.h)
 
+        this.ctx.setLineDash([0, 0])
         this.ctx.strokeStyle = 'white'
         this.ctx.lineWidth = 6
         this.ctx.beginPath()
@@ -44,7 +45,8 @@ class Road {
 
         this.ctx.fillStyle = 'grey'
         this.ctx.fillRect(40, this.y - this.h, this.w - 80, this.h)
-
+        
+        this.ctx.setLineDash([0, 0])
         this.ctx.strokeStyle = 'white'
         this.ctx.lineWidth = 6
         this.ctx.beginPath()
