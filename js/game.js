@@ -72,7 +72,6 @@ class Game {
     clearInterval(this._intervalId)
     this._clear()
 
-    this._ctx.
     this._ctx.fillText(
       "GAME OVER",
       this._ctx.canvas.width / 2,
