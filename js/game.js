@@ -35,6 +35,7 @@ class Game {
                 this.count++
             } else {
                 clearInterval(this.intervalId)
+                this.car = null
                 this._gameOver()
             } 
         }, 1000 / 60)

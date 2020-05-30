@@ -3,7 +3,7 @@ class Obstacle {
     constructor (ctx) {
         this.ctx = ctx
 
-        this.w = Math.random() * (this.ctx.canvas.width / 2) + 30
+        this.w = Math.random() * (this.ctx.canvas.width / 2) + 50
         this.h = 10
 
         this.x = Math.random() * (this.ctx.canvas.width - 40 - this.w - 40) + 40
