@@ -16,11 +16,17 @@ class Game {
     start() {
         this._intervalId = setInterval(() => {
            if (this._checkCollisions) {
+               
             if (!(this.counter % this._intervalObs)) {
                 this.counter = 0
                 this._obstacle.push(new Obstacle(this.ctx))
                 this.score += 5
-            }
+                while(this._intervalObs > 50) {
+                    this._intervalObs -= 2
+                }
+                
+            } 
+            
             this._clear()
             this._draw()
             this._move()
@@ -97,14 +103,24 @@ class Game {
 
       _gameOver() {
         clearInterval(this._intervalId)
-    
-        this.ctx.font = "40px Comic Sans MS";
+        this._lastScore()
+        this.ctx.font = "80px Helvetica";
         this.ctx.textAlign = "center";
-        this.ctx.strokeText(
+        this.ctx.fillText(
           "GAME OVER",
           this.ctx.canvas.width / 2,
           this.ctx.canvas.height / 2,
-          200
         );
+      }
+
+      _lastScore() {
+        this.ctx.font = "40px Helvetica";
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText(
+            `Your score is ${this.score}`,
+            this.ctx.canvas.width / 2,
+            this.ctx.canvas.height / 2 + 50
+            );
+        this.fillStyle = 'white' 
       }
 }
