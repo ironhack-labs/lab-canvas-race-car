@@ -11,8 +11,8 @@ class Car {
         this.w = this._ctx.canvas.width * 0.1
         this.h = this._ctx.canvas.height * 0.2
 
-        this.ax = 2
-        this.ay = 2
+        this.ax = 10
+        this.ay = 0
 
         this._img = new Image()
         this._img.src = './images/car.png'
