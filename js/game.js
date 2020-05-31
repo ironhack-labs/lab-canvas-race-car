@@ -2,6 +2,7 @@ class Game {
     constructor (ctx) {
         this.ctx = ctx;
         this.background = new Background(ctx);
+        this.car = new Car(ctx);
         this.intervalId = null;
         
     }
@@ -14,10 +15,11 @@ class Game {
     }
 
     draw() {
-        this.background.draw()
+        this.background.draw();
+        this.car.draw();
     }
 
     clear() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 }
