@@ -39,12 +39,15 @@ class Game {
         }
        this._obstacles.forEach(obstacle => obstacle.draw())
        this._score.draw(this.frameNumber)
+       console.log(this._obstacles)
+       
     }
 
     _move() {
         this._bg.move()
         this._car.move()
         this._obstacles.forEach(obstacle => obstacle.move())
+        this._obstacles = this._obstacles.filter(obstacle => obstacle.y < this._ctx.canvas.height)
     }
 
     _collision() {
@@ -69,7 +72,7 @@ class Game {
         const color = this._randomRgb()
         const gap = Math.floor(Math.random() * (maxGap -  minGap + 1) + minGap);
 
-        if (this._obstacles.length % 2) {
+        if (gap % 2) {
             x = 0
             xSize = Math.floor( Math.random() * ((maxHeight - gap) - minHeight) + minHeight)
         } else {
