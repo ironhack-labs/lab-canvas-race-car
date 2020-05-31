@@ -9,14 +9,20 @@ class Game {
 
     start() {
         this.intervalId = setInterval(() => {
-            this.clear()
+            this.clear();
             this.draw();
+            this.move();
+
         },1000 / 60)
     }
 
     draw() {
         this.background.draw();
         this.car.draw();
+    }
+
+    move() {
+        this.car.move();
     }
 
     clear() {
