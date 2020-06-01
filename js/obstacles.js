@@ -2,6 +2,7 @@ class Obstacle {
     constructor (ctx) {
         this.ctx = ctx;
 
+<<<<<<< HEAD
         // this._leftLimit = this.ctx.canvas.width * 0.10;
         // this._rightLimit = this.ctx.canvas.width * 0.80;
 
@@ -25,5 +26,12 @@ class Obstacle {
 
     move() {
         this.y += this.vy;
+=======
+        this.dist = Math.random() 
+        this.x = Math.random() > 
+
+        this.w = this.ctx.canvas.width;
+        this.h = Math.random() * 40 + 50;
+>>>>>>> b477165b8e1629cce0ace383c2b3f6d7842a8edb
     }
 }
