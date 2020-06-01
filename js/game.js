@@ -27,5 +27,6 @@ class Game {
 
     move() {
         this.background.move()
+        this.car.move()
     }
 }
