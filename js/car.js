@@ -8,9 +8,6 @@ class Car {
         this.x = this.ctx.canvas.width * 0.45;
         this.y = this.ctx.canvas.height * 0.8;
 
-        // this.xLeftLimit = this.ctx.canvas.width * 0.22;
-        // this.xRightLimit = this.ctx.canvas.width * 0.67;
-
         this.vx = 0; //velocidad en x
         this.ax = 0; //aceleración en x
 
@@ -52,10 +49,13 @@ class Car {
 
         this.x += this.ax;
 
-        if (this.x <= (this.canvas.width * 0.22)) {
-            this.ax = 0;
-        } else if (this.x >= (this.canvas.width * 0.67)) {
-            this.ax = 0;
+         const leftLimit = this.ctx.canvas.width * 0.10;
+         const rightLimit = this.ctx.canvas.width * 0.80;
+
+        if (this.x <= leftLimit) {
+            this.x = leftLimit;
+        } else if (this.x >= rightLimit) {
+            this.x = rightLimit;
         }
 
     }
