@@ -44,4 +44,8 @@ class Game {
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
+
+    score() {
+        this.ctx.font = 'Chelsea Market'
+    }
 }
