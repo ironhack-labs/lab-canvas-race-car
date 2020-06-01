@@ -24,12 +24,12 @@ class Game {
       }
     
       _clearObstacles () {
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.isVisible())
+        this._obstacles = this._obstacles.filter(obstacle => obstacle.isVisible())
       }
 
       _addObstacle() {
         if (this.tick % 100) return
-        this._obstacles.push(new Obstacle(this.ctx))
+        this._obstacles.push(new Obstacle(this._ctx))
       }
 
       _clear() {

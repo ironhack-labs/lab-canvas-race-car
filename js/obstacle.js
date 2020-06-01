@@ -1,12 +1,12 @@
 class Obstacle {
     constructor(ctx) {
       this.ctx = ctx
-      this.x = this.ctx.canvas.width
-      this.dist = Math.random() * 100 + 300
-      this.y = Math.random() > 0.5 ? 0 - this.dist : this.dist
+      this.x = Math.random() * 300 + 100
+      this.dist = Math.random() * 100 + 100
+      this.y = 0 
       this.w = Math.random() * 40 + 50
-      this.h = this.ctx.canvas.height
-      this.vx = -1.5
+      this.h = Math.random() * 40 + 50
+      this.vy = 3
     }
   
     draw() {
@@ -19,13 +19,13 @@ class Obstacle {
     }
   
     move() {
-      this.x += this.vx
+      this.y += this.vy
     }
   
     isVisible() {
       return (
-        this.x < this.ctx.canvas.width * 2 &&
-        this.x > 0 - this.ctx.canvas.width
+        this.y < this.ctx.canvas.height * 2 &&
+        this.y > 0 - this.ctx.canvas.height
       )
     }
   }
