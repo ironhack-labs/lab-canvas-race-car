@@ -1,3 +1,6 @@
+const RIGHT_KEY = 39
+const LEFT_KEY = 37
+
 class Car {
     constructor(ctx) {
         this._ctx = ctx
@@ -27,16 +30,54 @@ class Car {
             this.h
         )
     }
+
+
     move() {
-        this.vx += this.ax
-        this.vy += this.ay
-    
+      document.addEventListener('keydown', event => {
+        switch(event.keyCode) {
+          case RIGHT:
+            this.x += 0.005;
+            break;
+          case LEFT:
+            this.x -= 0.005
+            break;
+        }
+      })
+      document.addEventListener('keyup', event => {
+        switch(event.keyCode) {
+          case RIGHT:
+            this.x -= 0;
+            break;
+          case LEFT:
+            this.x += 0
+            break;
+        }
+      })
+
         this.x += this.vx
-        this.y += this.vy
-    
+        // if (this.vx > 10) {
+        // this.vx = 0
+        // }
+        console.log(this.x)
         // if image out of canvas.... restart!
         if (this.x + this.w <= 0) {
           this.x = 0
         }
+        if (this.x >= this._ctx.canvas.width) {
+          this.x = (this._ctx.canvas.width - this.w)
+        }
     }
+
+    _checkCollisions() {
+        if(this.y + this.r >= this.ctx.canvas.height) {
+          this.vy *= -1
+          this.y = this.ctx.canvas.height - this.r
+        }
+        if(this.x + this.r >= this.ctx.canvas.width) {
+          this.vx *= -1
+        }
+        if(this.x - this.r <= 0) {
+          this.vx *= -1
+        }
+      }
 }

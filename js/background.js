@@ -9,7 +9,7 @@ class Background {
         this.h = this._ctx.canvas.height
 
         this.vx = 0
-        this.vy = 0
+        this.vy = 1
 
         this.ax = 0
         this.ay = 0
@@ -26,6 +26,14 @@ class Background {
             this.w,
             this.h
         )
+        this._ctx.drawImage(
+            this._img,
+            this.x,
+            this.y - this.h,
+            this.w,
+            this.h
+        )
+
     }
     move() {
         this.vx += this.ax
@@ -35,8 +43,8 @@ class Background {
         this.y += this.vy
     
         // if image out of canvas.... restart!
-        if (this.x + this.w <= 0) {
-          this.x = 0
+        if (this.y >= this.h) {
+          this.y = 0
         }
     }
 }
