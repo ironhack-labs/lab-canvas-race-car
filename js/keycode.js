@@ -1,0 +1,2 @@
+const RIGHT_BUTTON = 39
+const LEFT_BUTTON = 37
