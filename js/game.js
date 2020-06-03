@@ -8,6 +8,8 @@ class Game {
         this._car = new Car(ctx)
         this.tick = 0
 
+        this.points = -2
+
         this.obstacles = []
     }
 
@@ -26,14 +28,19 @@ class Game {
     }
 
     _clearObstacles() {
-        this.obstacles = this.obstacles.filter(b => b.isVisible())
+        this.obstacles = this.obstacles.filter(o => o.isVisible())
+
     }
 
     _addObstacle() {
         if (this.tick % 50 === 0) {
             this.obstacles.push(new Obstacles(this._ctx))
-            console.log(this.obstacles);
+            this._pointsCount()
         }
+    }
+
+    _pointsCount() {
+        this.points++
     }
 
     _clear() {
@@ -69,9 +76,18 @@ class Game {
         this._ctx.font = "40px Comic Sans MS";
         this._ctx.textAlign = "center";
         this._ctx.fillText(
-            "GAME OVER",
+            `GAME OVER`,
             this._ctx.canvas.width / 2,
             this._ctx.canvas.height / 2
         );
+        this._ctx.font = "20px Comic Sans MS";
+        this._ctx.textAlign = "center";
+        this._ctx.fillText(
+            `Your Score: ${this.points}`,
+            this._ctx.canvas.width / 2,
+            this._ctx.canvas.height / 2 + 30
+        );
+
+
     }
 }

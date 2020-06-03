@@ -4,9 +4,10 @@ class Obstacles {
         // this._x = 100
         this._x = Math.random() * 300 + 50 //this._ctx.canvas.width / 2
         this._y = 0
-        this._w = Math.random() * 100 + 50
+        this._w = Math.random() * 100 + 100
         this._h = 40
         this._vy = 7
+        this._vx = Math.round(Math.random() * (-1 - 1) + 1);
     }
 
     draw() {
@@ -20,6 +21,7 @@ class Obstacles {
 
     move() {
         this._y += this._vy
+        this._x += this._vx
     }
 
     isVisible() {
