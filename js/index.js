@@ -1,7 +1,10 @@
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
 
-  function startGame() {}
+
+window.onload = () => {
+  const game = new Game(ctx)
+  document.getElementById('start-button').onclick = () => {
+    game.start()
+  };
 };
