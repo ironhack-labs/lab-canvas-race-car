@@ -11,6 +11,8 @@ class Game {
 
         this._obstacles = []
 
+        this._score = 0
+
     }
 
     start() {
@@ -19,7 +21,9 @@ class Game {
            this.draw()
            this.move()
            this.addObstacle()
+           this.score()
            this.clearObstacles()
+           this.checkCollisions()
        }, 1000/60)
     }
 
@@ -52,6 +56,45 @@ class Game {
 
     clearObstacles() {
         this._obstacles = this._obstacles.filter((obst) => obst.isVisible())
+    }
+
+    checkCollisions() {
+        const c = this._car
+        this._obstacles.forEach(o => {
+            const collisionX = c.x < o.x + o.w && c.x + c.w > o.x
+            const collisionY = c.y < o.y + o.h
+            if (collisionY && collisionX) {
+                this.gameOver()
+            }
+        })
+
+    }
+
+    gameOver() {
+        clearInterval(this._intervalId)
+        this._ctx.font = "30px Comic Sans MS";
+        this._ctx.textAlign = "center";
+        ctx.fillStyle = '#000';
+        this._ctx.fillText(
+            "GAME OVER",
+            this._ctx.canvas.width / 2,
+            this._ctx.canvas.height / 2
+        );
+        
+        this._ctx.fillText(
+            `YOUR FINAL SCORE: ${this._score}`,
+            this._ctx.canvas.width / 2,
+            400
+          );
+        
+    }
+
+    score() {
+        this._obstacles.forEach((obs) => {
+            if (obs.y > this._car.y + this._car.h) {
+                this._score ++
+            }
+        }) 
     }
 
 }
