@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d')
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-   const game = new Game(ctx);
-   game.start() 
+    const game = new Game(ctx);
+    game.start()
   };
 };
