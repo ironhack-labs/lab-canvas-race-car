@@ -34,10 +34,10 @@ class Car {
         
         switch (event.key) {
           case 'ArrowRight':
-            this.vx += 0.01
+            this.vx = 10
             break
           case 'ArrowLeft':
-            this.vx -= 0.01
+            this.vx = -10
             break
   
         }
@@ -48,9 +48,12 @@ class Car {
         this.vx = 0
   
       });
-    // if (this.y >= this.h) {
-    //   this.y = 0
-    // }
+    if (this.y + this.h >= this._ctx.canvas.height) {
+      this.y = this._ctx.canvas.height - this.h
+    }
+    if (this.x - this.w / 2 <= 0) {
+      this.x = this.w / 2
+    }
   }
 
   
