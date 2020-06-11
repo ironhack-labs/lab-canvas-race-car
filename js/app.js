@@ -128,7 +128,6 @@ class Car {
         if (dir === 'left') {
             this.posX -= 10
             this.draw()
-            if()
         } else if (dir === 'right') {
             this.posX += 10
             this.draw()
