@@ -10,6 +10,8 @@ const carGame = {
   background: undefined,
   obstacles: [],
   frames: 0,
+  intervalId: undefined,
+  score: 0,
   canvasSize: {
     w: window.innerWidth / 2,
     h: window.innerHeight
@@ -27,18 +29,20 @@ const carGame = {
     this.car = new Car(this.ctx, carName, this.canvasSize.w / 2 - 40, this.canvasSize.h - 250, 80, 150, 80, this.canvasSize)
     this.car.init()
 
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.clearScreen()
       this.background.drawBackground()
       this.car.drawCar()
-      if (this.frames % 70 === 0 || this.frames === 0) {
+      if (this.frames % 65 === 0 || this.frames === 0) {
         const newObs = new Obstacle(this.canvasSize, this.ctx)
         newObs.generateRandomPosition()
         this.obstacles.push(newObs)
       }
       this.frames++
       this.obstacles.forEach(elm => elm.drawObstacle(elm.randomPosition))
-    }, 50)
+      this.collisionDetection()
+      this.drawScore()
+    }, 40)
   },
   setEventListeners() {
     document.onkeydown = e => {
@@ -48,6 +52,35 @@ const carGame = {
   },
   clearScreen() {
     this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h);
+  },
+  collisionDetection() {
+    this.obstacles.forEach(obs => {
+      console.log("MENOR", obs.posX, "MAYOR", this.car.posX + 80)
+      if (obs.posX[obs.randomPosition] < this.car.posX + 80 &&
+        obs.posX[obs.randomPosition] + obs.width[obs.randomPosition] > this.car.posX &&
+        obs.posY < this.car.posY + 150 &&
+        obs.posY + obs.height > this.car.posY) {
+        clearInterval(this.intervalId)
+        this.ctx.fillStyle = '#000'
+        this.ctx.fillRect(this.canvasSize.w / 2 - 150, this.canvasSize.h / 2 - 100, 300, 200)
+        this.ctx.font = "40px sans-serif"
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillText("Game Over :(", this.canvasSize.w / 2 - 120, this.canvasSize.h / 2 - 15)
+        this.ctx.fillStyle = '#870007'
+        this.ctx.fillText(`Your Score: ${this.score}`, this.canvasSize.w / 2 - 120, this.canvasSize.h / 2 + 50)
+
+      }
+    })
+  },
+  drawScore() {
+    this.obstacles.forEach(obs => {
+      if (obs.posY === this.car.posY) {
+        this.score++
+      }
+    })
+    this.ctx.font = "20px sans-serif"
+    this.ctx.fillStyle = 'white'
+    this.ctx.fillText(`SCORE:${this.score}`, 175, this.canvasSize.h - 55)
   }
 }
 
@@ -114,7 +147,7 @@ class Obstacle {
     this.canvasSize = canvasSize
     this.posY = -50
     this.posX = [175, 320, 450, 300, 175]
-    this.width = [this.canvasSize.w - 480, this.canvasSize.w - 480, this.canvasSize.w / 5, this.canvasSize.w / 4, this.canvasSize.w / 4]
+    this.width = [this.canvasSize.w - 480, this.canvasSize.w - 480, this.canvasSize.w / 5, this.canvasSize.w / 3, this.canvasSize.w / 4]
     this.height = 40
     this.vel = 5
     this.randomPosition = undefined
@@ -123,7 +156,7 @@ class Obstacle {
     this.randomPosition = Math.floor(Math.random() * this.posX.length)
   }
   drawObstacle(randomPosition) {
-    this.ctx.fillStyle = "red"
+    this.ctx.fillStyle = "#870007"
     this.posY += this.vel
     this.ctx.fillRect(this.posX[randomPosition], this.posY, this.width[randomPosition], 50)
   }
