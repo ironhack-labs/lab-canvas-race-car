@@ -5,3 +5,13 @@ window.onload = () => {
 
   function startGame() {}
 };
+
+  app.init('canvas')
+
+  // app.drawFilledSquares()
+
+  // app.drawLines()
+
+  // controlsApp.init('canvas')
+
+  //controlsApp.drawImage('car.png')
