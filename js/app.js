@@ -126,11 +126,19 @@ class Car {
 
     move(dir) {
         if (dir === 'left') {
-            this.posX -= 10
-            this.draw()
+            if (this.posX > 65) {
+                this.posX -= 10
+                this.draw()
+            } else {
+                alert('Out of boundaries!')
+            }
         } else if (dir === 'right') {
-            this.posX += 10
-            this.draw()
+            if (this.posX < 360) {
+                this.posX += 10
+                this.draw()
+            } else {
+                alert('Out of boundaries!')
+            }
             // dir === 'right' ? this.posX++ : null
         } else {
             return undefined
