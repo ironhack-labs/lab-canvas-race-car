@@ -37,6 +37,7 @@ const race = {
       this.setEventListeners()
       this.obstaclesGeneration()
       this.obstacleMovement()
+      console.log(this.obstaclesArr)
   
     },
 
@@ -161,7 +162,7 @@ class Obstacles {
       this.ctx = ctx
       this.maxWidth = 150
       this.minWidth = 80
-      this.posX = Math.random() * this.maxWidth + this.minWidth220
+      this.posX = Math.random() * this.maxWidth + this.minWidth
       this.posY = 0
       this.obstacleW = Math.random()*this.minWidth*2
       this.obstacleH = 25
