@@ -131,7 +131,7 @@ window.onload = () => {
         this.posX += 15
       } else {
         return null
-      } ∫
+      }
     }
 
     draw() {
