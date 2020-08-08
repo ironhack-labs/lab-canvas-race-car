@@ -5,6 +5,7 @@ class Car {
   constructor(img) {
     this.img = img;
     this.x = 250 - 158 / 3 / 2;
+    this.y = 700 - (319 / 3) - 20;
     this.width = 158 / 3;
     this.height = 319 / 3;
     this.speedX = 0;
@@ -35,11 +36,13 @@ function updateObstacles() {
     context.fillStyle = 'red';
     // console.log(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
     context.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+    // console.log(obstacles);
+    if (obstacles[i].y>=canvas.height) obstacles.shift();
   }
 
   frames += 1;
 
-  if (frames % 165 === 0) {
+  if (frames % 250 === 0) {
     let y = 0;
     let minWidth = 100;
     let maxWidth = 300;
@@ -59,7 +62,7 @@ function drawGame() {
 
   car.x += car.speedX;
   // console.log(car.x,car.speedX);
-  context.drawImage(car.img, car.x, canvas.height - car.height - 20, car.width, car.height);
+  context.drawImage(car.img, car.x, car.y, car.width, car.height);
 
   updateObstacles();
 
@@ -74,11 +77,12 @@ function drawGame() {
     // console.log('esquerda do obstaculo-',obstacle.x);
     // console.log('esquerda do carro-',car.x);
     // console.log('direira do obstaculo-',obstacle.x + obstacle.width);
-    let crashTop = (obstacle.y + obstacle.height >= canvas.height - car.height - 20);
-    let crashLeft = (car.x < obstacle.x + obstacle.width && car.x > obstacle.x);
-    let crashRight = (car.x + car.height > obstacle.x && car.x + car.height <= obstacle.x + obstacle.width);
-
-    return crashTop && (crashLeft || crashRight);
+    // let crashTop = (obstacle.y + obstacle.height >= car.y);
+    // let crashLeft = (obstacle.x + obstacle.width > car.x > obstacle.x);
+    // let crashRight = (obstacle.x < car.x + car.width < obstacle.x + obstacle.width);
+    // console.log (car.y);
+    // return crashTop && (crashLeft || crashRight);
+    return !(car.y+car.height < obstacle.y || car.y > obstacle.y + obstacle.height || car.x + car.width < obstacle.x || car.x > obstacle.x + obstacle.width);
   });
 
   if (crashed) {
@@ -109,17 +113,19 @@ window.onload = () => {
 document.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
     case 37: // left arrow
-      if (car.x >= 40) {
+      if (car.x >= 20) {
         car.speedX -= 1;
       } else {
-        car.x = 40;
+        car.x = 20;
+        car.speedX = 0;
       }
       break;
     case 39: // right arrow
-      if (car.x <= 460) {
+      if (car.x <= 480 - car.width) {
         car.speedX += 1
       } else {
-        car.x = 460;
+        car.x = 480 - car.width;
+        car.speedX = 0;
       }
       break;
   }
@@ -127,6 +133,6 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keyup', (e) => {
   car.speedX = 0;
-  if (car.x < 40) car.x = 40;
-  if (car.x > 460) car.x = 460;
+  // if (car.x < 40) car.x = 40;
+  // if (car.x > 460) car.x = 460;
 });
