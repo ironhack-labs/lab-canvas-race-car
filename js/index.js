@@ -30,9 +30,14 @@ class Character{
     this.y += this.speedY
   }
   touch(obstacle){
-    this.y <= obstacle.y + obstacle.height || 
-    this.x > obstacle.x + obstacle.width
-    }
+    return(
+      // this.x>=obstacle.x+obstacle.width 
+      this.y < obstacle.y + obstacle.height &&
+      this.y + this.heigth > obstacle.y &&
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width > obstacle.x
+    )
+}
 }
 
 
@@ -81,10 +86,12 @@ function clearCanvas() {
 }
 
 function checkCollitions(){
-  obstacles.forEach(obstacle =>{
-    if(car.touch(obstacle)){
-      ctx.font="40px Arial"
-      ctx.fillText('Game Over', 0, 0)
+  obstacles.forEach(ob=>{
+    if(car.touch(ob)){
+      clearInterval(intervalId)
+      ctx.font = `32px 'Arial'`
+      ctx.fillStyle = "black"
+      ctx.fillText("Game Over", 170, 400)
     }
   })
 }
@@ -110,17 +117,16 @@ document.addEventListener("keyup", (e) => {
 
 //obstaculo
 function generateObstacles() {
-  if (frames % 100 === 0) {
-    let minWidth= 50
-    let maxWidth= 400
+  if (frames % 150 === 0) {
+    let minWidth= 100
+    let maxWidth= 370
     let minGap = 75
-    let maxGap = 200
+    let maxGap = 100
     let randomWidth = Math.floor(
       Math.random() * (maxWidth- minWidth) + minWidth
     )
     let randomGap = Math.floor(Math.random() * (maxGap - minGap) + minGap)
     let randomX=Math.floor(Math.random()*500-randomWidth)
-    //constructor(x,y,color)
     obstacles.push(new Obstacle(randomX, 0,'red', randomWidth))
     obstacles.push(new Obstacle(randomWidth + randomGap,$canvas.width - randomGap - randomWidth )
     )
@@ -131,9 +137,6 @@ function generateObstacles() {
 function drawObstacles() {
   obstacles.forEach((obstacle, i) => {
     obstacle.draw()
-    if (obstacle.x = 0) {
-      obstacles.splice(i, 1)
-    }
   })
 }
 
