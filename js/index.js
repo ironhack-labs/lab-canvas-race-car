@@ -1,7 +1,11 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    // Start the canvas
+    drawingApp.init("canvas")
+    // Draw the others elements
+    drawingApp.draw()
+    
   };
 
-  function startGame() {}
+  
 };
