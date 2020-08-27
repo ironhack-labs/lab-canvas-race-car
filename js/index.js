@@ -18,40 +18,53 @@ const canvasRaceCar={
   canvasId:undefined,
   ctx:undefined,
   interval:undefined,
+  obsArray:undefined,
+  pointsInterval:0,
   canvasSize:{
     w:undefined,
     h:undefined
   },
+  totalPoints:0,
   init(id){
     
+    this.canvasSize.w="500"
+    this.canvasSize.h="700"
     this.canvasId=id,
     this.ctx=document.getElementById(this.canvasId).getContext('2d')
     this.setEventListeners()
     this.drawGame()
-    this.canvasSize.w="500"
-    this.canvasSize.h="700"
+    this.collision()
+    this.points()
+    
+
+   
+
     
   },
 
   drawGame(){
-    setInterval(() => {
-      this.drawObstacle()
-    }, 1000);
-    // this.drawObstacle()
+        
     this.drawCar('car.png')
+    this.drawObstacle()   
     this.interval = setInterval(() => {
+      this.collision() 
       this.clearScreen()
       this.drawRoadCar()
-    this.car.draw()
-    this.ob.draw()
-
-    
+      this.car.draw()
+      this.ob.draw()
+      setTimeout(() => {
+        this.ob2.draw()
+      }, 2000);
+           
     
   }, 50);
+  
   },
 
+  
+  
   clearScreen(){
-    this.ctx.clearRect(0,0,this.canvasSize.w,this.canvasSize.h)
+    this.ctx.clearRect(0,0,500,700)
 
   },
 
@@ -63,6 +76,7 @@ const canvasRaceCar={
     this.drawGrass(100)
     this.drawGrass(465)
     this.drawDashedLines(100,700)
+    this.drawScore()
 
 
   },
@@ -96,11 +110,19 @@ const canvasRaceCar={
 
   drawCar(imageName){
   this.car=new Car(this.ctx,200,600,40,75,this.canvasSize,imageName)
-  // this.car.draw()
+
   },
   drawObstacle(){
-  this.ob=new Obstacles(this.ctx,100,0,15,this.canvasSize)
+  this.ob=new Obstacles(this.ctx,100,35,this.canvasSize)
+  this.ob2=new Obstacles(this.ctx,100,35,this.canvasSize)
   },
+  drawScore(){
+    this.ctx.fillStyle = "white"     
+    this.ctx.font = "bold 20px sans-serif"
+    this.ctx.textAlign= "center"
+    this.ctx.fillText(`Score: ${this.totalPoints}` , 220, 150);
+  },
+
   
   setEventListeners(){
     document.onkeydown = e =>{ 
@@ -109,7 +131,65 @@ const canvasRaceCar={
       e.keyCode=== 39 ? this.car.move('right'): null
     }
 
+  },
+  collision(){
+    
+    if (this.car.carPos.x < this.ob.obsPos.x + this.ob.obsSize.w &&
+      this.car.carPos.x + this.car.carSize.w > this.ob.obsPos.x &&
+      this.car.carPos.y < this.ob.obsPos.y + this.ob.obsSize.h &&
+      this.car.carSize.h + this.car.carPos.y > this.ob.obsPos.y) {
+        
+       this.gameOver(this.totalPoints)
+   }
+   if (this.car.carPos.x < this.ob2.obsPos.x + this.ob2.obsSize.w &&
+    this.car.carPos.x + this.car.carSize.w > this.ob2.obsPos.x &&
+    this.car.carPos.y < this.ob2.obsPos.y + this.ob2.obsSize.h &&
+    this.car.carSize.h + this.car.carPos.y > this.ob2.obsPos.y) {
+      
+     this.gameOver(this.totalPoints)
+
+ }
+   
+  },
+  points(){
+    this.pointsInterval= setInterval(() => {
+      this.totalPoints+=10
+    }, 1000);
+
+  },
+  gameOver(points) {
+    clearInterval(this.interval)
+    clearInterval(this.pointsInterval)
+    this.clearScreen() 
+    
+  setTimeout(() => {
+    this.ctx.fillStyle = 'black'
+    this.ctx.fillRect(0, 0, 500, 700)
+  }, 3000); 
+  setTimeout(() => {
+    this.ctx.fillStyle = "white"     
+    this.ctx.font = "bold 60px sans-serif"
+    this.ctx.textAlign= "center"
+    this.ctx.fillText('Game Over', 240, 300);
+  }, 3500);  
+  setTimeout(() => {
+    this.ctx.fillStyle = "yellow"  
+    this.ctx.font = 'bold 40px sans-serif';
+    this.ctx.textAlign= "center"
+    this.ctx.fillText( `Your Score: ${this.totalPoints}`, 245,400 );
+  }, 4500);
+  setTimeout(() => {
+    this.ctx.fillStyle = "red"  
+    this.ctx.font = 'bold 40px sans-serif';
+    this.ctx.textAlign= "center"
+    this.ctx.fillText( `Drive Safely`, 245,550 );
+  }, 5500);
+    
+    
+
   }
+
+  
   
 }
 
@@ -130,6 +210,7 @@ class Car{
     
     this.imageInstance=undefined
     this.init()
+   
   }
 
   init(){
@@ -147,7 +228,9 @@ class Car{
   
   if(direction ==='left' && this.carPos.x>180) this.carPos.x -=10 
     if(direction ==='right' && this.carPos.x<380) this.carPos.x +=10
+    
   }
+  
 
 }
 
@@ -171,35 +254,41 @@ class Obstacles{
   init(){
   this.setObsPositionX()
   this.setObsDimensions()
-  this.obsDraw()
   }
 
-  obsDraw(){
-    this.moveObs()
-  }
+  
   
   
   setObsDimensions(){
-  this.obsSize.x=  Math.floor(Math.random()*(200-100))+100
-  
+  this.obsSize.w=  Math.floor(Math.random()*(200-100))+100
   }
 
   setObsPositionX(){
 
   this.obsPos.x=Math.floor(Math.random()*(400-100))+100
-  console.log(this.obsPos.x)
   }
 
   draw(){
     this.moveObs()
     this.ctx.fillStyle='blue'
-    this.ctx.fillRect(this.obsPos.x,this.obsPos.y,this.obsSize.x,50)
+    this.ctx.fillRect(this.obsPos.x,this.obsPos.y,this.obsSize.w,this.obsSize.h)
+    
 
   }
+
+  
 
   moveObs(){
+   if(this.obsPos.y<700){
+    this.obsPos.y +=10
    
-    this.obsPos.y++
+    
+    
+}
+    else {
+      this.setObsDimensions()
+      this.setObsPositionX()
+      this.obsPos.y=0
   }
 
-}
+}}
