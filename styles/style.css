@@ -1,6 +1,12 @@
 body {
   padding: 0;
   text-align: center;
+  display: flex;
+  
+}
+
+#canvas {
+  background-color: #969696;
 }
 
 .game-intro {
