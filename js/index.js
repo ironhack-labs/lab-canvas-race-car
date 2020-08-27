@@ -4,7 +4,7 @@ window.onload = () => {
   };
 
   function startGame() {
-    //raceCarApp.init('canvas')
+    raceCarApp.init('canvas')
   }
 };
 
@@ -17,7 +17,7 @@ const raceCarApp = {
   description: 'First try with canvas!',
   canvasId: undefined,
   ctx: undefined,
-  frames: 0,
+  frame: 0,
   canvasSize: {
     width: 500,
     height: 700
@@ -40,13 +40,16 @@ const raceCarApp = {
     this.drawCentralLines()
   },
   
+  // Grass
   drawBoard() {
     this.ctx.fillStyle = 'green'
     this.ctx.fillRect(0, 0, 500, 700)
     this.ctx.fillStyle = 'grey'
     this.ctx.fillRect(25, 0, 450, 700)
+    
   },
 
+  // Side lines of the road  ==> After implementing the setInterval, the lines became dashed lines - ?????
   drawSideLines() {
     this.ctx.lineWidth = 10
     this.ctx.strokeStyle = 'white'
@@ -61,7 +64,8 @@ const raceCarApp = {
     this.ctx.closePath()
     this.ctx.stroke()
   },
-
+  
+  // Central dashed lines
   drawCentralLines() {
     this.ctx.lineWidth = 5
     this.ctx.strokeStyle = 'white'
@@ -71,21 +75,23 @@ const raceCarApp = {
     this.ctx.lineTo(250, this.canvasSize.height)
     this.ctx.closePath()
     this.ctx.stroke()
+    
   },
 
   drawPlayerCar(carImage) {
     this.player1Car = new PlayerCar(this.ctx, 210, 590, 80, 100, this.canvasSize, 1.5, carImage)
-    console.log(this.player1Car)
+    //console.log(this.player1Car)
    setInterval(() => {
      //console.log('Am I cleaning?')
-     this.frames++
-     this.clearScreen()
-     this.player1Car.draw()
-   }, 50)
+     this.frame++    //update frame
+     this.clearScreen()  // clear screen  
+     this.drawRoad()  // draw the road  ==> I need to restore the lines
+     this.player1Car.draw()  // draw the car
+    }, 30)  // restart
   },
 
   setEventListeners() {
-    console.log('Moving now!')
+    //console.log('Moving now!')
     document.onkeydown = e => {
     e.keyCode === 37 ? this.player1Car.moveCar('left') : null
     e.keyCode === 39 ? this.player1Car.moveCar('right') : null
@@ -93,7 +99,7 @@ const raceCarApp = {
   },
 
   clearScreen() {
-    this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+   this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   }
   
   //drawRoadObstacles() {
@@ -130,9 +136,8 @@ class PlayerCar {
   }
 
   moveCar(dir) {
-    dir === 'left' ? this.carPos.x -= 5 : null
-    dir === 'right' ? this.carPos.x += 5 : null
-    
+    dir === 'left' && this.carPos.x >= 50 ? this.carPos.x -= 5 : null
+    dir === 'right' && this.carPos.x <= 450 - this.carSize.w ? this.carPos.x += 5 : null    
   }
 
 
@@ -143,4 +148,4 @@ class PlayerCar {
 
 // }
 
-raceCarApp.init('canvas')
+
