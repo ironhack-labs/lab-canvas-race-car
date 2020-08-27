@@ -36,3 +36,10 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+canvas {
+  background: url('../images/road.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
