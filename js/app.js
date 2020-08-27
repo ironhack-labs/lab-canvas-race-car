@@ -1,0 +1,1 @@
+raceGame.init('canvasId')
