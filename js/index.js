@@ -17,22 +17,29 @@ const raceCarApp = {
   description: 'First try with canvas!',
   canvasId: undefined,
   ctx: undefined,
+  frames: 0,
   canvasSize: {
     width: 500,
     height: 700
   },
 
+
   init(id) {
     this.canvasId = id
     this.ctx = document.getElementById(this.canvasId).getContext('2d')
-    this.drawBoard()
-    this.drawSidelLines()
-    this.drawCentralLines()
-    this.drawPlayerCar()
+    this.setEventListeners() 
+    this.drawRoad()
+    this.drawPlayerCar('car.png')
     //this.drawRoadObstacles()
-    console.log('Objeto canvas 2D', this.ctx)
+    //console.log('Objeto canvas 2D', this.ctx)
   },
 
+  drawRoad() {
+    this.drawBoard()
+    this.drawSideLines()
+    this.drawCentralLines()
+  },
+  
   drawBoard() {
     this.ctx.fillStyle = 'green'
     this.ctx.fillRect(0, 0, 500, 700)
@@ -40,7 +47,7 @@ const raceCarApp = {
     this.ctx.fillRect(25, 0, 450, 700)
   },
 
-  drawSidelLines () {
+  drawSideLines() {
     this.ctx.lineWidth = 10
     this.ctx.strokeStyle = 'white'
     this.ctx.beginPath()
@@ -66,13 +73,23 @@ const raceCarApp = {
     this.ctx.stroke()
   },
 
-  drawPlayerCar() {
-    const player1 = new PlayerCar(this.ctx, 210, 590, 80, 100, this.canvasSize, 2.5, 'car.png')
-    console.log(player1)
+  drawPlayerCar(carImage) {
+    this.player1Car = new PlayerCar(this.ctx, 210, 590, 80, 100, this.canvasSize, 1.5, carImage)
+    console.log(this.player1Car)
    setInterval(() => {
+     //console.log('Am I cleaning?')
+     this.frames++
      this.clearScreen()
-     player1.draw()
+     this.player1Car.draw()
    }, 50)
+  },
+
+  setEventListeners() {
+    console.log('Moving now!')
+    document.onkeydown = e => {
+    e.keyCode === 37 ? this.player1Car.moveCar('left') : null
+    e.keyCode === 39 ? this.player1Car.moveCar('right') : null
+    }
   },
 
   clearScreen() {
@@ -98,7 +115,6 @@ class PlayerCar {
     }
     this.canvasSize = canvasSize
     this.imgName = imgName
-    this.speed = speed
     this.imageInstance = undefined
     this.init()
   }
@@ -110,14 +126,12 @@ class PlayerCar {
   }
 
   draw() {
-    //this.moveCar()
     this.ctx.drawImage(this.imageInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
   }
 
-  moveCar() {
-    this.carPos.y += this.speed
-    this.carPos.x >= this.canvasSize.w - this.carSize.w || this.carPos.x <= 0 ? this.changeDirection() : null
-
+  moveCar(dir) {
+    dir === 'left' ? this.carPos.x -= 5 : null
+    dir === 'right' ? this.carPos.x += 5 : null
     
   }
 
