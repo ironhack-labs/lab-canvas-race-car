@@ -14,10 +14,12 @@ const carRaceApp = {
     description: 'Canvas app to drive a car avoiding random obstacles',
     canvasId : undefined,
     ctx: undefined,
+    car: undefined,
     canvasSize: {
       w: undefined,
       h: undefined,
     },
+
     init(id) {
       this.canvasId = id
       this.ctx = document.getElementById(this.canvasId).getContext('2d')
@@ -25,8 +27,8 @@ const carRaceApp = {
 
       this.drawRoad()
 
-      const car = new Car (this.ctx, this.canvasSize.w/2 - 20, this.canvasSize.h - 100, 40, 80, 'car.png')
-
+      this.placeCar()
+      this.drawCar()     
     },
 
     setDimensions() {
@@ -59,7 +61,20 @@ const carRaceApp = {
       this.ctx.lineTo (this.canvasSize.w / 2, this.canvasSize.h)
       this.ctx.closePath()
       this.ctx.stroke()
+    },
+
+    placeCar() {
+     this.car = new Car (this.ctx, this.canvasSize.w /2 - 25, this.canvasSize.h  - 125, 50, 100, 'car.png')
+     console.log(this.car)
+    
+     this.carImage = new Image()
+     this.carImage.src = `images/${this.car.imgName}`
+    },
+
+    drawCar() {
+      this.car.renderCar()
     }
+  
     
 }
 
@@ -84,17 +99,13 @@ class Car {
   initCar() {
     this.imgInstance = new Image()
     this.imgInstance.src = `images/${this.imgName}`
-    this.drawCar()
   }
 
-  drawCar() {
-    console.log(this.imgInstance)
-    console.log(this)
-    console.log(this.ctx)
-    this.ctx.drawImage(this.imgInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+  renderCar() {
+    this.imgInstance.onload = e => this.ctx.drawImage(this.imgInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
   }
 }
 
 
 carRaceApp.init('cars')
-carRaceApp.drawRoad()
+
