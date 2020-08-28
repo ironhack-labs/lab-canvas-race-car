@@ -7,78 +7,126 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 window.onload = function () {
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-
-  document.getElementById("start-button").onclick = function () {
-    startGame();
-  }; // Get the image
-
-
-  var road = new Image();
-  road.src = "/images/road.png";
-  var car = new Image();
-  car.src = "/images/car.png"; // Wait Till the pista is loaded
-
-  road.onload = function () {
-    drawCanvas(road);
-  };
-
-  var myGameArea = {
-    canvas: document.createElement("canvas"),
-    start: function start() {
-      // call updateGameArea() every 20 milliseconds
-      this.interval = setInterval(updateCanvas, 20);
-    }
-  };
-
-  function startGame() {
-    drawCanvas();
-    myGameArea.start();
-  }
-
   var obstacleArray = [];
   var counter = 0;
-  var points = 0;
 
-  function drawCanvas() {
-    ctx.clearRect(0, 0, 1.8 * road.width, 1.75 * road.height);
-    ctx.drawImage(road, 0, 0, 1.8 * road.width, 1.75 * road.height);
-    ctx.drawImage(car, myCar.x, myCar.y, 0.5 * car.width, 0.5 * car.height);
-    obstacleArray.push(new Obstacles());
-    obstacleArray[0].draw();
+  document.getElementById("start-button").onclick = function () {
+    gameArea.start();
+  };
+
+  var roadImg = new Image();
+  roadImg.src = "/images/road.png";
+  var carImg = new Image();
+  carImg.src = "/images/car.png";
+
+  function drawRoad() {
+    gameArea.ctx.clearRect(0, 0, 1.775 * roadImg.width, 1.775 * roadImg.height);
+    gameArea.ctx.drawImage(roadImg, 0, 0, 1.775 * roadImg.width, 1.775 * roadImg.height);
   }
 
-  function updateCanvas() {
-    // requestAnimationFrame(updateCanvas);
-    counter++; // let time = 1
+  function updateGameArea() {
+    gameArea.clear();
+    drawRoad();
+    player.update();
+    gameArea.score();
+    counter++;
 
-    if (counter >= 50) {
-      counter = 0;
+    if (counter % 100 == 0) {
       obstacleArray.push(new Obstacles());
-      points += 10;
-    } // se bateu
-
-
-    if (obstacleArray[0].y + obstacleArray[0].height >= car.y && car.x > obstacleArray[0].x - myCar.width && car.x < obstacleArray[0].x + obstacleArray[0].width) {
-      con("bateu");
-    } // bonus: rolar a pista
-
-
-    if (obstacleArray[0].y > canvas.width) {
-      obstacleArray.shift();
     }
 
-    points += 1 / 40;
-    ctx.clearRect(0, 0, 1.8 * road.width, 1.75 * road.height);
-    ctx.drawImage(road, 0, 0, 1.8 * road.width, 1.75 * road.height);
-    ctx.drawImage(car, myCar.x, myCar.y, 0.5 * car.width, 0.5 * car.height);
     obstacleArray.forEach(function (obs) {
+      if (obs.y > gameArea.canvas.height) {
+        obstacleArray.shift();
+      }
+
+      if (obs.y + obs.height >= player.y && player.x < obs.x + obs.width && player.x + player.width > obs.x) {
+        // requestAnimationFrame(gameArea.stop);
+        con("BATEU");
+      }
+
       obs.moveDown();
-      obs.draw();
+      obs.update();
     });
-    ctx.fillText("Points: " + points, 220, 600);
   }
+
+  document.addEventListener("keydown", function (keyPressed) {
+    switch (keyPressed.keyCode) {
+      case 37:
+        player.moveLeft();
+        break;
+
+      case 39:
+        player.moveRight();
+        break;
+    }
+  });
+  var gameArea = {
+    canvas: document.getElementById("canvas"),
+    start: function start() {
+      this.canvas.width = canvas.width;
+      this.canvas.height = canvas.height;
+      this.ctx = this.canvas.getContext("2d"); // document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+
+      this.interval = setInterval(updateGameArea, 20);
+    },
+    clear: function clear() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    score: function score() {
+      var points = Math.floor(counter / 5);
+      this.ctx.font = "18px serif";
+      this.ctx.fillStyle = "black";
+      this.ctx.fillText("Score: ".concat(points), 350, 50);
+    } // stop: function () {
+    //   clearInterval(this.interval);
+    //   // gameArea.clear();
+    //   // this.ctx.fillRect(0, 0, this.width, this.height);
+    //   // this.ctx.fillText(`GAME OVER`, this.width / 2, this.height / 2);
+    // },
+
+  };
+
+  var Player =
+  /*#__PURE__*/
+  function () {
+    function Player() {
+      _classCallCheck(this, Player);
+
+      this.width = 0.5 * carImg.width;
+      this.height = 0.5 * carImg.height;
+      this.x = (canvas.width - this.width) / 2;
+      this.y = canvas.height - this.height - 60;
+    }
+
+    _createClass(Player, [{
+      key: "moveLeft",
+      value: function moveLeft() {
+        this.x -= 50;
+
+        if (this.x < 0) {
+          this.x = 0;
+        }
+      }
+    }, {
+      key: "moveRight",
+      value: function moveRight() {
+        this.x += 50;
+
+        if (this.x > canvas.width - this.width) {
+          this.x = canvas.width - this.width;
+        }
+      }
+    }, {
+      key: "update",
+      value: function update() {
+        var ctx = gameArea.ctx;
+        ctx.drawImage(carImg, this.x, this.y, this.width, this.height);
+      }
+    }]);
+
+    return Player;
+  }();
 
   var Obstacles =
   /*#__PURE__*/
@@ -98,9 +146,11 @@ window.onload = function () {
         this.y += 10;
       }
     }, {
-      key: "draw",
-      value: function draw() {
-        //             x         y     w       h
+      key: "update",
+      value: function update() {
+        var ctx = gameArea.ctx; //             x         y     w       h
+
+        ctx.fillStyle = "red";
         ctx.fillRect(this.x, this.y, this.width, this.height);
       }
     }]);
@@ -108,55 +158,9 @@ window.onload = function () {
     return Obstacles;
   }();
 
-  var myCar = {
-    x: (canvas.width - 0.5 * car.width) / 2,
-    y: canvas.height - 0.5 * car.height - 55,
-    moveLeft: function moveLeft() {
-      this.x -= 30;
-
-      if (this.x < 0) {
-        this.x = 0;
-      }
-    },
-    moveRight: function moveRight() {
-      this.x += 30;
-
-      if (this.x > canvas.width - car.width) {
-        this.x = canvas.width - car.width;
-      }
-    } // moveUp: function () {
-    //   this.y -= 25;
-    // },
-    // moveDown: function () {
-    //   this.y += 25;
-    // },
-
-  };
-  document.addEventListener("keydown", function (keyPressed) {
-    switch (keyPressed.keyCode) {
-      // case 38:
-      //   // myCar.moveUp();
-      //   con("up");
-      //   break;
-      // case 40:
-      //   // myCar.moveUp();
-      //   con("down");
-      //   break;
-      case 37:
-        myCar.moveLeft();
-        con("left");
-        break;
-
-      case 39:
-        myCar.moveRight();
-        con("right");
-        break;
-    }
-
-    updateCanvas();
-  });
-
   function con(consoleMSg) {
     console.log(consoleMSg);
   }
+
+  var player = new Player();
 };
