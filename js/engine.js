@@ -57,7 +57,6 @@ const gameEngine = {
     init(canvasId) {
 
         this.canvas.id = canvasId
-
         this.canvas.itemInDOM = document.getElementById(this.canvas.id)
 
         // We store the Canvas Rendering Context 2d for using its methods later
@@ -68,12 +67,31 @@ const gameEngine = {
         // We instantiate the player
         this.player = new Car(this.ctx, this.canvas)
 
-        this.createWalls()
+        this.setEventHandlers()
 
-        // We draw the element in the canvas
+        // We draw the road
+        this.drawRoad()
+        this.ctx.lineDashOffset -= 4.7
+
+        // We draw the car
+
+        setTimeout(() => {
+
+            this.drawPlayer()
+
+        }, 10);
+
+        // We draw the score
+        this.drawScore()
+
+    },
+
+    startGame() {
+
         this.renderImage()
 
-        this.setEventHandlers()
+        this.createWalls()
+
     },
 
     storeCanvasDimensions() {
