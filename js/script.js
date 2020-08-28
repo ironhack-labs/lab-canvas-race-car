@@ -1,0 +1,1 @@
+cardRaceApp.init('canvas')
