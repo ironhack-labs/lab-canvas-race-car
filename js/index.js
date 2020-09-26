@@ -1,38 +1,6 @@
 
 
-/*const backgroundImage = {
-  img: img,
-  x: 0,
-  speed: 1,
 
-  move: function() {
-    this.x += this.speed;
-    this.x %= canvas.width;
-  },
-
-  draw: function() {
-    ctx.drawImage(this.img, this.x, 0);
-    if (this.speed < 0) {
-      ctx.drawImage(this.img, this.x + canvas.width, 0);
-    } else {
-      ctx.drawImage(this.img, this.x - this.img.width, 0);
-    }
-  },
-};
-
-function updateCanvas() {
-  backgroundImage.move();
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  backgroundImage.draw();
-
-  requestAnimationFrame(updateCanvas);
-}
-
-// start calling updateCanvas once the image is loaded
-img.onload = updateCanvas;
-
-*/
 
 const ctx  = document.getElementById('canvas').getContext('2d');
 const img = new Image();
@@ -44,31 +12,75 @@ window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
   };
+
+
+
   function startGame() {
-     let x = 200;
+    let x = 200;
     ctx.drawImage(img, 0, 0,500,700);
     ctx.drawImage(img2, x, 400,100,200);
 
+    let keyflagLeft = false
+    let keyflagRight = false
 
-   let isKeyPressedLeft = false
-    
+
     document.addEventListener("keydown", event => {
-      if (!keyflag || event.keyCode === 37) {
-        keyflag = true;
-        x-=5
+      if (event.keyCode === 37) {
+        keyflagLeft = true;
+        //x-=10
       }
-      if (!keyflag || event.keyCode === 39) {
-        keyflag = true;
-        x+=5
+      if (event.keyCode === 39) {
+        keyflagRight = true;
+        //x+=10
       }
 
       console.log(x);
     });
 
-    let obstacle = {
-      speedX: 5,
-      posX: 10,
-      posY: 10
+    document.addEventListener("keyup", event => {
+      if (event.keyCode === 37) {
+        keyflagLeft = false;
+        //x-=10
+      }
+      if (event.keyCode === 39) {
+        keyflagRight = false;
+        //x+=10
+      }
+
+      console.log(x);
+    });    
+
+    let obs = {
+      speedX: 6,
+      posX: 100,
+      posY: 0,
+    }
+
+    let bG ={
+      speedX: 3,
+      posX: 0,
+      posY: 0,
+    }
+
+    function move () {
+      bG.posY += bG.speedX;
+      bG.posY %= 700;
+    }
+
+    function moveobs () {
+      obs.posY += obs.speedX;
+      obs.posY %= 1400;
+      if(obs.posY >= 700 && frameCounter % 120 === 0){
+      obs.posX = Math.floor(Math.random() * 400);
+      }
+    }
+
+    function security () {
+      if(x <=35){
+        keyflagLeft = false
+      } else if (x >= 365){
+        keyflagRight = false
+      }
     }
 
     let frameCounter = 0
@@ -77,18 +89,28 @@ window.onload = () => {
     let draw = () => {
       frameCounter++
       // one second has passed
-      if (frameCounter >= 60) {
-        obstacle.posY += obstacle.speedX
-        obstacle.posx += 0.2
+      
+
+      if (keyflagLeft) {
+        x -= 5
       }
+      if (keyflagRight) {
+        x += 5
+      }
+
       ctx.clearRect(0, 0, 500, 700)
-      ctx.drawImage(img2, x, 400,100,200);
-      ctx.drawImage(img, 0, 0,500,700);
-      ctx.drawImage(img2, x, 400,100,200);
-      ctx.fillRect(obstacle.posX, obstacle.posY, 100, 100)
+      move ()
+      moveobs ()
+      security ()
+      ctx.drawImage(img, bG.posX, bG.posY-700,500,700);
+      ctx.drawImage(img, bG.posX, bG.posY,500,700);
+      ctx.drawImage(img2, x, 500,80,160);
+      
+      ctx.fillRect(obs.posX, obs.posY, 180, 30)
       requestAnimationFrame(draw)
     }
     draw()
+    ;
   }
   
 };
