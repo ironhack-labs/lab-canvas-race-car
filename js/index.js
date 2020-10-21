@@ -10,7 +10,6 @@ window.onload = () => {
   let frames = 299;
   let obstacles = [];
   let score = 0;
-  let click = 0;
 
   let gameOver = false;
 
@@ -110,7 +109,6 @@ window.onload = () => {
       carObj.y < obstacles[0].y + obstacles[0].height &&
       carObj.y + 100 > obstacles[0].y){
         gameOver = true;
-        click = 0;
         ctx.fillStyle = "black";
         ctx.fillRect(100, 100, 290, 200);
         ctx.fillStyle = "white";
@@ -127,13 +125,11 @@ window.onload = () => {
       gameOver = false;
       carObj.reset();
       score = 0;
-      click++;
     }
-    if(click === 1){
-      render();
-      if(!gameOver){
-        requestAnimationFrame(startGame);
-      }
+    render();
+    if(!gameOver){
+      requestAnimationFrame(startGame);
     }
+    
   }
 };
