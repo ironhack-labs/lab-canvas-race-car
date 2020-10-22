@@ -4,7 +4,6 @@
 // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-
     startGame();
   };
 
@@ -25,8 +24,12 @@ window.onload = () => {
     let carHeight = imgCar.height/2
     let carWidth = imgCar.width/2
 
+    let startAreaWidth = $canvas.width/2 - (carWidth/2);
 
-    ctx.drawImage(imgCar, 0, 0, carWidth, carHeight);
+    let startAreaHeigth = $canvas.height/2
+
+
+    ctx.drawImage(imgCar, startAreaWidth, startAreaHeigth, carWidth, carHeight);
     // debugger
 
   }
