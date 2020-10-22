@@ -18,8 +18,9 @@ window.onload = () => {
 
     imgCar = new Image();
     imgCar.src = "./images/car.png";
-    let carHeight = 319/2
-    let carWidth = 158/2
+
+    let carHeight = imgCar.height/2
+    let carWidth = imgCar.width/2
 
     // void ctx.drawImage(image, dx, dy, dWidth, dHeight);
     // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
