@@ -1,6 +1,10 @@
 //when we click on the Start Game button, we need to create the canvas and display the road.
+//SINTAXIS
+// void ctx.drawImage(image, dx, dy, dWidth, dHeight);
+// void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
+
     startGame();
   };
 
@@ -11,7 +15,6 @@ window.onload = () => {
     imgRoad = new Image();
     imgRoad.src = "./images/road.png";
     ctx.drawImage(imgRoad, 0, 0,$canvas.width,$canvas.height);
-    // debugger
 
 
     //iterattion 2
@@ -22,8 +25,7 @@ window.onload = () => {
     let carHeight = imgCar.height/2
     let carWidth = imgCar.width/2
 
-    // void ctx.drawImage(image, dx, dy, dWidth, dHeight);
-    // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+
     ctx.drawImage(imgCar, 0, 0, carWidth, carHeight);
     // debugger
 
