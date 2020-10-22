@@ -13,7 +13,7 @@ window.onload = () => {
 
     imgRoad = new Image();
     imgRoad.src = "./images/road.png";
-    ctx.drawImage(imgRoad, 0, 0,$canvas.width,$canvas.height);
+    ctx.drawImage(imgRoad, 0, 0, $canvas.width, $canvas.height);
 
 
     //iterattion 2
@@ -21,16 +21,28 @@ window.onload = () => {
     imgCar = new Image();
     imgCar.src = "./images/car.png";
 
-    let carHeight = imgCar.height/2
-    let carWidth = imgCar.width/2
+    let carHeight = imgCar.height / 2
+    let carWidth = imgCar.width / 2
 
-    let startAreaWidth = $canvas.width/2 - (carWidth/2);
+    let startAreaWidth = $canvas.width / 2 - (carWidth / 2);
 
-    let startAreaHeigth = $canvas.height/2
+    let startAreaHeigth = $canvas.height / 2
 
 
     ctx.drawImage(imgCar, startAreaWidth, startAreaHeigth, carWidth, carHeight);
-    // debugger
+
+
+    //iterattion 3
+    document.onkeydown = e => {
+      switch (e.key) {
+        case "ArrowLeft":
+          return imgCar.move("LEFT")
+        case "ArrowRight":
+          return imgCar.move("RIGHT")
+        default:
+          break
+      }
+    }
 
   }
 
