@@ -20,6 +20,9 @@ window.onload = () => {
 
     imgCar = new Image();
     imgCar.vel = 10
+    imgCar.xUbication= 1
+    imgCar.yUbication= 1
+
     imgCar.src = "./images/car.png";
 
     let carHeight = imgCar.height / 2
@@ -39,18 +42,12 @@ window.onload = () => {
 
     imgCar.move = function (dir){
       switch (dir) {
-        case "UP":
-          if (imgCar.y <= 0) return
-          return (imgCar.y -= imgCar.vel)
-        case "DOWN":
-          if (imgCar.y >= $canvas.height - imgCar.height) return
-          return (imgCar.y += imgCar.vel)
         case "LEFT":
-          if (imgCar.x <= 0) return
-          return (imgCar.x -= imgCar.vel)
+          if (imgCar.xUbication <= 0) return
+          return (imgCar.xUbication -= imgCar.vel)
         case "RIGHT":
-          if (imgCar.x >= $canvas.width - imgCar.width) return
-          return (imgCar.x += imgCar.vel)
+          if (imgCar.xUbication >= $canvas.width - imgCar.width) return
+          return (imgCar.xUbication += imgCar.vel)
         default:
           // throw new Error("Invalid direction")
       }
@@ -60,10 +57,12 @@ window.onload = () => {
     document.onkeydown = e => {
       switch (e.key) {
         case "ArrowLeft":
-          console.log("leftt");
+          imgCar.xUbication-=1
+          console.log(imgCar.xUbication);
           return imgCar.move("LEFT")
         case "ArrowRight":
-        console.log("right");
+        imgCar.xUbication+=1
+        console.log(imgCar.xUbication);
           return imgCar.move("RIGHT")
         default:
           break
