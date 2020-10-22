@@ -35,7 +35,9 @@ window.onload = () => {
 
     // iterattion 3
 
-    function move (){
+
+
+    imgCar.move = function (dir){
       switch (dir) {
         case "UP":
           if (imgCar.y <= 0) return
@@ -50,9 +52,10 @@ window.onload = () => {
           if (imgCar.x >= $canvas.width - imgCar.width) return
           return (imgCar.x += imgCar.vel)
         default:
-          throw new Error("Invalid direction")
+          // throw new Error("Invalid direction")
       }
     }
+
 
     document.onkeydown = e => {
       switch (e.key) {
@@ -60,7 +63,7 @@ window.onload = () => {
           console.log("leftt");
           return imgCar.move("LEFT")
         case "ArrowRight":
-        console.log("leftt");
+        console.log("right");
           return imgCar.move("RIGHT")
         default:
           break
