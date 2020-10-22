@@ -7,16 +7,21 @@ window.onload = () => {
   function startGame() {
     const $canvas = document.querySelector("canvas");
     const ctx = $canvas.getContext("2d");
-    img = new Image();
-    img.src = "./images/road.png";
-    ctx.drawImage(img, 90, 0);
+    imgRoad = new Image();
+    imgRoad.src = "./images/road.png";
+    ctx.drawImage(imgRoad, 90, 0);
 
 
     //iterattion 2
 
     imgCar = new Image();
     imgCar.src = "./images/car.png";
-    ctx.drawImage(imgCar, 0, 0);
+    let carHeight = 319/2
+    let carWidth = 158/2
+
+    // void ctx.drawImage(image, dx, dy, dWidth, dHeight);
+    // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+    ctx.drawImage(imgCar, 0, 0, carWidth, carHeight);
     // debugger
 
   }
