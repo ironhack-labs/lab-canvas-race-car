@@ -19,6 +19,7 @@ window.onload = () => {
     //iterattion 2
 
     imgCar = new Image();
+    imgCar.vel = 10
     imgCar.src = "./images/car.png";
 
     let carHeight = imgCar.height / 2
@@ -33,16 +34,43 @@ window.onload = () => {
 
 
     //iterattion 3
-    document.onkeydown = e => {
-      switch (e.key) {
-        case "ArrowLeft":
-          return imgCar.move("LEFT")
-        case "ArrowRight":
-          return imgCar.move("RIGHT")
-        default:
-          break
-      }
-    }
+    // document.onkeydown = e => {
+    //   switch (e.key) {
+    //     case "ArrowLeft":
+    //       return imgCar.move("LEFT")
+    //     case "ArrowRight":
+    //       return imgCar.move("RIGHT")
+    //     default:
+    //       break
+    //   }
+    // }
+    // debugger
+    //
+    //
+    // move(dir) {
+    //   switch (dir) {
+    //     case "UP":
+    //       if (imgCar.y <= 0) return
+    //       return (imgCar.y -= imgCar.vel)
+    //     case "DOWN":
+    //       if (imgCar.y >= $canvas.height - imgCar.height) return
+    //       return (imgCar.y += imgCar.vel)
+    //     case "LEFT":
+    //       if (imgCar.x <= 0) return
+    //       return (imgCar.x -= imgCar.vel)
+    //     case "RIGHT":
+    //       if (imgCar.x >= $canvas.width - imgCar.width) return
+    //       return (imgCar.x += imgCar.vel)
+    //     default:
+    //       throw new Error("Invalid direction")
+    //   }
+    //
+    // }
+
+
+
+
+    ///end sttarGame
 
   }
 
