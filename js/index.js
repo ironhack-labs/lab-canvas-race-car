@@ -7,9 +7,11 @@ window.onload = () => {
   function startGame() {
     const $canvas = document.querySelector("canvas");
     const ctx = $canvas.getContext("2d");
+
     imgRoad = new Image();
     imgRoad.src = "./images/road.png";
-    ctx.drawImage(imgRoad, 90, 0);
+    ctx.drawImage(imgRoad, 0, 0,$canvas.width,$canvas.height);
+    // debugger
 
 
     //iterattion 2
