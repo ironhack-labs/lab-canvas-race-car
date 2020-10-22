@@ -21,9 +21,9 @@ window.onload = () => {
 
     //iterattion 2
 
-    imgCar.vel = 10
-    imgCar.xUbication= 1
-    imgCar.yUbication= 1
+    imgCar.vel = 0
+    imgCar.xUbication= 0
+    imgCar.yUbication= 0
 
 
     let carHeight = imgCar.height / 2
@@ -59,11 +59,11 @@ window.onload = () => {
       switch (e.key) {
         case "ArrowLeft":
           imgCar.xUbication-=1
-          console.log("left",imgCar.xUbication);
+          console.log("LEFT now you're at x:",imgCar.xUbication);
           return imgCar.move("LEFT")
         case "ArrowRight":
         imgCar.xUbication+=1
-        console.log("rigth",imgCar.xUbication);
+        console.log("RIGTH now you're at x:",imgCar.xUbication);
           return imgCar.move("RIGHT")
         default:
           break
