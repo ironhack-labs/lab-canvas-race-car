@@ -58,11 +58,11 @@ window.onload = () => {
       switch (e.key) {
         case "ArrowLeft":
           imgCar.xUbication-=1
-          console.log(imgCar.xUbication);
+          console.log("left",imgCar.xUbication);
           return imgCar.move("LEFT")
         case "ArrowRight":
         imgCar.xUbication+=1
-        console.log(imgCar.xUbication);
+        console.log("rigth",imgCar.xUbication);
           return imgCar.move("RIGHT")
         default:
           break
