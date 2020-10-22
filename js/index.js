@@ -3,6 +3,7 @@ const $ctx=$canvas.getContext('2d')
 
 let frames=0
 let ratio=200
+let score=0
 
 let obstacles=[]
 
@@ -48,6 +49,15 @@ class Character{
       throw new Error('invalid direction')
     }
   }
+  isTouching(obstacle) {
+    return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + 70 > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.y + 100 > obstacle.y
+    )
+  }
+
 }
 
 class Obstacle {
@@ -59,7 +69,7 @@ class Obstacle {
   }
   draw() {
     this.y++
-    $ctx.fillStyle = "forestgreen"
+    $ctx.fillStyle = "brown"
     $ctx.fillRect(this.x, this.y, this.width, this.height)
   }
 }
@@ -71,7 +81,7 @@ function generateObstacles() {
     const max = 400 //$canvas.width
     const randomWidth = Math.floor(Math.random() * (max - min))
     //const gap = 100
-    obstacles.push(new Obstacle(100, randomWidth))
+    obstacles.push(new Obstacle(randomWidth, randomWidth))
     //obstacles.push(
       //new Obstacle(randomWidth + gap, $canvas.width - randomHeight - gap)
     //)
@@ -96,8 +106,25 @@ function Update() {
   generateObstacles()
   drawObstacles()
   console.log(obstacles)
+  printScore()
+  checkCollitions()
 }
 
+
+function printScore() {
+  if (frames % 200 === 0 && frames > 500) score++
+  $ctx.font = "20px Sans-serif"
+  $ctx.fillStyle = "black"
+  $ctx.fillText(`Score: ${score}`, $canvas.width - 100, 30)
+}
+
+function checkCollitions() {
+  obstacles.forEach(obs => {
+    if (character.isTouching(obs)) {
+      alert("perdiste")
+    }
+  })
+}
 
 
 
