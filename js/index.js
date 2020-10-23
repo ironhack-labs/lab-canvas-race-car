@@ -23,7 +23,8 @@ window.onload = () => {
       this.img.src = "./images/road.png"
     }
     draw(){
-      if(this.y < -$canvas.height) this.y = 0
+      console.log(-this.y);
+      if( -this.y < -$canvas.height) this.y = 0
       this.y++
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
       ctx.drawImage(this.img, this.x, this.y - $canvas.height, this.width, this.height)
