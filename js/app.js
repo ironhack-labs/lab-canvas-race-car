@@ -5,22 +5,14 @@ window.onload = () => {
 
   function startGame() {
     carGame.init('canvas')
-    // carGame.createBoard()
-    // carGame.createLines()
-    // carGame.createDottedLines()
-    // carGame.createCar()
   }
 };
 
 
-
-
-// 1.ITERATION - Draw the game board
-
 const carGame = {
   name: 'Car Game',
-  description: 'Car Game for basic shapes drawing',
-  version: '1.0.0',
+  description: 'Car Game with obstacles',
+  version: '0.0.0',
   license: undefined,
   author: 'Carlos García',
   canvasCall: undefined,
@@ -40,13 +32,36 @@ const carGame = {
 
 
   init(id) {
-    console.log(window)
     this.canvasCall = document.getElementById(id)
     this.cntxt = this.canvasCall.getContext('2d')
-    this.setDimensions()
+    // this.setDimensions()
     this.createCar()
     this.createAll()
+    this.createBoard()
     this.setEventListeners()
+  },
+
+  createAll() {
+    setInterval(() => {
+      this.frames++
+      this.clearScreen()
+      this.createBoard()
+      this.car.create()
+    }, 50)
+  },
+
+
+  setEventListeners() {
+
+    document.onkeydown = e => {
+      if (e.keyCode === this.keys.left) {
+        this.car.move('left')
+      }
+
+      if (e.keyCode === this.keys.right) {
+        this.car.move('right')
+      }
+    }
   },
 
 
@@ -60,7 +75,7 @@ const carGame = {
   },
 
 
-  createBoard() {
+  createRoad() {
     this.cntxt.fillStyle = 'green'
     this.cntxt.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
 
@@ -89,35 +104,22 @@ const carGame = {
   },
 
 
+  clearScreen() {
+    this.cntxt.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+  },
+
+  createBoard() {
+    this.createRoad()
+    this.createLines()
+    this.createDottedLines()
+  },
+
   createCar() {
-    this.car = new Car(this.cntx, 250, 400, 70, 40, 'car.png')
-    console.log(this.car)
+    this.car = new Car(this.cntxt, 250, 400, 52, 106, 'car.png')
   },
 
 
-  setEventListeners() {
 
-    document.onkeydown = e => {
-      if (e.keyCode === this.keys.left) {
-        this.car.move('left')
-      }
-
-      if (e.keyCode === this.keys.right) {
-        this.car.move('right')
-      }
-    }
-  },
-
-
-  createAll() {
-    setInterval(() => {
-      this.frames++
-      // this.clearScreen()
-      this.createLines()
-      this.createDottedLines()
-      this.carGame.createCar()
-    }, 70)
-  },
 }
 
 
@@ -152,7 +154,7 @@ class Car {
 
 
   create() {
-    this.cntxt.carImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+    this.cntxt.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
   }
 
 
