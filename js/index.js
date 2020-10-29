@@ -167,10 +167,7 @@ class Car{
        this.init()
    }
 
-   init() {
-    this.ctx.fillStyle = 'red'
-    this.ctx.fillRect(0,0, this.obstacleSize.w, this.obstacleSize.h)
-   }
+   init() {   }
 
    }
 
