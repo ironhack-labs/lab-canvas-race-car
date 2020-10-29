@@ -19,6 +19,7 @@ const raceGame = {
     },
     //obstacles
     frames: 0,
+    obstacles: [],
     
 
 
@@ -78,12 +79,12 @@ const raceGame = {
     drawAll() {
         setInterval(() => {
             this.frames++
-            
             this.clearScreen()
             this.drawRoad()
-            //this.frames % 50 === 0 ? this.createObstacles() : null
-            this.createObstacles()
             this.car.draw()
+            this.createObstacles()
+            this.moveObstacles()
+            
         }, 70)
     },
 
@@ -92,12 +93,25 @@ const raceGame = {
     },
 
     createObstacles() {
-        this.ctx.fillStyle = "red"
-        this.ctx.fillRect(0,0 + this.frames * 4, 200, 25)
-    }
-     
-    
-    
+        if (this.frames % 100 === 0) {
+            console.log(this.obstacles) // el bucle se realiza se añaden los objetos
+            let y = 20
+            let minGap = 0
+            let maxGap = 150
+            let Gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap)
+            let minWidth = 50
+            let maxwidth = 350
+            let width = Math.floor(Math.random() * (maxwidth - minWidth + 1) + minWidth)
+            this.obstacles.push(new Obstacle (this.ctx, width, 25, "red", Gap, y ))
+        }
+    },
+
+    moveObstacles() {
+        for (i = 0; i < this.obstacles.length; i++) {
+            this.obstacles[i].obsPos.y += 1;
+            this.obstacles[i].init();
+        }
+    }  
 }
 
 class Car {
@@ -137,6 +151,29 @@ class Car {
     }
 }
 
+
+class Obstacle {
+    constructor(ctx, obsWidth, obsHeight, obsColor, obsPosx, obsPosy) {
+        this.ctx = ctx
+        this.obsSize = {
+            w: obsWidth,
+            h: obsHeight
+        }
+        this.color = obsColor
+        this.obsPos = {
+            x: obsPosx,
+            y: obsPosy
+        }
+        this.init()
+    }
+
+    init() {
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.obsPosx, this.obsPos.y, this.obsSize.w, this.obsSize.h);
+  
+    }
+
+}
 
 
 
