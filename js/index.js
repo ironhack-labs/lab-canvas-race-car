@@ -106,13 +106,7 @@ window.onload = () => {
   clearScreen() {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
-    
-
-
-drawRectangle() {
-  this.ctx.fillStyle = 'red'
-  this.ctx.fillRect(50,50,50,60)
- },
+  
 
   generateObstacle() {
   console.log('')
@@ -176,9 +170,11 @@ class Car{
        this.obstacleInstance.src = 'images/car.png'
    }
 
-   draw() {
-     this.ctx.drawImage(this.obstacleInstance, this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
-   }
+   drawObst() {
+      this.ctx.drawImage(this.obstacleInstance, this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
+      this.ctx.fillStyle = 'red'
+      this.ctx.fillRect(0,0,20,30)
+    }
 
    move(dir) {
        dir === 'left' ? this.obstaclePos.x -= 20 : null
