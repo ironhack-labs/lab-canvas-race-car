@@ -65,9 +65,9 @@ window.onload = () => {
     drawDashedLines() {
       this.ctx.lineWidth = 5
       this.ctx.beginPath()
-      this.ctx.setLineDash([40, 30])      
-      this.ctx.moveTo(this.canvasSize.w / 2 - 10)
-      this.ctx.lineTo(this.canvasSize.w - 2, this.canvasSize.h)
+      this.ctx.setLineDash([50, 30])      
+      this.ctx.moveTo(this.canvasSize.w / 2, 0)
+      this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
       this.ctx.stroke()
     },
 
