@@ -27,7 +27,8 @@ window.onload = () => {
       this.drawRectangle ()
       this.drawContinuousLines()
       this.drawDashedLines()
-      this.drawDashedLines() 
+      this.drawDashedLines()
+      this.drawImage()  
       
       console.log(this.ctx)    
      },
