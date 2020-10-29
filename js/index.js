@@ -34,12 +34,29 @@ window.onload = () => {
   },
 
 
-    drawRectangle() {
+  drawRectangle() {
        this.ctx.fillStyle = 'green'
        this.ctx.fillRect(0,0, this.canvasSize.w, this.canvasSize.h)
        this.ctx.fillStyle = 'grey'
        this.ctx.fillRect(50,0, this.canvasSize.w -100, this.canvasSize.h)
-    },  
+  },
+      
+  drawContinuousLine() {
+    this.ctx.lineWidth = 7
+    this.ctx.strokeStyle = 'white'
+    this.ctx.beginPath()
+    this.ctx.moveTo(65, 0)
+    this.ctx.lineTo (65, this.canvasSize.h)
+    this.ctx.stroke()
+
+    this.ctx.lineWidth = 7
+    this.ctx.strokeStyle = 'white'
+    this.ctx.beginPath()
+    this.ctx.moveTo(this.canvasSize.w -65, 0)
+    this.ctx.lineTo (this.canvasSize.w -65, this.canvasSize.h)
+    this.ctx.stroke()
+  },
+       
     
     drawDashedLines() {
       this.ctx.lineWidth = 20
@@ -48,10 +65,10 @@ window.onload = () => {
       this.ctx.moveTo(100, this.canvasSize.h / 2 - 10)
       this.ctx.lineTo(this.canvasSize.w - 200, this.canvasSize.h / 2 - 10)
       this.ctx.stroke()
+    
+    
     },
-      
 
-  }
 
 
 
