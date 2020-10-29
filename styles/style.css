@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -30,6 +31,13 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  transition: all .5s;
+}
+
+body button:hover {
+  color: #870007;
+  background-color: #fff;
+  border: 2px solid #870007;
 }
 
 #game-board {
