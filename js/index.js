@@ -112,6 +112,12 @@ window.onload = () => {
   clearScreen() {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
+    
+  drawImage(imgName) {
+    let imageInstance = new Image()
+    imageInstance.src = 'images/car.png'
+    imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
+  }
 
  // generateObstacle() {
  // console.log('')
@@ -140,8 +146,7 @@ window.onload = () => {
         this.carInstance.src = 'images/car.png'
     }
 
-    drawCar() {
-      this.moveCar()
+    draw() {
       this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
     }
 
@@ -149,12 +154,7 @@ window.onload = () => {
         dir === 'left' ? this.carPos.x -= 20 : null
         dir === 'right' ? this.carPos.x += 20 : null
     }
-    
-    drawImage(imgName) {
-      let imageInstance = new Image()
-      imageInstance.src = 'images/car.png'
-      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-    }
+
  }
 
 
@@ -164,7 +164,6 @@ window.onload = () => {
   drawingApp.drawRectangle('canvas')
   drawingApp.drawContinuousLines ('canvas')
   drawingApp.drawDashedLines('canvas')
-  drawingApp.drawImage('canvas')  
-  drawingApp.createCar('canvas')
-  drawingApp.drawAll('canvas')
+  drawingApp.drawImage('car.png')  
+
 
