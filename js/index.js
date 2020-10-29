@@ -100,6 +100,7 @@ window.onload = () => {
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
+          this.obstacle.drawObst()
       }, 70)
   },
 
@@ -110,8 +111,7 @@ window.onload = () => {
   createObstacle(){
     let tamX=Math.random () * (60 - 20) + 10, 
       x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
-    this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20, 3)
-    this.obstacle.drawObst()
+    this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20)
   }
   
 }
@@ -151,7 +151,7 @@ class Car{
 
 
  class Obstacle{
-  constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight, speed) {
+  constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight) {
        this.ctx = ctx
 
        this.obstaclePos = {
@@ -162,7 +162,6 @@ class Car{
            w: obstacleWidth,
            h: obstacleHeight
        }
-       this.speed=speed
    }
 
    drawObst() {
@@ -172,15 +171,7 @@ class Car{
     }
 
    move() {
-    if (this.obstaclePos.y >= this.canvasSize.h - this.obstacleSize.w) {
-        this.speed *= -1
-    }
-
-    if (this.obstaclePos.y < 0) {
-       this.speed *= -1
-    }
-
-    this.obstaclePos.y += this.speed
+     this.obstaclePos.y += 5
    }
 
 }
