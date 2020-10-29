@@ -96,9 +96,9 @@ window.onload = () => {
 
   drawAll() {
       setInterval(() => {
-          this.frames++
+          //this.frames++
           //this.frames % 50 === 0 ? this.generateObstacle() : null
-          this.clearScreen()
+          //this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
           this.drawContinuousLines()
@@ -110,16 +110,26 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
     
-  drawImage() {
-    let imageInstance = new Image()
-    imageInstance.src = 'images/car.png'
-    imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-  }
+  //drawImage() {
+  // let imageInstance = new Image()
+  //   imageInstance.src = 'images/car.png'
+  //  imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
+  //  }
 
  // generateObstacle() {
  // console.log('')
  // }, 
  }
+
+
+ drawingApp.init('canvas')
+ drawingApp.setDimensions ('canvas')
+ drawingApp.drawRectangle('canvas')
+ drawingApp.drawContinuousLines ('canvas')
+ drawingApp.drawDashedLines('canvas')
+ drawingApp.drawImage('car.png')  
+
+
 
    class Car {
     constructor(ctx, carPosX, carPosY,carWidth, carHeight, carImage) {
@@ -153,13 +163,5 @@ window.onload = () => {
     }
 
  }
-
-
-  drawingApp.init('canvas')
-  drawingApp.setDimensions ('canvas')
-  drawingApp.drawRectangle('canvas')
-  drawingApp.drawContinuousLines ('canvas')
-  drawingApp.drawDashedLines('canvas')
-  drawingApp.drawImage('car.png')  
 
 
