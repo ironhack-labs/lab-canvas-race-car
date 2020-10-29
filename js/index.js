@@ -36,7 +36,6 @@ window.onload = () => {
       this.createCar()
       this.drawAll()
       this.setEventListeners()  
-      this.createObstacle()
      },
 
     setDimensions() {
@@ -101,7 +100,6 @@ window.onload = () => {
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
-          this.obstacle.drawObst()
       }, 70)
   },
 
@@ -113,6 +111,7 @@ window.onload = () => {
     let tamX=Math.random () * (60 - 20) + 10, 
       x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
     this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20, 3)
+    this.obstacle.drawObst()
   }
   
 }
@@ -164,11 +163,6 @@ class Car{
            h: obstacleHeight
        }
        this.speed=speed
-       this.init()
-   }
-
-   init() {   }
-
    }
 
    drawObst() {
