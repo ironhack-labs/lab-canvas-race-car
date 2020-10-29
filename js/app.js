@@ -1,6 +1,6 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    startGame()
   };
 
   function startGame() {
@@ -34,7 +34,7 @@ const carGame = {
   init(id) {
     this.canvasCall = document.getElementById(id)
     this.cntxt = this.canvasCall.getContext('2d')
-    // this.setDimensions()
+    this.setDimensions()
     this.createCar()
     this.createAll()
     this.createBoard()
@@ -81,6 +81,7 @@ const carGame = {
 
     this.cntxt.fillStyle = 'gray'
     this.cntxt.fillRect(50, 0, this.canvasSize.w - 100, this.canvasSize.h)
+    console.log('0')
   },
 
 
@@ -90,6 +91,7 @@ const carGame = {
 
     this.cntxt.fillStyle = 'white'
     this.cntxt.fillRect(410, 0, this.canvasSize.w - 490, this.canvasSize.h)
+    console.log('2')
   },
 
 
@@ -101,6 +103,7 @@ const carGame = {
     this.cntxt.moveTo(this.canvasSize.w / 2, 0)
     this.cntxt.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
     this.cntxt.stroke()
+    console.log('3')
   },
 
 
@@ -112,14 +115,12 @@ const carGame = {
     this.createRoad()
     this.createLines()
     this.createDottedLines()
+    console.log('1')
   },
 
   createCar() {
-    this.car = new Car(this.cntxt, 250, 400, 52, 106, 'car.png')
+    this.car = new Car(this.cntxt, 250, 580, 52, 106, 'car.png')
   },
-
-
-
 }
 
 
