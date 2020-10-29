@@ -6,7 +6,7 @@ window.onload = () => {
   function startGame() {
     drawingApp.init ('canvas')
   }
-
+};
 
 
  const drawingApp = {
@@ -32,14 +32,9 @@ window.onload = () => {
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
-      //this.drawImage()  
       this.createCar()
       this.drawAll()
-      this.setEventListeners()
-      //this.clearScreen()
-      
-
-      console.log(this.ctx)    
+      this.setEventListeners()   
      },
 
     setDimensions() {
@@ -85,7 +80,7 @@ window.onload = () => {
     },
 
     createCar() {
-      this.car = new Car (this.ctx, 200, 200, 100, 100, "car.png")
+      this.car = new Car (this.ctx, 200, 200, 100, 100, 'car.png')
     },
 
   setEventListeners() {
@@ -107,25 +102,25 @@ window.onload = () => {
       }, 70)
   },
 
+  
   clearScreen() {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
     
-  drawImage(imgName) {
-  let imageInstance = new Image()
-    imageInstance.src = 'images/car.png'
-    imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-  },
+//  drawImage(imgName) {
+//  let imageInstance = new Image()
+//    imageInstance.src = 'images/car.png'
+ //   imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
+//  },
 
   generateObstacle() {
   console.log('')
   }
+  
 }
-} ;
 
-
-   class Car {
-    constructor (ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
+class Car{
+   constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
         this.ctx = ctx
 
         this.carPos = {
