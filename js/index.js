@@ -112,18 +112,16 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
 
-  //generateObstacle() {
-    //  console.log('NUEVO OBSTÁCULO! CUIDAO QUE VA!')
- // } 
-}
-
-
-    
-    drawImage(imgName) {
+  generateObstacle() {
+  console.log('')
+  }, 
+  
+  
+  drawImage(imgName) {
       let imageInstance = new Image()
       imageInstance.src = 'images/car.png'
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 210, 100, 200, 200)
-    }
+    },
  }
 
 
