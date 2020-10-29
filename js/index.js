@@ -8,7 +8,6 @@ window.onload = () => {
   }
 };
 
-
  
  const drawingApp = {
    name: 'Drawing app',
@@ -39,7 +38,7 @@ window.onload = () => {
        this.ctx.fillStyle = 'green'
        this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 2 - 100, 200, 200)
        this.ctx.fillStyle = 'grey'
-       this.ctx.fillRect(this.canvasSize.w / 600 - 300, this.canvasSize.h / 2 - 50, 100, 100)
+       this.ctx.fillRect(this.canvasSize.w / 200 - 50, this.canvasSize.h / 2 - 50, 100, 100)
     },  
   
   }
