@@ -8,9 +8,6 @@ window.onload = () => {
   
 
   function startGame() {
-    drawingApp.init('canvas')
-    drawingApp.drawImage('car.png')
-    
     controlledApp.init('canvas')
   }
 };

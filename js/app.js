@@ -13,7 +13,6 @@ const drawingApp = {
         this.drawRectangle()
         this.drawContinuousLines()
         this.drawDashedLines()
-        //this.drawImage(imgName)
     },
 
     setDimensions() {
@@ -57,11 +56,11 @@ const drawingApp = {
         this.ctx.stroke()
     },
 
-    drawImage(imgName) {
-        let imageInstance = new Image()
-        imageInstance.src = `images/${imgName}`
-        imageInstance.onload = () => this.ctx.drawImage(imageInstance, this.canvasSize.w / 2 - 25 , this.canvasSize.h - 150, 50, 100)
-    }
+    drawImage(imageName) {
+        const imgInstance = new Image()
+        imgInstance.src = `images/${imageName}`
+        imgInstance.onload = () => this.ctx.drawImage(imgInstance, this.canvasSize.w / 2 - 25, this.canvasSize.h - 150, 50, 100)
+    }  
 }
 
 
@@ -202,12 +201,16 @@ class Car {
     }
 
     draw() {
-        drawingApp.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+        this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
     }
 
     move(dir) {
-        dir === 'left' ? this.carPos.x -= 20 : null
-        dir === 'right' ? this.carPos.x += 20 : null
+        if (dir === 'left' && this.carPos.x > 65 + 20) {
+            this.carPos.x -= 20
+        }
+        if (dir === 'right' && this.carPos.x < 405 - 20){
+            this.carPos.x += 20
+        }
     }
 }
 
@@ -229,7 +232,7 @@ const controlledApp = {
     },
 
     createCar() {
-        this.car = new Car(this.ctx, drawingApp.canvasSize.w / 2 - 25, drawingApp.canvasSize.h - 100, 50, 100, 'car.png')
+        this.car = new Car(this.ctx, drawingApp.canvasSize.w / 2 - 25, drawingApp.canvasSize.h - 150, 50, 100, 'car.png')
     },
 
     setEventListeners() {
