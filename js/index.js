@@ -9,9 +9,8 @@ window.onload = () => {
 };
 
 
-
 const drawingApp = {
-  name: 'Car app',
+  name: 'Car game',
   description: 'Car in the road',
   version: '1.0.0',
   license: undefined,
@@ -20,10 +19,12 @@ const drawingApp = {
   ctx: undefined,
   frames: 0,
   car: undefined,
+  //obstacle: undefined,
   keys: {
     left: 37,
     right: 39
   },
+  //array = [],
   canvasSize: {
     w: undefined,
     h: undefined
@@ -67,42 +68,52 @@ const drawingApp = {
   },
 
   createCar() {
-    this.car = new Car (this.ctx, 210, 500, 75, 100, `images/car.png`)
+    this.car = new Car(this.ctx, 210, 500, 75, 100, `images/car.png`)
   },
 
   setEventListeners() {
-        document.onkeydown = e => {
-            e.keyCode === this.keys.left ? this.car.move('left') : null
-            e.keyCode === this.keys.right ? this.car.move('right') : null
-        }
+    document.onkeydown = e => {
+      e.keyCode === this.keys.left ? this.car.move('left') : null
+      e.keyCode === this.keys.right ? this.car.move('right') : null
+    }
   },
 
   drawAll() {
-        setInterval(() => {
-          this.frames++
-          this.frames % 50 === 0 ? this.generateObstacle() : null
-          this.clearScreen()
-          this.drawRectangle()
-          this.drawDashedLines ()
-          this.car.draw()
-        }, 70)
+    setInterval(() => {
+      this.frames++
+      this.frames % 50 === 0 ? this.generateObstacle() : null
+      this.clearScreen()
+      this.drawRectangle()
+      this.drawDashedLines()
+      this.car.draw()
+    }, 70)
   },
   
-   clearScreen() {
-        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-    },
-
-
+  clearScreen() {
+    this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+  },
+   
   drawImage(imgName) {
     let imageInstance = new Image()
     imageInstance.src = `images/car.png`
-    imageInstance.onload = () => this.ctx.drawImage (imageInstance, 210, 500, 75, 100)
+    imageInstance.onload = () => this.ctx.drawImage(imageInstance, 210, 500, 75, 100)
   },
-
 }
 
+  /*generateObstacle() {
+
+    if (this.frames % 100 === 0) {
+      let minWidth = 50
+      let maxwidth = 500
+      let width = Math.floor(Math.random() * (maxwidth - minWidth) + minWidth)
+      this.obstacles.push(new Obstacle(this.ctx, width, 25, "red", y))
+            
+    }
+  }*/
+
+  
 class Car {
-  constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
+  constructor (ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
     this.ctx = ctx
     this.carPos = {
       x: carPosX,
@@ -132,11 +143,34 @@ class Car {
   }
 }
 
+/*class Obstacle {
+  constructor(ctx, obsWidth, obsHeigth, obsColor, obsPosX, obsPosY) {
 
+    this.ctx = ctx
+    this.obsSize = {
+      w: obsWidth,
+      h: obsHeigth,
+    }
+    this.color = obsColor
+    this.obsPos = {
+      x= obsPosX,
+      y= obsPosY
+    }
+
+    this.init()
+ 
+  }
+
+  init() {
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.obsPosx, this.obsPos.y, this.obsSize.w, this.obsSize.h);
+  }
+}*/
  
 
 drawingApp.init('canvas')
 drawingApp.setDimensions('canvas')
 drawingApp.drawRectangle('canvas')
 drawingApp.drawDashedLines('canvas')
-drawingApp.drawImage ('canvas')
+drawingApp.drawImage('canvas')
+
