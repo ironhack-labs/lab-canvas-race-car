@@ -58,6 +58,7 @@ window.onload = () => {
      },
       
     drawContinuousLines() {
+      this.ctx.setLineDash([0,0])
       this.ctx.lineWidth = 7
       this.ctx.strokeStyle = 'white'
       this.ctx.beginPath()
@@ -75,7 +76,6 @@ window.onload = () => {
        
     
     drawDashedLines() {
-      this.ctx.setLineDash([0,0])
       this.ctx.lineWidth = 5
       this.ctx.beginPath()
       this.ctx.setLineDash([50, 30])      
@@ -97,8 +97,8 @@ window.onload = () => {
 
   drawAll() {
       setInterval(() => {
-          //this.frames++
-          //this.frames % 50 === 0 ? this.generateObstacle() : null
+          this.frames++
+          this.frames % 50 === 0 ? this.generateObstacle() : null
           this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
