@@ -94,7 +94,7 @@ window.onload = () => {
   drawAll() {
       setInterval(() => {
           this.frames++
-          this.frames % 50 === 0 ? this.createObstacle() : null
+          this.frames % 25 === 0 ? this.createObstacle() : null
           this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
@@ -171,7 +171,7 @@ class Car{
     }
 
    move() {
-     this.obstaclePos.y += 5
+     this.obstaclePos.y += 10
    }
 
 }
