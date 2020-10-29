@@ -115,12 +115,12 @@ window.onload = () => {
   let imageInstance = new Image()
     imageInstance.src = 'images/car.png'
     imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
- }
+  },
 
- // generateObstacle() {
- // console.log('')
- // }, 
- }
+  generateObstacle() {
+  console.log('')
+  }
+}
 
 
 
