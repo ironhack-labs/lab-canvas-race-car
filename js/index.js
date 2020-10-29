@@ -107,11 +107,12 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
     
-//  drawImage(imgName) {
-//  let imageInstance = new Image()
-//    imageInstance.src = 'images/car.png'
- //   imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-//  },
+
+
+drawRectangle() {
+  this.ctx.fillStyle = 'red'
+  this.ctx.fillRect(0,0, this.canvasSize.w, this.canvasSize.h)
+ },
 
   generateObstacle() {
   console.log('')
@@ -154,34 +155,34 @@ class Car{
 
 
  class Obstacle{
-  constructor(ctx, obstaclePosX, carPosY, carWidth, carHeight, carImage) {
+  constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight, obstacleImage) {
        this.ctx = ctx
 
-       this.carPos = {
-           x: carPosX,
+       this.obstaclePos = {
+           x: obstaclePosX,
            y: carPosY
        }
-       this.carSize = {
+       this.obstacleSize = {
            w: carWidth,
            h: carHeight
        }
-       this.imageName = carImage
-       this.carInstance = undefined
+       this.imageName = obstacleImage
+       this.obstacleInstance = undefined
        this.init()
    }
 
    init() {
-       this.carInstance = new Image()
-       this.carInstance.src = 'images/car.png'
+       this.obstacleInstance = new Image()
+       this.obstacleInstance.src = 'images/car.png'
    }
 
    draw() {
-     this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+     this.ctx.drawImage(this.obstacleInstance, this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
    }
 
    move(dir) {
-       dir === 'left' ? this.carPos.x -= 20 : null
-       dir === 'right' ? this.carPos.x += 20 : null
+       dir === 'left' ? this.obstaclePos.x -= 20 : null
+       dir === 'right' ? this.obstaclePos.x += 20 : null
    }
 
 }
