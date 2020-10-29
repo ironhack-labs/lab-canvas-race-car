@@ -94,13 +94,13 @@ window.onload = () => {
   drawAll() {
       setInterval(() => {
           this.frames++
-          this.frames % 50 === 0 ? console.log('') : null
+          this.frames % 50 === 0 ? this.createObstacle() : null
           this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
-          this.createObstacle()
+          this.obstacle.drawObst()
       }, 70)
   },
 
