@@ -22,6 +22,9 @@ window.onload = () => {
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
+      this.drawRectangle ()
+      this.drawContinuousLines()
+      this.drawDashedLines()
       
       console.log(this.ctx)    
      },
@@ -46,7 +49,7 @@ window.onload = () => {
     this.ctx.strokeStyle = 'white'
     this.ctx.beginPath()
     this.ctx.moveTo(65, 0)
-    this.ctx.lineTo (65, this.canvasSize.h)
+    this.ctx.lineTo(65, this.canvasSize.h)
     this.ctx.stroke()
 
     this.ctx.lineWidth = 7
