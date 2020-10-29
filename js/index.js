@@ -39,12 +39,13 @@ window.onload = () => {
        this.ctx.fillRect(0, 0, 500, 700)
 
        this.ctx.fillRect(25,25,100,100);
-       this.ctx.clearRect(45,45,60,60);
+       //this.ctx.clearRect(45,45,60,60);
        this.ctx.strokeRect(50,50,50,50);
+    
 
 
 
-       //this.ctx.fillStyle = 'grey'
+       this.ctx.fillStyle = 'grey'
        //this.ctx.fillRect(0, 0, 300, 700)
     },  
   
