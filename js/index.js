@@ -79,68 +79,37 @@ window.onload = () => {
  }
 
 
- const carApp = {
-  name: 'Car app',
-  canvasTag: undefined,
-  ctx: undefined,
-  car:[],
-  frames: 0,
-  car: undefined,
-  
 
-  canvasSize: {
-    w: undefined,
-    h: undefined
-   },
-
-   init(id) {
-     this.canvasTag = document.getElementById(id)
-     this.ctx = this.canvasTag.getContext('2d')
-     this.setDimensions()
-     this.createCamels()
-     this.drawAll()
-    
-    console.log(this.ctx)       
-    },
-    
-    setDimensions() {
-      this.canvasSize = {
-       w: window.innerWidth,
-       h: window.innerHeight
+ class Car {
+  constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
+      this.ctx = ctx
+      this.carPos = {
+          x: carPosX,
+          y: carPosY
       }
-      this.canvasTag.setAttribute('width', this.canvasSize.w)
-      this.canvasTag.setAttribute('height', this.canvasSize.h)
-      },
-      
-      createcar() {
-       this.car = new car(this.ctx, 0, 0, 200, 200, 4, 'car.png')
-      },  
-      setEventListeners() {
-        document.onkeydown = e => {
-            e.keyCode === this.keys.left ? this.ball.move('left') : null
-            e.keyCode === this.keys.right ? this.ball.move('right') : null
-        }
-    },
+      this.carSize = {
+          w: carWidth,
+          h: carHeight
+      }
+      this.imageName = carImage
+      this.carInstance = undefined
+      this.init()
+  }
 
-    drawAll() {
-        setInterval(() => {
-            this.frames++
-            this.frames % 50 === 0 ? this.generateObstacle() : null
-            this.clearScreen()
-            this.car.draw()
-        }, 70)
-    },
+  init() {
+      this.carInstance = new Image()
+      this.carInstance.src = `img/${this.imageName}`
+  }
 
-    clearScreen() {
-        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-    },
+  draw() {
+      this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+  }
 
-    generateObstacle() {
-        console.log('NUEVO OBSTÁCULO! CUIDAO QUE VA!')
-    }
-
- }
-
+  move(dir) {
+      dir === 'left' ? this.carPos.x -= 20 : null
+      dir === 'right' ? this.carPos.x += 20 : null
+  }
+}
 
 
 
@@ -153,6 +122,6 @@ window.onload = () => {
   drawingApp.drawRectangle('canvas')
   drawingApp.drawContinuousLines ('canvas')
   drawingApp.drawDashedLines('canvas')
-  drawingApp.drawimage('car.png('canvas')
+
 
 
