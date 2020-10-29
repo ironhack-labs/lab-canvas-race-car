@@ -40,8 +40,8 @@ window.onload = () => {
        this.ctx.fillStyle = 'grey'
        this.ctx.fillRect(50,0, this.canvasSize.w -100, this.canvasSize.h)
     },  
-  
-    /     drawDashedLines() {
+    
+    drawDashedLines() {
       this.ctx.lineWidth = 20
       this.ctx.beginPath()
       this.ctx.setLineDash([40, 10])      
