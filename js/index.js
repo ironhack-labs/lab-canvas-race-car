@@ -168,7 +168,7 @@ class Car{
    drawObst() {
      this.move()
      this.ctx.fillStyle = 'red'
-     this.ctx.fillRect(this.obstaclePos.x, y, this.obstacleSize.w, this.obstacleSize.h)
+     this.ctx.fillRect(this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
     }
 
    move() {
