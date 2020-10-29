@@ -120,7 +120,7 @@ window.onload = () => {
   drawImage(imgName) {
       let imageInstance = new Image()
       imageInstance.src = 'images/car.png'
-      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 210, 100, 200, 200)
+      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
     },
  }
 
