@@ -171,7 +171,7 @@ class Car{
     }
 
    move() {
-     this.obstaclePos.y += 10
+     this.obstaclePos.y += 20
    }
 
 }
