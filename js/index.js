@@ -29,15 +29,14 @@ window.onload = () => {
     },
 
     init(id) {
-      console.log(window)
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
       this.drawImage()  
       this.createCar()
       this.drawAll()
-      this.setEventListeners()
-      this.clearScreen()
+      //this.setEventListeners()
+      //this.clearScreen()
       
 
       console.log(this.ctx)    
@@ -86,7 +85,7 @@ window.onload = () => {
 
     createCar() {
       this.car = new Car(this.ctx, 200, 200, 100, 100, 'car.png')
-  },
+    },
 
   setEventListeners() {
       document.onkeydown = e => {
@@ -154,7 +153,6 @@ window.onload = () => {
     }
 
  }
-
 
 
   drawingApp.init('canvas')
