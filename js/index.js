@@ -4,17 +4,25 @@ window.onload = () => {
   };
 
   function startGame() {
- 
+    drawingApp.init ('canvas')
   }
 };
 
- 
-// PISTA //
 
  const drawingApp = {
-   name: 'Drawing app',
+   name: 'Car race app',
+   description: 'Canvas app for basic shapes drawing',
+   version: '1.0.0',
+   license: undefined,
+   author: 'Monch',
    canvasTag: undefined,
    ctx: undefined,
+   frames: 0,
+   car: undefined,
+   keys: {
+     left:37,
+     right:39
+   },
    canvasSize: {
      w: undefined,
      h: undefined
@@ -29,7 +37,11 @@ window.onload = () => {
       this.drawDashedLines()
       this.drawDashedLines()
       this.drawImage()  
+
+      this.createCar()
+      this.drawAll()
       
+
       console.log(this.ctx)    
      },
 
@@ -73,51 +85,46 @@ window.onload = () => {
       this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
       this.ctx.stroke()
     },
+
+    createCar() {
+      this.car = new Car(this.ctx, 200, 200, 100, 100, 'car.png')
+  },
+
+  setEventListeners() {
+      document.onkeydown = e => {
+          e.keyCode === this.keys.left ? this.car.move('left') : null
+          e.keyCode === this.keys.right ? this.car.move('right') : null
+      }
+  },
+
+  drawAll() {
+      setInterval(() => {
+          this.frames++
+          this.frames % 50 === 0 ? this.generateObstacle() : null
+          this.clearScreen()
+          this.drawDashedLines ()
+          this.drawRectangle()
+          this.car.draw()
+      }, 70)
+  },
+
+  clearScreen() {
+      this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+  },
+
+  //generateObstacle() {
+    //  console.log('NUEVO OBSTÁCULO! CUIDAO QUE VA!')
+ // } 
+}
+
+
     
     drawImage(imgName) {
       let imageInstance = new Image()
       imageInstance.src = 'images/car.png'
-      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 200, 200)
+      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 210, 100, 200, 200)
     }
  }
-
-// COCHE //
-
- class Car {
-  constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
-      this.ctx = ctx
-      this.carPos = {
-          x: carPosX,
-          y: carPosY
-      }
-      this.carSize = {
-          w: carWidth,
-          h: carHeight
-      }
-      this.imageName = carImage
-      this.carInstance = undefined
-      this.init()
-  }
-
-  init() {
-      this.carInstance = new Image()
-      this.carInstance.src = `img/${this.imageName}`
-  }
-
-  draw() {
-      this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
-  }
-
-  move(dir) {
-      dir === 'left' ? this.carPos.x -= 20 : null
-      dir === 'right' ? this.carPos.x += 20 : null
-  }
-}
-
-
-
-// MOVIMIENTO DEL COCHE //
-
 
 
 
