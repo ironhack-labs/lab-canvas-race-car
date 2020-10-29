@@ -3,5 +3,10 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    islandRacer.init('canvas')
+  }
 };
+
+
+// islandRacer.init('canvas')
