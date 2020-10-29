@@ -98,8 +98,8 @@ const raceCarApp = {
     const randomX1 = Math.floor(Math.random() * (this.canvasSize.w - 0)) + 0
     const randomX2 = Math.floor(Math.random() * (this.canvasSize.w - 0)) + 0
     
-    const randomSpeed1 = Math.floor(Math.random() * (5 - 1)) + 1
-    const randomSpeed2 = Math.floor(Math.random() * (5 - 1)) + 1
+    const randomSpeed1 = Math.floor(Math.random() * (10 - 1)) + 1
+    const randomSpeed2 = Math.floor(Math.random() * (10 - 1)) + 1
 
     const obstacle1 = new Obstacle(this.ctx, this.canvasSize, randomX1, 0, 100, 100, randomSpeed1, 'cow_walk1.png')
     const obstacle2 = new Obstacle(this.ctx, this.canvasSize, randomX2, 0, 100, 100, randomSpeed2, 'cow_walk2.png')
@@ -134,7 +134,7 @@ const raceCarApp = {
 
   endGame() {
     this.ctx.fillStyle = 'black'
-    this.ctx.fillRect(0, 0, this.canvasSize.w, 600)
+    this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
 
     this.ctx.fillStyle = 'red'
     this.ctx.font = '50px sans-serif'
@@ -167,13 +167,13 @@ class Road {
 
   drawRectangle() {
     this.ctx.fillStyle = 'green'
-    this.ctx.fillRect(0, 0, 500, 600)
+    this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     this.ctx.fillStyle = 'grey'
-    this.ctx.fillRect(20, 0, 460, 600)
+    this.ctx.fillRect(20, 0, this.canvasSize.w - 40, this.canvasSize.h)
     this.ctx.fillStyle = 'white'
-    this.ctx.fillRect(30, 0, 440, 600)
+    this.ctx.fillRect(30, 0, this.canvasSize.w - 60, this.canvasSize.h)
     this.ctx.fillStyle = 'grey'
-    this.ctx.fillRect(40, 0, 420, 600)
+    this.ctx.fillRect(40, 0, this.canvasSize.w - 80, this.canvasSize.h)
   }
 
   drawDashedLine() {
