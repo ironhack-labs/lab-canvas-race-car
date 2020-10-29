@@ -116,11 +116,12 @@ window.onload = () => {
  // generateObstacle() {
  // console.log('')
  // }, 
-  
+ }
 
    class Car {
     constructor(ctx, carPosX, carPosY,carWidth, carHeight, carImage) {
         this.ctx = ctx
+
         this.carPos = {
             x: carPosX,
             y: carPosY
@@ -139,8 +140,9 @@ window.onload = () => {
         this.carInstance.src = 'images/car.png'
     }
 
-    draw() {
-        this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+    drawCar() {
+      this.moveCar()
+      this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
     }
 
     move(dir) {
@@ -152,8 +154,7 @@ window.onload = () => {
       let imageInstance = new Image()
       imageInstance.src = 'images/car.png'
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-    },
-
+    }
  }
 
 
