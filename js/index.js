@@ -29,6 +29,7 @@ window.onload = () => {
     },
 
     init(id) {
+      console.log(window)
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
@@ -38,6 +39,8 @@ window.onload = () => {
       this.drawImage()  
       this.createCar()
       this.drawAll()
+      this.setEventListeners()
+      this.clearScreen()
       
 
       console.log(this.ctx)    
@@ -110,16 +113,48 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
 
-  generateObstacle() {
-  console.log('')
-  }, 
+ // generateObstacle() {
+ // console.log('')
+ // }, 
   
-  
-  drawImage(imgName) {
+
+   class Car {
+    constructor(ctx, ballPosX, ballPosY, ballWidth, ballHeight, ballImage) {
+        this.ctx = ctx
+        this.carPos = {
+            x: carPosX,
+            y: carPosY
+        }
+        this.carSize = {
+            w: carWidth,
+            h: carHeight
+        }
+        this.imageName = carImage
+        this.carInstance = undefined
+        this.init()
+    }
+
+    init() {
+        this.carInstance = new Image()
+        this.carInstance.src = 'images/car.png'
+    }
+
+    draw() {
+        this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+    }
+
+    move(dir) {
+        dir === 'left' ? this.carPos.x -= 20 : null
+        dir === 'right' ? this.carPos.x += 20 : null
+    }
+    
+    drawImage(imgName) {
       let imageInstance = new Image()
       imageInstance.src = 'images/car.png'
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
     },
+
+
  }
 
 
