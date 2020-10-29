@@ -8,7 +8,6 @@ window.onload = () => {
 
   let carX = 225
   let direction = 'right'
-  let colision = false
   let score = 0
   myObstacles = []
 
@@ -27,7 +26,7 @@ window.onload = () => {
     updateObstacles()
     showScoreText()
 
-    setInterval(()=>{
+    const obstaclesInt = setInterval(()=>{
       let minWidth = 40
       let maxWidth = 220
       let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth)
@@ -36,26 +35,26 @@ window.onload = () => {
     }, 2500)
   }
 
-  const checkEndGame = () => {
-    if(colision=='true'){
-      console.log('crash!');
-    }
-  }
 
   const checkColision = () => {
     myObstacles.forEach((obstacle)=>{
       if(obstacle.y===580 && obstacle.x < carX && carX < (obstacle.x + obstacle.width)){
-        colision = true
+        document.getElementById('gameover').style.visibility = 'visible'
+        document.getElementById('gameover').innerHTML = `<p>GAME OVER</p><p class="small-text">Your score is ${score} </p>`
+        clearInterval(obstaclesInt)
       } 
+      if (obstacle.y===580 && (carX < obstacle.x || carX > (obstacle.x + obstacle.width))){
+        score++
+      }
     }) 
   }
 
-  const calculateScore = () => {}
+  
 
   const showScoreText = () => {
     ctx.font = '30px sans-seriff'
     ctx.fillStyle = 'black'
-    ctx.fillText('Score: ', 70, 500)
+    ctx.fillText(`Score: ${score}`, 70, 500)
   }
 
   const createRoad = () => {
@@ -109,9 +108,8 @@ window.onload = () => {
     printObstacles()
     createCar()  
     moveObstacle()  
-    showScoreText()
     checkColision()
-    checkEndGame()
+    showScoreText()
     requestAnimationFrame(updateObstacles)
   } 
 

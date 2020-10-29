@@ -40,3 +40,24 @@ body button {
 #canvas{
   border: 2px solid black;
 }
+
+#gameover{
+  background-color: black;
+  color: #870007;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 60px;
+  left: 60px;
+  width: 800px;
+  height: 600px;
+  font-size: 90px;
+  visibility: hidden;
+}
+
+.small-text{
+  font-size: 40px;
+  color: #fff;
+}
