@@ -33,6 +33,7 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  position: absolute;
+  right: 0;
+  padding: 20px 0px;
 }

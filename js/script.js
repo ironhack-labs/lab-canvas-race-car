@@ -1,0 +1,1 @@
+raceCarApp.init('canvas')
