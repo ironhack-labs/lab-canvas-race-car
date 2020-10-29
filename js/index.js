@@ -85,6 +85,9 @@ window.onload = () => {
   ctx: undefined,
   car:[],
   frames: 0,
+  car: undefined,
+  
+
   canvasSize: {
     w: undefined,
     h: undefined
@@ -110,11 +113,31 @@ window.onload = () => {
       },
       
       createcar() {
-       const car = new car(this.ctx, this.canvasSize, 0, 0, 200, 200, 4, 'car.png')
-       this.car.push(camel1, camel2, camel3)
+       this.car = new car(this.ctx, 0, 0, 200, 200, 4, 'car.png')
       },  
-    
+      setEventListeners() {
+        document.onkeydown = e => {
+            e.keyCode === this.keys.left ? this.ball.move('left') : null
+            e.keyCode === this.keys.right ? this.ball.move('right') : null
+        }
+    },
 
+    drawAll() {
+        setInterval(() => {
+            this.frames++
+            this.frames % 50 === 0 ? this.generateObstacle() : null
+            this.clearScreen()
+            this.car.draw()
+        }, 70)
+    },
+
+    clearScreen() {
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+    },
+
+    generateObstacle() {
+        console.log('NUEVO OBSTÁCULO! CUIDAO QUE VA!')
+    }
 
  }
 
@@ -130,6 +153,6 @@ window.onload = () => {
   drawingApp.drawRectangle('canvas')
   drawingApp.drawContinuousLines ('canvas')
   drawingApp.drawDashedLines('canvas')
-
+  drawingApp.drawimage('car.png('canvas')
 
 
