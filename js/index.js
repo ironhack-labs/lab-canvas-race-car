@@ -3,5 +3,11 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  drawingApp.init('canvas')
+  drawingApp.drawImage('car.png')
+  
+
+  function startGame() {
+    controlledApp.init('canvas')
+  }
 };
