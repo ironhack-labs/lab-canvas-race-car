@@ -1,4 +1,7 @@
-carGame.init('canvas')
-carGame.createBoard()
-carGame.createLines()
-carGame.createDottedLines()
+// carGame.init('canvas')
+// carGame.createBoard()
+// carGame.createLines()
+// carGame.createDottedLines()
+
+
+
