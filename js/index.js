@@ -68,11 +68,9 @@ window.onload = () => {
       this.ctx.moveTo(100, this.canvasSize.h / 2 - 10)
       this.ctx.lineTo(this.canvasSize.w - 200, this.canvasSize.h / 2 - 10)
       this.ctx.stroke()
-    
-    
     },
 
-
+ }
 
 
   drawingApp.init('canvas')
