@@ -10,7 +10,6 @@ window.onload = () => {
 
 
  
- 
  const drawingApp = {
    name: 'Drawing app',
    canvasTag: undefined,
@@ -37,12 +36,10 @@ window.onload = () => {
 
 
     drawRectangle() {
-       this.ctx.fillStyle = 'red'
-       this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 2 - 100, 200, 200)
+       this.ctx.fillStyle = 'green'
+       this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 200 - 300, 200, 300)
        this.ctx.fillStyle = 'green'
        this.ctx.fillRect(this.canvasSize.w / 2 - 50, this.canvasSize.h / 2 - 50, 100, 100)
-       this.ctx.fillStyle = 'black'
-       this.ctx.fillRect(100, this.canvasSize.h / 2 - 10, this.canvasSize.w - 200, 20)
     },  
   
   }
