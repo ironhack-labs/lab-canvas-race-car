@@ -73,7 +73,7 @@ window.onload = () => {
     
     drawImage(imgName) {
       let imageInstance = new Image()
-      imageInstance.src = "./images/car.png" 
+      imageInstance.src = `img/${imgName}`
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 200, 200)
     }
  }
@@ -100,6 +100,19 @@ window.onload = () => {
     console.log(this.ctx)       
     },
     
+    setDimensions() {
+      this.canvasSize = {
+       w: window.innerWidth,
+       h: window.innerHeight
+      }
+      this.canvasTag.setAttribute('width', this.canvasSize.w)
+      this.canvasTag.setAttribute('height', this.canvasSize.h)
+      },
+      
+      createcar() {
+       const car = new car(this.ctx, this.canvasSize, 0, 0, 200, 200, 4, 'car.png')
+       this.car.push(camel1, camel2, camel3)
+      },  
     
 
 
