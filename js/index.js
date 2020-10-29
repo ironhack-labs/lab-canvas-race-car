@@ -116,7 +116,6 @@ window.onload = () => {
   
   generateObstacle() {
     for (let i=0;i<this.canvasSize.h-20;i++){
-      this.clearScreen()
       this.obstacle.drawObst(i)
     }
   }
