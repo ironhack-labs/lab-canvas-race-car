@@ -100,7 +100,7 @@ window.onload = () => {
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
-
+          this.generateObstacle()
       }, 70)
   },
 
