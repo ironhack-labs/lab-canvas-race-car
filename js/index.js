@@ -35,9 +35,7 @@ window.onload = () => {
       this.drawRectangle ()
       this.drawContinuousLines()
       this.drawDashedLines()
-      this.drawDashedLines()
       this.drawImage()  
-
       this.createCar()
       this.drawAll()
       
@@ -131,6 +129,7 @@ window.onload = () => {
   drawingApp.drawRectangle('canvas')
   drawingApp.drawContinuousLines ('canvas')
   drawingApp.drawDashedLines('canvas')
-
-
+  drawingApp.drawImage('canvas')  
+  drawingApp.createCar('canvas')
+  drawingApp.drawAll('canvas')
 
