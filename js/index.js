@@ -39,17 +39,18 @@ window.onload = () => {
        this.ctx.fillRect(0,0, this.canvasSize.w, this.canvasSize.h)
        this.ctx.fillStyle = 'grey'
        this.ctx.fillRect(50,0, this.canvasSize.w -100, this.canvasSize.h)
-       
-
-
-     
-
-
-
-       //this.ctx.fillStyle = 'grey'
-       //this.ctx.fillRect(0, 0, 300, 700)
     },  
   
+    /     drawDashedLines() {
+      this.ctx.lineWidth = 20
+      this.ctx.beginPath()
+      this.ctx.setLineDash([40, 10])      
+      this.ctx.moveTo(100, this.canvasSize.h / 2 - 10)
+      this.ctx.lineTo(this.canvasSize.w - 200, this.canvasSize.h / 2 - 10)
+      this.ctx.stroke()
+    },
+      
+
   }
 
 
