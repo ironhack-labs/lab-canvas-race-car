@@ -41,7 +41,7 @@ window.onload = () => {
        this.ctx.fillRect(50,0, this.canvasSize.w -100, this.canvasSize.h)
   },
       
-  drawContinuousLine() {
+  drawContinuousLines() {
     this.ctx.lineWidth = 7
     this.ctx.strokeStyle = 'white'
     this.ctx.beginPath()
@@ -75,6 +75,7 @@ window.onload = () => {
   drawingApp.init('canvas')
   drawingApp.setDimensions ('canvas')
   drawingApp.drawRectangle('canvas')
+  drawingApp.drawContinuousLines ('canvas')
 
 
 
