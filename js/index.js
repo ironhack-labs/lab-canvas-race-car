@@ -4,6 +4,7 @@ window.onload = () => {
   };
 
   function startGame() {
+    drawingApp.init('myCanvas')
     drawingApp.drawRectangle()
   }
 };
