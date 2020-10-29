@@ -85,7 +85,7 @@ window.onload = () => {
     },
 
     createCar() {
-      this.car = new Car(this.ctx, 200, 200, 100, 100, 'car.png')
+      this.car = new Car (this.ctx, 200, 200, 100, 100, "car.png")
     },
 
   setEventListeners() {
