@@ -75,6 +75,7 @@ window.onload = () => {
        
     
     drawDashedLines() {
+      this.ctx.setLineDash([0,0])
       this.ctx.lineWidth = 5
       this.ctx.beginPath()
       this.ctx.setLineDash([50, 30])      
