@@ -28,7 +28,7 @@ window.onload = () => {
 
   setDimensions() {
     this.canvasSize.w = window.innerWidth *.4
-    this.canvasSize.h = window.innerHeight
+    this.canvasSize.h = window.innerHeight*.4
     this.canvasTag.setAttribute('width', this.canvasSize.w)
     this.canvasTag.setAttribute('height', this.canvasSize.h)
   },
