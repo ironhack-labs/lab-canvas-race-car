@@ -111,7 +111,7 @@ window.onload = () => {
 
 drawRectangle() {
   this.ctx.fillStyle = 'red'
-  this.ctx.fillRect(0,0, this.canvasSize.w, this.canvasSize.h)
+  this.ctx.fillRect(50,50,50,60)
  },
 
   generateObstacle() {
