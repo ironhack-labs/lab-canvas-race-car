@@ -6,7 +6,7 @@ window.onload = () => {
   function startGame() {
     drawingApp.init ('canvas')
   }
-};
+
 
 
  const drawingApp = {
@@ -20,8 +20,8 @@ window.onload = () => {
    frames: 0,
    car: undefined,
    keys: {
-     left:37,
-     right:39
+     left: 37,
+     right: 39
    },
    canvasSize: {
      w: undefined,
@@ -111,7 +111,7 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
     
-  drawImage() {
+  drawImage(imgName) {
   let imageInstance = new Image()
     imageInstance.src = 'images/car.png'
     imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
@@ -121,11 +121,11 @@ window.onload = () => {
   console.log('')
   }
 }
-
+} ;
 
 
    class Car {
-    constructor(ctx, carPosX, carPosY,carWidth, carHeight, carImage) {
+    constructor (ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
         this.ctx = ctx
 
         this.carPos = {
