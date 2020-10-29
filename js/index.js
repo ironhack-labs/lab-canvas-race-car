@@ -4,8 +4,7 @@ window.onload = () => {
   };
 
   function startGame() {
-    drawingApp.init('Canvas')
-    drawingApp.drawRectangle()
+ 
   }
 };
 
@@ -48,6 +47,11 @@ window.onload = () => {
   
   }
 
+
+  
+  drawingApp.init('Canvas')
+  drawingApp.setDimensions ('canvas')
+  drawingApp.drawRectangle('canvas')
 
 
 
