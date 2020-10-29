@@ -32,11 +32,11 @@ window.onload = () => {
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
-      //this.drawImage()  
+      this.drawImage()  
       this.createCar()
       this.drawAll()
-      //this.setEventListeners()
-      //this.clearScreen()
+      this.setEventListeners()
+      this.clearScreen()
       
 
       console.log(this.ctx)    
@@ -99,7 +99,7 @@ window.onload = () => {
       setInterval(() => {
           //this.frames++
           //this.frames % 50 === 0 ? this.generateObstacle() : null
-          //this.clearScreen()
+          this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
           this.drawContinuousLines()
@@ -111,11 +111,11 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
     
-  //drawImage() {
-  // let imageInstance = new Image()
-  //   imageInstance.src = 'images/car.png'
-  //  imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
-  //  }
+  drawImage() {
+  let imageInstance = new Image()
+    imageInstance.src = 'images/car.png'
+    imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
+ }
 
  // generateObstacle() {
  // console.log('')
