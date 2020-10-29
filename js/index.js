@@ -94,29 +94,32 @@ window.onload = () => {
   drawAll() {
       setInterval(() => {
           this.frames++
-          this.frames % 50 === 0 ? this.generateObstacle() : null
+          this.frames % 50 === 0 ? this.createObstacle() : null
           this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
-          for (let i=0;i<this.canvasSize.h-20;i++)
-            this.obstacle.drawObst(i)
+
       }, 70)
   },
 
-  
   clearScreen() {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
-  
 
-  generateObstacle() {
+  createObstacle(){
     let tamX=Math.random () * (60 - 20) + 10, 
-      x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
-    this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20)
-  }
+    x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
+  this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20)
+  },
   
+  generateObstacle() {
+    for (let i=0;i<this.canvasSize.h-20;i++){}
+      this.clearScreen()
+      this.obstacle.drawObst(i)
+    }
+  }
 }
 
 class Car{
