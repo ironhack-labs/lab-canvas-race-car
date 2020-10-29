@@ -1,0 +1,1 @@
+drawingBoard.init('canvas')
