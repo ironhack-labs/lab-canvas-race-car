@@ -37,7 +37,7 @@ window.onload = () => {
 
     drawRectangle() {
        this.ctx.fillStyle = 'green'
-       this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 200 - 300, 200, 300)
+       this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 2 - 100, 200, 200)
        this.ctx.fillStyle = 'green'
        this.ctx.fillRect(this.canvasSize.w / 2 - 50, this.canvasSize.h / 2 - 50, 100, 100)
     },  
