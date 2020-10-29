@@ -124,9 +124,9 @@ window.onload = () => {
 
  drawingApp.init('canvas')
  drawingApp.setDimensions ('canvas')
- drawingApp.drawRectangle('canvas')
+ drawingApp.drawRectangle()
  drawingApp.drawContinuousLines ('canvas')
- drawingApp.drawDashedLines('canvas')
+ drawingApp.drawDashedLines()
  drawingApp.drawImage('car.png')  
 
 
