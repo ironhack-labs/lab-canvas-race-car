@@ -1,10 +1,8 @@
 /* ----- APP ----- */
 
-/* ---DRAWING--- */
-
-const drawingApp = {
-  name: 'Drawing app',
-  description: 'Canvas app for basic shapes drawing',
+const raceCarGame = {
+  name: 'Race Car Game',
+  description: 'Canvas basic Race Car Game',
   version: '1.0.0',
   license: undefined,
   author: 'Manuel Barreda',
@@ -12,6 +10,7 @@ const drawingApp = {
   ctx: undefined,
   frames: 0,
   car: undefined,
+  obstacleVal: false,
   keys: {
     left: 37,
     right: 39
@@ -29,7 +28,6 @@ const drawingApp = {
     this.createCar()
     this.setEventListeners()
 
-    console.log(this.ctx)       // Puedes ver el contexto por consola
   },
 
   setDimensions() {
@@ -74,11 +72,12 @@ const drawingApp = {
   drawAll() {
     setInterval(() => {
       this.frames++
-      this.frames % 1500 === 0 ? this.generateObstacle() : null
+      this.frames % 21 === 0 && !this.obstacle ? this.createObstacle() : null
       this.clearScreen()
       this.drawRectangle()
       this.drawDashedLines()
       this.car.draw()
+      this.obstacle.draw()
     }, 70)
   },
 
@@ -86,10 +85,43 @@ const drawingApp = {
     this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
 
-  generateObstacle() {
-    console.log('NUEVO OBSTÁCULO! CUIDAO QUE VA!')
+  createObstacle() {
+      let ranX = Math.floor(Math.random() * (400))
+      let ranLen = Math.floor(Math.random() * 280) + 50
+      this.obstacle = new Obstacle(this.ctx, ranX, 0, 'brown', ranLen,25,this.obstacleVal)
+    },
+};
+
+/* -OBSTACLE- */
+class Obstacle{
+  constructor(ctx, obsPosX, obsPosY, obsColor, obsWidth, obsHeight, obstacleValue) {
+    this.ctx = ctx
+    this.obstacleValue = obstacleValue
+    this.frames = 0
+    this.obsPos = {
+      x: obsPosX,
+      y: obsPosY
+    }
+    this.obsSize = {
+      w: obsWidth,
+      h: obsHeight
+    }
+  }
+
+  draw() {
+    if (this.frames * 6 < 600) {
+      this.frames++
+      this.ctx.fillStyle = 'brown'
+      this.ctx.fillRect(this.obsPos.x, 0 + this.frames * 7, this.obsSize.w, 25)
+      console.log(this.frames)
+      this.obstacleValue = true;
+    } else {
+      this.frames = 0
+      this.obstacleValue = false;
+    }
   }
 };
+
 
 /* -CAR- */
 class Car {
@@ -132,7 +164,7 @@ window.onload = () => {
   };
 
   function startGame() {
-  drawingApp.init("canvas")
+  raceCarGame.init("canvas")
   }
 };
 
