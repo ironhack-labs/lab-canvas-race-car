@@ -19,6 +19,7 @@ window.onload = () => {
    ctx: undefined,
    frames: 0,
    car: undefined,
+   obstacle: undefined,
    keys: {
      left: 37,
      right: 39
@@ -99,6 +100,8 @@ window.onload = () => {
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
+          for (let i=0;i<this.canvasSize.h-20;i++)
+            this.obstacle.drawObst(i)
       }, 70)
   },
 
@@ -109,7 +112,9 @@ window.onload = () => {
   
 
   generateObstacle() {
-  console.log('')
+    let tamX=Math.random () * (60 - 20) + 10, 
+      x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
+    this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20)
   }
   
 }
@@ -149,36 +154,27 @@ class Car{
 
 
  class Obstacle{
-  constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight, obstacleImage) {
+  constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight) {
        this.ctx = ctx
 
        this.obstaclePos = {
            x: obstaclePosX,
-           y: carPosY
+           y: obstaclePosY
        }
        this.obstacleSize = {
-           w: carWidth,
-           h: carHeight
+           w: obstacleWidth,
+           h: obstacleHeight
        }
-       this.imageName = obstacleImage
-       this.obstacleInstance = undefined
-       this.init()
    }
 
-   init() {
-       this.obstacleInstance = new Image()
-       this.obstacleInstance.src = 'images/car.png'
-   }
-
-   drawObst() {
-      this.ctx.drawImage(this.obstacleInstance, this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
+   drawObst(y) {
       this.ctx.fillStyle = 'red'
-      this.ctx.fillRect(0,0,20,30)
+      this.ctx.fillRect(this.obstaclePos.x, y, this.obstacleSize.w, this.obstacleSize.h)
     }
 
    move(dir) {
-       dir === 'left' ? this.obstaclePos.x -= 20 : null
-       dir === 'right' ? this.obstaclePos.x += 20 : null
+   //    dir === 'left' ? this.obstaclePos.x -= 20 : null
+   //    dir === 'right' ? this.obstaclePos.x += 20 : null
    }
 
 }
