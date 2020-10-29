@@ -94,7 +94,7 @@ window.onload = () => {
   drawAll() {
       setInterval(() => {
           this.frames++
-          this.frames % 75 === 0 ? this.createObstacle() : null
+          this.frames % 70 === 0 ? this.createObstacle() : null
           this.clearScreen()
           this.drawRectangle()
           this.drawDashedLines()
