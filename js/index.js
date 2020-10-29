@@ -80,7 +80,7 @@ window.onload = () => {
     },
 
     createCar() {
-      this.car = new Car (this.ctx, 200, 200, 100, 100, 'car.png')
+      this.car = new Car (this.ctx, 200, 200, 150, 100, 'car.png')
     },
 
   setEventListeners() {
@@ -152,4 +152,37 @@ class Car{
 
  }
 
+
+ class Obstacle{
+  constructor(ctx, obstaclePosX, carPosY, carWidth, carHeight, carImage) {
+       this.ctx = ctx
+
+       this.carPos = {
+           x: carPosX,
+           y: carPosY
+       }
+       this.carSize = {
+           w: carWidth,
+           h: carHeight
+       }
+       this.imageName = carImage
+       this.carInstance = undefined
+       this.init()
+   }
+
+   init() {
+       this.carInstance = new Image()
+       this.carInstance.src = 'images/car.png'
+   }
+
+   draw() {
+     this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+   }
+
+   move(dir) {
+       dir === 'left' ? this.carPos.x -= 20 : null
+       dir === 'right' ? this.carPos.x += 20 : null
+   }
+
+}
 
