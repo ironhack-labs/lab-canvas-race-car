@@ -32,11 +32,11 @@ window.onload = () => {
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
-      this.drawImage()  
+      //this.drawImage()  
       this.createCar()
       this.drawAll()
       this.setEventListeners()
-      this.clearScreen()
+      //this.clearScreen()
       
 
       console.log(this.ctx)    
@@ -103,7 +103,7 @@ window.onload = () => {
           this.drawRectangle()
           this.drawDashedLines()
           this.drawContinuousLines()
-          this.car.drawCar()
+          this.car.draw()
       }, 70)
   },
 
@@ -121,14 +121,6 @@ window.onload = () => {
  // console.log('')
  // }, 
  }
-
-
- drawingApp.init('canvas')
- drawingApp.setDimensions ('canvas')
- drawingApp.drawRectangle()
- drawingApp.drawContinuousLines ('canvas')
- drawingApp.drawDashedLines()
- drawingApp.drawImage('car.png')  
 
 
 
