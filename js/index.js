@@ -9,6 +9,8 @@ window.onload = () => {
 };
 
  
+// PISTA //
+
  const drawingApp = {
    name: 'Drawing app',
    canvasTag: undefined,
@@ -73,12 +75,12 @@ window.onload = () => {
     
     drawImage(imgName) {
       let imageInstance = new Image()
-      imageInstance.src = `img/${imgName}`
+      imageInstance.src = 'images/car.png'
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 200, 200)
     }
  }
 
-
+// COCHE //
 
  class Car {
   constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
@@ -113,6 +115,7 @@ window.onload = () => {
 
 
 
+// MOVIMIENTO DEL COCHE //
 
 
 
