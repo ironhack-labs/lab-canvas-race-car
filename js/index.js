@@ -39,6 +39,7 @@ window.onload = () => {
        this.ctx.fillRect(0, 0, 500, 700)
        this.ctx.fillStyle = 'grey'
        this.ctx.strokeRect(0, 300, 300, 700)
+       this.ctx.fillStyle = 'grey'
     },  
   
   }
