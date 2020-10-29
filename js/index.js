@@ -70,8 +70,46 @@ window.onload = () => {
       this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
       this.ctx.stroke()
     },
+    
+    drawImage(imgName) {
+      let imageInstance = new Image()
+      imageInstance.src = "./images/car.png" 
+      imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 200, 200)
+    }
+ }
+
+
+ const carApp = {
+  name: 'Car app',
+  canvasTag: undefined,
+  ctx: undefined,
+  car:[],
+  frames: 0,
+  canvasSize: {
+    w: undefined,
+    h: undefined
+   },
+
+   init(id) {
+     this.canvasTag = document.getElementById(id)
+     this.ctx = this.canvasTag.getContext('2d')
+     this.setDimensions()
+     this.createCamels()
+     this.drawAll()
+    
+    console.log(this.ctx)       
+    },
+    
+    
+
 
  }
+
+
+
+
+
+
 
 
   drawingApp.init('canvas')
