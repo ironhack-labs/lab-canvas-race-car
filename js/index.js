@@ -35,7 +35,8 @@ window.onload = () => {
       this.setDimensions()
       this.createCar()
       this.drawAll()
-      this.setEventListeners()   
+      this.setEventListeners()  
+      this.createObstacle()
      },
 
     setDimensions() {
