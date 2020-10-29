@@ -32,7 +32,7 @@ window.onload = () => {
       this.canvasTag = document.getElementById(id)
       this.ctx = this.canvasTag.getContext('2d')
       this.setDimensions()
-      this.drawImage()  
+      //this.drawImage()  
       this.createCar()
       this.drawAll()
       //this.setEventListeners()
