@@ -48,8 +48,8 @@ window.onload = () => {
   }
 
 
-  
-  drawingApp.init('Canvas')
+
+  drawingApp.init('canvas')
   drawingApp.setDimensions ('canvas')
   drawingApp.drawRectangle('canvas')
 
