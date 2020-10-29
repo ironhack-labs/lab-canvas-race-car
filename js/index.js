@@ -119,7 +119,7 @@ window.onload = () => {
   
 
    class Car {
-    constructor(ctx, ballPosX, ballPosY, ballWidth, ballHeight, ballImage) {
+    constructor(ctx, carPosX, carPosY,carWidth, carHeight, carImage) {
         this.ctx = ctx
         this.carPos = {
             x: carPosX,
@@ -153,7 +153,6 @@ window.onload = () => {
       imageInstance.src = 'images/car.png'
       imageInstance.onload = () => this.ctx.drawImage(imageInstance, 100, 100, 100, 100)
     },
-
 
  }
 
