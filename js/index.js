@@ -6,15 +6,23 @@ window.addEventListener("load", () => {
 const btn = document.getElementById("start-button");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+// const canvas2 = document.querySelector("canvas")[1];
+// const ctx2 = canvas.getContext("2d");
 
 const carImg = new Image();
-carImg.src = "./images/car.png";
+carImg.src = "../images/car.png";
 
 const img = new Image();
 img.src = "./images/road.png";
 
-img.onload = function () {
-  updateGame();
+// img.onload = function () {
+//   updateBackgroundCanvas();
+// };
+
+const gameArea = {
+  player: null,
+  obstacles: [],
+  animationId: 0,
 };
 
 const backgroundImage = {
@@ -38,39 +46,86 @@ const backgroundImage = {
   },
 };
 
-const gameArea = {
-  player: null,
-  obstacles: [],
-  animationId: 0,
-};
+function updateBackgroundCanvas() {
+  backgroundImage.move();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  backgroundImage.draw();
+
+  requestAnimationFrame(updateBackgroundCanvas);
+}
+
+//Para criar o Player
+class Player {
+  constructor(x, y, width, height, color) {
+    (this.x = x),
+      (this.y = y),
+      (this.width = width),
+      (this.height = height),
+      (this.speedX = 0),
+      (this.color = color);
+  }
+
+  draw() {
+    ctx.drawImage(carImg, 225, canvas.height - 110, 50, 100);
+  }
+
+  newPos() {
+    this.x += this.speedX;
+  }
+
+  left() {
+    return this.x;
+  }
+
+  right() {
+    return this.x + this.width;
+  }
+
+  top() {
+    return this.y;
+  }
+
+  bottom() {
+    return this.y + this.height;
+  }
+
+  isCrashedWith(obstacle) {
+    const condition = !(
+      this.bottom() < obstacle.top() ||
+      this.top() > obstacle.bottom() ||
+      this.right() < obstacle.left() ||
+      this.left() > obstacle.right()
+    );
+
+    return condition;
+  }
+}
 
 function startGame() {
   //para clicar o botão de start e trocar para a tela do canvas
   btn.parentElement.style.display = "none";
   canvas.style.display = "block";
+  // canvas2.style.display = "block";
 
+  gameArea.player = new Player(225, canvas.height - 25, 50, 100, "black");
+  console.log(gameArea.player);
+  updateBackgroundCanvas();
   updateGame();
-
-  gameArea.player = new Player(325, 0);
 }
 
 function updateGame() {
-  backgroundImage.move();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  backgroundImage.draw();
-
-  // Atualizar posição dos elementos
+  gameArea.player.draw();
   gameArea.player.newPos();
 
-  gameArea.player.draw();
+  // requestAnimationFrame(updateGame);
 
-  gameArea.animationId = requestAnimationFrame(updateGame);
+  // Atualizar posição dos elementos
 
   // updateObstacles();
 
   // updateScore(gameArea.score);
 
-  // gameArea.animationId = requestAnimationFrame(updateGame);
+  gameArea.animationId = requestAnimationFrame(updateGame);
 
   // checkGameOver();
 }
@@ -113,52 +168,6 @@ function updateGame() {
 //   }
 // }
 
-//Para criar o player
-class Player {
-  constructor(x, y) {
-    (this.x = x),
-      (this.y = y),
-      (this.width = 50),
-      (this.height = 100),
-      (this.speedX = 0);
-  }
-
-  draw() {
-    ctx.drawImage(carImg, 350, canvas.height - 60, 50, 100);
-  }
-
-  newPos() {
-    this.x += this.speedX;
-  }
-
-  left() {
-    return this.x;
-  }
-
-  right() {
-    return this.x + this.width;
-  }
-
-  top() {
-    return this.y;
-  }
-
-  bottom() {
-    return this.y + this.height;
-  }
-
-  isCrashedWith(obstacle) {
-    const condition = !(
-      this.bottom() < obstacle.top() ||
-      this.top() > obstacle.bottom() ||
-      this.right() < obstacle.left() ||
-      this.left() > obstacle.right()
-    );
-
-    return condition;
-  }
-}
-
 //Para criar Obstaculos com paredes
 class Obstacle extends Player {
   constructor(x, y, width, height, color) {
@@ -181,14 +190,13 @@ class Obstacle extends Player {
 
 window.addEventListener("load", () => {
   document.addEventListener("keydown", (event) => {
-    if (event.key === right) {
+    if (event.key === "ArrowRight") {
       gameArea.player.speedX += 4;
     }
 
-    if (event.key === left) {
+    if (event.key === "ArrowLeft") {
       gameArea.player.speedX -= 4;
     }
-    return;
   });
 
   document.addEventListener("keyup", (event) => {

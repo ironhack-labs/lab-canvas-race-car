@@ -36,9 +36,19 @@ body button {
 #game-board {
   float: left;
   padding: 20px 0px;
+  z-index: 5;
 }
 
 canvas {
   display: none;
   border: 1px solid black;
+  z-index: 5;
 }
+
+/* #canvasGame {
+  width: 500;
+  height: 650;
+  border: 1px solid black;
+  padding: 20px 0px;
+  z-index: 20;
+} */
