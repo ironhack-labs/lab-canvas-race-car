@@ -1,9 +1,10 @@
 class Obstacle {
-    constructor(x,y,size){
+    constructor(x,y,width,height,image){
       this.x = x;
       this.y = y;
-      this.width = size;
-      this.height = 20;
+      this.image = image;
+      this.width = width;
+      this.height = height;
       this.color = 'red';
       this.speedX = 0;
       this.speedY = 0;
@@ -15,8 +16,9 @@ class Obstacle {
   }
 
   update(ctx){
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.fillStyle = this.color;
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.image,this.x,this.y,this.width,this.height);
 }
 
   left() {

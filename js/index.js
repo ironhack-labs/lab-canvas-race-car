@@ -7,6 +7,14 @@
   const imageCar = new Image();
   imageCar.src = "./images/car.png";
   
+  const imageBarril = new Image();
+  imageBarril.src = "./images/barril.png"; 
+
+  const imagePlaca = new Image();
+  imagePlaca.src = "./images/placa.png";  
+
+
+
   const playerCar = new PlayerCar(225,600,imageCar,50,100);
   const game = new Game(playerCar,imageRoad,canvas,ctx);
 

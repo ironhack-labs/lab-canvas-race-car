@@ -36,12 +36,16 @@ class Game {
         });
 
           if (this.frames % 180 === 0) {
-            let x = Math.floor(Math.random() * (this.canvas.width));
-            let minHeight = 20;
-            let maxHeight = 300;
-            let width = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-            const obj = new Obstacle(x,0,width);
-            this.obstacles.push(obj);
+            let minWidth = 50;
+            let maxWidth = 400;
+            let x = Math.floor(Math.random() * (maxWidth - minWidth +1) + minWidth);
+            let evenOdd = Math.floor(Math.random()*2);
+            let image = imageBarril;
+            if(evenOdd === 1){ 
+                image = imagePlaca   
+            }
+                const obj = new Obstacle(x,0,100,100,image);   
+                this.obstacles.push(obj);
         }
     }
 
