@@ -27,13 +27,18 @@ class PlayerCar {
       }
 
    stopLeft(){
-        this.x < 50 ? this.x = 50 : false;  
-        this.speedX = 0;
+      this.speedX = 0;
+
+        if(this.x <= 50){
+          this.x = 50;
+        }
     }
 
     stopRight(){
-        this.x > 400 ? this.x = 400 : false;
         this.speedX = 0;
+        if(this.x >= 400){
+          this.x = 400;
+        }
       }
 
 

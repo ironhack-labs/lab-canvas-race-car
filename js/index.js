@@ -12,6 +12,7 @@
 
   window.onload = () => {  
     document.getElementById('start-button').onclick = () => {     
+      start();
       update();
     }
 
@@ -45,7 +46,23 @@
 
 };
 
+  function start() {
+    game.obstacles = [];
+    playerCar.x = 225;
+    playerCar.y = 600;
+
+
+    game.ctx.clearRect(0,0,500,700);
+    game.background();
+    game.updateScore();
+    game.playerCar.newPos();
+    game.playerCar.update(game.ctx);
+    game.updateObstacles();
+           
+    game.animationId = requestAnimationFrame(update);
+    game.checkGameOver();      
   
+  }
 
   function update() {
             game.ctx.clearRect(0,0,500,700);
