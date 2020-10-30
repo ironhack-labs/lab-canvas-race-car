@@ -1,7 +1,14 @@
+
+
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    let game = new Game();
+    game.startGame();
   };
+}
 
-  function startGame() {}
-};
+
+
+
+
+
