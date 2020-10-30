@@ -6,8 +6,6 @@ window.addEventListener("load", () => {
 const btn = document.getElementById("start-button");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-// const canvas2 = document.querySelector("canvas")[1];
-// const ctx2 = canvas.getContext("2d");
 
 const carImg = new Image();
 carImg.src = "../images/car.png";
@@ -15,13 +13,10 @@ carImg.src = "../images/car.png";
 const img = new Image();
 img.src = "./images/road.png";
 
-// img.onload = function () {
-//   updateBackgroundCanvas();
-// };
-
 const gameArea = {
   player: null,
   obstacles: [],
+  frames: 0,
   animationId: 0,
 };
 
@@ -45,14 +40,6 @@ const backgroundImage = {
     }
   },
 };
-
-function updateBackgroundCanvas() {
-  backgroundImage.move();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  backgroundImage.draw();
-
-  requestAnimationFrame(updateBackgroundCanvas);
-}
 
 //Para criar o Player
 class Player {
@@ -109,19 +96,21 @@ function startGame() {
 
   gameArea.player = new Player(225, canvas.height - 25, 50, 100, "black");
   console.log(gameArea.player);
-  updateBackgroundCanvas();
   updateGame();
 }
 
 function updateGame() {
-  gameArea.player.draw();
+  backgroundImage.move();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  backgroundImage.draw();
   gameArea.player.newPos();
+  gameArea.player.draw();
 
   // requestAnimationFrame(updateGame);
 
   // Atualizar posição dos elementos
 
-  // updateObstacles();
+  updateObstacles();
 
   // updateScore(gameArea.score);
 
@@ -130,43 +119,43 @@ function updateGame() {
   // checkGameOver();
 }
 
-// function updateObstacles() {
-//   gameArea.frames++;
+function updateObstacles() {
+  gameArea.frames++;
 
-//   if (gameArea.frames % 30 === 0) {
-//     gameArea.score++;
-//   }
+  if (gameArea.frames % 30 === 0) {
+    gameArea.score++;
+  }
 
-//   gameArea.obstacles.map((obstacle) => {
-//     obstacle.x--;
-//     obstacle.update();
-//   });
+  gameArea.obstacles.map((obstacle) => {
+    obstacle.x--;
+    obstacle.update();
+  });
 
-//   if (gameArea.frames % 120 === 0) {
-//     let x = canvas.height;
-//     let minwidth = 20;
-//     let maxwidth = 200;
-//     let width = Math.floor(
-//       Math.random() * (maxwidth - minwidth + 1) + minwidth
-//     );
+  if (gameArea.frames % 120 === 0) {
+    let x = canvas.height;
+    let minwidth = 20;
+    let maxwidth = 200;
+    let width = Math.floor(
+      Math.random() * (maxwidth - minwidth + 1) + minwidth
+    );
 
-//     let minGap = 50;
-//     let maxGap = 200;
-//     let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+    let minGap = 50;
+    let maxGap = 200;
+    let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
 
-//     const upperObstacle = new Component(x, 0, 10, width, "red");
-//     const bottomObstacle = new Component(
-//       x,
-//       width + gap,
-//       10,
-//       x - width - gap,
-//       "red"
-//     );
+    const upperObstacle = new Obstacle(x, 0, 10, width, "red");
+    const bottomObstacle = new Obstacle(
+      x,
+      width + gap,
+      10,
+      x - width - gap,
+      "red"
+    );
 
-//     gameArea.obstacles.push(upperObstacle);
-//     gameArea.obstacles.push(bottomObstacle);
-//   }
-// }
+    gameArea.obstacles.push(upperObstacle);
+    gameArea.obstacles.push(bottomObstacle);
+  }
+}
 
 //Para criar Obstaculos com paredes
 class Obstacle extends Player {
