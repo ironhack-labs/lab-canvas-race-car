@@ -32,10 +32,10 @@
       document.addEventListener("keyup", (event) => {
         switch (event.key) {
           case "ArrowLeft":
-            playerCar.speedX = 0;
+            playerCar.stopLeft();
             break;
           case "ArrowRight":
-            playerCar.speedX = 0;
+            playerCar.stopRight();
             break;
           default:
             return;

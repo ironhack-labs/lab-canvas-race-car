@@ -24,9 +24,20 @@ class PlayerCar {
 
     goRight(){
         this.x < 400 ? this.speedX++ : this.x = 400;
+      }
+
+   stopLeft(){
+        this.x < 50 ? this.x = 50 : false;  
+        this.speedX = 0;
     }
 
-     left() {
+    stopRight(){
+        this.x > 400 ? this.x = 400 : false;
+        this.speedX = 0;
+      }
+
+
+    left() {
     return this.x;
   }
 
