@@ -21,6 +21,11 @@ body {
   width: 150px;
 }
 
+.home {
+  display: flex;
+
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
@@ -35,4 +40,11 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+
+.canvas {
+
+  border: 2px solid red;
+
+
 }
