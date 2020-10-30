@@ -1,7 +1,14 @@
+
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
+   
   };
+  
+  
+  function startGame() {
+    raceApp.init('canvas');
+  }
 
-  function startGame() {}
+  
 };
