@@ -35,4 +35,24 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    /* border: 1px solid red; */
+}
+.game-over{
+  margin-left: 39%;
+  position: absolute;
+  margin-top: 10%;
+  height: 150px;
+  width: 400px;
+  text-align: center;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 20px;
+  color: white;
+  border: 1px solid orange;
+  /* visibility: visible; */
+
+
 }
