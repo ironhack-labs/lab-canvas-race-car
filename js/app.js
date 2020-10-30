@@ -26,6 +26,7 @@ const drawingBoard = {
         this.setDimensions()
         this.drawAll()
         this.drawCar()
+        this.createObstacle()
         this.setEventListeners()
     },
 
@@ -40,11 +41,11 @@ const drawingBoard = {
         this.car = new Car(this.ctx, 200, 500, 100, 200, '../images/car.png')
     },
 
-    // createObstacle() {
-    //     this.obs = new Obstacle(this.ctx, 0, 0, 100, 200, '../images/java.png')
-    // },
+    createObstacle() {
+        this.obs = new Obstacle(this.ctx, this.canvasSize, 50, 50, 100, 100,)
+    },
 
-    
+
     drawHighway() {
         this.ctx.fillStyle = 'green'
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -65,121 +66,98 @@ const drawingBoard = {
     },
 
     drawAll() {
+
         setInterval(() => {
-            // this.frames++
-            // this.frames % 50 === 0 ? 
             this.clearScreen()
             this.drawHighway()
             this.car.draw()
-            // this.car.forEach(elm => {
-            //     elm.draw()
-            // })
+            this.obs.draw()
         }, 70)
     },
 
     clearScreen() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-        },
-        
-  setEventListeners() {
+    },
+
+    setEventListeners() {
         document.onkeydown = e => {
             e.keyCode === this.keys.left ? this.car.move('left') : null
             e.keyCode === this.keys.right ? this.car.move('right') : null
         }
     },
-  
-    // generateObstacle() {
-    //     this.ctx.fillStyle = 'brown'
-    //     this.ctx.fillRect(70, 30, 170, 20)
-    // }
-    
+
 };
 
 
 class Car {
-        constructor(ctx, carPosX, carPosY, carWidth, carHeigth, carImage) {
-            this.ctx = ctx
-            this.carPos = {
-                x: carPosX,
-                y: carPosY
-            }
-            this.carSize = {
-                w: carWidth,
-                h: carHeigth
-            }
-                this.imageName = carImage
-                this.carInstance = undefined
-                this.init()
-            
+    constructor(ctx, carPosX, carPosY, carWidth, carHeigth, carImage) {
+        this.ctx = ctx
+        this.carPos = {
+            x: carPosX,
+            y: carPosY
         }
-        
-        init() {
-            this.carInstance = new Image()
-            this.carInstance.src = `images/${this.imageName}`
+        this.carSize = {
+            w: carWidth,
+            h: carHeigth
         }
+        this.imageName = carImage
+        this.carInstance = undefined
+        this.init()
 
-            draw() {
-                this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+    }
 
-            }
-    
+    init() {
+        this.carInstance = new Image()
+        this.carInstance.src = `images/${this.imageName}`
+    }
+
+    draw() {
+        this.ctx.drawImage(this.carInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+
+    }
+
     move(dir) {
         dir === 'left' ? this.carPos.x -= 20 : null
         dir === 'right' ? this.carPos.x += 20 : null
     }
 
+
 }
-        ///////////////
+///////////////
 
 
-// class Obstacle {
-//     constructor(ctx, canvasSize, obsPosX, obsPosY, obsWidth, obsHeight, speed) {
-//         this.ctx = ctx
-//         this.canvasSize = {
-//             w: canvasSize.w,
-//             h: canvasSize.h
-//         }
-//         this.obsPos = {
-//             x: obsPosX,
-//             y: obsPosY
-//         }
-//         this.obsSize = {
-//             w: obsWidth,
-//             h: obsHeight
-//         }
-//         this.imageName = obsImage
-//         this.obsInstance = undefined
-//         this.speed = speed
-//         this.init()
-//     }
+class Obstacle {
+    constructor(ctx, canvasSize, obsPosX, obsPosY, obsWidth, obsHeight, speed) {
+        this.ctx = ctx
+        this.canvasSize = {
+            w: canvasSize.w,
+            h: canvasSize.h
+        }
+        this.obsPos = {
+            x: obsPosX,
+            y: obsPosY
+        }
+        this.obsSize = {
+            w: obsWidth,
+            h: obsHeight
+        }
+        this.obsInstance = undefined
+        this.speed = speed
+        this.init()
+    }
 
-//     init() {
-//         this.obsInstance = new Image()
-//         this.obsInstance.src = `img/${this.imageName}`
-//     }
+    init() {
+        this.obsInstance = new Image()
+        this.obsInstance.src = './images/java.png'
+    }
 
-//     draw() {
-//         this.moveObs()
-//         this.ctx.drawImage(this.imageInstance, this.obsPos.x, this.obsPos.y, this.obsSize.w, this.obsSize.h)
-//     }
+    draw() {
+        this.ctx.drawImage(this.obsInstance, this.obsPos.x, this.obsPos.y, this.obsSize.w, this.obsSize.h)
+        this.moveObstacle()
+    }
 
-//     moveObstacle() {
-//         if (this.obsPos.x >= this.canvasSize.w - this.obsSize.w) {
-//             this.speed *= -1
-//         }
+    moveObstacle() {
+        (this.obsPos.y += 5)
+    }
 
-//         if (this.obsPos.x < 0) {
-//             this.speed *= -1
-//         }
-
-//         if (this.obsPos.x >= this.canvasSize.w - this.obsSize.w || this.obsPos.x < 0) {
-//             this.changeDirection()
-//         }
-
-//         this.obsPos.x += this.speed
-//     }
-
-//     changeDirection() {
-//         this.speed *= -1
-//     }
-// }
+}
