@@ -10,14 +10,14 @@ class Game {
         this.showScore();
     }
     updateCanvas() {
-        setInterval(() => {
+        canvasUpdate = setInterval(() => {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.startGame();
             obstacleArr.forEach(obstacle => {
                 obstacle.draw();
                 obstacle.move();
             })
-        }, 20)
+        }, 20);
     }
     startObstacles() {
         setInterval(() => {
@@ -73,5 +73,8 @@ class Obstacle {
     }
     move() {
         this.y += this.dy;
+        if (this.x < car.x + car.width && this.x + this.width > car.x && this.y < car.y + car.height && this.y + this.height > car.y) {
+            clearInterval(canvasUpdate);
+        }
     }
 }
