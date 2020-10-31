@@ -1,16 +1,15 @@
 let carX = 225
 let direction = 'right'
-
 const createRoad = () => {
 const road = new Image()
-road.src = '../images/road.png'
+road.src = './images/road.png'//otra vez la imagen sino, no funciona.
 road.onload = () => {
     ctx.drawImage(road, 0, 0, 500, 700)
 }
 }
 const createCar = () => {
 let car = new Image()
-car.src = '../images/car.png'
+car.src = './images/car.png'
 car.onload = () => {
     ctx.drawImage(car, carX, 580, 50, 100)
 }
@@ -36,5 +35,3 @@ const moveCar = () => {
         moveCar()
     } 
     });
-
-
