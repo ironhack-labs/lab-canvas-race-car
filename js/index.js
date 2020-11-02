@@ -2,13 +2,16 @@ let game = new Game();
 let road = new Road();
 let car= new Car();
 let obstacleArr = [];
+let obstacleGenerator;
 let canvasUpdate;
+let pointCounter;
+let descriptionText = document.getElementsByClassName("description")[0];
+let button = document.getElementById("start-button");
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     game.startObstacles();
     game.updateCanvas();
-    game.countScore;
   };
 }
 

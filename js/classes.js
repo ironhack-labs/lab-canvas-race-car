@@ -17,10 +17,20 @@ class Game {
                 obstacle.draw();
                 obstacle.move();
             })
-        }, 20);
+        }, 50);
+        pointCounter = setInterval(() => {
+            this.countPoints();
+        }, 1000);
+    }
+    countPoints() {
+        for (let i = 0; i < obstacleArr.length; i++) {
+            if(obstacleArr[i].y > car.y + car.height) {
+                this.score += 1;
+            }
+        }
     }
     startObstacles() {
-        setInterval(() => {
+        obstacleGenerator = setInterval(() => {
             obstacleArr.push(new Obstacle());
         }, 3000);
     }
@@ -28,6 +38,15 @@ class Game {
         this.ctx.fillStyle = 'white';
         this.ctx.font = '20px Arial';
         this.ctx.fillText(`Score: ${this.score}`, 70, 30);
+    }
+    gameOver() {
+        descriptionText.innerHTML = "";
+        descriptionText.innerHTML = `Game over! Your final score: ${this.score}.`;
+        button.innerText = "Play Again";
+
+        button.addEventListener('click', () => {
+            location.reload();
+        })
     }
 }
 
@@ -58,11 +77,11 @@ class Obstacle {
         this.y = 0;
         this.width = this.getRandomWidth();
         this.height = 20;
-        this.dy = 2;
+        this.dy = 5;
         this.draw();
     }
     getRandomX() {
-        return Math.floor(Math.random() * (game.canvas.width - 50));
+        return Math.floor(Math.random() * (300 - 50 + 1) + 50);
     }
     getRandomWidth() {
         return Math.floor(Math.random() * (300 - 150 + 1)) + 150;
@@ -75,6 +94,12 @@ class Obstacle {
         this.y += this.dy;
         if (this.x < car.x + car.width && this.x + this.width > car.x && this.y < car.y + car.height && this.y + this.height > car.y) {
             clearInterval(canvasUpdate);
+            clearInterval(obstacleGenerator);
+            clearInterval(pointCounter);
+            game.gameOver();
         }
+        obstacleArr = obstacleArr.filter((obstacle) => {
+            return obstacle.y < game.canvas.height;
+        })
     }
 }
