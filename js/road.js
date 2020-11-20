@@ -1,34 +1,13 @@
-const img = new Image();
- img.src = './images/road.png';
+  class Road {
+    constructor(canvas){
+        this.canvas = canvas;
+        this.ctx = this.canvas.getContext("2d");
+    }
 
-
-img.onload = function() {
-
-  backgroundCanvas = document.getElementById('background-canvas');
-  ctx = backgroundCanvas.getContext('2d');
-  
-  
-};
-
-
-const backgroundImage = {
-    img: img,
-    x: 0,
-    y:0,
-    speed: -1,
-  
-    moveRoad: function() {
-      this.y += this.speed;
-      this.y %= backgroundCanvas.height;
-    },
-  
-    drawRoad: function() {
-      ctx.drawImage(this.img, 0, this.y);
-      if (this.speed < 0) {
-        ctx.drawImage(this.img, 0, this.y + this.img.height);
-      } else {
-        ctx.drawImage(this.img, 0, this.y - backgroundCanvas.height);
-      }
-    },
-  };
-  
+    draw(){
+        let img = new Image()
+        img.src = "./images/road.png"
+        this.ctx.drawImage(img,0,0,500,700);
+      
+       }
+} 

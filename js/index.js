@@ -1,34 +1,19 @@
-  mainCanvas = document.getElementById('canvas');
-  mainCtx = mainCanvas.getContext('2d');
-  
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
 
-
-function renderMainCanvas() {
-  mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
-  car.draw();
-}
-
-function clearCanvas() {
-  ctx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
-}
-
-
-function updateBackgroundCanvas() {
-  backgroundImage.moveRoad();
-  renderMainCanvas();
-  clearCanvas();
-  backgroundImage.drawRoad();
-  createObstacles();
-  requestAnimationFrame(updateBackgroundCanvas);
-}
-
+let start = new Start(canvas)
+let car = new Car(canvas)
+let road = new Road(canvas)
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
   }
 };
-      
   
-
-  
+  function startGame() {
+    road.draw();
+    car.draw();
+    start.randomLoop();
+    
+  }
