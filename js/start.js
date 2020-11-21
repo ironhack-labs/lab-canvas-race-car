@@ -1,53 +1,46 @@
-class Start{
-    constructor(canvas){
-        this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
-        this.car;
-        this.obstacles = [];
-    }
+// class Start{
+//     constructor(canvas){
+//         this.canvas = canvas;
+//         this.ctx = this.canvas.getContext("2d");
+//         this.car;
+//         this.road;
+//         this.obstacle;
+//     }
 
-    randomLoop(){
-        this.car = new Car(this.canvas); 
-        this.road = new Road(this.canvas);
-let i=0;
-        const loop = () => {
-          i +=1 
-          console.log (i)
-            this.updateCanvas();
-            this.clearCanvas();
-            this.drawCanvas();
-        };
-        requestAnimationFrame(loop);
-    }
+//     randomLoop () {
+      
+//       this.car = new Car(canvas);
+//       this.road = new Road(canvas);
+//       this.obstacle = new Obstacles(canvas);
 
-    updateCanvas(){
-        
-      document.addEventListener('keydown', e => {
-        switch (e.keyCode) {
-          case 37: this.car.moveLeft();  break;
-          case 39: this.car.moveRight(); break;
-        }
-        
-        this.clearCanvas();
-        this.drawCanvas();
-      });
+//             this.updateCanvas();
+//             this.clearCanvas();
+//             this.drawCanvas();   
 
-        this.obstacles.forEach((obstacle)=> {
-            obstacle.update();
-        })  
-    }
+//       window.requestAnimationFrame(this.randomLoop);
+//     }
 
-    clearCanvas(){
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
-    }
+//     updateCanvas(){
+          
+//             // this.obstacle.update();
+//         }
+   
 
-    drawCanvas(){
-        this.road.draw()
-        this.car.draw();
-        this.obstacles.forEach((obstacle)=>{
-            obstacle.draw();
-        });
-    }
-
-
-} 
+//         clearCanvas(){
+//           this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
+//       }
+  
+//       drawCanvas(){
+//           this.road.draw()
+//           this.car.draw();
+//           this.obstacle.draw();
+//       }
+  
+//   } 
+  
+//   document.addEventListener('keydown', e => {
+//     switch (e.keyCode) {
+//       case 37: this.car.moveLeft();  break;
+//       case 39: this.car.moveRight(); break;
+//     }
+//   });    
