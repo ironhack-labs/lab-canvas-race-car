@@ -3,24 +3,23 @@ class Game {
         this.car;
         this.road;
         this.obstacles;
-        this.canvas = document.getElementById('canvas');
+        this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
         this.points =0;
         this.obstaclesList = [];
         this.frames = 0;
-        this.score=0;
         this.speed=2;
         this.isOver = false;
         this.high;
+        this.score;
     }
 
     start(){
-        this.car = new Car(2);
+        this.isOver = false;
+        this.car = new Car(5);
         this.road = new Background();
         this.obstacles = new Obstacles(this.canvas, this.speed);
-        this.score = new Score(this.canvas);
-        const Error = document.getElementById('error');
-        
+        this.score = new Score(canvas);
         
         const loop = () =>{
             if (this.frames%150==0){
@@ -40,7 +39,16 @@ class Game {
             window.requestAnimationFrame(loop);
             this.frames++;
         } else{
-            window.setInterval(this.gameOver,10);
+            var s = window.setInterval(this.gameOver,10);
+            let click = 0;
+            document.getElementById('start-button').onclick = ()=> {
+                if (click==0){
+                clearInterval(s);
+                this.start();
+            }
+            click++;
+
+            }
         }
         }
         
@@ -64,16 +72,10 @@ class Game {
 
     gameOver() {
         let context= document.getElementById('canvas').getContext('2d');
-        context.fillStyle ='black';
-        context.fillRect(0,0,500,700);
         context.fillStyle = 'blue';
-        context.font='50px Georgia'
+        context.font='50px Georgia';
         context.fillText(`GAME OVER`, 140,300);
         
-        
-        //var list_scores = function (scores){
-            //let object = JSON
-        //}
     }
 
     updateCanvas(){

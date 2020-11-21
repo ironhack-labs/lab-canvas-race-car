@@ -3,11 +3,14 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
-    var score = new Score();
+    clicked++;
   };
+
+  let clicked=1;
 
   function startGame(){
     let canvas = document.getElementById('canvas');
+    if (clicked==1){
     var game = new Game(canvas);
     game.start();
   
@@ -27,27 +30,8 @@ window.onload = () => {
       }
   })
   
-  }
+  }}
 
-  
-
-  function get_scores(callback) {
-    let file = "scores.json";
-    fetch(file, {cache:'no-cache'})
-        .then(function(response){
-            if (response.status !=200){
-                Error.innerHTML= response.status
-            } 
-            response.json().then(function(data){
-                let scores = JSON.stringify(data);
-                console.log(scores);
-                callback(scores)
-            });
-        })
-        .catch(function(err){
-            Error.innerHTML = err;
-        })
-}
 
 };
 
