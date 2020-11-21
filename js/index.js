@@ -4,6 +4,7 @@ window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
   };
+}
 
 
   const drawBackground = () => {
@@ -14,7 +15,22 @@ window.onload = () => {
     });
   }
 
+  const drawCar = () => {
+    const car = {
+      x: 217,
+      y: 550,
+      width: 60,
+      height: 110
+    };
+
+  const carImg = new Image();
+  carImg.src = `./images/car.png`;
+  carImg.addEventListener(`load`, () => {
+    context.drawImage(carImg, car.x, car.y, car.width, car.height);
+  });
+}
+
   function startGame() {
     drawBackground();
+    drawCar();
   }
-};
