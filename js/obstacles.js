@@ -1,22 +1,32 @@
+  const obstaclesArray = [];
   class Obstacles {
-    constructor(canvas){
-        this.canvas = canvas;
-        this.ctx = this.canvas.getContext("2d");
-        this.x = 0
+    constructor(x,size){
+        this.x = x;
         this.y = 0;
-        this.size = 25
-        this.speed = 2;
+        this.size = size;
     }
 
-update(){
-    this.x = Math.floor(Math.random()*500);
-    this.size = Math.floor(Math.random()*100);
+    left() {
+      return this.x;
+    }
+    right() {
+      return this.x + this.size;
+    }
+
+    top() {
+      return this.y;
+    }
+    bottom() {
+      return this.y + 50;
+    }
+update() {
+  ctx.fillStyle = "red";
+  ctx.fillRect(this.x, this.y, this.size, 50);
 }
 
-draw(){
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.x, this.y, this.size, 50);
-  }
-  
+newPos() {
+  this.y +=1
+
 }
+  }
 
