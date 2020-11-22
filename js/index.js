@@ -40,10 +40,11 @@ carImg.src = `./images/car.png`;
   document.addEventListener(`keydown` , event => {
     switch (event.key){
       case `ArrowLeft`:
-        console.log(car);
+        if(car.x >= 65)
         car.x -= 10;
         break;
       case `ArrowRight`:
+        if(car.x <= 380)
         car.x += 10;
         break;
       default:
