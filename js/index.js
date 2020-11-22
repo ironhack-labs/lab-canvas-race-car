@@ -6,31 +6,54 @@ window.onload = () => {
   };
 }
 
+// draw car and background
+const car = {
+  x: 217,
+  y: 550,
+  width: 60,
+  height: 110
+};
+const carImg = new Image();
+carImg.src = `./images/car.png`;
 
-  const drawBackground = () => {
+
+
+  const drawBackAndCar = () => {
     const backgroundImg = new Image();
     backgroundImg.src = `./images/road.png`;
-    backgroundImg.addEventListener(`load`, () => {
-      context.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
-    });
+    context.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+    context.drawImage(carImg, car.x, car.y, car.width, car.height);
+    
   }
 
-  const drawCar = () => {
-    const car = {
-      x: 217,
-      y: 550,
-      width: 60,
-      height: 110
-    };
 
-  const carImg = new Image();
-  carImg.src = `./images/car.png`;
-  carImg.addEventListener(`load`, () => {
-    context.drawImage(carImg, car.x, car.y, car.width, car.height);
-  });
-}
 
   function startGame() {
-    drawBackground();
-    drawCar();
+    clearAll();
+    drawBackAndCar();
+
+    requestAnimationFrame(startGame);
   }
+
+
+  //move car
+  document.addEventListener(`keydown` , event => {
+    switch (event.key){
+      case `ArrowLeft`:
+        console.log(car);
+        car.x -= 10;
+        break;
+      case `ArrowRight`:
+        car.x += 10;
+        break;
+      default:
+        console.log(`You can use only left and right arrows`);
+    }
+    });
+
+    //function to clear canvas
+    const clearAll = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // start game function
