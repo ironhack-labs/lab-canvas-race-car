@@ -7,7 +7,6 @@ class Car {
     this.h = h
 
     this.vx = 0
-    this.vy = 0
 
     this.img = img
   }
@@ -16,8 +15,10 @@ class Car {
     this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
   }
 
-  move() {
-    this.x += this.vx
-    this.y += this.vy
+  move(mv) {
+    let newX = this.x + mv
+    if (newX > 0 && newX < this.ctx.canvas.width - this.w) {
+        this.x = newX
+    }
   }
 }
