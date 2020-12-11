@@ -2,8 +2,8 @@ class Background {
     constructor(ctx) {
       this.ctx = ctx
   
-      this.x = 0
-      this.vx = -1
+      this.y = 0
+      this.vy = 1
   
       this.width = this.ctx.canvas.width
       this.height = this.ctx.canvas.height
@@ -24,16 +24,16 @@ class Background {
       if (this.isReady()) {
         this.ctx.drawImage(
           this.img,
-          this.x,
           0,
+          this.y,
           this.width,
           this.height
         )
   
         this.ctx.drawImage(
           this.img,
-          this.x + this.width,
           0,
+          this.y - this.height,
           this.width,
           this.height
         )
@@ -41,10 +41,10 @@ class Background {
     }
   
     move() {
-      this.x += this.vx
+      this.y += this.vy
   
-      if (this.x + this.width <= 0) {
-        this.x = 0
+      if (this.y >= this.height) {
+        this.y = 0
       }
     }
   }

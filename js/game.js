@@ -14,7 +14,7 @@ class Game {
         this.draw()
         
         this.move()
-      }, 1000 / 60)
+      }, 1000 / 140)
     }
   
     clear() {
