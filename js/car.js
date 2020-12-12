@@ -21,4 +21,11 @@ class Car {
         this.x = newX
     }
   }
+
+  collidesWith(element) {
+    return this.x < element.x + element.width &&
+      this.x + this.w > element.x &&
+      this.y < element.y + element.height &&
+      this.y + this.h > element.y
+  }
 }

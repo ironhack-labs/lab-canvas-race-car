@@ -1,4 +1,4 @@
-class Board {
+class Background {
     constructor(ctx) {
         this.ctx = ctx
         
