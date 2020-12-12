@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+const body = document.querySelector('body');
 const ctx = canvas.getContext('2d');
 const raceGame = new Game(ctx)
 
@@ -17,5 +18,7 @@ window.onload = () => {
   // Start Game Function
   const startGame = () => {
     raceGame.start()
+    body.classList.add('playing');
+    canvas.classList.add('canvas-playing');
   }
 };

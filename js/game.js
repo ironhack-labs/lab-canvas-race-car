@@ -13,6 +13,7 @@ class Game {
         ];
 
         this.points = 0;
+        this.record = localStorage.getItem("record");
     }
 
     start() {
@@ -62,6 +63,11 @@ class Game {
 
     pause() {
         clearInterval(this.invervalId)
+
+        if (this.points > this.record){
+            localStorage.setItem("record", this.points);
+            this.record = this.points
+        }
     
         this.ctx.save()
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
@@ -80,7 +86,12 @@ class Game {
             `Your points: ${this.points}`,
             (this.ctx.canvas.width / 2),
             (this.ctx.canvas.height / 2) + 15,
-          )
+        )
+          this.ctx.fillText(
+            `Record: ${this.record}`,
+            (this.ctx.canvas.width / 2),
+            (this.ctx.canvas.height / 2) + 45,
+        )
         this.ctx.restore()
       }
 
@@ -117,21 +128,21 @@ class Game {
 
     setDifficulty() {
         if(this.points > 10 && this.points < 25){
+            this.background.vy = 8
+            this.obstacles.forEach((obs) => {
+                obs.vy = 8
+            })
+            this.obstaclesInterval = 50
+        } else if (this.points > 25 && this.points < 50){
             this.background.vy = 10
             this.obstacles.forEach((obs) => {
                 obs.vy = 10
             })
-            this.obstaclesInterval = 50
-        } else if (this.points > 25 && this.points < 50){
+            this.obstaclesInterval = 49
+        } else if (this.points > 50 && this.points < 70){
             this.background.vy = 11
             this.obstacles.forEach((obs) => {
                 obs.vy = 11
-            })
-            this.obstaclesInterval = 49
-        } else if (this.points > 50 && this.points < 70){
-            this.background.vy = 12
-            this.obstacles.forEach((obs) => {
-                obs.vy = 12
             })
             this.obstaclesInterval = 48
         }
