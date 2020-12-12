@@ -145,6 +145,12 @@ class Game {
                 obs.vy = 11
             })
             this.obstaclesInterval = 48
+        } else if (this.points > 70){
+            this.background.vy = 12
+            this.obstacles.forEach((obs) => {
+                obs.vy = 12
+            })
+            this.obstaclesInterval = 47
         }
     }
 }

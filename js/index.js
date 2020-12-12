@@ -21,4 +21,15 @@ window.onload = () => {
     body.classList.add('playing');
     canvas.classList.add('canvas-playing');
   }
+
+  document.addEventListener('keypress', (event) => {
+    if (event.code === "Space"){
+      startGame();
+      // ReStart game 
+      startButton.innerHTML = 'ReStart Game';
+      startButton.onclick = () => {
+        location.reload();
+      }
+    }
+  })
 };
