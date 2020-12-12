@@ -46,4 +46,12 @@ class Car {
             this.x = this.ctx.canvas.width - this.width
         }
     }
+
+    collidesWith(obs) {
+        return this.y <= obs.y 
+        && this.x + this.width >= obs.x 
+        && this.x <= obs.x + obs.width
+        && this.y <= obs.y + obs.height
+        && this.y + this.height >= obs.y
+    }
 }
