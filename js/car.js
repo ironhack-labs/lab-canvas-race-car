@@ -1,7 +1,6 @@
 class Car {
     constructor(ctx) {
         this.ctx = ctx
-
         this.x = 214
         this.y = 550
         
@@ -9,6 +8,14 @@ class Car {
         this.h = 120
 
         this.vx = 0
+        this.speed = 2
+
+        this.movements = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        }
 
         this.img = new Image()
         this.img.src = '../images/car.png'
@@ -27,16 +34,37 @@ class Car {
     }
 
     move() {
-        this.x += this.vx
-
-        if (this.x + this.w >= this.ctx.canvas.width) {
-            this.x = this.ctx.canvas.width - this.w
+          if (this.movements.left) {
+            this.vx = -this.speed
+          } else if (this.movements.right) {
+            this.vx = this.speed
+          } else {
             this.vx = 0
-        }
-
-        if (this.x - this.w <= 0) {
-            this.x = this.w
-            this.vx = 0
-        }
+          }
+      
+          this.x += this.vx
+          this.y += this.vy
+      
+          if (this.x + this.size >= this.ctx.canvas.width) {
+            this.x = this.ctx.canvas.width - this.size
+          } else if (this.x <= 0) {
+            this.x = 0
+          }
     }
+
+    onKeyEvent(event) {
+        const status = event.type === 'keydown'
+    
+        switch(event.keyCode) {
+          case KEY_RIGHT:
+            this.movements.right = status
+            break;
+          case KEY_LEFT:
+            this.movements.left = status
+            break;
+        }
+      }
 }
+
+const KEY_RIGHT = 39
+const KEY_LEFT = 37

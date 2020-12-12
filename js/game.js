@@ -5,6 +5,8 @@ class Game {
       this.background = new Background(ctx)
   
       this.interval = undefined
+
+      this.car = new Car(ctx)
     }
   
     start() {
@@ -14,7 +16,7 @@ class Game {
         this.draw()
         
         this.move()
-      }, 1000 / 140)
+      }, 1000 / 240)
     }
   
     clear() {
@@ -22,7 +24,8 @@ class Game {
     }
   
     draw() {
-      this.background.draw()
+      this.background.draw();
+      this.car.draw()
     }
   
     move() {
