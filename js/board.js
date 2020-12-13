@@ -2,7 +2,7 @@ class Board{
     constructor(ctx){
         this.ctx=ctx;
         this.y= 0
-        this.vy= 1
+        this.vy= 3
         this.width= this.ctx.canvas.width
         this.height= this.ctx.canvas.height
         this.img = new Image()
