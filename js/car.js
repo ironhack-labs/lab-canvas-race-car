@@ -72,6 +72,13 @@ class Car{
             this.x=0
         }
     }
+
+    collisionWith(obstacle){
+        return this.y < obstacle.y &&
+          this.x + this.width >= obstacle.x&&
+          this.y < obstacle.y + obstacle.height &&
+          this.y + this.heigth >= obstacle.y
+        }
 }
 
 
