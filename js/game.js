@@ -4,6 +4,13 @@ class Game {
 
     this.background = new Background(ctx)
     this.car = new Car(ctx)
+    this.obstacleArray = []
+    
+    setInterval(() => {
+      this.obstacleArray.push(new Obstacle(ctx))
+    }, 1000)
+    
+
 
     this.interval = undefined
   }
@@ -16,7 +23,7 @@ class Game {
       this.clear()
       this.draw()
       this.move()
-      this.checkColision()
+      this.colision()
     }, 1000 / 60)
   }
 
@@ -27,21 +34,24 @@ class Game {
   draw() {
     this.background.draw()
     this.car.draw()
+    this.obstacleArray.forEach(obs => obs.draw())
   }
 
   move() {
     this.background.move()
     this.car.move()
+    this.obstacleArray.forEach(obs => obs.move(this.obstacleArray.length))
   }
 
-  checkColision(){
-    this.car.checkColision()
+  colision(){
+    if(this.obstacleArray.some(obs => this.car.checkColision(obs))){
+      alert('Game Over')
+    }
   }
-
 
   setListeners() {
     document.onkeydown = event => {
-      switch (event.keyCode) {
+      switch (event.key) {
         case TOP:
           this.car.vy = -10
           break;
@@ -58,7 +68,7 @@ class Game {
     }
 
     document.onkeyup = event => {
-      switch (event.keyCode) {
+      switch (event.key) {
         case RIGHT:
         case LEFT:
           this.car.vx = 0
@@ -73,7 +83,7 @@ class Game {
 }
 
 
-const TOP = 38
-const RIGHT = 39
-const BOTTOM = 40
-const LEFT = 37
+const TOP = 'ArrowUp'
+const RIGHT = 'ArrowRight'
+const BOTTOM = 'ArrowDown'
+const LEFT = 'ArrowLeft'

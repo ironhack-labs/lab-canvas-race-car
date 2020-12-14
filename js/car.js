@@ -5,7 +5,7 @@ class Car {
       this.y = 500
       this.w = 50
       this.h = 90
-  
+
       this.vx = 0
       this.vy = 0
 
@@ -16,7 +16,6 @@ class Car {
       this.imgCar.onload = () => {
         this.imgCar.isReady = true
       }
-
     }
   
     isReady() {
@@ -40,9 +39,19 @@ class Car {
     this.x += this.vx
     this.y += this.vy
 
-    this.x + this.w >= this.ctx.canvas.width ? this.x = this.ctx.canvas.width - this.w : 1
+    this.x + this.w >= canvas.width ? this.x = canvas.width - this.w : 1
     this.x <= 0 ? this.x = 0 : 1
+
+    this.y + this.h >= canvas.height ? this.y = canvas.height - this.h : 1
+    this.y <= 0 ? this.y = 0 : 1
   }
 
 
+  checkColision(obstacle){
+    
+    return this.x < obstacle.x + obstacle.w &&
+      this.x + this.w > obstacle.x &&
+      this.y < obstacle.y + obstacle.h &&
+      this.y + this.w > obstacle.y
+  }
 }
