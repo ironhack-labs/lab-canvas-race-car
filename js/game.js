@@ -16,6 +16,7 @@ class Game {
       this.clear()
       this.draw()
       this.move()
+      this.checkColision()
     }, 1000 / 60)
   }
 
@@ -31,6 +32,10 @@ class Game {
   move() {
     this.background.move()
     this.car.move()
+  }
+
+  checkColision(){
+    this.car.checkColision()
   }
 
 

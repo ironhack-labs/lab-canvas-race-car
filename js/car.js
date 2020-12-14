@@ -35,8 +35,14 @@ class Car {
       }
 
   }
-    move() {
-      this.x += this.vx
-      this.y += this.vy
-    }
+  move() {
+
+    this.x += this.vx
+    this.y += this.vy
+
+    this.x + this.w >= this.ctx.canvas.width ? this.x = this.ctx.canvas.width - this.w : 1
+    this.x <= 0 ? this.x = 0 : 1
   }
+
+
+}
