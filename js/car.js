@@ -8,7 +8,7 @@ class Car{
         this.heigth= 200
         this.width= 80
 
-        this.speed=3
+        this.speed=4
         this.vx= 0
         this.vy=0
         
@@ -74,10 +74,13 @@ class Car{
     }
 
     collisionWith(obstacle){
-        return this.y < obstacle.y &&
-          this.x + this.width >= obstacle.x&&
-          this.y < obstacle.y + obstacle.height &&
-          this.y + this.heigth >= obstacle.y
+        if(this.y <= obstacle.y + obstacle.heigth
+            &&this.x+this.width>=obstacle.x
+            &&this.x<=obstacle.x + obstacle.width
+            &&this.y + this.heigth >= obstacle.y
+            ){
+              return true
+          }
         }
 }
 

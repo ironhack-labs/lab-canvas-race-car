@@ -4,10 +4,10 @@ class Obstacle{
         this.ctx=ctx
         this.x=x
         this.y=y
-        this.heigth= 10
+        this.heigth= 50
         this.width= width
 
-        this.vy= 2
+        this.vy= 4
     }
 
     draw(){

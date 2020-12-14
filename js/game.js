@@ -9,6 +9,7 @@ class Game{
         this.obstacles=[]
         this.obstacleCount=0;
         this.interval = undefined
+        
     }
 
     start() {
@@ -19,10 +20,12 @@ class Game{
           this.checkCollisions()
           this.obstacleCount++
 
-          if(this.obstacleCount % this.car.heigth*2 ===0){
+          if(this.obstacleCount % this.car.heigth ===0){
             this.addObstacle()
 
-            this.obstacleCount=0
+            
+            console.log(this.obstacleCount)
+            this.obstacleCount = 0;
           }
           
         }, 1000 / 60)
@@ -50,20 +53,23 @@ class Game{
       }
 
       addObstacle(){
-        const maxSpace = this.ctx.canvas.width - this.car.width*2
-        const theWidth = Math.floor(Math.random()*maxSpace)
+        const maxSpace = this.ctx.canvas.width - this.car.width*1.1
         
+        const theWidth = Math.floor(Math.random()*maxSpace)
+
 
         this.obstacles.push(
-          new Obstacle(this.ctx,theWidth,10,theWidth)
-          
+          new Obstacle(this.ctx,theWidth,0,theWidth)
+        
         )
-
+        this.obstacleCount= this.obstacles.length
         console.log(this.obstacles)
       }
 
       checkCollisions(){
+        
         if(this.obstacles.some(obstacle => this.car.collisionWith(obstacle))){
+        
           alert('collision')
         }
       }
