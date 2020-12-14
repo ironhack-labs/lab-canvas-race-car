@@ -24,12 +24,15 @@ class Game {
       this.draw()
       this.move()
       this.colision()
+      this.setScore()
     }, 1000 / 60)
   }
 
   clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-  }
+
+    this.pipes = this.obstacleArray.filter(obs => obs.x + obs.h >= 0)
+  }obstacleArray
 
   draw() {
     this.background.draw()
@@ -47,6 +50,10 @@ class Game {
     if(this.obstacleArray.some(obs => this.car.checkColision(obs))){
       alert('Game Over')
     }
+  }
+
+  setScore(){
+    this.obstacleArray.some(obs => this.car.getScore(obs))
   }
 
   setListeners() {

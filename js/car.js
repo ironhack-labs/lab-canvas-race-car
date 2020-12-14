@@ -9,6 +9,9 @@ class Car {
       this.vx = 0
       this.vy = 0
 
+      this.scoreCounter = 0
+      this.score = document.getElementById('score')
+
       this.imgCar = new Image()
       this.imgCar.src = './images/car.png'
 
@@ -53,5 +56,9 @@ class Car {
       this.x + this.w > obstacle.x &&
       this.y < obstacle.y + obstacle.h &&
       this.y + this.w > obstacle.y
+  }
+
+  getScore(obstacle){
+
   }
 }
