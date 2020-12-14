@@ -69,6 +69,14 @@ onKeyEvent(event) {
   }
 }
 
-
+collidesWith(element) {
+  // if the three conditions are true there is a collition
+  return this.x < element.x + element.width && // collition by right side
+    this.x + this.width > element.x &&               // collition by left side
+    this.y < element.y + element.height &&   // frontal collition
+    this.y + this.height > element.y       // back collition
+    
+  
+}
 // fin clase
 }

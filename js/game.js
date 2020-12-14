@@ -21,6 +21,8 @@ class Game {
               this.clear()
               //muevo objetos
               this.move()
+              // check collitions betwwen car and obstacles
+              this.checkCollisions();
               // dibujo objetos
               this.draw()
               this.obstDrawCount++
@@ -111,6 +113,32 @@ addObstacle (){
   )
 }
 
+checkCollisions() {
+  // si obstaculo superado  suma 1
+  // if there is collition pause the game
+  if(this.obstacles.some(obstacle => this.car.collidesWith(obstacle))) {
+    this.pause()
+  }
+}
 
+
+pause() {
+  clearInterval(this.drawInterval)
+/*
+  this.ctx.save()
+  this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.width)
+
+  this.ctx.font = '26px Arial'
+  this.ctx.fillStyle = 'white'
+  this.ctx.textAlign = 'center'
+  this.ctx.fillText(
+    'Game over!',
+    this.canvas.width / 2,
+    this.canvas.height / 2,
+  )
+  this.ctx.restore()
+  */
+}
 // fin clase
 }
