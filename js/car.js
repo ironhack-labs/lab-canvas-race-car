@@ -8,7 +8,7 @@ class Car{
         this.heigth= 200
         this.width= 80
 
-        this.speed=7
+        this.speed=10
         this.vx= 0
         this.vy=0
         

@@ -74,8 +74,8 @@ class Game{
       }
 
       addObstacle(){
-        const maxSpace = this.ctx.canvas.width - this.car.width*1.5
-        const minSpace = this.ctx.canvas.width/2
+        const maxSpace = Math.floor(this.ctx.canvas.width - this.car.width*2.5)
+        const minSpace = Math.ceil(this.ctx.canvas.width/1.7)
         const theWidth = Math.floor(Math.random()*(maxSpace-minSpace) + minSpace)
 
 
@@ -90,10 +90,11 @@ class Game{
       checkCollisions(){
         
         if(this.obstacles.some(obstacle => this.car.collisionWith(obstacle))){
-          //Paint the background
+          //Paint the finish screen background
           this.stop()
           this.ctx.fillStyle = 'rgba(0, 0, 0)'
           this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height)
+
           //Paint the game over
           this.ctx.save()
           this.ctx.font = '50px Sans-serif'
@@ -105,6 +106,7 @@ class Game{
             this.ctx.canvas.height / 2,
           )
           this.ctx.restore()
+
           //Paint final score
           this.ctx.save()
           this.ctx.font = '40px Sans-serif'
