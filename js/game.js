@@ -9,6 +9,12 @@ class Game {
         this.fps = 1000 / 60
         this.obstacles = []
         this.obstDrawCount = 0
+        this.sitCarWithobs = {
+          crossing: false,
+          crossed: false
+          
+        }
+        this.score = 0
     }
     startGame() {
      
@@ -116,9 +122,31 @@ addObstacle (){
 checkCollisions() {
   // si obstaculo superado  suma 1
   // if there is collition pause the game
+  
   if(this.obstacles.some(obstacle => this.car.collidesWith(obstacle))) {
     this.pause()
   }
+  if(this.obstacles.some(obstacle => this.car.crossingObs(obstacle))){
+    console.log(`cruzando obstaculo`)
+    this.sitCarWithobs.crossing =true;
+
+  this.sitCarWithobs.crossed = false;
+
+  }   else { 
+    if (this.sitCarWithobs.crossing && !this.sitCarWithobs.crossed){
+      this.sitCarWithobs.crossed =true;
+      console.log(`cruzo obstaculo`)
+      this.score++
+      console.log(this.score)
+    } else {
+      this.sitCarWithobs.crossed =false;
+      console.log(`no cruzo obstaculo`)
+    }
+    
+    this.sitCarWithobs.crossing =false;
+
+  }
+   
 }
 
 
