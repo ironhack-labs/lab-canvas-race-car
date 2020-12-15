@@ -44,7 +44,6 @@ class Car{
         const status = event.type === 'keydown'
 
         if(event.keyCode === KEY_RIGHT){
-            console.log('right clicked')
             this.movements.right = status
         }else if(event.keyCode === KEY_LEFT){
             this.movements.left = status
@@ -74,6 +73,7 @@ class Car{
     }
 
     collisionWith(obstacle){
+        //if all conditions are true there's a collision with an obstacle
         if(this.y <= obstacle.y + obstacle.heigth
             &&this.x+this.width>=obstacle.x
             &&this.x<=obstacle.x + obstacle.width

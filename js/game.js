@@ -24,11 +24,9 @@ class Game{
           this.checkCollisions()
           this.obstacleCount++
 
-          if(this.obstacleCount % 120 ===0){
+          if(this.obstacleCount % 120 ===0){ //Add the frequency to generate obstacles
             this.addObstacle()
 
-            
-            console.log(this.obstacleCount)
             this.obstacleCount = 0;
           }
           
@@ -39,16 +37,6 @@ class Game{
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
       }
       
-      showPoints(){
-        this.ctx.font = '25px Sans-serif'
-        this.ctx.fillStyle = 'white'
-        this.ctx.textAlign = 'left'
-          if(this.obstacles.length===1||this.obstacles.length===0){
-            return 0
-          }else{
-            return  this.obstacles.length-1
-          }
-      }
 
       draw() {
         this.board.draw()
@@ -74,56 +62,67 @@ class Game{
       }
 
       addObstacle(){
-        const maxSpace = Math.floor(this.ctx.canvas.width - this.car.width*2.5)
-        const minSpace = Math.ceil(this.ctx.canvas.width/1.7)
-        const theWidth = Math.floor(Math.random()*(maxSpace-minSpace) + minSpace)
-
+        const maxSpace = this.ctx.canvas.width - this.car.width*2.5
+        const minSpace = 200
+        const theWidth = Math.random()*(maxSpace-minSpace) + minSpace
 
         this.obstacles.push(
-          new Obstacle(this.ctx,Math.floor(Math.random()*this.ctx.canvas.width),0,theWidth)
-        
+          new Obstacle(this.ctx,Math.floor(Math.random()*this.ctx.canvas.width/2),0,theWidth)
         )
-        this.obstacleCount= this.obstacles.length
-        console.log(this.obstacles)
+        
       }
 
       checkCollisions(){
         
         if(this.obstacles.some(obstacle => this.car.collisionWith(obstacle))){
-          //Paint the finish screen background
-          this.stop()
-          this.ctx.fillStyle = 'rgba(0, 0, 0)'
-          this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height)
-
-          //Paint the game over
-          this.ctx.save()
-          this.ctx.font = '50px Sans-serif'
-          this.ctx.fillStyle = 'red'
-          this.ctx.textAlign = 'center'
-          this.ctx.fillText(
-            'Game over!',
-            this.ctx.canvas.width / 2,
-            this.ctx.canvas.height / 2,
-          )
-          this.ctx.restore()
-
-          //Paint final score
-          this.ctx.save()
-          this.ctx.font = '40px Sans-serif'
-          this.ctx.fillStyle = 'white'
-          this.ctx.textAlign = 'center'
-          this.ctx.fillText(
-            `Your final score is ${this.showPoints()}`,
-            this.ctx.canvas.width/3.5 ,
-            this.ctx.canvas.height / 1.7,
-          )
-          this.ctx.restore()
           
+          this.stop()
+
         }
+      }
+
+      //Return the points based on how many obstacles have been avoid
+      showPoints(){
+        this.ctx.font = '25px Sans-serif'
+        this.ctx.fillStyle = 'white'
+        this.ctx.textAlign = 'left'
+          if(this.obstacles.length===1||this.obstacles.length===0){
+            return 0
+          }else{
+            return  this.obstacles.length-1
+          }
       }
 
       stop(){
         clearInterval(this.drawInterval);
+
+        //Paint the finish screen background
+        this.ctx.fillStyle = 'rgba(0, 0, 0)'
+          this.ctx.fillRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height)
+
+          //Paint the game over
+          this.ctx.save()
+            this.ctx.font = '50px Sans-serif'
+            this.ctx.fillStyle = 'red'
+            this.ctx.textAlign = 'center'
+            this.ctx.fillText(
+              'Game over!',
+              this.ctx.canvas.width / 2,
+              this.ctx.canvas.height / 2,
+            )
+          this.ctx.restore()
+
+          //Paint final score
+          this.ctx.save()
+            this.ctx.font = '40px Sans-serif'
+            this.ctx.fillStyle = 'white'
+            this.ctx.textAlign = 'center'
+            this.ctx.fillText(
+              `Your final score is ${this.showPoints()}`,
+              this.ctx.canvas.width/3.5 ,
+              this.ctx.canvas.height / 1.7,
+            )
+          this.ctx.restore()
 
       }
 }
