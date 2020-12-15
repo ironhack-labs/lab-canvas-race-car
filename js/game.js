@@ -48,7 +48,7 @@ class Game {
 
   colision(){
     if(this.obstacleArray.some(obs => this.car.checkColision(obs))){
-      alert('Game Over')
+      alert(`Game Over\n\nFinal Score: ${parseInt(this.car.scoreCounter)}`)
     }
   }
 

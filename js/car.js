@@ -35,8 +35,8 @@ class Car {
             this.h
             )
       }
-
   }
+
   move() {
 
     this.x += this.vx
@@ -59,6 +59,9 @@ class Car {
   }
 
   getScore(obstacle){
-
+    if(!(this.y < obstacle.y + obstacle.h && this.y + this.w > obstacle.y)){
+      this.scoreCounter += 0.1
+      this.score.innerHTML = parseInt(this.scoreCounter)
+    }
   }
 }

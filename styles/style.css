@@ -41,3 +41,29 @@ body button {
 canvas {
   border: 1px dashed black;
 }
+
+#score{
+  color: black;
+  font-size: 30px;
+  padding: 5px;
+
+  position: absolute;
+  top: 50px;
+  right: 700px;
+}
+
+.hide{
+  display: none;
+  color: black;
+  font-size: 30px;
+  padding: 5px;
+
+  position: absolute;
+  top: 50px;
+  right: 700px;
+}
+
+
+.show{
+  display: block;
+}
