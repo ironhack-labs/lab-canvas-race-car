@@ -42,6 +42,11 @@ class Game {
 
     move() {
         this.background.move()
+        this.car.move()
+    }
+
+    onKeyEvent(event) {
+        this.car.onKeyEvent(event)
     }
 
 }

@@ -20,6 +20,11 @@ class Car {
         this.img.onload = () => {
             this.img.isReady = true
         }
+
+        this.movements = {
+            rigth: false,
+            left: false
+        }
     }
 
     isReady() {
@@ -38,5 +43,40 @@ class Car {
         }
     }
 
+    move () {
+        if (this.movements.rigth) {
+            this.vx = this.speed
+        } else if (this.movements.left) {
+            this.vx = -this.speed
+        } else {
+            this.vy = 0 //no olvidar este else
+        }
+        // si hay también hacia arriba y hacia abajo se hace otro if debajo e independiente para que te puedas mover al mismo tiempo, por ejemplo, a la izquierda y arriba
+
+        this.x += this.vx
+
+        if (this.x + 50 >= this.ctx.canvas.width) {
+            this.x = this.maxX - this.width
+        } else if (this.x <= this.minX) {
+            this.x = this.minX
+        }
+    }
+
+    onKeyEvent(event) {
+        // console.log(event.type) // -> keydown
+        // console.log(event.keyCode) // -> saber las teclas
+        //d3 - 11d: 37:03'
+
+        const status = event.type === 'keydown'
+
+        switch(event.keyCode) {
+            case KEY_RIGTH:
+                this.movements.rigth = status
+                break;
+            case KEY_LEFT:
+                this.movements.left = status
+                break;
+        }
+    }
 
 }
