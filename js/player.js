@@ -1,8 +1,8 @@
 class Player {
-    constructor(ctx) {
+    constructor(ctx, x, y) {
         this.ctx = ctx
-        this.x = 225
-        this.y = 550
+        this.x = x
+        this.y = y
         this.w = 60
         this.h = 100
 
@@ -20,15 +20,22 @@ class Player {
         this.x += this.vx
 
         if (this.x + this.w >= this.ctx.canvas.width) {
-            this.x = this.ctx.canvas.width - this.w
+            this.x = this.ctx.canvas.width - this.w 
             this.vx = 0
         }
 
-        if (this.x - this.w <= 0) {
-            this.x = this.w
+        if (this.x <= 0) {
+            this.x = 0
             this.vx = 0
         }
         
     }
+
+    collidesWith(element) {
+    return this.x < element.x + element.width &&
+      this.x + this.size > element.x &&
+      this.y < element.y + element.height &&
+      this.y + this.size > element.y
+  }
 }
 
