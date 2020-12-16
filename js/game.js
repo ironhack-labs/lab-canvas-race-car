@@ -23,6 +23,7 @@ class Game {
                 this.clear()
                 this.move()
                 this.draw()
+                this.checkCollitions()
                 this.drawCount++
 
                 if (this.drawCount % PIPE_FRAMES === 0) {
@@ -57,12 +58,14 @@ class Game {
 
     addPipes() { 
 
+        // first way do not work with collisions
         // random width
         let getRandomArbitrary = ((min, max) => {
             return Math.random() * (max - min) + min;
           })
         
         let pipeWidth = getRandomArbitrary(150, this.canvas.width - 150)
+
         // choose side or random middle
 
         const xRigth = 0
@@ -74,8 +77,29 @@ class Game {
 
         this.pipes.push(
             new Pipe(this.ctx, chooseX, -100, pipeWidth, 'brown')
-            )
+            ) 
+        /*
+        const pipeS = new Pipe(this.ctx, 0, -100, 150, 'brown')
+        const pipeSR = new Pipe(this.ctx, this.canvas.width - 150, -100, 150, 'brown')
+
+        const pipeM = new Pipe(this.ctx, 0, -100, 250, 'brown')
+        const pipeMR = new Pipe(this.ctx, this.canvas.width - 250, -100, 250, 'brown')
+
+        const pipeL = new Pipe(this.ctx, 0, -100, 350, 'brown')
+        const pipeLR = new Pipe(this.ctx, this.canvas.width - 350, -100, 350, 'brown')
+        
+        const arrPipes = [pipeS, pipeSR, pipeM, pipeMR, pipeL, pipeLR]
+        let choosePipe = arrPipes[Math.floor(Math.random() * arrPipes.length)]
+
+        this.pipes.push(
+            choosePipe
+        ) */
     }
 
+    checkCollitions() {
+        if (this.pipes.some(pipe => this.car.collidesWith(pipe))) {
+            console.log('Game over')
+        }
+    }
 
 }

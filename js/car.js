@@ -79,4 +79,12 @@ class Car {
         }
     }
 
+    collidesWith(pipe) {
+        console.log('Game over')
+        return this.x < pipe.x + pipe.width &&
+        this.x + this.width > pipe.x &&
+        this.y < pipe.y + pipe.height &&
+        this.y + this.height > pipe.y 
+        
+    }
 }
