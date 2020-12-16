@@ -6,7 +6,7 @@ class Pipe {
         this.color = color
         
         this.width = width
-        this.heigth = 40
+        this.height = 40
 
         this.vy = 1
     }
@@ -14,7 +14,7 @@ class Pipe {
     draw() {
         this.ctx.save()
         this.ctx.fillStyle = this.color
-        this.ctx.fillRect(this.x, this.y, this.width, this.heigth)
+        this.ctx.fillRect(this.x, this.y, this.width, this.height)
         this.ctx.restore()
     }
 

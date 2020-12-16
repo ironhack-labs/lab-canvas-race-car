@@ -9,6 +9,10 @@ class Game {
         this.drawInterval = undefined
         this.fps = 1000/60
 
+        this.scoreInterval = undefined
+        
+        
+
         this.background = new Background(this.ctx)
 
         this.car = new Car(this.ctx, (this.canvas.width/2) - 25, this.canvas.height - 150)
@@ -32,6 +36,33 @@ class Game {
                 }
             }, this.fps)
         }
+
+        this.scoreInterval = setTimeout(this.car.delayScore(), 16000)
+
+            delayScore() {
+                setInterval(()=> {
+                this.score += 10
+                }, 4000)
+            }
+    }
+
+
+    pause() {
+        clearInterval(this.drawInterval)
+
+        this.ctx.save()
+        this.ctx.fillStyle = 'black'
+        this.ctx.fillRect(100, 200, 300, 300)
+    
+        this.ctx.font = '26px Arial'
+        this.ctx.fillStyle = 'red'
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText(
+          'Game over!',
+          this.canvas.width / 2,
+          this.canvas.height / 2,
+        )
+        this.ctx.restore()
     }
 
     clear() {
@@ -44,6 +75,14 @@ class Game {
         this.background.draw()
         this.car.draw()
         this.pipes.forEach(pipe => pipe.draw()) 
+
+        this.ctx.save()
+        this.ctx.font = 'bold 18px Arial'
+        this.ctx.fillText(`SCORE`, 10, 660)
+        this.ctx.font = 'bold 18px Arial'
+        this.ctx.fillStyle = 'red'
+        this.ctx.fillText(`${this.score}`, 10, 680)
+        this.ctx.restore()
     }
 
     move() {
@@ -58,7 +97,6 @@ class Game {
 
     addPipes() { 
 
-        // first way do not work with collisions
         // random width
         let getRandomArbitrary = ((min, max) => {
             return Math.random() * (max - min) + min;
@@ -78,27 +116,11 @@ class Game {
         this.pipes.push(
             new Pipe(this.ctx, chooseX, -100, pipeWidth, 'brown')
             ) 
-        /*
-        const pipeS = new Pipe(this.ctx, 0, -100, 150, 'brown')
-        const pipeSR = new Pipe(this.ctx, this.canvas.width - 150, -100, 150, 'brown')
-
-        const pipeM = new Pipe(this.ctx, 0, -100, 250, 'brown')
-        const pipeMR = new Pipe(this.ctx, this.canvas.width - 250, -100, 250, 'brown')
-
-        const pipeL = new Pipe(this.ctx, 0, -100, 350, 'brown')
-        const pipeLR = new Pipe(this.ctx, this.canvas.width - 350, -100, 350, 'brown')
-        
-        const arrPipes = [pipeS, pipeSR, pipeM, pipeMR, pipeL, pipeLR]
-        let choosePipe = arrPipes[Math.floor(Math.random() * arrPipes.length)]
-
-        this.pipes.push(
-            choosePipe
-        ) */
     }
 
     checkCollitions() {
         if (this.pipes.some(pipe => this.car.collidesWith(pipe))) {
-            console.log('Game over')
+            this.pause()
         }
     }
 
