@@ -12,10 +12,12 @@ class Game {
     setInterval(() => {
       this.obstacleArray.push(new Obstacle(ctx))
     }, 1000)
+
+    this.points = 0
   }
       
 
-    start() {
+  start() {
     this.setListeners()
 
     this.interval = setInterval(() => {
@@ -36,44 +38,59 @@ class Game {
       }
 
     }, 1000 / 60)
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    this.obstacleArray = this.obstacleArray.filter(obstacle => obstacle.y <= this.ctx.canvas.height)
     }
 
-    clear() {
-      this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-      this.obstacleArray = this.obstacleArray.filter(obstacle => obstacle.y <= this.ctx.canvas.height)
-    }
+  draw() {
+    this.background.draw()
+    this.player.draw()
+    this.obstacleArray.forEach(obs => obs.draw())
 
-    draw() {
-      this.background.draw()
-      this.player.draw()
-      this.obstacleArray.forEach(obs => obs.draw())
-    }
+    this.ctx.save()
+      this.ctx.font = '20px Arial'
+      this.ctx.fillStyle = 'white'
+      this.ctx.fillText(`Score: ${this.points}`, 35, 30)
+    this.ctx.restore()
+  }
 
-    move() {
-      this.background.move()
-      this.player.move()
-      this.obstacleArray.forEach(obs => obs.move(this.obstacleArray.length))
-    }
+  move() {
+    this.background.move()
+    this.player.move()
+    this.obstacleArray.forEach(obs => obs.move(this.obstacleArray.length))
+  }
   
   pause() {
     clearInterval(this.interval)
 
     this.ctx.save()
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+
+    this.ctx.fillStyle = 'black'
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
 
-    this.ctx.font = '26px Arial'
+    this.ctx.font = '30px Arial'
     this.ctx.fillStyle = 'white'
     this.ctx.textAlign = 'center'
     this.ctx.fillText(
       'Game over!',
       this.ctx.canvas.width / 2,
-      this.ctx.canvas.height / 2,
+      this.ctx.canvas.height / 2 - 100,
     )
+    this.ctx.font = '25px Arial'
+    this.ctx.fillStyle = 'white'
+    this.ctx.fillText(
+      `Your final score ${this.points}`,
+      this.ctx.canvas.width / 2,
+      this.ctx.canvas.height / 2 
+    )
+    
     this.ctx.restore()
   }
 
-    setListeners() {
+  setListeners() {
     document.onkeydown = (event) => {
       switch(event.keyCode) {
         case RIGHT:
@@ -86,22 +103,23 @@ class Game {
     }
 
     document.onkeyup = (event) => {
-        if (event.keyCode) {
-            this.player.vx = 0
-        }
+      if (event.keyCode) {
+        this.player.vx = 0
       }
     }
+  }
   
   addObstacles() {
-    const minSpace = this.ctx.canvas.width - this.player.w * 4
+    const minSpace = this.ctx.canvas.width - this.player.w * 2
     const space = Math.floor(Math.random() * minSpace)
-      this.obstacleArray.push(
-        new Obstacle(
-          this.ctx,
-          this.ctx.canvas.width - space, 
-        )
+    this.obstacleArray.push(
+      new Obstacle(
+        this.ctx,
+        this.ctx.canvas.width - space, 
       )
-    } 
+    )
+    this.points +=1
+  } 
   
   checkCollisions() {
     if (this.obstacleArray.some(obstacle => this.player.collidesWith(obstacle))) {
