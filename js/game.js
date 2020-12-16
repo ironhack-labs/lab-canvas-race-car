@@ -6,7 +6,8 @@ class Game {
         this.car = new Car(this.ctx,this.width /2 ,this.height/2);
         this.board= new Board(this.ctx);
         this.drawInterval = undefined
-        this.fps = 1000 / 60
+        this.fps = 1000 / 120 
+        this.acceleration = 2
         this.obstacles = []
         this.obstDrawCount = 0
         this.sitCarWithobs = {
@@ -28,17 +29,18 @@ class Game {
               //muevo objetos
               this.move()
               // check collitions betwwen car and obstacles
-              this.checkCollisions();
+              
               // dibujo objetos
               this.draw()
               this.obstDrawCount++
-
+              // add obstacles  
               if (this.obstDrawCount % OBSTACLES_FRAMES === 0) {
                 this.addObstacle()
       
                 this.obstDrawCount = 0
               }
-  
+              //check collitions
+              this.checkCollisions();
             }, this.fps)
           }
         
@@ -49,6 +51,12 @@ class Game {
             this.board.draw();
             this.obstacles.forEach(obstacle => obstacle.draw())
             this.car.draw();
+            this.ctx.save();
+            this.ctx.font='36px Arial';
+            this.ctx.fillStyle ='white'
+            this.ctx.fillText(`Score: ${this.score}`, 75, 50);
+            this.ctx.restore();
+
          }
          clear() {
             this.ctx.clearRect(0, 0, this.width, this.height)
@@ -107,9 +115,8 @@ addObstacle (){
   const obsWidth = Math.floor(Math.random() * (maxWidth - minWidth)+ minWidth)
    
   let obsX = Math.floor(Math.random()*(widthRoad - obsWidth))
-  if (obsX < leftLimRoad) {
-    obsX =leftLimRoad;
-  }
+ 
+  obsX+=leftLimRoad;
   //const bottomWidth = Math.floor(Math.random() * (minSpace - topWidth))
   this.obstacles.push(
 
@@ -122,12 +129,12 @@ addObstacle (){
 checkCollisions() {
   // si obstaculo superado  suma 1
   // if there is collition pause the game
-  
   if(this.obstacles.some(obstacle => this.car.collidesWith(obstacle))) {
     this.pause()
   }
+  else {
   if(this.obstacles.some(obstacle => this.car.crossingObs(obstacle))){
-    console.log(`cruzando obstaculo`)
+  //  console.log(`cruzando obstaculo`)
     this.sitCarWithobs.crossing =true;
 
   this.sitCarWithobs.crossed = false;
@@ -135,38 +142,64 @@ checkCollisions() {
   }   else { 
     if (this.sitCarWithobs.crossing && !this.sitCarWithobs.crossed){
       this.sitCarWithobs.crossed =true;
-      console.log(`cruzo obstaculo`)
+    //  console.log(`cruzo obstaculo`)
       this.score++
-      console.log(this.score)
+      
+      if (this.score % 5 === 0){
+        this.fps*=this.acceleration;
+      }
+    //  console.log(this.score)
     } else {
       this.sitCarWithobs.crossed =false;
-      console.log(`no cruzo obstaculo`)
+     // console.log(`no cruzo obstaculo`)
     }
     
     this.sitCarWithobs.crossing =false;
 
   }
+}
+ 
+  
    
 }
 
 
 pause() {
+
+  this.paintScore();
   clearInterval(this.drawInterval)
-/*
+
+  
+  
+}
+
+paintScore(){
   this.ctx.save()
   this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
-  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.width)
+  this.ctx.fillRect(0, 0, this.width, this.height)
 
-  this.ctx.font = '26px Arial'
-  this.ctx.fillStyle = 'white'
+  this.ctx.font = '48px Arial'
+  this.ctx.fillStyle = 'red'
   this.ctx.textAlign = 'center'
   this.ctx.fillText(
     'Game over!',
-    this.canvas.width / 2,
-    this.canvas.height / 2,
+    (this.width / 2),
+    (this.height / 2) - 80,
   )
+  this.ctx.fillStyle = 'white'
+  this.ctx.fillText(
+    'Your final score',
+    this.width / 2,
+    this.height / 2,
+  )
+  this.ctx.fillText(
+    this.score,
+    this.width / 2,
+    (this.height / 2) + 80,
+  )
+
   this.ctx.restore()
-  */
+
 }
 // fin clase
 }

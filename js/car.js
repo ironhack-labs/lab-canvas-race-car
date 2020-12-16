@@ -71,7 +71,7 @@ onKeyEvent(event) {
 }
 
 collidesWith(element) {
-  // if the three conditions are true there is a collition
+  // if the four conditions are true there is a collition
  return this.x < element.x + element.width  // collition by right side
   &&  this.x + this.width > element.x              // collition by left side
   &&  this.y < element.y + element.height   // frontal collition
@@ -81,7 +81,7 @@ collidesWith(element) {
 }
 
 crossingObs(element){
-
+// detect if the car is crossing a bar by right or left side
   if ((  this.x < element.x + element.width  // collition by right side                true
     &&  !(this.x + this.width > element.x)              // collition by left side       
     &&  this.y < element.y + element.height   // frontal collition                      true 
