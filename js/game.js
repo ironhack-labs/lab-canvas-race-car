@@ -1,25 +1,24 @@
 class Game {
-    constructor(ctx) {
-      this.ctx = ctx
-      this.background = new Background(ctx)
-      this.player = new Player(ctx, 225, 550)
+  constructor(ctx) {
+    this.ctx = ctx
+    this.background = new Background(ctx)
+    this.player = new Player(ctx, 225, 550)
         
-      this.interval = undefined
+    this.interval = undefined
 
-      this.obstacleArray = []
-      this.obstacleDrawCount = 0
+    this.obstacleArray = []
+    this.obstacleDrawCount = 0
 
-      setInterval(() => {
-        this.obstacleArray.push(new Obstacle(ctx))
-      }, 1000)
+    setInterval(() => {
+      this.obstacleArray.push(new Obstacle(ctx))
+    }, 1000)
+  }
       
-      
-    }
 
     start() {
     this.setListeners()
 
-    this.inverval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.clear()
 
       this.draw()
@@ -55,6 +54,24 @@ class Game {
       this.player.move()
       this.obstacleArray.forEach(obs => obs.move(this.obstacleArray.length))
     }
+  
+  pause() {
+    clearInterval(this.interval)
+
+    this.ctx.save()
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+
+    this.ctx.font = '26px Arial'
+    this.ctx.fillStyle = 'white'
+    this.ctx.textAlign = 'center'
+    this.ctx.fillText(
+      'Game over!',
+      this.ctx.canvas.width / 2,
+      this.ctx.canvas.height / 2,
+    )
+    this.ctx.restore()
+  }
 
     setListeners() {
     document.onkeydown = (event) => {
@@ -87,8 +104,8 @@ class Game {
     } 
   
   checkCollisions() {
-    if(this.obstacleArray.some(obstacle => this.player.collidesWith(obstacle))) {
-      alert('Game Over')
+    if (this.obstacleArray.some(obstacle => this.player.collidesWith(obstacle))) {
+      this.pause()
     }
   }
 

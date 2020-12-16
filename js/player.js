@@ -33,9 +33,9 @@ class Player {
 
     collidesWith(element) {
     return this.x < element.x + element.width &&
-      this.x + this.size > element.x &&
+      this.x + this.w > element.x &&
       this.y < element.y + element.height &&
-      this.y + this.size > element.y
+      this.y + this.x > element.y
   }
 }
 
