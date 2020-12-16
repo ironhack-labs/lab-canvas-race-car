@@ -1,23 +1,23 @@
 class Road {
   constructor(ctx) {
-    this.ctx = ctx
+    this.ctx = ctx;
 
-    this.y = 0
-    this.vy = -1.5
+    this.y = 0;
+    this.vy = -4;
 
-    this.width = this.ctx.canvas.width
-    this.height = this.ctx.canvas.height
+    this.width = this.ctx.canvas.width;
+    this.height = this.ctx.canvas.height;
 
-    this.img = new Image()
-    this.img.src = 'images/road.png'
-    this.img.isReady = false
+    this.img = new Image();
+    this.img.src = 'images/road.png';
+    this.img.isReady = false;
     this.img.onload = () => {
-      this.img.isReady = true
-    }
+      this.img.isReady = true;
+    };
   }
 
   isReady() {
-    return this.img.isReady
+    return this.img.isReady;
   }
 
   draw() {
@@ -28,7 +28,7 @@ class Road {
         this.y,
         this.width,
         this.height
-      )
+      );
 
       this.ctx.drawImage(
         this.img,
@@ -36,7 +36,7 @@ class Road {
         this.y - this.height,
         this.width,
         this.height
-      )
+      );
     }
   }
 
@@ -44,7 +44,7 @@ class Road {
     this.y -= this.vy;
 
     if (this.y - this.height >= 0) {
-      this.y = 0
+      this.y = 0;
     }
   }
 }
