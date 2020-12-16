@@ -19,4 +19,4 @@ class Obstacle {
 
 }
 
-const Speed = 3
+const Speed = 5

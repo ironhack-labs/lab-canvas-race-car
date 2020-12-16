@@ -4,7 +4,7 @@ class Game {
         this.background = new Background(ctx)
 
         this.img = new Image()
-        this.img.src = '../images/car.png'
+        this.img.src = '/images/car.png'
 
         this.car = new Car(this.ctx, 210, 500, 70, 150, this.img)
         this.interval = undefined
