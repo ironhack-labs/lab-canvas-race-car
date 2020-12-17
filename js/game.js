@@ -8,17 +8,15 @@ class Game {
 
         this.drawInterval = undefined
         this.fps = 1000/60
-
-        this.scoreInterval = undefined
-        
-        
-
+    
         this.background = new Background(this.ctx)
 
         this.car = new Car(this.ctx, (this.canvas.width/2) - 25, this.canvas.height - 150)
 
         this.pipes = []
         this.drawCount = 0
+
+        this.points = 0
     }
 
     start() {
@@ -36,23 +34,14 @@ class Game {
                 }
             }, this.fps)
         }
-
-        this.scoreInterval = setTimeout(this.car.delayScore(), 16000)
-
-            delayScore() {
-                setInterval(()=> {
-                this.score += 10
-                }, 4000)
-            }
     }
-
 
     pause() {
         clearInterval(this.drawInterval)
 
         this.ctx.save()
         this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(100, 200, 300, 300)
+        this.ctx.fillRect(100, 270, 300, 200)
     
         this.ctx.font = '26px Arial'
         this.ctx.fillStyle = 'red'
@@ -62,6 +51,12 @@ class Game {
           this.canvas.width / 2,
           this.canvas.height / 2,
         )
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillText(
+            `Your final score: ${this.points}`,
+            this.canvas.width / 2,
+            this.canvas.height / 2 + 50,
+          )
         this.ctx.restore()
     }
 
@@ -77,11 +72,11 @@ class Game {
         this.pipes.forEach(pipe => pipe.draw()) 
 
         this.ctx.save()
-        this.ctx.font = 'bold 18px Arial'
-        this.ctx.fillText(`SCORE`, 10, 660)
+        this.ctx.font = 'bold 10px Arial'
+        this.ctx.fillText(`SCORE`, 2, 670)
         this.ctx.font = 'bold 18px Arial'
         this.ctx.fillStyle = 'red'
-        this.ctx.fillText(`${this.score}`, 10, 680)
+        this.ctx.fillText(`${this.points}`, 10, 690)
         this.ctx.restore()
     }
 
@@ -105,7 +100,6 @@ class Game {
         let pipeWidth = getRandomArbitrary(150, this.canvas.width - 150)
 
         // choose side or random middle
-
         const xRigth = 0
         let xLeft = this.canvas.width - pipeWidth
         let xRandom = getRandomArbitrary(150, this.canvas.width - 250)
@@ -122,6 +116,10 @@ class Game {
         if (this.pipes.some(pipe => this.car.collidesWith(pipe))) {
             this.pause()
         }
+
+        const score = this.pipes.filter(pipe => pipe.y === this.car.y + this.car.height + 1).forEach((pipe) => {
+            this.points += 10
+        })
     }
 
 }
