@@ -21,11 +21,6 @@ class Obstacle {
 
     move() {
         this.y -= this.vy;
-        // if (this.x >= 60 && this.x <= this.ctx.canvas.width ) {
-        //     this.x = this.minLeft;
-        // } else if (this.x >= this.maxRight) {
-        //     this.x = this.maxRight;
-        // }
     }
 
 }

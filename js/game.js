@@ -42,15 +42,20 @@ class Game {
         if (this.obstacleDrawCount % obstaclesFPS === 0) {
           this.addObtstacles();
           this.obstacleDrawCount = 0;
+
+          // Increase Level
+          // if (parseInt(this.score.innerHTML) >= 1) {
+          //   this.increaseLevel();
+          // } 
         }
 
       }, this.fps);
     }
   }
 
-  pause() {
-    clearInterval(this.interval);
-  }
+  // pause() {
+  //   clearInterval(this.interval);
+  // }
 
   gaveOver() {
     clearInterval(this.interval);
@@ -113,9 +118,9 @@ class Game {
       if (event.keyCode === LEFT) {
         this.car.vx = -7;
       };
-      if (event.keyCode === SPACE) {
-        this.pause();
-      }
+      // if (event.keyCode === SPACE) {
+      //   this.pause();
+      // }
     }
 
     document.onkeyup = event => {
@@ -146,11 +151,17 @@ class Game {
       this.sounds.point.play();
     };
     this.score.innerHTML = avoidedObstacles.length;
+
+    this.obstacles.map(obstacle => {
+      if (obstacle.y > this.car.y + this.car.heigth) {
+        this.obstacles.splice(0,1);
+      }
+    });
   }
 
   // increaseLevel() {
-  //   this.addObtstacles();
-  //   this.obs
+  //     this.obstacle.vy *= 2;
+  //     this.road.vy *= 2;
   // }
 }
 

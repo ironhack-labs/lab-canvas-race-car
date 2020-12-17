@@ -46,38 +46,20 @@ class Car {
     }
 
     collidesWith(element) {
-        // Coche a la derecha de obstáculo
-        if (this.x > element.x + element.width ) {
-            console.log('Derecha!')
-            console.log(this.y, this.x, element.y, element.x) // TEST
-            
-            return this.y <= element.y + element.height &&
-                   this.x >= element.x + element.width;
-        } 
+        let frontalCoche = this.y;
+        let ladoDerechoCoche = this.x + this.width;
+        let ladoIzquierdoCoche = this.x
+        let largoCoche = this.y + this.height;
 
-        // Coche a la izquierza de obstáculo
-        if (this.x + this.width < element.x) {
-            console.log('Izquierda!')
-            console.log(this.y, this.x, element.y, element.x) // TEST
+        let ladoInferiorObs = element.y + element.height;
+        let lateralDerechoObs = element.x + element.width;
+        let lateralIzquierdoObs = element.x;
+        let altoObstaculo = element.y;
 
-            return this.y <= element.y + element.height &&
-                   this.x + this.width > element.x;   
-        }
-
-        // if (element.x > (this.x + this.width) && (this.x + this.width) < (element.x + element.width)) {
-        //     return this.y <= element.y + element.height
-        // }
-
-    // return this.y <= element.y + element.height && // colisión frontal - ok
-    //        this.x -  > element.x + element.width ||
-    //        this.x + this.width > element.x
-
-
-    // this.x > element.x + element.width &&
-    //            //this.x < element.x + element.width &&
-    //           
-    //     // return this.x + this.size < element.x // No hace nada con el operador a ambos lados
-    //     // return this.y + this.size < element.y // No hace nada con el operador a ambos lados
+        return frontalCoche <= ladoInferiorObs && // Frontal
+               ladoDerechoCoche >= lateralIzquierdoObs && // Choque derecho coche
+               ladoIzquierdoCoche <= lateralDerechoObs &&// Choque izquierdo coche
+               altoObstaculo < largoCoche; // El obstáculo está por detrás del coche  
     }
 
 }
