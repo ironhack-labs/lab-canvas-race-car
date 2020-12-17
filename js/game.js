@@ -1,4 +1,4 @@
-const obstaclesFPS = 120;
+let obstaclesFPS = 120;
 
 class Game {
   constructor(ctx) {
@@ -44,9 +44,9 @@ class Game {
           this.obstacleDrawCount = 0;
 
           // Increase Level
-          // if (parseInt(this.score.innerHTML) >= 1) {
-          //   this.increaseLevel();
-          // } 
+            // if (parseInt(this.score.innerHTML) <= 100) {
+            //   this.increaseLevel();    
+            // } 
         }
 
       }, this.fps);
@@ -131,7 +131,7 @@ class Game {
   }
 
   addObtstacles() {
-    const obstacleWidth = Math.floor(Math.random() * (this.ctx.canvas.width - this.car.width * 4)) //+ this.car.width * 2.5;
+    const obstacleWidth = Math.floor(Math.random() * (this.ctx.canvas.width - this.car.width * 4)) + this.car.width * 2.5;
 
     const obstaclePosition = Math.floor(Math.random() * (this.maxRight - this.minLeft)) + this.minLeft;
 
@@ -151,17 +151,12 @@ class Game {
       this.sounds.point.play();
     };
     this.score.innerHTML = avoidedObstacles.length;
-
-    this.obstacles.map(obstacle => {
-      if (obstacle.y > this.car.y + this.car.heigth) {
-        this.obstacles.splice(0,1);
-      }
-    });
   }
 
   // increaseLevel() {
-  //     this.obstacle.vy *= 2;
-  //     this.road.vy *= 2;
+  //   this.obstacles.map(obstacle => {
+  //     obstaclesFPS -= 2;
+  //   });
   // }
 }
 
