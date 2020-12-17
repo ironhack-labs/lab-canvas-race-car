@@ -3,7 +3,7 @@ class Car{
         this.ctx = ctx
 
         this.x = 225
-        this.y = 550
+        this.y = 470
         this.w = 60
         this.h = 100
 
@@ -33,6 +33,15 @@ class Car{
             this.vx = 0
         }
     }  
+    colision(col) {
+        return this.x < col.x + col.width &&
+            this.x + this.w > col.x &&
+            this.y < col.y + col.height &&
+            this.y + this.x > col.y
+    }
+
+    
+
 
     }
 

@@ -7,7 +7,7 @@ class Obstacles{
         this.height = 40;
        
         
-        this.vy = 1;
+        this.vy = 2;
     }
 
     draw(){
