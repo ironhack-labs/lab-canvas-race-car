@@ -8,7 +8,7 @@ class Car {
         this.h = 120
 
         this.vx = 0
-        this.speed = 2
+        //this.speed = 2
 
         this.movements = {
             up: false,

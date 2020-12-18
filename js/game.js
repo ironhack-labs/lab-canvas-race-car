@@ -16,7 +16,7 @@ class Game {
         this.draw()
         
         this.move()
-      }, 1000 / 240)
+      }, 1000 / 80)
     }
   
     clear() {
@@ -30,5 +30,6 @@ class Game {
   
     move() {
       this.background.move()
+      //this.car.move()
     }
   }
