@@ -4,19 +4,22 @@ class Game {
       this.ctx = ctx
       this.background = new Background(ctx)
   
-      this.interval = undefined
+      this.drawInterval = undefined
+      this.fps = 1000/60
 
       this.car = new Car(ctx)
     }
   
     start() {
-      this.inverval = setInterval(() => {
-        this.clear()
-  
-        this.draw()
-        
-        this.move()
-      }, 1000 / 80)
+      if (!this.drawInterval){
+        this.drawInterval = setInterval(() => {
+          this.clear()
+          
+          this.move()
+          
+          this.draw()
+        }, this.fps)
+      }
     }
   
     clear() {
@@ -29,7 +32,11 @@ class Game {
     }
   
     move() {
+      this.car.move()
       this.background.move()
-      //this.car.move()
+    }
+
+    onKeyEvent(event){
+      this.car.onKeyEvent(event)
     }
   }

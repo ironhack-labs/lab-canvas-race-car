@@ -8,6 +8,14 @@ window.onload = () => {
     startGame();
   };
 
+  document.addEventListener('keydown', (event) =>{
+    game.onKeyEvent(event)
+  })
+  
+  document.addEventListener('keyup', (event) =>{
+    game.onKeyEvent(event)
+  })
+
   function startGame() {
     game.start()
   }
