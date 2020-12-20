@@ -10,7 +10,8 @@ class Game {
 
       this.car = new Car(ctx)
 
-      this.obstacles = []
+      this.obstacles = [
+      ]
       this.drawCount = 0
     }
   
@@ -57,11 +58,14 @@ class Game {
     }
 
     addObstacle(){
-      const obsWidth =
-      //const obsPos = 
+      const obstacleMaxWidth = this.ctx.canvas.width - this.car.w * 1.5
+
+      const randomWidth = Math.floor(Math.random() * obstacleMaxWidth)
+      
+      const randomX = Math.floor(Math.random() * (this.ctx.canvas.width - randomWidth))
 
       this.obstacles.push(
-        new Obstacle(this.ctx, 50, 0, obsWidth)
+        new Obstacle (this.ctx, randomX, 0, randomWidth)
       )
-   }
+    }
 }
