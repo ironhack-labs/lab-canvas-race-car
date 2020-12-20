@@ -7,7 +7,7 @@ class Car {
         this.w = 72
         this.h = 120
 
-        this.speed = 4
+        this.speed = 6
         this.vx = 0
 
         this.movements = {
@@ -62,6 +62,10 @@ class Car {
           this.movements.left = status
           break;
       }
+    }
+
+    crash(obstacle){
+      return this.y <= obstacle.y + obstacle.height //working on it...
     }
 }
 

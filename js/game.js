@@ -23,6 +23,8 @@ class Game {
           this.move()
           
           this.draw()
+
+          this.checkCrash()
           
           this.drawCount++
 
@@ -33,6 +35,10 @@ class Game {
 
         }, this.fps)
       }
+    }
+
+    finish(){
+      clearInterval(this.drawInterval)
     }
   
     clear() {
@@ -67,5 +73,11 @@ class Game {
       this.obstacles.push(
         new Obstacle (this.ctx, randomX, 0, randomWidth)
       )
+    }
+
+    checkCrash(){
+      if(this.obstacles.some(obstacle => this.car.crash(obstacle))){
+        this.finish()
+      }
     }
 }
