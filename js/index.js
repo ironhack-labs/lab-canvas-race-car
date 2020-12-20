@@ -1,7 +1,19 @@
 window.onload = () => {
+
+  const game = new Game('canvas')
   document.getElementById('start-button').onclick = () => {
-    startGame();
+   
+    game.start();
+  }
   };
 
-  function startGame() {}
-};
+ /* function start() {
+
+      this.interval = setInterval(() => {
+        this.clear()
+        this.draw()
+        this.move()
+      }, this.fps)
+    }
+  
+};*/
