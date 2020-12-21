@@ -64,7 +64,7 @@ class Game {
     }
 
     addObstacle(){
-      const obstacleMaxWidth = this.ctx.canvas.width - this.car.w * 1.5
+      const obstacleMaxWidth = this.ctx.canvas.width - this.car.w * 2
 
       const randomWidth = Math.floor(Math.random() * obstacleMaxWidth)
       

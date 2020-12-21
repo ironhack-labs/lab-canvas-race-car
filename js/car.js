@@ -2,7 +2,7 @@ class Car {
     constructor(ctx) {
         this.ctx = ctx
         this.x = 214
-        this.y = 650
+        this.y = 550
         
         this.w = 72
         this.h = 120
@@ -65,7 +65,11 @@ class Car {
     }
 
     crash(obstacle){
-      return this.y <= obstacle.y + obstacle.height //working on it...
+      if(obstacle.y <= this.y + this.w){
+        return this.y <= obstacle.y + obstacle.height &&
+        this.x <= obstacle.x + obstacle.width &&
+        this.x + this.w >= obstacle.x
+      }
     }
 }
 
