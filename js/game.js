@@ -10,9 +10,11 @@ class Game {
 
       this.car = new Car(ctx)
 
-      this.obstacles = [
-      ]
+      this.obstacles = []
       this.drawCount = 0
+
+      this.score = 0
+
     }
   
     start() {
@@ -39,18 +41,36 @@ class Game {
 
     finish(){
       clearInterval(this.drawInterval)
+      this.ctx.save()
+      this.ctx.fillStyle = 'rgba(135, 0, 7, 0.4)'
+      this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height-50)
+      this.ctx.textAlign = 'center'
+      this.ctx.font = '40px Arial'
+      this.ctx.fillStyle = 'white'
+      this.ctx.fillText('Si bebes no conduzcas!!', this.ctx.canvas.width/2, this.ctx.canvas.height/2)
+      this.ctx.restore()
     }
   
     clear() {
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
 
-      this.obstacles = this.obstacles.filter(obstacle => obstacle.y <= 800)
+      this.obstacles = this.obstacles.filter(obstacle => obstacle.y <= this.ctx.canvas.height -50)
+
     }
   
     draw() {
       this.background.draw();
       this.car.draw()
       this.obstacles.forEach(obstacle => obstacle.draw())
+
+      this.ctx.save()
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4'
+      this.ctx.fillRect(0, this.ctx.canvas.height-50, this.ctx.canvas.width, 50)
+      this.ctx.textAlign = 'center'
+      this.ctx.font = '25px Arial'
+      this.ctx.fillStyle = 'white'
+      this.ctx.fillText(`Score: ${this.score}`, this.ctx.canvas.width/2, this.ctx.canvas.height-20)
+      this.ctx.restore()
     }
   
     move() {
@@ -73,6 +93,10 @@ class Game {
       this.obstacles.push(
         new Obstacle (this.ctx, randomX, 0, randomWidth)
       )
+      
+        this.score = this.score + Math.round(randomWidth/10)
+        //here the score depends on the witdh of the obstacles, but would like to be scored
+        //when the obstacle it's passed or eliminated...
     }
 
     checkCrash(){
