@@ -1,12 +1,13 @@
 
 class Obstacle{
-    constructor (ctx, x, y, width){
+    constructor (ctx, x, y, width, score){
         this.ctx = ctx
         this.x = x
         this.y = y
         
         this.height = 20
         this.width = width
+        this.score = score
 
         this.vy = 2
     }
@@ -22,3 +23,4 @@ class Obstacle{
         this.y += this.vy
     }
 }
+

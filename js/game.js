@@ -52,10 +52,15 @@ class Game {
     }
   
     clear() {
+      if (typeof this.obstacles[0] !== 'undefined') {
+        let height = this.ctx.canvas.height - 50
+        if(this.obstacles[0].y >= height) {
+        this.score = this.score + this.obstacles[0].score
+        } //======== score based on the obstacles width ========
+      }
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-
+    
       this.obstacles = this.obstacles.filter(obstacle => obstacle.y <= this.ctx.canvas.height -50)
-
     }
   
     draw() {
@@ -90,11 +95,13 @@ class Game {
       
       const randomX = Math.floor(Math.random() * (this.ctx.canvas.width - randomWidth))
 
+      const score_obstacle = Math.round(randomWidth/10)
+      
       this.obstacles.push(
-        new Obstacle (this.ctx, randomX, 0, randomWidth)
+        new Obstacle (this.ctx, randomX, 0, randomWidth, score_obstacle)
       )
       
-        this.score = this.score + Math.round(randomWidth/10)
+        //this.score = this.score + Math.round(randomWidth/10)
         //here the score depends on the witdh of the obstacles, but would like to be scored
         //when the obstacle it's passed or eliminated...
     }
