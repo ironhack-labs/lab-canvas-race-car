@@ -10,7 +10,7 @@ window.onload = () => {
 
 
  const drawingApp = {
-   name: 'Car race app',
+   name: 'marioKart race app',
    description: 'Canvas app for basic shapes drawing',
    version: '1.0.0',
    license: undefined,
@@ -19,15 +19,20 @@ window.onload = () => {
    ctx: undefined,
    frames: 0,
    car: undefined,
+   gameOver: undefined,
+   score: undefined,
    obstacle: undefined,
    keys: {
-     left: 37,
-     right: 39
+     left: 'ArrowLeft',
+     right: 'ArrowRight'
    },
    canvasSize: {
      w: undefined,
      h: undefined
     },
+    
+
+    //// INICIALIZAR Y CREAR DIMENSIONES DE MI CANVAS ////
 
     init(id) {
       this.canvasTag = document.getElementById(id)
@@ -35,7 +40,8 @@ window.onload = () => {
       this.setDimensions()
       this.createCar()
       this.drawAll()
-      this.setEventListeners()  
+      this.setEventListeners() 
+      this.createGameOver()
      },
 
     setDimensions() {
@@ -46,7 +52,10 @@ window.onload = () => {
      },
 
 
-    drawRectangle() {
+
+     // PISTA DE CARRERAS //
+
+    drawRoad() {
       this.ctx.fillStyle = 'green'
       this.ctx.fillRect(0,0, this.canvasSize.w, this.canvasSize.h)
       this.ctx.fillStyle = 'grey'
@@ -80,27 +89,41 @@ window.onload = () => {
       this.ctx.stroke()
     },
 
-    createCar() {
-      this.car = new Car (this.ctx, 150, 550, 100, 100, 'mariokart.png')
-    },
+
+
+   ///// CREO CARRO DE CARRERAS Y FUNCIÓN DE SUS BOTONES /////
+
+  createCar() {
+    this.car = new Car (this.ctx, 150, 550, 100, 100, 'mariokart.png')
+  },
 
   setEventListeners() {
-      document.onkeydown = e => {
-          e.key === this.keys.left ? this.car.move('left') : null
-          e.key === this.keys.right ? this.car.move('right') : null
+    document.onkeydown = e => {
+
+      if (e.key === this.keys.left){
+        this.car.move('left')
       }
+      if (e.key === this.keys.right) {
+        this.car.move('right')
+      }
+    }
   },
+
+
+  
+  //// BORRAR Y CREAR EN "x" TIEMPO OBTASCULOS,PISTA Y CARRO DE CARRERAS ////
 
   drawAll() {
       setInterval(() => {
           this.frames++
           this.frames % 70 === 0 ? this.createObstacle() : null
           this.clearScreen()
-          this.drawRectangle()
+          this.drawRoad()
           this.drawDashedLines()
           this.drawContinuousLines()
           this.car.draw()
           this.obstacle.drawObst()
+          this.totalScore() //REVISAR---------------------------------------------
       }, 70)
   },
 
@@ -108,13 +131,58 @@ window.onload = () => {
       this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
   },
 
+
+
+
+  //// CREO MÉTODO PARA TENER LOS OBSTACULOS ALEATORIAMENTE ////
+
   createObstacle(){
-    let tamX=Math.random () * (60 - 20) + 10, 
-      x=Math.random () * ((this.canvasSize.w -100-tamX) - 50) + 50
-    this.obstacle = new Obstacle (this.ctx, x, 0, tamX, 20)
-  }
+    let differentSizeObstacle=Math.random () * (150 - 20) + 50, 
+      x=Math.random () * ((this.canvasSize.w -100-differentSizeObstacle) - 50) + 50
+    this.obstacle = new Obstacle (this.ctx, x, 0, differentSizeObstacle, 20)
+  },
+
+
+
+   //// CREO MÉTODO PARA QUE HAYA COALICIÓN ENTRE CARRO DE CARRERAS Y  OBSTÁCULOS ////
+
+   collision(){ //REVISAR---------------------------------------------
+    if (this.obstaclePos.x < this.carPos.x + this.carPos.w &&
+      this.obstaclePos.x + this.obstaclePos.w > this.carPos.x &&
+      this.obstaclePos.y < this.carPos.y + this.carPos.h &&
+      this.obstaclePos.h + this.obstaclePos.y > this.carPos.y){
+        this.gameOver.draw(this.carPos.x,this.carPos.y)
+        return true
+      }
+    return false
+  },
   
+
+  //// CREO MI GAMEOVER ////
+
+  createGameOver() {
+    this.gameOver = new GameOver (this.ctx, 150, 550, 100, 100, 'gameover.png')
+  },
+
+  totalScore(){ //REVISAR---------------------------------------------
+    //texto CON SCORE
+    writeText(score)
+    score += 1
+    if (collision())
+    //Texto game over, pantalla negro
+      score = 0
+  },
+
+  writeText(text) {
+    this.ctx.font = '50px sans-serif'
+    this.ctx.fillText(text, 100, 100, 300)
+ }
 }
+
+
+
+
+//// CREO-DEFINO MI CARRO DE CARRERAS ////
 
 class Car{
    constructor(ctx, carPosX, carPosY, carWidth, carHeight, carImage) {
@@ -143,12 +211,14 @@ class Car{
     }
 
     move(dir) {
-        dir === 'left' ? this.carPos.x -= 20 : null
-        dir === 'right' ? this.carPos.x += 20 : null
+        dir === 'left' && this.carPos.x > 50 ? this.carPos.x -= 20 : null
+        dir === 'right' && this.carPos.x < (450-this.carSize.w) ? this.carPos.x += 20 : null
     }
 
  }
 
+
+ //// CREO-DEFINO MIS OBSTÁCULOS /////
 
  class Obstacle{
   constructor(ctx, obstaclePosX, obstaclePosY, obstacleWidth, obstacleHeight) {
@@ -166,13 +236,43 @@ class Car{
 
    drawObst() {
      this.move()
-     this.ctx.fillStyle = 'red'
+     this.ctx.fillStyle = 'yellow'
      this.ctx.fillRect(this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
     }
 
    move() {
-     this.obstaclePos.y += 20
+     this.obstaclePos.y += 30
    }
 
 }
 
+
+
+ //// CREO-DEFINO MI GAMEOVER /////
+
+ class GameOver{
+  constructor(ctx, gameOverPosX, gameOverPosY, gameOverWidth, gameOverHeight, gameOverImage) {
+    this.ctx = ctx
+
+    this.Pos = {
+        x: gameOverPosX,
+        y: gameOverPosY
+    }
+    this.carSize = {
+        w: gameOverWidth,
+        h: gameOverHeight
+    }
+    this.imageName = gameOverImage
+    this.gameOverInstance = undefined
+    this.init()
+}
+
+   init() {
+    this.gameOverInstance = new Image()
+    this.gameOverInstance.src = 'images/gameover.png'
+}
+
+  draw(ejeX,ejeY) {
+    this.ctx.drawImage(this.gameOverInstance, ejeX, ejeY, this.gameOverSize.w, this.gameOverSize.h)
+  }
+}
