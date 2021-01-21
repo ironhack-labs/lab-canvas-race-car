@@ -1,6 +1,9 @@
 window.onload = () => {
-    document.getElementById('start-button').onclick = () => {
+    const startButton = document.getElementById('start-button')
+
+    startButton.onclick = () => {
         startGame();
+        startButton.setAttribute('disabled', 'true')
     };
     document.getElementById('restart-button').onclick = () => {
         restartGame();

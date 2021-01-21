@@ -33,7 +33,6 @@ const carApp = {
 
     renderGame() {
         this.createCar()
-            //this.createObstacle()
         this.intervalID = setInterval(() => {
             this.clearScreen
             this.setBackgroundImg()
