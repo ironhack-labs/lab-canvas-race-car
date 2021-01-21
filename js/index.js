@@ -81,13 +81,13 @@ window.onload = () => {
     },
 
     createCar() {
-      this.car = new Car (this.ctx, 150, 550, 100, 100, 'car.png')
+      this.car = new Car (this.ctx, 150, 550, 100, 100, 'mario-kart.png')
     },
 
   setEventListeners() {
       document.onkeydown = e => {
-          e.keyCode === this.keys.left ? this.car.move('left') : null
-          e.keyCode === this.keys.right ? this.car.move('right') : null
+          e.key === this.keys.left ? this.car.move('left') : null
+          e.key === this.keys.right ? this.car.move('right') : null
       }
   },
 
@@ -135,7 +135,7 @@ class Car{
 
     init() {
         this.carInstance = new Image()
-        this.carInstance.src = 'images/car.png'
+        this.carInstance.src = 'images/mario-kart.png'
     }
 
     draw() {
