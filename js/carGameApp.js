@@ -16,6 +16,7 @@ const carApp = {
         left: 'ArrowLeft',
         right: 'ArrowRight'
     },
+    frames: 0,
 
     init(id) {
         this.canvasDom = document.getElementById(`${id}`)
@@ -35,7 +36,14 @@ const carApp = {
             this.clearScreen
             this.setBackgroundImg()
             this.car.drawCar()
-            this.obstacles.forEach(elm => elm.drawObstacle())
+            this.obstacles.forEach(elm => {
+                elm.drawObstacle()
+                elm.moveObstacle()
+            })
+            this.frames++
+                if (this.frames % 10 === 0) {
+                    this.createObstacle()
+                }
         }, 500)
     },
 
@@ -70,7 +78,7 @@ const carApp = {
     },
 
     createObstacle() {
-        this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, 0, this.car.getCarWidth()))
+        this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.car.getCarWidth()))
     }
 
 }
