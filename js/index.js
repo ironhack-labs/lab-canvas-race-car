@@ -81,7 +81,7 @@ window.onload = () => {
     },
 
     createCar() {
-      this.car = new Car (this.ctx, 150, 550, 100, 100, 'mario-kart.png')
+      this.car = new Car (this.ctx, 150, 550, 100, 100, 'mariokart.png')
     },
 
   setEventListeners() {
@@ -135,7 +135,7 @@ class Car{
 
     init() {
         this.carInstance = new Image()
-        this.carInstance.src = 'images/mario-kart.png'
+        this.carInstance.src = 'images/mariokart.png'
     }
 
     draw() {
