@@ -1,18 +1,54 @@
-const drawRoad = {
+const carGame = {
     ctx: undefined,
     /** @type {CanvasRenderingContext2D} */
-
     canvasDOM: undefined,
     canvasSize: {
         w: 500,
         h: 700
     },
+    car: undefined,
 
     init() {
         this.canvasDOM = document.querySelector('canvas')
-        console.log(this.canvasDOM)
         this.ctx = this.canvasDOM.getContext('2d')
-        console.log(this.ctx)
+
+        mainRoad.ctx = this.ctx
+        mainRoad.canvasDOM = this.canvasDOM
+        mainRoad.init()
+
+        this.createCar()
+        this.drawAll()
+        
+    },
+
+    createCar() {
+        this.car = new Car (this.ctx, this.canvasSize, this.canvasSize.w / 2 -35, this.canvasSize.h - 160, 70, 140)
+    },
+
+    drawAll() {
+        setInterval(() => {
+            this.clearScreen()
+            mainRoad.init()                   //para que salga la carretera cada vez que se limpia
+            this.car.drawCar()
+        }, 17)
+    },
+
+    clearScreen() {
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+    }
+
+    
+}
+
+/*----Drawing Main Road----*/
+
+const mainRoad = {
+    ctx: undefined,
+    canvasDOM: undefined,
+    canvasSize: carGame.canvasSize,
+
+
+    init() {
         this.drawRoadSides()
         this.drawMainRoad()
         this.drawCentralLine()
@@ -43,5 +79,31 @@ const drawRoad = {
         this.ctx.lineWidth = 10
         this.ctx.stroke()
     }
+    
+}
+
+class Car {
+    constructor(ctx, canvasSize, posX, posY, width, heigth) {
+
+        this.ctx = ctx
+        this.canvasSize = canvasSize
+        this.carPos = {
+            x: posX,
+            y: posY
+        }
+        this.carSize = {
+            w: width,
+            h: heigth
+        }
+        this.imageName = 'car.png'
+        this.imageInstance = new Image()
+        this.imageInstance.src = `images/${this.imageName}`
+
+    }
+
+    drawCar() {
+        this.ctx.drawImage(this.imageInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+    }
+
     
 }

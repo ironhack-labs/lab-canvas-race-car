@@ -5,4 +5,7 @@ window.onload = () => {
 
   function startGame() {}
 };
-drawRoad.init()
+
+carGame.init()
+
+
