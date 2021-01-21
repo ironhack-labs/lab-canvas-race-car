@@ -13,6 +13,8 @@ const carGame = {
         right: 'ArrowRight'
     },
     blocks: [],
+    frames: 0,
+    randomIndex: undefined,
     
 
     init() {
@@ -27,13 +29,12 @@ const carGame = {
 
         this.createCar()
         this.drawAll()
-        this.createBlock()
-        console.log(this.block1)
+        this.createBlocks()
         
     },
 
     setEventListeners() {
-        document.onkeyup = e => {
+        document.onkeydown = e => {
             if (e.key === this.keys.left) {
                 this.car.move(-30)
             }
@@ -47,28 +48,78 @@ const carGame = {
         this.car = new Car (this.ctx, this.canvasSize, this.canvasSize.w / 2 -35, this.canvasSize.h - 160, 70, 140)
     },
 
-    createBlock() {
+    createBlocks() {
         const block1 = new Block (this.ctx, this.canvasSize, 60, 0, 150, 30)
-        const block2 = new Block (this.ctx, this.canvasSize, 60, 40, 250, 30)
-        const block3 = new Block (this.ctx, this.canvasSize, 190, 80, 250, 30)
-        const block4 = new Block (this.ctx, this.canvasSize, 290, 120, 150, 30)
-        const block5 = new Block (this.ctx, this.canvasSize, this.canvasSize.w / 2 -50, 160, 100, 30)
+        
 
-        this.blocks.push(block1, block2, block3, block4, block5)
+        this.blocks.push(block1)
+
+    },
+
+    obstacleRandomnessX(){
+        const randomXPosArr = []
+        for (let i = 60; i <= 290; i++){
+            randomXPosArr.push(i)
+        }
+        return randomXPosArr
+    },
+
+    obstacleRandomnessW(){
+        const randomWArr = []
+        for (let i = 150; i <= 250; i++){
+            randomWArr.push(i)
+        }
+        return randomWArr
+    },
+
+    
+    createObstacle() {
+        
+        const block = new Block (this.ctx, this.canvasSize, this.obstacleRandomnessX()[Math.floor(Math.random()*this.obstacleRandomnessX().length)], 0, this.obstacleRandomnessW()[Math.floor(Math.random()*this.obstacleRandomnessW().length)], 30)
+        this.blocks.push(block)
+   
+    },
+
+    removeObstacle() {
+        this.blocks.shift()
     },
 
     drawAll() {
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.clearScreen()
             mainRoad.init()                   //para que salga la carretera cada vez que se limpia
             this.car.drawCar()
-            this.blocks.forEach(elm => elm.drawBlock())
-        }, 17)
+            this.frames++
+            if (this.frames % 90 === 0) {
+                this.createObstacle()
+                this.removeObstacle()
+            }
+            this.blocks.forEach(elm => elm.drawBlock())  
+            
+            this.blocks.forEach(elm => {
+                if (elm.blockPos.x + elm.blockSize.w > this.car.carPos.x && this.car.carPos.x + this.car.carSize.w > elm.blockPos.x && elm.blockPos.y + elm.blockSize.h > this.car.carPos.y){
+                    clearInterval(intervalId)
+                    this.gameOversquare()                   
+                }
+            })
+        }, 34)
     },
 
     clearScreen() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+    },
+
+    gameOversquare() {
+        this.ctx.fillStyle = "black"
+        this.ctx.fillRect(this.canvasSize.w / 2 - 150, this.canvasSize.h / 2 - 150, 300, 300)
+        this.ctx.fillStyle = "white"
+        this.ctx.font = '30px sans-serif'
+        this.ctx.fillText('Game Over', this.canvasSize.w / 2 - 80, this.canvasSize.h / 2 - 50, 300)
     }
+    
+
+     
+    
 
     
 }
@@ -115,6 +166,8 @@ const mainRoad = {
     
 }
 
+
+/*----CAR----*/
 class Car {
     constructor(ctx, canvasSize, posX, posY, width, heigth) {
 
@@ -143,6 +196,8 @@ class Car {
     }    
 }
 
+
+/*----BLOCKS----*/
 class Block {
     constructor(ctx, canvasSize, posX, posY, width, heigth) {
 
@@ -160,5 +215,10 @@ class Block {
     drawBlock() {
         this.ctx.fillStyle = 'red'
         this.ctx.fillRect(this.blockPos.x, this.blockPos.y, this.blockSize.w, this.blockSize.h)
+        this.move()
+    }
+
+    move() {
+        this.blockPos.y += 8
     }
 }

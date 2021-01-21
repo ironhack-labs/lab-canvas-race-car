@@ -3,9 +3,11 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    carGame.init()
+  }
 };
 
-carGame.init()
+
 
 
