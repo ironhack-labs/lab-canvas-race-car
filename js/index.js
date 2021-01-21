@@ -13,19 +13,42 @@ window.onload = () => {
     /** @type {CanvasRenderingContext2D} */
     ctx: undefined,
     canvasDOM: undefined,
+    car: undefined,
+    obstacles: [],
+    frames: 0,
     canvasSize: {
         w: undefined,
         h: undefined
     },
+    keys: {
+      left: `ArrowLeft`,
+      right: `ArrowRight`
+    },
+    
 
 
     init(id) {
       this.canvasDOM = document.querySelector(`#${id}`)
       console.log(this.canvasDOM)
       this.ctx = this.canvasDOM.getContext('2d')
-      this.setDimensions()
       
+// ------------------------------------------------------------------------      
+ 
     },
+
+    setEventListeners() {
+      document.onkeyup = e => {
+        if (e.key === this.keys.left) {
+          this.car.move(-5)
+        }
+        if (e.key === this.keys.right) {
+          this.car.move(5)
+        }
+      }
+    },
+
+
+
     setDimensions() {
       this.canvasSize = {
         w: 500,
@@ -55,13 +78,102 @@ window.onload = () => {
       this.ctx.lineWidth = 10
       this.ctx.strokeStyle = `#ffffff`
       this.ctx.setLineDash([40, 40])
-      this.ctx.moveTo(this.canvasSize.w / 2, 0)
+      this.ctx.moveTo(this.canvasSize.w / 2 - 5, 0)
       this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
       this.ctx.stroke()      
+    },
+
+    createCar() {
+      this.car = new Car(this.ctx, this.canvasSize, this.canvasSize.w / 2 - 25, this.canvasSize.h - 150, 50, 100)
+    },
+
+    drawAll() {
+      console.log(this.car)
+      setInterval(() => {
+        this.clearScreen()
+        this.drawFilledRectangle()
+        this.drawLine()
+        this.car.draw()
+        this.obstacles.forEach(elem => elem.draw())
+        this.frames++
+        this.frames % 40 === 0 ? this.createObstacle() : null
+        
+      }, 70)
+    },
+
+    clearScreen() {
+      this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.w)
+    },
+
+    createObstacle() {
+      const obstacle1 = new Obstacle(this.ctx, this.canvasSize, 80, 0, Math.floor(Math.random() * (250 - 80)) + 80, 20, 6)
+      const obstacle2= new Obstacle(this.ctx, this.canvasSize, this.canvasSize.w - 180, 0, 100, 20, 8)
+      this.obstacles.push(obstacle1, obstacle2)
     }
+
 }
 
 
+
+
+
+
+
+class Car {
+
+  constructor(ctx, canvasSize, posX, posY, width, height,) {
+    this.ctx = ctx
+    this.canvasSize = canvasSize
+    this.carPos = {
+      x: posX,
+      y: posY
+    }
+    this.carSize = {
+      w: width,
+      h: height
+    }
+
+    this.imageName = 'car.png'
+    this.imageInstance = new Image()
+    this.imageInstance.src = `images/${this.imageName}`
+  }
+  draw() {
+    this.ctx.drawImage(this.imageInstance, this.carPos.x, this.carPos.y, this.carSize.w, this.carSize.h)
+  }
+
+  move(distance) {
+    this.carPos.x += distance
+  }
+
+  
+}
+
+class Obstacle {
+  constructor(ctx, canvasSize, posX, posY, width, height, speed) {
+    this.ctx = ctx
+    this.canvasSize = canvasSize
+    this.obstaclePos = {
+      x: posX,
+      y: posY          
+    }
+    this.obstacleSize = {
+      w: width,
+      h: height
+    }
+    this.speed = speed
+
+    }
+    
+    move() {
+      this.obstaclePos.y += this.speed
+    }
+    draw() {
+      this.move()
+      this.ctx.fillStyle = `#89220f`
+      this.ctx.fillRect(this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
+    }
+
+}
 
 
 
@@ -71,12 +183,13 @@ window.onload = () => {
   function startGame() {
     
   raceCarApp.init('canvas')
+  raceCarApp.setEventListeners()
   raceCarApp.setDimensions()
   raceCarApp.drawFilledRectangle()
   raceCarApp.drawLine()
-
-
-    
+  raceCarApp.createCar()
+  raceCarApp.drawAll()
+  raceCarApp.createObstacle()
   }
 };
 
