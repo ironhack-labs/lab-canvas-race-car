@@ -5,3 +5,4 @@ window.onload = () => {
 
   function startGame() {}
 };
+drawRoad.init()
