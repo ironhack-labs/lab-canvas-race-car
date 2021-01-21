@@ -18,6 +18,7 @@ const drawRoad = {
         this.drawCentralLine()
     },
 
+    /*----Green and Grey parts on the side of the road (left and right)----*/
     drawRoadSides() {
         this.ctx.fillStyle = "#008200" 
         this.ctx.fillRect(0, 0, 30, this.canvasSize.h)
@@ -27,11 +28,13 @@ const drawRoad = {
         this.ctx.fillRect(this.canvasSize.w-40, 0, 10, this.canvasSize.h)
     },
 
+    /*----Central grey background----*/
     drawMainRoad() {
         this.ctx.fillRect(this.canvasSize.w / 2 - 200, 0 , 400, this.canvasSize.h)
         
     },
 
+    /*----Central dashed line----*/
     drawCentralLine() {
         this.ctx.moveTo(this.canvasSize.w / 2, 0)
         this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
