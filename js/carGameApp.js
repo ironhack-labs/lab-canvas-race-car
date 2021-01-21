@@ -9,6 +9,7 @@ const carApp = {
     ctx: undefined,
     canvasSize: undefined,
     car: undefined,
+    obstacles: [],
     backgroundImageName: undefined,
     imageInstance: undefined,
     keys: {
@@ -19,8 +20,6 @@ const carApp = {
     init(id) {
         this.canvasDom = document.getElementById(`${id}`)
         this.ctx = this.canvasDom.getContext('2d')
-            // const seeDOM = this.canvasDom
-            // console.log(this.canvasDom.width)
         this.backgroundImageName = 'road.png'
         this.imageInstance = new Image()
         this.imageInstance.src = `images/${this.backgroundImageName}`
@@ -31,10 +30,12 @@ const carApp = {
 
     renderGame() {
         this.createCar()
+        this.createObstacle()
         setInterval(() => {
             this.clearScreen
             this.setBackgroundImg()
             this.car.drawCar()
+            this.obstacles.forEach(elm => elm.drawObstacle())
         }, 500)
     },
 
@@ -45,10 +46,10 @@ const carApp = {
     setEventListeners() {
         document.addEventListener('keydown', (event) => {
             if (event.key === this.keys.left) {
-                this.car.moveCar(-5)
+                this.car.moveCar(-25)
             }
             if (event.key === this.keys.right) {
-                this.car.moveCar(5)
+                this.car.moveCar(25)
             }
         })
     },
@@ -65,7 +66,11 @@ const carApp = {
     },
 
     createCar() {
-        this.car = new Car(this.ctx, this.canvasSize, this.canvasSize.w / 2, this.canvasSize.h / 2)
+        this.car = new Car(this.ctx, this.canvasSize, this.canvasSize.w / 2, this.canvasSize.h * 0.8)
+    },
+
+    createObstacle() {
+        this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, 0, this.car.getCarWidth()))
     }
 
 }

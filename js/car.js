@@ -19,11 +19,16 @@ class Car {
     }
 
     moveCar(distance) {
-        !this.hasReachedBorder(distance) ? this.posX += distance : null
+        if (!this.hasReachedBorder(distance)) {
+            this.posX += distance
+        }
     }
-
 
     hasReachedBorder(distance) {
         return (this.posX - this.carWidth / 2 + distance <= 0) || (this.posX + this.carWidth / 2 + distance >= this.canvasSize.w)
+    }
+
+    getCarWidth() {
+        return this.carWidth
     }
 }

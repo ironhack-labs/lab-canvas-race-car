@@ -5,6 +5,7 @@ window.onload = () => {
 
     function startGame() {
         carApp.renderGame()
+
     }
 };
 
