@@ -3,7 +3,9 @@ window.onload = () => {
         startGame();
     };
 
-    function startGame() {}
+    function startGame() {
+        carApp.renderGame()
+    }
 };
 
 carApp.init('canvas')
