@@ -12,7 +12,7 @@ class Obstacle {
     }
 
     drawObstacle() {
-        this.ctx.fillStyle = 'red'
+        this.ctx.fillStyle = '#870007'
         this.ctx.fillRect(this.posX, this.posY, this.size.w, this.size.h)
     }
 

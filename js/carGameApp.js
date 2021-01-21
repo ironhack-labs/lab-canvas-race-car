@@ -18,6 +18,7 @@ const carApp = {
     },
     frames: 0,
     intervalID: undefined,
+    score: 0,
 
     init(id) {
         this.canvasDom = document.getElementById(`${id}`)
@@ -32,7 +33,7 @@ const carApp = {
 
     renderGame() {
         this.createCar()
-        this.createObstacle()
+            //this.createObstacle()
         this.intervalID = setInterval(() => {
             this.clearScreen
             this.setBackgroundImg()
@@ -41,10 +42,14 @@ const carApp = {
                 elm.drawObstacle()
                 elm.moveObstacle()
             })
+            this.displayScore()
             this.frames++
-                if (this.frames % 60 === 0) {
-                    this.createObstacle()
+                if (this.frames % 30 === 0) {
+                    this.countScore()
                 }
+            if (this.frames % 60 === 0) {
+                this.createObstacle()
+            }
             this.detectCollision()
         }, 40)
     },
@@ -86,11 +91,37 @@ const carApp = {
     detectCollision() {
         this.obstacles.forEach(elm => {
             if ((this.car.getLeftBorder() < elm.getRightBorder()) && (this.car.getRightBorder() > elm.getLeftBorder()) && (this.car.getBottomBorder() > elm.getTopBorder()) && (this.car.getTopBorder() < elm.getBottomBorder())) {
+                console.log('your score ', this.score)
                 console.log('collision')
                 clearInterval(this.intervalID)
+                this.showEndMessg()
+                return true
             }
         })
 
+    },
+
+    countScore() {
+        this.score++
+    },
+
+    displayScore() {
+        this.ctx.font = '48px serif'
+        this.ctx.fillStyle = 'rgb(63, 12, 12)'
+        this.ctx.fillText(`Score: ${this.score}`, 50, 50)
+    },
+
+    showEndMessg() {
+        document.getElementById('end-msg').innerText = `Game Over! \n Final Score: ${this.score}`
+        document.querySelector('.end-msg-container').style.display = 'block'
+    },
+
+    restartGame() {
+        this.car = undefined
+        this.obstacles = []
+        this.score = 0
+        this.intervalID = undefined
+        document.querySelector('.end-msg-container').style.display = 'none'
     }
 
 }
