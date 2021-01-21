@@ -36,6 +36,7 @@ const carApp = {
             this.clearScreen
             this.setBackgroundImg()
             this.car.drawCar()
+                //console.log(this.car.getLeftBorder())
             this.obstacles.forEach(elm => {
                 elm.drawObstacle()
                 elm.moveObstacle()
@@ -74,7 +75,7 @@ const carApp = {
     },
 
     createCar() {
-        this.car = new Car(this.ctx, this.canvasSize, this.canvasSize.w / 2, this.canvasSize.h * 0.8)
+        this.car = new Car(this.ctx, this.canvasSize)
     },
 
     createObstacle() {

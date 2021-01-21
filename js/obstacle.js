@@ -19,4 +19,14 @@ class Obstacle {
     moveObstacle() {
         this.posY += 20
     }
+
+    getLeftBorder() {
+        return this.posX
+    }
+    getRightBorder() {
+        return this.posX + this.size.w
+    }
+    getBottomBorder() {
+        return this.posY + this.size.h
+    }
 }
