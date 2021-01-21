@@ -42,6 +42,7 @@ window.onload = () => {
       this.drawAll()
       this.setEventListeners() 
       this.createGameOver()
+      this.writeText()
      },
 
     setDimensions() {
@@ -173,9 +174,9 @@ window.onload = () => {
       score = 0
   },
 
-  writeText(text) {
-    this.ctx.font = '50px sans-serif'
-    this.ctx.fillText(text, 100, 100, 300)
+  writeText() {
+    ctx.font = '50px sans-serif',
+    ctx.fillText('Score', 100, 100, 300)
  }
 }
 
