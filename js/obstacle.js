@@ -17,7 +17,7 @@ class Obstacle {
     }
 
     moveObstacle() {
-        this.posY += 20
+        this.posY += 5
     }
 
     getLeftBorder() {
@@ -25,6 +25,9 @@ class Obstacle {
     }
     getRightBorder() {
         return this.posX + this.size.w
+    }
+    getTopBorder() {
+        return this.posY
     }
     getBottomBorder() {
         return this.posY + this.size.h

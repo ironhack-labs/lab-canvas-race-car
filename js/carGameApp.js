@@ -17,6 +17,7 @@ const carApp = {
         right: 'ArrowRight'
     },
     frames: 0,
+    intervalID: undefined,
 
     init(id) {
         this.canvasDom = document.getElementById(`${id}`)
@@ -32,20 +33,20 @@ const carApp = {
     renderGame() {
         this.createCar()
         this.createObstacle()
-        setInterval(() => {
+        this.intervalID = setInterval(() => {
             this.clearScreen
             this.setBackgroundImg()
             this.car.drawCar()
-                //console.log(this.car.getLeftBorder())
             this.obstacles.forEach(elm => {
                 elm.drawObstacle()
                 elm.moveObstacle()
             })
             this.frames++
-                if (this.frames % 10 === 0) {
+                if (this.frames % 60 === 0) {
                     this.createObstacle()
                 }
-        }, 500)
+            this.detectCollision()
+        }, 40)
     },
 
     clearScreen() {
@@ -80,6 +81,16 @@ const carApp = {
 
     createObstacle() {
         this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.car.getCarWidth()))
+    },
+
+    detectCollision() {
+        this.obstacles.forEach(elm => {
+            if ((this.car.getLeftBorder() < elm.getRightBorder()) && (this.car.getRightBorder() > elm.getLeftBorder()) && (this.car.getBottomBorder() > elm.getTopBorder()) && (this.car.getTopBorder() < elm.getBottomBorder())) {
+                console.log('collision')
+                clearInterval(this.intervalID)
+            }
+        })
+
     }
 
 }

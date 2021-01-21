@@ -16,7 +16,6 @@ class Car {
     }
 
     drawCar() {
-        console.log(this.posX)
         this.ctx.drawImage(this.imageInstance, this.posX, this.posY, this.carWidth, this.carHeight)
     }
 
@@ -42,5 +41,8 @@ class Car {
     }
     getTopBorder() {
         return this.posY
+    }
+    getBottomBorder() {
+        return this.posY + this.carHeight
     }
 }
