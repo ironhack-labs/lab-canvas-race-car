@@ -11,7 +11,10 @@ const carApp = {
     car: undefined,
     backgroundImageName: undefined,
     imageInstance: undefined,
-
+    keys: {
+        left: 'ArrowLeft',
+        right: 'ArrowRight'
+    },
 
     init(id) {
         this.canvasDom = document.getElementById(`${id}`)
@@ -23,14 +26,31 @@ const carApp = {
         this.imageInstance.src = `images/${this.backgroundImageName}`
         this.imageInstance.onload = () => this.setBackgroundImg()
         this.setDimensions()
+        this.setEventListeners()
     },
 
     renderGame() {
         this.createCar()
         setInterval(() => {
+            this.clearScreen
             this.setBackgroundImg()
             this.car.drawCar()
         }, 500)
+    },
+
+    clearScreen() {
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.w)
+    },
+
+    setEventListeners() {
+        document.addEventListener('keydown', (event) => {
+            if (event.key === this.keys.left) {
+                this.car.moveCar(-5)
+            }
+            if (event.key === this.keys.right) {
+                this.car.moveCar(5)
+            }
+        })
     },
 
     setDimensions() {
