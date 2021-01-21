@@ -60,14 +60,20 @@ const gameBoard = {
       },
       createObstacle() {
         this.obstacle.push( new Obstacle(this.ctx, this.canvasSize))
-        console.log(this.obstacle)
+        this.obstacle.push( new Obstacle(this.ctx, this.canvasSize))
+        this.obstacle.push( new Obstacle(this.ctx, this.canvasSize))
+
+        // console.log(this.obstacle[0])
       },
       drawAll() {
         setInterval(() => {
             this.clearScreen()
             this.showBoardImage("road.png")
             this.car.draw()
-            //this.obstacle.draw()
+            this.obstacle[0].draw()
+            this.obstacle[1].draw()
+            this.obstacle[2].draw()
+
         }, 70)
       },
       clearScreen() {
