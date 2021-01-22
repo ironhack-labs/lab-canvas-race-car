@@ -5,7 +5,7 @@ body {
 
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 0% 2%;
 }
 
 .game-intro p {
@@ -36,3 +36,14 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#canvas{
+  border: solid 1px black;
+}
+
+#canvas{
+  background-image: url(../images/road.png);
+  background-repeat: no-repeat;
+  background-size: 500px 700px;
+}
+
