@@ -2,7 +2,7 @@
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-const myObstacles = [];
+let myObstacles = [];
 
 // Start Game Condition
 
@@ -16,12 +16,13 @@ window.onload = () => {
 
 function startGame() {
   road.loadRoad();
-  road.start();
   player.loadPlayer();
+  road.start();
 }
 
 function updateGameArea() {
   road.clear();
+  road.move();
   road.loadRoad();
   player.loadPlayer();
   player.updateScore(road);
@@ -36,7 +37,7 @@ class Road {
   constructor() {
     this.x = 0;
     this.y = 0;
-    this.velocity = 50;
+    this.velocity = 1;
     this.roadImg = new Image();
     this.roadImg.src = "./images/road.png";
     this.interval = "";
@@ -49,6 +50,15 @@ class Road {
 
   loadRoad() {
     ctx.drawImage(this.roadImg, this.x, this.y, 500, 700);
+    if (this.velocity >= 0) {
+      ctx.drawImage(this.roadImg, this.x, this.y - 500, 500, 700);
+    }
+  }
+  move() {
+    this.y += this.velocity;
+    if (this.y >= canvas.heigth) {
+      this.y = 0;
+    }
   }
 
   clear() {
@@ -64,6 +74,17 @@ class Road {
     ctx.strokeText("GAME OVER", 190, 175);
     ctx.fillStyle = "white";
     ctx.fillText(`Final Score: ${player.score}`, 190, 225);
+    this.restartGame();
+  }
+
+  restartGame() {
+    const startGamebtn = document.getElementById("start-button");
+    startGamebtn.innerText = "Restart Game";
+    startGamebtn.onclick = () => {
+      this.clear();
+      newGame();
+      startGame();
+    };
   }
 }
 
@@ -145,8 +166,8 @@ class Obstacle {
 
 // Starting the game:
 
-const road = new Road();
-const player = new Player();
+let road = new Road();
+let player = new Player();
 
 document.addEventListener("keydown", (e) => {
   if (e.key == "ArrowLeft" && player.x >= 75) {
@@ -187,4 +208,12 @@ function checkGameOver() {
   if (crashed) {
     road.stop(player);
   }
+}
+
+// Restart Game
+
+function newGame() {
+  road = new Road();
+  player = new Player();
+  myObstacles = [];
 }
