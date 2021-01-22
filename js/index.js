@@ -22,10 +22,10 @@ function startGame() {
 
 function updateGameArea() {
   road.clear();
-  road.move();
   road.loadRoad();
   player.loadPlayer();
   player.updateScore(road);
+  road.move();
   updateObstacles();
   checkGameOver();
 }
@@ -51,12 +51,12 @@ class Road {
   loadRoad() {
     ctx.drawImage(this.roadImg, this.x, this.y, 500, 700);
     if (this.velocity >= 0) {
-      ctx.drawImage(this.roadImg, this.x, this.y - 500, 500, 700);
+      ctx.drawImage(this.roadImg, this.x, this.y - 700, 500, 700);
     }
   }
   move() {
     this.y += this.velocity;
-    if (this.y >= canvas.heigth) {
+    if (this.y >= 700) {
       this.y = 0;
     }
   }
