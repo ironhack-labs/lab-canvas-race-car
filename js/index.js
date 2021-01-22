@@ -4,9 +4,18 @@ window.onload = () => {
   };
 
   function startGame() {
-    
-    myGameArea.start();
-    
+
+    if (myGameArea.frames > 0) {
+      myGameArea.stop();
+      myGameArea.clear();
+      myGameArea.frames = 0;
+      myObstacles = [];
+      myGameArea.start();
+    }
+    else {
+      myGameArea.start();
+    }
+
     const canvas = document.getElementById('canvas');
     canvas.style.backgroundImage = "url('./images/road.png')";
     canvas.style.backgroundRepeat = "no-repeat";
