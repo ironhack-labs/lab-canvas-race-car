@@ -55,8 +55,15 @@ class Road {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  stop() {
+  stop(player) {
     clearInterval(this.interval);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(75, 100, 350, 200);
+    ctx.strokeStyle = "red";
+    ctx.strokeText("GAME OVER", 190, 175);
+    ctx.fillStyle = "white";
+    ctx.fillText(`Final Score: ${player.score}`, 190, 225);
   }
 }
 
@@ -75,10 +82,10 @@ class Player {
     ctx.drawImage(this.carImg, this.x, this.y, 50, 75);
   }
   updateScore(road) {
-    const points = Math.floor(road.frames / 50);
+    this.score = Math.floor(road.frames / 50);
     ctx.font = "18px serif";
     ctx.fillStyle = "black";
-    ctx.fillText(`Score: ${points}`, 225, 25);
+    ctx.fillText(`Score: ${this.score}`, 225, 25);
   }
 
   left() {
@@ -142,9 +149,9 @@ const road = new Road();
 const player = new Player();
 
 document.addEventListener("keydown", (e) => {
-  if (e.key == "ArrowLeft") {
+  if (e.key == "ArrowLeft" && player.x >= 75) {
     player.x -= player.velocity;
-  } else if (e.key == "ArrowRight") {
+  } else if (e.key == "ArrowRight" && player.x <= 375) {
     player.x += player.velocity;
   }
 });
@@ -163,7 +170,7 @@ function updateObstacles() {
       Math.random() * (maxWidth - minWidth + 1) + minWidth
     );
     let startPlaceX = Math.floor(Math.random() * (parseInt(x) - 100)) + 50;
-    if (startPlaceX + width > 425) {
+    if (startPlaceX + width > 375) {
       startPlaceX = startPlaceX - width - 50;
     }
     myObstacles.push(new Obstacle(width, 10, "#A52A2A", startPlaceX, 0));
@@ -178,6 +185,6 @@ function checkGameOver() {
   });
 
   if (crashed) {
-    road.stop();
+    road.stop(player);
   }
 }
