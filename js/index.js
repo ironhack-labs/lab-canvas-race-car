@@ -8,7 +8,7 @@ window.onload = () => {
     myGameArea.start();
     
     const canvas = document.getElementById('canvas');
-    canvas.style.backgroundImage = "url('../images/road.png')";
+    canvas.style.backgroundImage = "url('./images/road.png')";
     canvas.style.backgroundRepeat = "no-repeat";
     canvas.style.backgroundSize = "cover";
     canvas.style.backgroundPosition = "center";
@@ -57,7 +57,7 @@ class Player {
     this.x = 210;
     this.y = 500;
     this.car = new Image();
-    this.car.src = "../images/car.png" 
+    this.car.src = "./images/car.png" 
     this.speedX = 0;
   }
 
