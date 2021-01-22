@@ -109,7 +109,10 @@ function updateObstacles() {
     let width = Math.floor(
       Math.random() * (maxWidth - minWidth + 1) + minWidth
     );
-    let startPlaceX = Math.floor(Math.random() * parseInt(x));
+    let startPlaceX = Math.floor(Math.random() * (parseInt(x) - 100)) + 50;
+    if (startPlaceX + width > 425) {
+      startPlaceX = startPlaceX - width - 50;
+    }
     myObstacles.push(new Obstacle(width, 10, "red", startPlaceX, 0));
   }
 }
