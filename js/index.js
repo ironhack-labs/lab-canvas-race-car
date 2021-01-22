@@ -31,23 +31,18 @@ window.onload = () => {
       this.canvasDOM = document.querySelector(`#${id}`)
       console.log(this.canvasDOM)
       this.ctx = this.canvasDOM.getContext('2d')
-      
-// ------------------------------------------------------------------------      
- 
     },
 
     setEventListeners() {
       document.onkeyup = e => {
         if (e.key === this.keys.left) {
-          this.car.move(-5)
+          this.car.move(-10)
         }
         if (e.key === this.keys.right) {
-          this.car.move(5)
+          this.car.move(10)
         }
       }
     },
-
-
 
     setDimensions() {
       this.canvasSize = {
@@ -96,7 +91,7 @@ window.onload = () => {
         this.car.draw()
         this.obstacles.forEach(elem => elem.draw())
         this.frames++
-        this.frames % 40 === 0 ? this.createObstacle() : null
+        this.frames % 60 === 0 ? this.createObstacle() : null
         
       }, 70)
     },
@@ -106,18 +101,16 @@ window.onload = () => {
     },
 
     createObstacle() {
-      const obstacle1 = new Obstacle(this.ctx, this.canvasSize, 80, 0, Math.floor(Math.random() * (250 - 80)) + 80, 20, 6)
-      const obstacle2= new Obstacle(this.ctx, this.canvasSize, this.canvasSize.w - 180, 0, 100, 20, 8)
+      const obstacle1 = new Obstacle(this.ctx, this.canvasSize, Math.floor(Math.random() * (120 - 80)) + 80, 0, Math.floor(Math.random() * (250 - 80)) + 80, 20, 4)
+      const obstacle2= new Obstacle(this.ctx, this.canvasSize, this.canvasSize.w - (Math.floor(Math.random() * (220 - 180)) + 180), 0, 100, 20, 6)
       this.obstacles.push(obstacle1, obstacle2)
     }
-
 }
 
 
 
 
-
-
+//------CLASSES--------//
 
 class Car {
 
@@ -143,10 +136,9 @@ class Car {
 
   move(distance) {
     this.carPos.x += distance
-  }
-
-  
+  }  
 }
+
 
 class Obstacle {
   constructor(ctx, canvasSize, posX, posY, width, height, speed) {
@@ -161,7 +153,6 @@ class Obstacle {
       h: height
     }
     this.speed = speed
-
     }
     
     move() {
@@ -172,14 +163,13 @@ class Obstacle {
       this.ctx.fillStyle = `#89220f`
       this.ctx.fillRect(this.obstaclePos.x, this.obstaclePos.y, this.obstacleSize.w, this.obstacleSize.h)
     }
-
 }
 
 
 
 
 
-//motor del juego-----
+//--motor del juego-----//
   function startGame() {
     
   raceCarApp.init('canvas')
@@ -193,9 +183,3 @@ class Obstacle {
   }
 };
 
-
-// 1-funcion arranque con tamaño
-
-// 2-funcion para pintar rectangulo
-
-// metodos del juego
