@@ -1,12 +1,18 @@
+// Get canvas and instance the obstacles
+
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 const myObstacles = [];
+
+// Start Game Condition
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
     startGame();
   };
 };
+
+// Game loop
 
 function startGame() {
   road.loadRoad();
@@ -22,6 +28,9 @@ function updateGameArea() {
   updateObstacles();
 }
 
+// Game classes
+
+// Road is the class that identifies the game
 class Road {
   constructor() {
     this.x = 0;
@@ -46,6 +55,7 @@ class Road {
   }
 }
 
+// Player is the car
 class Player {
   constructor() {
     this.x = 225;
@@ -67,6 +77,8 @@ class Player {
   }
 }
 
+// Obstacles that appear on the road
+
 class Obstacle {
   constructor(width, height, color, x, y) {
     this.width = width;
@@ -84,6 +96,8 @@ class Obstacle {
   }
 }
 
+// Starting the game:
+
 const road = new Road();
 const player = new Player();
 
@@ -91,7 +105,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key == "ArrowLeft") {
     player.x -= player.velocity;
   } else if (e.key == "ArrowRight") {
-    // right arrow
     player.x += player.velocity;
   }
 });
