@@ -126,6 +126,6 @@ function updateObstacles() {
     if (startPlaceX + width > 425) {
       startPlaceX = startPlaceX - width - 50;
     }
-    myObstacles.push(new Obstacle(width, 10, "red", startPlaceX, 0));
+    myObstacles.push(new Obstacle(width, 10, "#A52A2A", startPlaceX, 0));
   }
 }
