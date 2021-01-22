@@ -26,6 +26,7 @@ function updateGameArea() {
   player.loadPlayer();
   player.updateScore(road);
   updateObstacles();
+  checkGameOver();
 }
 
 // Game classes
@@ -53,6 +54,10 @@ class Road {
   clear() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
+
+  stop() {
+    clearInterval(this.interval);
+  }
 }
 
 // Player is the car
@@ -75,6 +80,28 @@ class Player {
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${points}`, 225, 25);
   }
+
+  left() {
+    return this.x;
+  }
+  right() {
+    return this.x + this.width;
+  }
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y + this.height;
+  }
+
+  crashWith(obstacle) {
+    return !(
+      this.bottom() < obstacle.top() ||
+      this.top() > obstacle.bottom() ||
+      this.right() < obstacle.left() ||
+      this.left() > obstacle.right()
+    );
+  }
 }
 
 // Obstacles that appear on the road
@@ -93,6 +120,19 @@ class Obstacle {
   update() {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+  left() {
+    return this.x;
+  }
+  right() {
+    return this.x + this.width;
+  }
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y + this.height;
   }
 }
 
@@ -127,5 +167,17 @@ function updateObstacles() {
       startPlaceX = startPlaceX - width - 50;
     }
     myObstacles.push(new Obstacle(width, 10, "#A52A2A", startPlaceX, 0));
+  }
+}
+
+// Crash test
+
+function checkGameOver() {
+  const crashed = myObstacles.some(function (obstacle) {
+    return player.crashWith(obstacle);
+  });
+
+  if (crashed) {
+    road.stop();
   }
 }
