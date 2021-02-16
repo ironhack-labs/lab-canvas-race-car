@@ -1,36 +1,75 @@
-class RaceCanvas{
-  construct(){
-    this.context = document.getElementById('game-board').getContext('2d');
+class Car{
+  constructor(ctx, canvasSize, posX, posY, width, height){
+    this.ctx = ctx;
+    this.pos = { x: posX, y: posY };
+    this.size = { w: width, h: height };
+    this.canvas = canvasSize;
+    this.imageInstance = new Image();
+    this.imageInstance.src = `../images/car.png`;
   }
 
-  drawRoad(){
-    const ctx = this.context;
-    const img = new Image();
-    img.src = "./images/road.png";
-    img.onload = ('load', e => () {
-      ctx.drawImage(img, 10, 10);
-    });
+  move(distance) {
+    if(this.pos.x > this.canvas.w - 120) {
+      this.pos.x -= 5;
+    } else if(this.pos.x < 80){
+      this.pos.x += 5;
+    } else {
+      this.pos.x += distance;
+    }
+  }
+
+  draw(){
+    this.ctx.drawImage(this.imageInstance, this.pos.x, this.pos.y, this.size.w, this.size.h);
   }
 }
 
-class Component{
-  constructor(width, height, color, x, y, image){
-    this.width = width;
-    this.height = height;
-    this.color = color;
-    this.x = x;
-    this.y = y;
-    this.image = image;
+const raceCar = {
+  ctx: document.querySelector(`canvas`).getContext('2d'),
+  frames: 0,
+  canvas: { w: 500, h: 700 },
+  addEventListeners() {
+    document.onkeydown = e => {
+      switch (e.keyCode){
+        case 37:
+            this.car.move(-20);
+            break;
+        case 39:
+            this.car.move(20);
+            break;
+        }
+      }
+  },
+  drawCar(){
+    this.car = new Car(this.ctx, this.canvas, this.canvas.w/2 - 30, this.canvas.h - 150, 60, 130);
+  },
+  drawRoad(){
+    this.imageInstance = new Image(); 
+    this.imageInstance.src = `../images/road.png`;
+    this.imageInstance.onload = ('load', e => () => {
+      this.ctx.drawImage(this.imageInstance, 500, 400, 500, 500);
+    });
+  },
+  drawGame(){
+    setInterval(() =>{
+      this.clearCanvas();
+      this.car.draw();
+      this.frames++;
+    }, 70)
+  },
+  clearCanvas() {
+    this.ctx.clearRect(0, 0, this.canvas.w, this.canvas.h);
   }
+}
+
+function start(){
+  raceCar.drawRoad();
+  raceCar.addEventListeners();
+  raceCar.drawCar();
+  raceCar.drawGame();
 }
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
-
-  function startGame() {
-    race = new RaceCanvas();
-    race.drawRoad();
+    start();
   }
 };
