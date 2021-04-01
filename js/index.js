@@ -9,9 +9,21 @@ class Car {
     this.height = this.img.naturalHeight*0.5
     this.bottomMargin = 5
     this.pos = [canvas.width*0.5-this.width*0.5, canvas.height-this.height-this.bottomMargin]
+    this.turnSpeed = 4
+    this.direction = ''
   }
+
   drawCar(){
+    this.moveCar(this.direction)
     ctx.drawImage(this.img, this.pos[0], this.pos[1], this.width, this.height)
+  }
+
+  moveCar(direction){
+    if (direction === 'left') {
+      this.pos[0] -= this.turnSpeed
+    } else if (direction === 'right') {
+      this.pos[0] += this.turnSpeed
+    }
   }
 }
 
@@ -28,12 +40,10 @@ class Game {
   }
   
   startGame() {
-    console.log('starting game')
     this.updateGame()
   }
   
   updateGame(){
-    console.log('updating')
     this.updateBg()
     this.drawBackground()
     car.drawCar()
@@ -42,7 +52,6 @@ class Game {
   
   drawBackground(){
     if (this.bgPosY > canvas.height) {
-      console.log('reseting y')
       this.bgPosY = 0
     }
     ctx.drawImage(this.bgImg, 0, this.bgPosY, canvas.width, canvas.height)
@@ -50,9 +59,7 @@ class Game {
   }
   
   updateBg(){
-    console.log('updating bg')
     this.bgPosY += this.speed
-    console.log('new pos:', this.bgPosY)
   }
 }
 
@@ -61,6 +68,7 @@ const game = new Game()
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     game.startGame();
+    document.getElementById('start-button').innerText = 'Upgrade difficulty'
   };
 };
 
@@ -69,4 +77,10 @@ document.addEventListener('keydown', (event)=>{
     a: 'left',
     d: 'right'
   }[event.key]
+  console.log(car.direction)
+})
+
+document.addEventListener('keyup', (event)=>{
+  car.direction = ''
+  console.log(car.direction)
 })
