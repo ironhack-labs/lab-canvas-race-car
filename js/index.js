@@ -8,27 +8,40 @@ road.src = '/images/road.png'
 road.onload = ()=>{
     ctx.drawImage(road, 0, 0, ctx.canvas.width, ctx.canvas.height)
   }
-  
-  window.onload = () => {
-    document.getElementById('start-button').onclick = () => {
-      startGame();
-    };
-    
-    function startGame() {
-        car.renderCar()
-      }
-  
+
+const  drawBackground =()=>{
+  ctx.drawImage(road, 0, 0, ctx.canvas.width, ctx.canvas.height)
 }
-//CLASE 
+  
+//CLASES
+
+class Obstacle{
+  constructor(){
+    this.width = Math.floor(Math.random())*ctx.canvas.width/2
+    this.heigth= 10
+    this.x= Math.floor(Math.random())*(ctx.canvas.width-this.width)
+    this.y= 0
+  }
+  renderObstacle(){
+    ctx.fillStyle = 'red'
+    ctx.fillRect(this.x,this.y,this.width,this.heigth)
+  }
+
+  moveObstacle(){
+    this.y += 5
+  }
+}
+
+
 class Car {
 
   //PROPIEDADES
   constructor(){
     this.img = ''
-    this.width = 50
-    this.height = 90
-    this.x = ctx.canvas.width/2 -25   
-    this.y = ctx.canvas.height-120
+    this.width = 90
+    this.height = 150
+    this.x = ctx.canvas.width/2  -45  
+    this.y = ctx.canvas.height-190
   }
   //METODOS
   renderCar(){
@@ -48,14 +61,14 @@ class Car {
   moveRight(){
     this.x += 3
   }
-
+  
   moveLeft(){
     this.x -= 3
   }
 }
 
-//CREAR COCHE 
-const car =  new Car()
+let obstacle = new Obstacle()
+let car 
 
 //COMPROBAR LIMITES
 const checkForBoundries = ()=>{
@@ -66,7 +79,7 @@ const checkForBoundries = ()=>{
 
   if(car.x <= 60){
     car.x = 61
-    console.log('chocado a la derecha')
+    console.log('chocado a la izquierda')
   }
 }
 
@@ -77,12 +90,14 @@ const clearCanvas = ()=>{
 
 //DRAW / DIBUJAR (la nueva posición)
 const drawCanvas = ()=>{
-  car.renderCar()
+  drawBackground()
+  car.drawSelf()
+  obstacle.renderObstacle()
 }
 
 //UPDATE / ACTUALIZAR (ultima posición)
 const updateCanvas = ()=>{
-  //clearCanvas()
+  clearCanvas()
   
   drawCanvas()
   
@@ -91,7 +106,7 @@ const updateCanvas = ()=>{
   requestAnimationFrame(updateCanvas)
  
 }
-updateCanvas()
+
 
 
 document.addEventListener('keydown', (event)=>{
@@ -101,3 +116,15 @@ document.addEventListener('keydown', (event)=>{
     car.moveRight()
   } 
 })
+
+  window.onload = () => {
+    document.getElementById('start-button').onclick = () => {
+      startGame();
+    };
+    
+    function startGame() {
+        car = new Car()
+        car.renderCar()
+        updateCanvas()
+      }
+  }
