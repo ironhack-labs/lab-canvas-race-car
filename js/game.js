@@ -133,7 +133,7 @@ const drawingApp = {
     drawScore() {
         this.ctx.font = "24px Arial";
         this.ctx.fillStyle = "black";
-        this.ctx.fillText("Score: " + this.frames, 8, 20);
+        this.ctx.fillText("Score: " + this.frames, 220, 20);
     },
 }
 
