@@ -2,7 +2,23 @@ const canvas = document.getElementById(`canvas`)
 const ctx = canvas.getContext(`2d`)
 
 
+class Obstacle{
+  constructor(){
+    this.width = Math.random()*ctx.canvas.width/2
+    this.height = 10
+    this.x = Math.random()*((ctx.canvas.width)-this.width)
+    this.y = 0
+  }
 
+  renderObst(){
+    ctx.fillStyle = `tomato`
+    ctx.fillRect (this.x,this.y,this.width,this.height)
+  }
+
+  moveObst(){
+    this.y +=4 
+  }
+}
 
 class Car {
       constructor(){
@@ -11,6 +27,7 @@ class Car {
         this.height = 80
         this.x = ctx.canvas.width/2 - 25
         this.y = ctx.canvas.height - 120
+        this.direction=``
     }
 
 renderImage(){
@@ -25,23 +42,26 @@ drawSelf(){
   ctx.drawImage(this.img,this.x,this.y,this.width, this.height)
 }
 moveRight(){
-  this.x +=10
+  this.x +=3
 }
 
 moveLeft(){
-  this.x -=10
+  this.x -=3
 }
 }
+
 const carretera = new Image()
 carretera.src = `/images/road.png`
 carretera.onload = ()=>{ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)}
 const coche = new Car()
+const valla = new Obstacle()
+
 
 const checkForBoundaries = ()=>{
   if (coche.x > 400){
       coche.x = 400
   }
-  if (coche.x < 51){
+  if (coche.x < 50){
       coche.x = 50
   }
 }
@@ -54,6 +74,13 @@ const clearCanvas = ()=>{
 const updateCanvas= ()=>{
 clearCanvas()
 
+if (coche.direction === `right`) {
+  coche.moveRight()
+}else if (coche.direction === `left`) {
+  coche.moveLeft()
+}
+valla.moveObst()
+
 drawCanvas()
 
 checkForBoundaries()
@@ -65,30 +92,39 @@ requestAnimationFrame(updateCanvas)
 const drawCanvas=()=>{
   renderCarretera()
   coche.drawSelf()
+  valla.renderObst()
+
   }
   
-  document.addEventListener(`keydown`, (event)=>{
+ /*  document.addEventListener(`keydown`, (event)=>{
       if(event.key===`d`){
         coche.moveRight()
       }
       if(event.key===`a`){
         coche.moveLeft()
       }
-  })
-  
+  }) */
+  document.addEventListener(`keydown`, (event)=>{
+    coche.direction = {
+        a: `left`,
+        d: `right`
+    }[event.key]
+})
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
   };};
+  
+
 
 function renderCarretera(){
   
-  ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)}
-
+ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)}
 
 function startGame() {
   renderCarretera()
   coche.renderImage()
   updateCanvas()
 }
+
