@@ -3,5 +3,13 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    raceCarGame.init()
+    raceCarGame.drawBackground()
+    raceCarGame.drawRoad()
+    raceCarGame.drawLeftLine()
+    raceCarGame.drawRightLine()
+    raceCarGame.drawDashedLine()
+
+  }
 };
