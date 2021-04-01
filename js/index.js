@@ -1,19 +1,8 @@
 const canvas = document.getElementById(`canvas`)
 const ctx = canvas.getContext(`2d`)
 
-const carretera = new Image()
-carretera.src = `/images/road.png`
 
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
 
-  function startGame() {
-    coche.renderImage()
-    ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)
-  }
-};
 
 class Car {
       constructor(){
@@ -22,7 +11,6 @@ class Car {
         this.height = 80
         this.x = ctx.canvas.width/2 - 25
         this.y = ctx.canvas.height - 120
-        this.direction = ``
     }
 
 renderImage(){
@@ -33,19 +21,74 @@ renderImage(){
   }
 }
 drawSelf(){
-  /* console.log(`hola`) */
+  console.log(`hola`)
   ctx.drawImage(this.img,this.x,this.y,this.width, this.height)
 }
 moveRight(){
-  this.x +=1
+  this.x +=10
 }
 
 moveLeft(){
-  this.x -=1
+  this.x -=10
 }
 }
-
+const carretera = new Image()
+carretera.src = `/images/road.png`
+carretera.onload = ()=>{ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)}
 const coche = new Car()
 
-coche.renderImage()
+const checkForBoundaries = ()=>{
+  if (coche.x > 400){
+      coche.x = 400
+  }
+  if (coche.x < 51){
+      coche.x = 50
+  }
+}
 
+//clear
+const clearCanvas = ()=>{
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+}
+//update
+const updateCanvas= ()=>{
+clearCanvas()
+
+drawCanvas()
+
+checkForBoundaries()
+
+requestAnimationFrame(updateCanvas)
+}
+
+//draw
+const drawCanvas=()=>{
+  renderCarretera()
+  coche.drawSelf()
+  }
+  
+  document.addEventListener(`keydown`, (event)=>{
+      if(event.key===`d`){
+        coche.moveRight()
+      }
+      if(event.key===`a`){
+        coche.moveLeft()
+      }
+  })
+  
+
+window.onload = () => {
+  document.getElementById('start-button').onclick = () => {
+    startGame();
+  };};
+
+function renderCarretera(){
+  
+  ctx.drawImage(carretera,0,0,ctx.canvas.width,ctx.canvas.height)}
+
+
+function startGame() {
+  renderCarretera()
+  coche.renderImage()
+  updateCanvas()
+}
