@@ -3,5 +3,10 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+
+
+  console.log(roadApp)
+  function startGame() {
+    roadApp.init()
+  }
 };
