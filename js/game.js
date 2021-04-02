@@ -129,7 +129,7 @@ const roadApp = {
     createObs() {
         if (this.obs.length > 0) {
             this.obs.forEach(e => {
-                e.obstaclePos.y += 70
+                e.obstaclePos.y += 150
             })
         }
 
