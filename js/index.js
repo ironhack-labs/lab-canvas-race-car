@@ -7,16 +7,12 @@ window.onload = () => {
   };
   function startGame() {
     setInterval(updateGame, 20);
-    
+    // car.crashCar()
   }
-  
-  
 };
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
-
-
 class Game {
   constructor(x, y, width, height) {
     this.img = new Image();
@@ -25,9 +21,6 @@ class Game {
     this.height = height;
     this.x = x;
     this.y = y;
-    
-    
-    
   }
   drawRoad() {
     context.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -35,8 +28,6 @@ class Game {
   clearRoad() {
     context.clearRect(this.x, this.y, this.width, this.height);
   }
-  
-  
 };
 class Car {
   constructor(x, y, width, height) {
@@ -46,7 +37,7 @@ class Car {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.speed = 5;
+    this.speed = 7;
     this.dX = 0;
   }
   drawCar() {
@@ -69,8 +60,24 @@ class Car {
       this.x = 500 - this.width;
     }
   }
-  
-  
+  // crashCar(){
+  //     let myleft = this.x;
+  //     let myright = this.x + (this.width);
+  //     let mytop = this.y;
+  //     let mybottom = this.y + (this.height);
+  //     obstacleArray.forEach(element => {
+  //     let otherleft = element.x;
+  //     let otherright = element.x + (element.width);
+  //     let othertop = element.y;
+  //     let otherbottom = element.y + (element.height);
+  //     if ((mybottom < othertop) ||
+  //     (mytop > otherbottom) ||
+  //     (myright < otherleft) ||
+  //     (myleft > otherright)) {
+  //       clearInterval(updateGame());
+  //     }    
+    // });
+    // }
 };
 
 
@@ -79,48 +86,29 @@ class Obstacles {
     this.width = width;
     this.x = x;
     this.y = 0; 
+    this.color = "#890000";
   }
-  drawObstacles(x, width){
-    context.fillStyle = "#890000";
-    context.fillRect(this.x, this.y, this.width, 50);
-    this.moveObstacles()
-    this.updateObstacle()
+  drawObstacles(){
+    obstacleArray.forEach(element => {
+      context.fillStyle = "#890000";
+      context.fillRect(element.x, element.y, element.width, 30);
+      if (frames < 1000) {element.y += 1.5;
+      }else{ element.y += 2;}
+    });
   }
-  moveObstacles(){
-    this.y += 1;
-  } 
-  updateObstacle(){
-    let obstacleWidth = Math.round(Math.random() * 250) + 100;
-    let obdstacleX = Math.floor(Math.random() * (500 - obstacleWidth));
-      frames += 1;
-      if (frames ===3 || frames % 150 === 0){
-        this.drawObstacles(obdstacleX, obstacleWidth)
+  addObstacle(){
+    frames += 1;
+    if (frames ===3 || frames % 200 === 0){
+      let obstacleWidth = Math.round(Math.random() * 250) + 100;
+      let obdstacleX = Math.floor(Math.random() * (500 - obstacleWidth))
+      obstacleArray.push(new Obstacles(obdstacleX, obstacleWidth));
     }
-
   }
-  
 };
-
-
-
 
 const road = new Game(0, 0, 500, 700);
 const car = new Car(225, 600, 50, 70);
-let obstacleWidth = Math.round(Math.random() * 250) + 100;
-let obdstacleX = Math.floor(Math.random() * (500 - obstacleWidth));
-let obstacles = new Obstacles(obdstacleX, obstacleWidth);
-
-
-// function addObstacle(){
-//   frames += 1;
-//   if (frames ===3 || frames % 150 === 0){
-//     obstacleArray.push(obstacles);
-//   }
-// }
-
-
-
-
+const obstacles = new Obstacles(250, 100);
 
 function updateGame() {
   road.clearRoad();
@@ -128,13 +116,9 @@ function updateGame() {
   road.drawRoad();
   car.detectWalls();
   car.drawCar();
+  obstacles.addObstacle()
   obstacles.drawObstacles()
-  
-  }
-
-
-
-
+}
 
 document.addEventListener("keydown", (event) => {
   switch (event.code) {
@@ -147,25 +131,3 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-
-  // for(let i = 0; i< obstacleArray.length; i++){
-  //     obstacleArray[i].x += 1;
-  //     obstacleArray[i].update();
-  //   }
-  //   frames +=1;
-  //   if(frames ===3 || frames %120 === 0){
-  //     let x = canvas.width;
-  
-  //     let minWidth = 20;
-  //     let maxWidth = 200;
-  
-  //     let width = Math.floor(Math.random() * (maxWidth - minWidth +1) +minWidth);
-  
-  //     let minGap = 50;
-  //     let maxGap = 200;
-  
-  //     let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-  
-  //     obstacleArray.push(new Obstacles(10, width, "green", x, 0));
-  //     obstacleArray.push(new Obstacles(10, width - gap, "green", x, width + gap))
-  //   }
