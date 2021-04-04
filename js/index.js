@@ -5,7 +5,7 @@ window.onload = () => {
     startGame();
   };
   function startGame() {
-    const gameInterval = setInterval(updateGame, 30);
+    const gameInterval = setInterval(updateGame, 25);
     
   }
 };
@@ -117,24 +117,6 @@ function addObstacle() {
   obstaclesArray.unshift(obstacle);
 }
 
-// function stop() {
-//   clearInterval(gameInterval);
-// }
-
-// function crashWithObstocle() {
-//     return !(
-//       this.x + this.width < obstacle.x ||
-//       this.x > obstacle.x + obstacle.width
-//   );
-// }
-  
-// function checkGameOver() {
-//   const crashed = obstaclesArray.some((obstacle) => car.crashWithObstocle(obstacle));
-
-//   if (crashed) {
-//     canvas.stop();
-//   }
-// }
 document.addEventListener("keydown", (event) => {
   switch (event.code) {
     case "ArrowLeft":
