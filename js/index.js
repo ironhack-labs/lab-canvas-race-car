@@ -61,33 +61,33 @@ setInterval(function () {
   score.points += 10
 }, 1500)
 
-
+function detectCollision(rect1, rect2) {
+  if (rect1.x < rect2.x + rect2.w &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
+    rect1.y + rect1.h > rect2.y) {
+      // collision detected!
+      console.log("COLLISION")
+      cancelAnimationFrame(gameInt)
+      alert("GAME OVER")
+      window.location.reload()
+  }
+}
+let gameInt = null;
+function animate() {
+  gameInt=requestAnimationFrame(animate)
+  c.clearRect(0,0,canvas.width,canvas.height)
+  score.draw()
+  background.draw()
+  car.draw()
+  badGuys.forEach(eachBadGuy => {
+    eachBadGuy.move()
+    eachBadGuy.draw()
+    detectCollision(car, eachBadGuy)
+  })
+}
 
 document.querySelector('#start-button').onclick = () => {
-  function detectCollision(rect1, rect2) {
-    if (rect1.x < rect2.x + rect2.w &&
-      rect1.x + rect1.w > rect2.x &&
-      rect1.y < rect2.y + rect2.h &&
-      rect1.y + rect1.h > rect2.y) {
-        // collision detected!
-        console.log("COLLISION")
-        cancelAnimationFrame(gameInt)
-        alert("GAME OVER")
-    }
-  }
-  let gameInt = null;
-  function animate() {
-    gameInt=requestAnimationFrame(animate)
-    c.clearRect(0,0,canvas.width,canvas.height)
-    score.draw()
-    background.draw()
-    car.draw()
-    badGuys.forEach(eachBadGuy => {
-      eachBadGuy.move()
-      eachBadGuy.draw()
-      detectCollision(car, eachBadGuy)
-    })
-  }
   animate()
 }
 
