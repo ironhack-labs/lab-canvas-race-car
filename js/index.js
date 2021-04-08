@@ -1,14 +1,11 @@
-// Blah blah initializing everything, adding photos, etc.
-
 const canvas = document.getElementById('canvas');
+
 const c = canvas.getContext('2d');
 let deltaX = 0;
 car_image = new Image();
-car_image.src = '/ironHack/lab-canvas-race-car/images/car.png';
+car_image.src = '././images/car.png';
 background_image = new Image();
-background_image.src = '/ironHack/lab-canvas-race-car/images/road.png';
-
-//Canvas Objects, gives each object it's properties as well as the ability to be drawn
+background_image.src = '././images/road.png';
 
 const background = {
   x: 0,
@@ -56,11 +53,8 @@ class BadGuy {
   }
 }
 
-// Array to store the baddies
 
 let badGuys = []
-
-// Timer to spawn barriers and add to score
 
 setInterval(function () {
   badGuys.push(new BadGuy(Math.random() * 400, 100, 200, 50))
@@ -68,7 +62,6 @@ setInterval(function () {
 }, 1500)
 
 
-// What actually starts the Game
 
 document.querySelector('#start-button').onclick = () => {
   function detectCollision(rect1, rect2) {
@@ -98,26 +91,24 @@ document.querySelector('#start-button').onclick = () => {
   animate()
 }
 
-//Event listener to move the car left and right, as well as enforce barriers
-
 window.addEventListener("keydown", moveSomething, false);
 function moveSomething(e) {
   switch(e.keyCode) {
-    case 37:
-      if (car.x > 0){
-        car.x -= 8
-      }
-      else{
-        car.x = 0
-      }
-        break;
-    case 39:
-      if (car.x < 400){
-        car.x += 8
-      }
-      else{
-        car.x = 400
-      }
-      break;
+      case 37:
+        if (car.x > 0){
+          car.x -= 8
+        }
+        else{
+          car.x = 0
+        }
+          break;
+      case 39:
+        if (car.x < 400){
+          car.x += 8
+        }
+        else{
+          car.x = 400
+        }
+          break;
   }
 }
