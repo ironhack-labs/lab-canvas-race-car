@@ -11,21 +11,30 @@ background_image.src = '/ironHack/lab-canvas-race-car/images/road.png';
 
 const background = {
   x: 0,
-  y: 0,
-  h: 500,
-  w: 900,
+  y: 100,
+  h: 900,
+  w: 500,
   draw: function(){
-    c.drawImage(background_image, this.x, this.y, this.h, this.w)
+    c.drawImage(background_image, this.x, this.y, this.w, this.h)
   }
 }
 
 const car = {
   x: 200,
   y: 700,
-  h: 100,
-  w: 150,
+  h: 150,
+  w: 100,
   draw: function () {
-  c.drawImage(car_image, this.x, this.y, this.h, this.w)
+    c.drawImage(car_image, this.x, this.y, this.w, this.h)
+  }
+}
+
+const score = {
+  points: 0,
+  draw: function () {
+    c.font = "30px Arial";
+    c.fillStyle = "#000000";
+    c.fillText("Score: "+this.points, 200, 50);
   }
 }
 
@@ -39,51 +48,49 @@ class BadGuy {
   }
   draw = () => {
       c.fillStyle = this.color
-      //ctx.fillRect(this.x, this.y, this.h, this.w)
-      c.fillRect(this.x, this.y, this.h, this.w)
+      c.fillRect(this.x, this.y, this.w, this.h)
   }
   move = () => {
-      this.y += 5;
+      this.y += 3;
   }
 }
 
 
 let badGuys = []
 
-
 setInterval(function () {
-  badGuys.push(new BadGuy(Math.random() * 400, 0, 50, 200))
-  score += 1
-}, 1000)
+  badGuys.push(new BadGuy(Math.random() * 400, 100, 200, 50))
+  score.points += 10
+}, 1500)
+
+
+
 document.querySelector('#start-button').onclick = () => {
   function detectCollision(rect1, rect2) {
     if (rect1.x < rect2.x + rect2.w &&
-        rect1.x + rect1.w > rect2.x &&
-        rect1.y < rect2.y + rect2.h &&
-        rect1.y + rect1.h > rect2.y) {
+      rect1.x + rect1.w > rect2.x &&
+      rect1.y < rect2.y + rect2.h &&
+      rect1.y + rect1.h > rect2.y) {
         // collision detected!
         console.log("COLLISION")
         cancelAnimationFrame(gameInt)
         alert("GAME OVER")
     }
   }
-  
-let gameInt = null;
-let score = 0;
-function animate() {
-  gameInt=requestAnimationFrame(animate)
-  c.clearRect(0,0,canvas.width,canvas.height)
-  c.fillText(score, 0, 0, 200, 100)
-  background.draw()
-  car.draw()
-  setInterval
-  badGuys.forEach(eachBadGuy => {
-    eachBadGuy.move()
-    eachBadGuy.draw()
-    detectCollision(car, eachBadGuy)
-})
-}
-animate()
+  let gameInt = null;
+  function animate() {
+    gameInt=requestAnimationFrame(animate)
+    c.clearRect(0,0,canvas.width,canvas.height)
+    score.draw()
+    background.draw()
+    car.draw()
+    badGuys.forEach(eachBadGuy => {
+      eachBadGuy.move()
+      eachBadGuy.draw()
+      detectCollision(car, eachBadGuy)
+    })
+  }
+  animate()
 }
 
 window.addEventListener("keydown", moveSomething, false);
@@ -91,7 +98,7 @@ function moveSomething(e) {
   switch(e.keyCode) {
       case 37:
         if (car.x > 0){
-          car.x -= 4
+          car.x -= 8
         }
         else{
           car.x = 0
@@ -99,7 +106,7 @@ function moveSomething(e) {
           break;
       case 39:
         if (car.x < 400){
-          car.x += 4
+          car.x += 8
         }
         else{
           car.x = 400
