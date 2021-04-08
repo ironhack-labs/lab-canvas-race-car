@@ -7,19 +7,32 @@
     <link rel="stylesheet" href="styles/style.css" />
     <title>Race Car</title>
   </head>
+
+  <style>
+    #contain {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
   <body>
-    <div class="game-intro">
-      <img src="./images/logo.png" alt="" class="logo-img" />
-      <br />
-      <button id="start-button">StartGame</button>
-      <p>Use the left and right arrow to control the car!</p>
-      <img src="./images/arrows.png" alt="" class="arrows-img" />
-    </div>
+    <div id="contain">
 
-    <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
-    </div>
+      <div class="game-intro">
+        <img src="images/logo.png" alt="" class="logo-img" />
+        <br />
+        <button id="start-button">car go</button>
+        <p>Use the left and right arrow to control the car!</p>
+        <img src="./images/arrows.png" alt="" class="arrows-img" />
+      </div>
 
+      <div id="game-board">
+        <canvas id="canvas" width="500" height="700"></canvas>
+      </div>
+    </div>
+    <div id="score" style="width: 100%; display: flex; justify-content: flex-end; font-size: 24px">
+      <div>Score: <span>0</span><span></span></div>
+    </div>
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>

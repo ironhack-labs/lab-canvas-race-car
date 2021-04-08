@@ -1,6 +1,13 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
+}
+
+#contain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-intro {
