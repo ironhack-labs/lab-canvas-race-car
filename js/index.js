@@ -3,9 +3,9 @@ const canvas = document.getElementById('canvas');
 const c = canvas.getContext('2d');
 let deltaX = 0;
 car_image = new Image();
-car_image.src = '././images/car.png';
+car_image.src = './images/car.png';
 background_image = new Image();
-background_image.src = '././images/road.png';
+background_image.src = './images/road.png';
 
 const background = {
   x: 0,
@@ -53,7 +53,7 @@ class BadGuy {
   }
 }
 
-
+console.log(window.location)
 let badGuys = []
 
 setInterval(function () {
