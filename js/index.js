@@ -100,12 +100,16 @@ class GameBoard {
     this.rafId = null;
     this.frames = 0;
     this.car = new Car(this, this.width/2 -25, this.height - 200, 50, 100);
+    this.backgroundImg = new Image();
+    this.backgroundImg.src = './images/explode.png';
+    this.offset = 0;
   }
   initGame() {
     requestAnimationFrame(() => this.animate());
   }
   
   drawBackground(){
+      this.ctx.setLineDash([]);
       //grey
       this.ctx.fillStyle = '#AFAFAF';
       this.ctx.fillRect(20, 0, this.width, this.height);
@@ -132,27 +136,30 @@ class GameBoard {
       this.ctx.lineTo(this.width - 30, this.height);
       this.ctx.stroke();
       //dashed
-      
-      this.ctx.beginPath();
-      this.ctx.lineWidth = 10;
-      this.ctx.setLineDash([40, 30]);
-      this.ctx.moveTo(this.width/2 - 5, 70);
-      this.ctx.lineTo(this.width/2 - 5, this.height);
-      this.ctx.stroke();
-      this.ctx.setLineDash([]);
+  }
+
+  drawDashedLine() {
+    this.ctx.beginPath();
+    this.ctx.lineWidth = 10;
+    this.ctx.setLineDash([40, 30]);
+    this.ctx.lineDashOffset= this.offset;
+    this.ctx.moveTo(this.width/2 - 5, 70);
+    this.ctx.lineTo(this.width/2 - 5, this.height);
+    this.ctx.stroke();
+  }
+
+  marchDashedLine() {
+    this.offset--;
+    if (this.offset > 16) {
+      this.offset = 0;
+    }
+    this.drawDashedLine();
   }
 
   drawGameOver(){
     this.clearGameboard();
-    const backgroundImg = new Image();
-    backgroundImg.src = './images/car.png';
-    
-    let pattern = this.ctx.createPattern(backgroundImg, 'repeat');
-    this.ctx.fillStyle = pattern;
-    this.ctx.fillRect(0, 0, this.width, this.height);
-
-    this.ctx.beginPath();
-    const points = Math.floor(this.frames / 100);
+    this.ctx.drawImage(this.backgroundImg, 0, 0);
+    const points = Math.floor(this.frames / 20);
     this.ctx.fillStyle = 'black';
     this.ctx.font = 'bold 64px monospace';
     this.ctx.fillText(`YOU LOSE!`, 80, 200);
@@ -174,7 +181,7 @@ class GameBoard {
   
     this.frames += 1;
 
-    if (this.frames % 160 === 0) {
+    if (this.frames % 180 === 0) {
       const y = this.height;
       const minWidth = 40;
       const maxWidth = 200;
@@ -191,6 +198,8 @@ class GameBoard {
 
   animate() {
     this.drawBackground();
+    this.drawDashedLine();
+    this.marchDashedLine();
     this.scoreGame();
     this.updateObstacles();
     this.car.position.x += this.car.velocity.vX;
@@ -212,7 +221,7 @@ class GameBoard {
   }
   
   scoreGame() {
-    const points = Math.floor(this.frames / 100);
+    const points = Math.floor(this.frames / 20);
     this.ctx.fillStyle = 'black';
     this.ctx.font = 'bold 36px monospace';
     this.ctx.fillText(`Your score is ${points}`, 80, 40);
@@ -241,197 +250,3 @@ document.addEventListener('keydown', (e) => {
     break;
   }
 });
-
-
-// function updateObstacles(gameboard) {
-//   for (let obstacle of gameboard.obstacles) {
-//     if (obstacle.y > this.canvasSize.height) {
-//       gameboard.obstacles.splice(gameboard.obstacles.indexOf(obstacle), 1);
-//       console.log(gameboard.obstacles.indexOf(obstacle));
-//     }
-//   }
-//   for (i = 0; i < gameboard.obstacles.length; i++) {
-//     console.log(gameboard.obstacles);
-//     gameboard.obstacles[i].y += 1;
-//     gameboard.obstacles[i].drawObstacle();
-//   }
-
-//   gameboard.frames += 1;
-
-//   if (frames % 240 === 0) {
-//     const y = gameboard.height;
-//     const minWidth = 40;
-//     const maxWidth = 200;
-//     const width = Math.floor(
-//       Math.random() * (maxWidth - minWidth + 1) + minWidth
-//     );
-//     let minGap = 75;
-//     let maxGap = 200;
-//     let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-//     gameboard.obstacles.push(new Obstacle(gameboard, width, 10, 0, 0));
-//     gameboard.obstacles.push(new Obstacle(gameboard, y - width - gap, 10, width + gap, 0));
-//   }
-// }
-
-
-
-// function animate() {
-//   gameboard.drawBackground();
-//   updateObstacles();
-//   newCar.position.x += newCar.vX;
-//   if (newCar.position.x > newCar.canvas.width / 2 + 140) {
-//     newCar.position.x = newCar.canvas.width / 2 + 140;
-//     newCar.vX = 0;
-//   }
-//   if (newCar.position.x < newCar.canvas.width / 2 - 180) {
-//     newCar.position.x = newCar.canvas.width / 2 - 180;
-//     newCar.vX = 0;
-//   }
-//   newCar.drawCar(); 
-//   requestAnimationFrame(animate);
-//   gameboard.checkGameOver();
-// }
-
-
-
-
-
-////////////////////////////////
-// const canvas = document.getElementById('canvas');
-// let canvasWidth = canvas.width;
-// let canvasHeight = canvas.height;
-// let ctx = null;
-// let frames = 0;
-// let obstacles = [];
-
-
-
-// if (canvas.getContext) {
-//   ctx = canvas.getContext('2d');
-// } else {
-//   // canvas-unsupported code here
-//   alert('upgrade!!! nooowwww');
-// }
-
-
-// class Car {
-//   constructor(x, y, canvasW, canvasH) {
-//     this.width = 50;
-//     this.height = 100;
-//     this.canvas = {width: canvasW, height: canvasH};
-//     this.position = {x: x, y: y};
-//     //velocity
-//     this.vX = 0;
-//     this.vY = 0;
-//     this.car = new Image();
-//     this.car.src = "./images/car.png";
-//   }
-//   drawCar() {
-//     ctx.drawImage(this.car, this.position.x, this.position.y, 50, 100);
-//   }
-//   moveLeft() {
-//     this.vX -= 0.7;
-//   }
-
-//   moveRight() {
-//     this.vX += 0.7; 
-//   }
-//   top() {
-//     return this.position.y;
-//   }
-//   left() {
-//     return this.position.x;
-//   }
-//   right() {
-//     return this.position.x + this.width;
-//   }
-// }
-  
-// const newCar = new Car(canvasWidth/2 - 25, canvasHeight - 110, canvasWidth, canvasHeight);
-
-
-
-// function clearGame(){
-//   ctx.clearRect(0, 0, canvas.width, canvas.height);
-// }
-
-// function animate() {
-//   drawRoad();
-//   updateObstacles();
-//   newCar.position.x += newCar.vX;
-//   if (newCar.position.x > newCar.canvas.width / 2 + 140) {
-//     newCar.position.x = newCar.canvas.width / 2 + 140;
-//     newCar.vX = 0;
-//   }
-//   if (newCar.position.x < newCar.canvas.width / 2 - 180) {
-//     newCar.position.x = newCar.canvas.width / 2 - 180;
-//     newCar.vX = 0;
-//   }
-//   newCar.drawCar(); 
-//   requestAnimationFrame(animate);
-//   gameOver();
-// }
-
-
-// function drawRoad () {
-//   const road = new Image();
-//       road.addEventListener('load', function() {
-//         ctx.drawImage(road, 0, 0, 500, 700);
-//       }, false);
-//       road.src = "./images/road.png";
-// }
-
-// document.addEventListener('keydown', (e) => {
-//   switch (e.key) {
-//     case 'ArrowLeft': // left arrow
-//     newCar.moveLeft();
-//     break;
-//     case 'ArrowRight': // right arrow
-//     newCar.moveRight();
-//     break;
-//   }
-// });
-
-// class Obstacle {
-//   constructor(width, height, x, y) {
-//   this.width = width;
-//   this.height = height;
-//   this.x = x;
-//   this.y = y;
-//   }
-//   drawObstacle(){
-//     ctx.fillStyle = 'red';
-//     ctx.fillRect(this.x, this.y, this.width, this.height);
-//   }
-// }
-
-// function obstacleGarbageCollection() {
-//   for (let obstacle of obstacles) {
-//     if (obstacle.y > canvasHeight) {
-//       obstacles.splice(obstacles.indexOf(obstacle), 1);
-//       console.log(obstacles.indexOf(obstacle));
-//     }
-//   }
-// }
-
-// function checkCollision(obstacle) {
-//   console.log('car right', newCar.right, 'obstacle', obstacle.height, obstacle.y)
-//   return !(
-//     newCar.right() >= obstacle.x &&  newCar.top() >= obstacle.y - obstacle.height|| 
-//     newCar.left() <= obstacle.x - obstacle.width && newCar.top() >= obstacle.y - obstacle.height
-//   );
-// }
-
-// function gameOver() {
-//   const collision = obstacles.some(obstacle => checkCollision(obstacle));
-//   if (collision) {alert('COLLISION');}
-// }
-
-// function updateObstacles() {
-//   obstacleGarbageCollection();
-//   for (i = 0; i < obstacles.length; i++) {
-//     obstacles[i].y += 1;
-//     obstacles[i].drawObstacle();
-//   }
-  
-
