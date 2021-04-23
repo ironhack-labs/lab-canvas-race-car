@@ -1,7 +1,14 @@
 body {
   padding: 0;
   text-align: center;
+  
 }
+#canvas {
+  border: 1px;
+  border-style: dotted;
+}
+
+
 
 .game-intro {
   float: left;
@@ -35,4 +42,5 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+    
 }
