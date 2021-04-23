@@ -1,193 +1,168 @@
-const carImg = new Image();
-carImg.src = './images/car.png';
-const raceImg = new Image();
-raceImg.src = './images/road.png';
+window.onload = () => {
+  document.getElementById('start-button').onclick = () => {
+    startGame();
+  };
+  function startGame() {}
+};
+const car = new Image();
+car.src = './images/car.png';
+const pista = new Image();
+pista.src = './images/road.png';
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const myGameArea = {
-  frames: 0,
-  score: function () {
-      const points = Math.floor(this.frames / 5);
-      ctx.font = '18px serif';
-      ctx.fillStyle = 'black';
-      ctx.fillText(`Score: ${points}`, 350, 50);
-  },
+    frames: 0
 };
-const car = {
-    width: 50,
-    height: 100,
-    x: 224,
-    y: 500,
-    dx: 0,
-    speed: 10
-}
-
-const race = {
-  width: 500,
-  height: 700,
-  img: raceImg,
-  x: 0,
-  y:0,
-  speed: 5,
-  move: function(){
-          this.y += this.speed
-          this.y %= canvas.height;
-  
-  },
-  draw: function(){
-    // context.drawImage(this.img, 0, this.y);
-    if (this.speed < 0) {
-      
-      context.drawImage(this.img, this.x, this.y + canvas.height, canvas.width, canvas.height);
-        
-    } else {
-      context.drawImage(this.img, this.x, this.y - canvas.height, canvas.width, canvas.height);
-        
-    }
-  }
-    
-}
-
-function drawCar(){
-  context.drawImage(carImg, car.x, car.y, car.width, car.height);
-  
-}
-
-function drawBackground(){
-  context.drawImage(raceImg, race.x, race.y, race.width, race.height);
-}
-
-function moveBg(){
-  race.dx = race.speed
-  race.x += race.dx
-  
-}
-
-function newPos(){
-  car.x += car.dx
-}
-
-function clear(){
-  context.clearRect(0,0,canvas.width, canvas.height)
-}
-
-function moveRight(){
-  car.dx = car.speed
-}
-
-function moveLeft(){
-  car.dx = -car.speed
-}
-
-function keyDown(event){
-  console.log(event.key)
-  switch (event.key) {
-    case "ArrowRight":
-      moveRight()
-      console.log("I moved Right")
-      break;
-    case "ArrowLeft":
-      moveLeft()
-      console.log("I moved Left")
-      break;
-    default:
-      break;
-  }
-}
-
-function detectWalls(){
-  if(car.x < 45){
-    car.x = 45
-  }if(car.x + car.width > canvas.width - 45){
-    car.x = (canvas.width - car.width) - 45
-  }
-  
-}
-
-function keyUp(){
-  car.dx = 0
-  car.dy = 0
-}
-
 class Component {
-  constructor(width, height, color, x, y) {
-      this.width = width;
-      this.height = height;
-      this.color = color;
-      this.x = x;
-      this.y = y;
-      this.speedX = 0;
-      this.speedY = 0;
+    constructor(width, height, x, y, dx, speed) {
+        this.width = width;
+        this.height = height;
+        this.dx = dx
+        this.y = y;
+        this.x = x;
+        this.speed = speed;
+        this.color = 'blue';
+        this.speedX = 0;
+        this.speedY = 0;
     }
-    crashWith(obstacle) {    
-      return !(
-          this.bottom() < obstacle.top() ||
-          this.top() > obstacle.bottom() || 
-          this.right() < obstacle.left() || 
-          this.left() > obstacle.right());
+    imagenes() {
+        context.drawImage(car, this.x, this.y, this.width, this.height);
     }
-  update() {  // GENERA UNA FIGURA COLOR ROJO
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
-  }
-  newPos() { // new Position del jugador o del obstáculo
-      this.x += this.speedX;
-      this.y += this.speedY;
-  }
+    newPos() { // new Position del jugador o del obstáculo
+        this.x += this.speedX;
+    }
+    update() { // GENERA UNA FIGURA COLOR ROJO
+        context.fillStyle = this.color;
+        //                x     y   w   h
+        context.fillRect(this.x, this.y, this.width, 10);
+    }
+    left() {
+        return this.x;
+    }
+    right() {
+        return this.x + this.width;
+    }
+    top() {
+        return this.y
+    }
+    bottom(){
+        return this.y + this.height
+    }
+    crashWith(obstacle) {
+        /*     return (
+            this.right() > obstacle.left() ||
+            this.left() < obstacle.right());
+ */
+    }
 }
-
-let myObstacles = []
-
-function updateObstacles(){
-  for (let i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].x += -1;
-    myObstacles[i].update();
-  }
-  myGameArea.frames += 1;
+const backgroundImage = {
+    img: pista,
+    x: 0,
+    y: 0,
+    speed: 1,
+    move: function() {
+        this.y += this.speed
+        this.y %= canvas.height;
+    },
+    draw: function() {
+        context.drawImage(this.img, 0, this.y, canvas.width, canvas.height);
+        context.drawImage(this.img, 0, this.y - canvas.height, canvas.width, canvas.height);
+    }
+}
+const carro = new Component(50, 80, 224, 600, 0, 10);
+const myObstacles = [];
+function updateObstacles() {
+    for (let i = 0; i < myObstacles.length; i++) {
+        myObstacles[i].y += 3;
+        myObstacles[i].update();
+    }
+    myGameArea.frames += 1;
     if (myGameArea.frames % 120 === 0) {
-      let x = canvas.width;
-      let minHeight = 20;
-      let maxHeight = 200;
-      let height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-      let minGap = 50;
-      let maxGap = 200;
-      let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-      // PRIMER PIPE
-      myObstacles.push(new Component(20, height, 'brown', x, 0));
-      // SEGUNDO PIPE
-      myObstacles.push(new Component(20, x - height - gap, 'brown', x, height + gap));
-      console.log(myObstacles)
+        let x = canvas.width;
+        let minWidth = 80;
+        let maxWidth = 320;
+        let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
+        //                               w    h   x   y   dx  speed
+        //  myObstacles.push(new Component(width, 10, 50, 50, 50, 0));
+        myObstacles.push(new Component(width, 10, 63, 0, 0, 0));
+        let minWidth2 = 80;
+        let maxWidth2 = 320;
+        let width2 = Math.floor(Math.random() * (maxWidth2 - minWidth2 + 1) + minWidth2);
+        myObstacles.push(new Component(-width2, 10, 440, 200, 200, 0));
+        console.log();
     }
-  
+}
+// GAME OVER
+function checkGameOver(id) {
+    const crashed = myObstacles.some(function(obstacle) {
+        return carro.crashWith(obstacle);
+        // return carro.crashWith(obstacle); // DEVUELVE UN VERDADERO O FALSO
+    });
+    if (crashed) {
+        cancelAnimationFrame(id)
+    }
+}
+const borrar = () => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+}
+const imagenes = () => {
+    context.drawImage(car, carro.x, carro.y, carro.width, carro.height);
+}
+const keyUp = () => {
+    carro.speedX = 0;
+}
+const keyDown = (event) => {
+    switch (event.key) {
+        case "ArrowRight":
+            carro.speedX += 10;
+            break;
+        case "ArrowLeft":
+            carro.speedX -= 10;
+            break;
+        default:
+            return;
+    }
+}
+const detectWalls = () => {
+    if (carro.x < 60) {
+        carro.x = 60;
+    }
+    if ((carro.x + carro.width) > canvas.width - 60) {
+        carro.x = (canvas.width - carro.width) - 60;
+    }
 }
 
-
-
+console.log(carro.top())
+function handleCollisions(){
+  for (let i= 0; i<myObstacles.length; i++){
+    //si la posición del carro en x es menor a la coordenada en x 
+    if (!(
+        // carro.left() < myObstacles[i].right() || 
+        // carro.right() > myObstacles[i].left() ||
+        carro.top() < myObstacles[i].bottom()||
+        carro.bottom() > myObstacles[i].top())
+       ){
+        //  cancelAnimationFrame(frameId)
+         console.log("choque");
+        }
+  }
+}
+document.addEventListener('keydown', keyDown);
+document.addEventListener('keyup', keyUp);
 window.onload = () => {
-    clear()
-    race.move()
-    race.draw()
-    detectWalls()
-    drawBackground()
-    updateObstacles()
-    newPos()
-    drawCar()
-    requestAnimationFrame(onload)
     document.getElementById('start-button').onclick = () => {
         startGame();
     };
     function startGame() {
-        
+      borrar();
+      backgroundImage.move();
+      backgroundImage.draw();
+      detectWalls();
+      carro.imagenes();
+      carro.newPos();
+      updateObstacles();
+      handleCollisions();
+      let frameId = requestAnimationFrame(startGame);
+      // cancelAnimationFrame(frameId);
     }
 };
-
-//eventos
-
-document.addEventListener('keydown', keyDown)
-document.addEventListener('keyup', keyUp )
-
-
-
-
-
-
