@@ -1,7 +1,18 @@
-window.onload = () => {
+window.addEventListener ("load", () => {
+  
+  const game = new Game("canvas")
+
+
   document.getElementById('start-button').onclick = () => {
-    startGame();
+   
+    if(!game.intervalId) {
+      game.start()
+    }
+
   };
 
-  function startGame() {}
-};
+  
+});
+
+
+
