@@ -11,6 +11,7 @@ class Game {
         canvas.height = 700
 
         this.background = new Background(this.ctx)
+        this.car = new Car(this.ctx)
     }
 
     start() {
@@ -28,12 +29,16 @@ class Game {
     }
     draw() {
         this.background.draw()
+        this.car.draw()
     }
 
 
    move() {
         this.background.move()
+        this.car.move()
     } 
- 
+    onKeyEvent(event) {
+        this.car.onKeyEvent(event)
+    }
 
 }
