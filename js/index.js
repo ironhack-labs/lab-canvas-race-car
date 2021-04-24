@@ -1,7 +1,13 @@
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+window.addEventListener('load', () => {
+  const game = new Game('canvas');
 
-  function startGame() {}
-};
+  document.addEventListener('keydown', (event) => {
+    game.onKeyEvent(event);
+  });
+
+  document.getElementById('start-button').onclick = () => {
+    if (!game.intervalId) {
+      game.start();
+    }
+  }
+});
