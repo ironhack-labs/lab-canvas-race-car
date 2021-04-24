@@ -1,14 +1,11 @@
 
-
-
-
 class Game {
     
     constructor(canvasId) {
         this.intervalId = null
 
         const canvas = document.getElementById(canvasId)
-        const ctx = canvas.getContext('2d')
+         this.ctx = canvas.getContext('2d')
     
         canvas.width = 500
         canvas.height = 700
@@ -33,7 +30,10 @@ class Game {
         this.background.draw()
     }
 
-    /* move() {} */
 
+   move() {
+        this.background.move()
+    } 
+ 
 
 }
