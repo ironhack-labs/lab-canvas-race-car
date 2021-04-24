@@ -7,7 +7,6 @@ window.addEventListener ("load", () => {
     if(!game.intervalId) {
       game.start()
     }
-    console.log("holis")
 
   };
 

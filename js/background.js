@@ -8,8 +8,8 @@ class Background {
         this.h = this.ctx.canvas.height
         this.w = this.ctx.canvas.width
 
-        this.vx = 0
-        this.vy = 2
+        
+        this.vy = 5
 
         this.img = new Image()
         this.img.src = "./images/road.png"
@@ -28,16 +28,17 @@ class Background {
 
         this.ctx.drawImage(
             this.img,
-            this.y + this.h,
             this.x,
+            this.y -this.h,
             this.w,
             this.h
           )
     }
     move() {
+        
         this.y += this.vy
-        if (this.y <= -this.h) {
+         if (this.y >= this.h) {
             this.y = 0
-        }
+        } 
     }
 }
