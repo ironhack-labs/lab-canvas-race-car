@@ -8,6 +8,14 @@ window.onload = () => {
     console.log("start")
   };
 
+  document.addEventListener('keydown', (event) => {
+    game.onKeyEvent(event);
+    console.log("movessss")
+  });
+
 };
+
+
+
 
 

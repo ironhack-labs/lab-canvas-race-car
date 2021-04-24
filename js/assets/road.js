@@ -7,7 +7,7 @@ class Road {
         this.h = this.ctx.canvas.height;
         this.w = this.ctx.canvas.width;
         
-        this.vy = 1;
+        this.vy = 3;
 
         this.img = new Image();
         this.img.src = './images/road.png';
