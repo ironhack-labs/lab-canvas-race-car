@@ -28,7 +28,7 @@ class Game {
 
       }
       this.checkCollisions()
-      this.scorePoints()
+      
     }, 1000 / 60)
   }
 
@@ -48,7 +48,13 @@ class Game {
 
   clearObstacles() {
 
-    this.obstacles = this.obstacles.filter(ob => ob.isVisible())
+    this.obstacles = this.obstacles.filter(ob => {
+      if (ob.isVisible()) {
+        return true
+      } else {
+        this.scorePoints()
+      }
+    })
   }
 
 
@@ -81,13 +87,8 @@ class Game {
     }
   }
 
-  scorePoints() {
-    if (this.clearObstacles()) {
-      this.score++
-      console.log(this.score)
-
-
-    }
+  scorePoints() {   
+      this.score.points++    
 
   }
 
