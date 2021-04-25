@@ -11,7 +11,13 @@ class Game {
 
         this.car = new Car(this.ctx)
 
-        this.obstacle = new Obstacle(this.ctx)
+        this.obstacles = [
+            new Obstacle(this.ctx)
+        ]
+
+        this.drawCount = 0 
+
+        this.score = new Score(this.ctx)
     }
 
     startGame() {
@@ -19,15 +25,40 @@ class Game {
             this.clear()
             this.move()
             this.draw()
-        }, 1000 / 60)
-
-        
+            this.checkCollisions()
+            this.clearObstacles()
+           if(this.drawCount > 150){
+                this.drawCount = 0
+                this.addObstacle()
+            }
+        }, 1000 / 60) 
     }
+    
+    updateScore() {
+        this.score.value += 20
+      }
+
+    clearObstacles() {
+        this.obstacles = this.obstacles.filter((o) => {
+          if (o.isVisible()) {
+            return true
+          } else {
+            this.updateScore()
+          }
+        })
+      }
+
+      addObstacle() {
+        const newObstacle = new Obstacle(this.ctx)
+        this.obstacles.push(newObstacle)
+      }
 
     draw() {
+        this.drawCount++
         this.background.draw() //llamo la funcion draw de this.background
         this.car.draw()
-        this.obstacle.draw()
+        this.obstacles.forEach(o => o.draw())
+        this.score.draw()
     }
 
     clear() {
@@ -36,10 +67,42 @@ class Game {
 
     move() {
         this.car.move()
-        this.obstacle.move()
+        this.obstacles.forEach(o => o.move())
     }
 
+    checkCollisions() {
+        const collision = this.obstacles.some(obstacle => {
+          const colX = (
+            this.car.x + this.car.w >= obstacle.x &&
+            this.car.x <= obstacle.x + obstacle.w
+          )
+    
+          const colY = (
+            this.car.y + this.car.h >= obstacle.y &&
+            this.car.y <= obstacle.y + obstacle.h
+          )
+    
+          return colX && colY
+        })
+    
+        if (collision) {
+          this.gameOver()
+        
+        }
+      }
     onKeyEvent(event) {
         this.car.onKeyEvent(event)
     }
+
+    gameOver() {
+        clearInterval(this.intervalId)
+    
+        this.ctx.font = "40px Comic Sans MS";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(
+          "GAME OVER",
+          this.ctx.canvas.width / 2,
+          this.ctx.canvas.height / 2
+        );
+      }
 }
