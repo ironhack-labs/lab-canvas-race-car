@@ -3,22 +3,42 @@ window.onload = () => {
     startGame();
   };
 
+  let frames = 0
+
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
+
+  let obstaclesArr = []
 
   class Obstacle {
     constructor () {
       this.width = Math.floor(Math.random() * (250) + 100);
       this.height = 25;
-      this.color = "blue";
+      this.color = "red";
       this.x = Math.floor(Math.random() * 250);
       this.y = 0;
     }
+
+    left() {
+      return this.x;
+    }
+    right() {
+      return this.x + this.width;
+    }
+    top() {
+      return this.y;
+    }
+    bottom() {
+      return this.y + this.height;
+    }
+
+    move() {
+      this.y += road.speed;
+    }
     
     draw() {
-      const obstacleCtx = document.getElementById('canvas').getContext('2d');
-      obstacleCtx.fillStyle = this.color;
-      obstacleCtx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
 
@@ -26,6 +46,8 @@ window.onload = () => {
     constructor () {
       this.x = 230;
       this.y = 600;
+      this.width = 40;
+      this.height = 80;
       const carImg = new Image();
       carImg.src = "./images/car.png";
       carImg.onload = () => {
@@ -33,7 +55,7 @@ window.onload = () => {
     }
     }
     draw() {
-      ctx.drawImage(this.img, this.x, this.y, 40, 80);
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
     moveLeft() {
       if (this.x >= 60) {
@@ -43,8 +65,24 @@ window.onload = () => {
     moveRight() {
       if (this.x <= 400) {
         this.x += 25;
+    }}
+
+    left() {
+      return this.x;
     }
-  }
+    right() {
+      return this.x + this.width;
+    }
+    top() {
+      return this.y;
+    }
+    bottom() {
+      return this.y + this.height;
+    }
+   
+    crashWith(obstacle) {
+      return !(this.bottom() < obstacle.top() || this.top() > obstacle.bottom() || this.right() < obstacle.left() || this.left() > obstacle.right());
+    }
   }
 
   class Road {
@@ -77,14 +115,38 @@ window.onload = () => {
   const car = new Car();
   const road = new Road();
 
+
   function startGame() {
     const roadImg = new Image();
     roadImg.src = "./images/road.png";
+    function gameOver () {
+      clearInterval(interval);
+    }
+    function checkGameOver() {
+      const crashed = obstaclesArr.some(function (obstacle) {
+        return car.crashWith(obstacle);
+      });
+     
+      if (crashed) {
+        gameOver();
+      }
+    }
+
     const interval = setInterval (() => {
+      frames += 1
       road.move();
       road.draw();
+      if (frames % 120 == 0) {
+        let obstacle = new Obstacle;
+        obstaclesArr.push (obstacle)
+      }
+      for (i = 0; i < obstaclesArr.length; i++) {
+        obstaclesArr[i].draw();
+        obstaclesArr[i].move();
+      }
       car.draw();
+      checkGameOver();
+      
       }, 1000/60)
+    }
   }
-
-};
