@@ -12,7 +12,7 @@ window.onload = () => {
 
   class Obstacle {
     constructor () {
-      this.width = Math.floor(Math.random() * (250) + 100);
+      this.width = Math.floor(Math.random() * (200) + 100);
       this.height = 25;
       this.color = "red";
       this.x = Math.floor(Math.random() * 250);
@@ -146,6 +146,12 @@ window.onload = () => {
       }
       car.draw();
       checkGameOver();
+
+      ctx.save();
+      ctx.fillStyle = "white";
+      ctx.font = '30px Arial';
+      ctx.fillText(`Score: ${Math.floor(frames/10)}`, 75, 50);
+      ctx.restore();
       
       }, 1000/60)
     }
