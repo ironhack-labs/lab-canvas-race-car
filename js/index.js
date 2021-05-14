@@ -3,6 +3,9 @@ window.onload = () => {
     startGame();
   };
 
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
   class Obstacle {
     constructor () {
       this.width = Math.floor(Math.random() * (250) + 100);
@@ -30,8 +33,6 @@ window.onload = () => {
     }
     }
     draw() {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
       ctx.drawImage(this.img, this.x, this.y, 40, 80);
     }
     moveLeft() {
@@ -50,16 +51,19 @@ window.onload = () => {
     constructor () {
       this.x = 0;
       this.y = 0;
+      this.speed = +3
       const roadImg = new Image();
       roadImg.src = "./images/road.png";
       roadImg.onload = () => {
       this.img = roadImg;
-    }
+    }}
+    move() {
+      this.y += this.speed
+      this.y %= canvas.height;
     }
     draw() {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
       ctx.drawImage(this.img, this.x, this.y, canvas.width, canvas.height);
+      ctx.drawImage(this.img, this.x, this.y - canvas.height +40, canvas.width, canvas.height);
     }
   }
 
@@ -74,11 +78,10 @@ window.onload = () => {
   const road = new Road();
 
   function startGame() {
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
     const roadImg = new Image();
     roadImg.src = "./images/road.png";
     const interval = setInterval (() => {
+      road.move();
       road.draw();
       car.draw();
       }, 1000/60)
