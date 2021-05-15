@@ -122,6 +122,17 @@ window.onload = () => {
     roadImg.src = "./images/road.png";
     function gameOver () {
       clearInterval(interval);
+      ctx.save();
+      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillRect (0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.font = "bold 50px Arial"; 
+      ctx.fillText (`GAME OVER`, canvas.width / 2, canvas.height / 2);
+      ctx.font = "bold 33px Arial"; 
+      ctx.fillText (`RELOAD PAGE`, canvas.width / 2, canvas.height / 2 + 60);
+      ctx.fillText (`TO RELAY`, canvas.width / 2, canvas.height / 2 + 100);
+      ctx.retore();
     }
     function checkGameOver() {
       const crashed = obstaclesArr.some(function (obstacle) {
@@ -140,6 +151,10 @@ window.onload = () => {
       if (frames % 80 == 0) {
         let obstacle = new Obstacle;
         obstaclesArr.push (obstacle)
+        obstaclesArr = obstaclesArr.filter((obstacle) => {
+          console.log(obstaclesArr.length)
+          return (obstacle.y < canvas.height);
+        })
       }
       for (i = 0; i < obstaclesArr.length; i++) {
         obstaclesArr[i].draw();
