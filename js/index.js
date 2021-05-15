@@ -89,7 +89,7 @@ window.onload = () => {
     constructor () {
       this.x = 0;
       this.y = 0;
-      this.speed = +3
+      this.speed = +5
       const roadImg = new Image();
       roadImg.src = "./images/road.png";
       roadImg.onload = () => {
@@ -137,7 +137,7 @@ window.onload = () => {
       frames += 1
       road.move();
       road.draw();
-      if (frames % 120 == 0) {
+      if (frames % 80 == 0) {
         let obstacle = new Obstacle;
         obstaclesArr.push (obstacle)
       }
