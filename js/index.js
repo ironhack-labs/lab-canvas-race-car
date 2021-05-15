@@ -131,7 +131,7 @@ window.onload = () => {
       ctx.fillText (`GAME OVER`, canvas.width / 2, canvas.height / 2);
       ctx.font = "bold 33px Arial"; 
       ctx.fillText (`RELOAD PAGE`, canvas.width / 2, canvas.height / 2 + 60);
-      ctx.fillText (`TO RELAY`, canvas.width / 2, canvas.height / 2 + 100);
+      ctx.fillText (`TO REPLAY`, canvas.width / 2, canvas.height / 2 + 100);
       ctx.retore();
     }
     function checkGameOver() {
