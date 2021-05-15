@@ -5,7 +5,7 @@ class Game {
       this.interval = null
   
       this.background = new Background(ctx)
-      //this.player = new Player(ctx)
+      this.player = new Player(ctx)
     }
   
     start() {
@@ -24,10 +24,11 @@ class Game {
   
     draw() {
       this.background.draw()
-      //this.player.draw()
+      this.player.draw()
     }
   
     move() {
       this.background.move()
+      this.player.move()
     }
   }
