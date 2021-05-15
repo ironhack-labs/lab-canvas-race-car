@@ -114,6 +114,7 @@ window.onload = () => {
 
   const car = new Car();
   const road = new Road();
+  let interval = undefined
 
 
   function startGame() {
@@ -131,8 +132,8 @@ window.onload = () => {
         gameOver();
       }
     }
-
-    const interval = setInterval (() => {
+    if (!interval) {
+    interval = setInterval (() => {
       frames += 1
       road.move();
       road.draw();
@@ -155,4 +156,5 @@ window.onload = () => {
       
       }, 1000/60)
     }
+  }
   }
