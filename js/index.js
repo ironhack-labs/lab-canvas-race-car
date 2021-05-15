@@ -9,5 +9,13 @@ window.onload = () => {
     const game = new Game(ctx);
 
     game.start();
+
+    document.addEventListener("keydown", () => {
+      game.onKeyEvent(event);
+    });
+
+    document.addEventListener("keyup", () => {
+      game.onKeyEvent(event);
+    });
   }
 };
