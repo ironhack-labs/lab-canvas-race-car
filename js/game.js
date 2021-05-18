@@ -42,7 +42,7 @@ class Game {
 
     clear(){
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.obstacles.filter((obstacle) => obstacle.y + obstacle.height )
+        this.obstacles = this.obstacles.filter((obstacle) => obstacle.x + obstacle.width >= 0)
     }
 
     draw(){
@@ -73,8 +73,24 @@ class Game {
         )
     }
 
+    gameOver() {
+        clearInterval(this.drawInterval);
+
+        this.ctx.save();
+        this.ctx.fillStyle = "rgb(0, 0, 0)";
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+        this.ctx.font = "60px Arial";
+        this.ctx.fillStyle = "white";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText("GAME OVER", this.ctx.canvas.width / 2, this.ctx.canvas.height / 2)
+        this.ctx.restore();
+    }
+
     checkCollisions() {
-        if (this.obstacles.some(obstacle => this.car.collidesWith(obstacle)))
+        if (this.obstacles.some((obstacle) => this.car.collidesWith(obstacle))) {
+           this.gameOver()
+        }
     }
 
 }
