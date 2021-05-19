@@ -1,15 +1,20 @@
 class Car {
     constructor(ctx, x, y) {
+        //Definimos el contexto
         this.ctx = ctx
+        //Definimos la posicion (x,y) de nuestro coche con respecto al canvas
         this.x = 150
-        //y viene fijada en game.js
         this.y = 300
+        //El coche inicialmente esta quieto en el eje x
         this.vx = 0
         //En el eje X el coche podra desplazarse en el intervalo (0, ancho)
         // this.minX = 0
         //this.maxX = this.ctx.canvas.width
-
-        this.width = this.ctx.canvas.width
+        //Establecemos el ancho y alto de nuestro sprite
+        this.width = 70;
+        this.height = 130;
+        //Definimos nuestra propiedad ancho del canvas (width2)
+        this.width2 = this.ctx.canvas.width
 
         this.sprite = new Image()
         this.sprite.src = '../images/car.png'
@@ -36,7 +41,7 @@ class Car {
     draw() {
         if (this.isReady()) {
             this.ctx.drawImage(this.sprite, this.x, this.y, this.width, this.height)
-            //this.ctx.drawImage(this.img, this.y + this.height, this.width, this.height)
+
         }
     }
 
@@ -45,13 +50,13 @@ class Car {
         //Llammamos al metodo movement y accedemos al value de su key, si es true ejecuta el if
         if (this.movements.right) {
             this.x += this.vx
-            if (this.x + this.width <= 0) {
+            if (this.x + this.width2 <= 0) {
                 this.x = 0
             }
         } else {
             this.x -= this.vx
-            if (this.x + this.width >= this.width) {
-                this.x = this.width
+            if (this.x + this.width2 >= this.width2) {
+                this.x = this.width2
             }
         }
     }

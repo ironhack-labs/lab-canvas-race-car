@@ -7,8 +7,8 @@ class Game {
 
         this.background = new Background(this.ctx)
         //Establecemos medidas Canvas
-        this.canvas.width = 300
-        this.canvas.height = 450
+        this.canvas.width = 600
+        this.canvas.height = 500
         //La y la fijamos en 300, ya que el coche esquiva desplazandose izda-dcha 
         //y el fondo es el que se mueve dando efectua visual de que es el coche desplazandose por y
        this.car = new Car(this.ctx, this.x,this.y )
@@ -36,6 +36,6 @@ class Game {
 
     move() {
         this.background.move()
-     this.car.move()
+     //this.car.move()
     }
 }
