@@ -3,6 +3,19 @@ body {
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
+  min-height: 700px;
+
+}
+
 .game-intro {
   float: left;
   padding: 0% 10%;
