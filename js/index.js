@@ -9,10 +9,10 @@ document.getElementById("start-button").onclick = () => {
 function startGame() {
   canvas.classList.add("back");
   gameArea.clear();
-  
-    ferrari.draw();
+  ferrari.draw();
   updateObstacles();
   checkGameOver();
+  gameArea.score();
 }
 
 const gameArea = {
@@ -24,8 +24,25 @@ const gameArea = {
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
   },
   stop: function () {
+    
     clearInterval(this.interval);
   },
+  score: function(){
+    let points = 0;
+    points = Math.floor(this.frames/12)
+    context.font = "15px Arial"
+    context.fillStyle = "black"
+    context.fillText(`Score: ${points}`, 420, 30)
+    
+    context.beginPath();
+    context.moveTo(418, 35);
+    context.lineTo (418, 15);
+    context.lineTo(495, 15)
+    context.lineTo(495, 35);
+    context.strokeStyle = "black";
+    context.closePath()
+    context.stroke()
+  }
 };
 class Car {
   constructor(x, y) {
@@ -101,11 +118,11 @@ class Component {
 
 function updateObstacles() {
   obstacles.forEach((obstacle) => {
-    obstacle.y += 1;
+    obstacle.y += 3;
     obstacle.update();
   });
   gameArea.frames += 1;
-  if (gameArea.frames % 200 === 0) {
+  if (gameArea.frames % 120 === 0) {
     const minWidth = 120;
     const maxWidth = 225;
     const randomWidth = Math.floor(
