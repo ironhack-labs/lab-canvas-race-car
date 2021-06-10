@@ -1,7 +1,9 @@
+canvasRacingCar.init();
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    // canvasRacingCar.startGame(); Función que activa obstaculos.
   };
 
-  function startGame() {}
+  function startGame() { }
 };
+
