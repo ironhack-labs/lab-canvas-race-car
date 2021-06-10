@@ -4,18 +4,21 @@ const context = canvas.getContext("2d");
 let obstacles = [];
 document.getElementById("start-button").onclick = () => {
   startGame();
+  gameArea.start();
 };
 function startGame() {
   canvas.classList.add("back");
   gameArea.clear();
+  
     ferrari.draw();
   updateObstacles();
+  checkGameOver();
 }
 
 const gameArea = {
   frames: 0,
   start: function () {
-    this.interval = setInterval(startGame, 40);
+    this.interval = setInterval(startGame, 10);
   },
   clear: function () {
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
@@ -63,12 +66,10 @@ class Car {
   }
 
   crashWith(component) {
-    return !(
-      this.bottom() < component.top() || //Procura por quando não bate e aí usa o ! para achar o contrário disso que é quando bate
+    return !(this.bottom() < component.top() || //Procura por quando não bate e aí usa o ! para achar o contrário disso que é quando bate
       this.top() > component.bottom() ||
       this.right() < component.left() ||
-      this.left() > component.right()
-    );
+      this.left() > component.right());
   }
 }
 class Component {
@@ -118,6 +119,15 @@ function updateObstacles() {
   }
 }
 
+function checkGameOver (){
+  const crashed = obstacles.some((obstacle)=> {
+    return ferrari.crashWith(obstacle) === true
+  })
+  if (crashed){
+    gameArea.stop()
+  }
+}
+
 document.addEventListener("keydown", (e) => {
   // console.log(e);
   switch (e.key) {
@@ -131,7 +141,6 @@ document.addEventListener("keydown", (e) => {
   context.clearRect(0, 0, canvas.width, canvas.height);
   ferrari.draw();
   
-  gameArea.start();
 });
 
 const ferrari = new Car(225, 590);
