@@ -9,6 +9,8 @@ const carRaceApp = {
   canvasDOM: undefined,
   canvasSize: { w: undefined, h: undefined },  
   car: undefined,
+  obstacles: [],
+  framesCounter: 0,
 
   init(){
     this.setContext()
@@ -69,14 +71,52 @@ const carRaceApp = {
 
   start(){
     this.createCar()
+    this.createObstacles()
     this.setListeners()
-    setInterval(() => {
+    let id = setInterval(() => {
         this.clearScreen()
+        this.moveAllObstacles()
+        // this.isCrash()
+        if( this.isCrash()){
+          clearInterval(id)
+          // this.clearScreen()
+          this.drawFinalScreen()
+        }
+        if(this.isCrash()){
+
+          this.drawFinalScreen()
+        }
+        this.isCrash()
         this.drawAll()
+        this.framesCounter++
+        this.framesCounter % 20 == 0 ? this.createObstacles() : null
+        // console.log(this.obstacles.length)
     }, 70)
 
   },
   
+  createObstacles(){
+
+    // const minWidth = 100
+    // const maxWidth = 300
+    let obstacleWidth = Math.random()*200
+    if(obstacleWidth < 100){
+      obstacleWidth = 100
+    }
+    // if(obstacleWidth > 300){
+    //   obstacleWidth = 300
+    // }
+    const posX = Math.random()* (400 - obstacleWidth)
+
+    const obstacle = new Obstacle(this.ctx, posX, 10, obstacleWidth, 10, this.canvasSize)
+
+    this.obstacles.push(obstacle)
+    // console.log(this.obstacles)
+  },
+
+  // drawAll() {
+  //   this.obstacles.forEach(obstacle => obstacle.draw())
+  // },
 
   createCar(){
     this.car = new Car(this.ctx, 225, 650, 50, 50, 'car.png')
@@ -88,8 +128,46 @@ const carRaceApp = {
 
   drawAll() {
     this.setBackground()
-      this.car.draw()
-  }
+    this.car.draw()
+    
+    this.obstacles.forEach(obstacle => obstacle.draw())
+  },
+
+  drawFinalScreen(){
+    this.setBackground()
+    this.car.draw()
+    this.myFillRect(200, 400 , 100, 100, 'violet' )
+    
+  },
+
+
+  isCrash(){
+    // console.log(this.obstacles[0].obstaclePos.x)
+    if(this.obstacles[0].obstaclePos.y > 700){
+      this.obstacles.shift();
+    }
+    const xo = this.obstacles[0].obstaclePos.x
+    const yo = this.obstacles[0].obstaclePos.y
+    const wo = this.obstacles[0].obstacleSize.w
+    const xc = this.car.carPos.x
+    const yc = 650
+    const wc = 50
+    
+    if( ( yo > yc ) && 
+        (( xo < xc && (xo + wo) > xc ) ||
+        ( xo > xc) && (xc + wc) > xo)) {
+      console.log('Baaaammm!!!!', xc)
+      
+      
+      return true
+    }
+    
+  },
+
+  
+  moveAllObstacles() {
+    this.obstacles.forEach(obstacle => obstacle.move())
+}
   
 
 

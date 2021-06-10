@@ -23,11 +23,11 @@ class Car{
     }
   
     moveLeft() {
-        this.carPos.x -= 10
+        this.carPos.x -= 25
     }
 
     moveRight() {
-        this.carPos.x += 10
+        this.carPos.x += 25
     }
   
   
