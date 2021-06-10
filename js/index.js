@@ -26,6 +26,16 @@ const gameArea = {
   stop: function () {
     
     clearInterval(this.interval);
+    const FinalScore = `FINAL SCORE: ${this.score()}`
+    context.fillStyle = "black";
+    context.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    context.font = "50px Arial"
+    context.fillStyle = "red"
+    context.fillText("GAME OVER", 110, 250)
+    context.font = "35px Arial"
+    context.fillStyle = "white"
+    context.fillText(FinalScore, 110, 350)
+    
   },
   score: function(){
     let points = 0;
@@ -33,7 +43,6 @@ const gameArea = {
     context.font = "15px Arial"
     context.fillStyle = "black"
     context.fillText(`Score: ${points}`, 420, 30)
-    
     context.beginPath();
     context.moveTo(418, 35);
     context.lineTo (418, 15);
@@ -42,6 +51,12 @@ const gameArea = {
     context.strokeStyle = "black";
     context.closePath()
     context.stroke()
+    return points
+    // const bestScore = [] Tried to implement best score
+    // bestScore.push(points)
+    // context.font = "15px Arial"
+    // context.fillStyle = "black"
+    // context.fillText(`Score: ${Math.max(...bestScore)}`, 420, 70)
   }
 };
 class Car {
@@ -155,8 +170,6 @@ document.addEventListener("keydown", (e) => {
       ferrari.moveRight();
       break;
   }
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  ferrari.draw();
   
 });
 
