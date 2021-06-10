@@ -5,12 +5,13 @@ const carRaceApp = {
   author: 'Ironhack Team and Silviu Dilimot',
   license: undefined,
   repository: 'https://github.com/SilviuDN/lab-canvas-race-car.git',
-  ctx: undefined,
   canvasDOM: undefined,
+  ctx: undefined,
   canvasSize: { w: undefined, h: undefined },  
   car: undefined,
   obstacles: [],
   framesCounter: 0,
+  score: 0,
 
   init(){
     this.setContext()
@@ -45,10 +46,6 @@ const carRaceApp = {
     this.ctx.closePath()
   },
 
-  // myInsertImage(){
-  //   const 
-  // }
-
   setContext(){
     this.canvasDOM = document.getElementById('canvas')
     this.ctx = this.canvasDOM.getContext('2d')
@@ -76,18 +73,13 @@ const carRaceApp = {
     let id = setInterval(() => {
         this.clearScreen()
         this.moveAllObstacles()
-        // this.isCrash()
-        if( this.isCrash()){
+        if( this.isCrash()){          
+          this.drawFinalScreen()
+          console.log(this.score)
           clearInterval(id)
-          // this.clearScreen()
-          this.drawFinalScreen()
+        }else{
+          this.drawAll()
         }
-        if(this.isCrash()){
-
-          this.drawFinalScreen()
-        }
-        this.isCrash()
-        this.drawAll()
         this.framesCounter++
         this.framesCounter % 20 == 0 ? this.createObstacles() : null
         // console.log(this.obstacles.length)
@@ -96,27 +88,14 @@ const carRaceApp = {
   },
   
   createObstacles(){
-
-    // const minWidth = 100
-    // const maxWidth = 300
-    let obstacleWidth = Math.random()*200
-    if(obstacleWidth < 100){
-      obstacleWidth = 100
-    }
-    // if(obstacleWidth > 300){
-    //   obstacleWidth = 300
-    // }
+    //random obstacle width between 100 and 200
+    let obstacleWidth = Math.random()*150 + 100 
     const posX = Math.random()* (400 - obstacleWidth)
 
     const obstacle = new Obstacle(this.ctx, posX, 10, obstacleWidth, 10, this.canvasSize)
-
     this.obstacles.push(obstacle)
     // console.log(this.obstacles)
   },
-
-  // drawAll() {
-  //   this.obstacles.forEach(obstacle => obstacle.draw())
-  // },
 
   createCar(){
     this.car = new Car(this.ctx, 225, 650, 50, 50, 'car.png')
@@ -128,23 +107,26 @@ const carRaceApp = {
 
   drawAll() {
     this.setBackground()
-    this.car.draw()
-    
+    this.car.draw()    
     this.obstacles.forEach(obstacle => obstacle.draw())
   },
 
   drawFinalScreen(){
+    this.clearScreen()
     this.setBackground()
     this.car.draw()
-    this.myFillRect(200, 400 , 100, 100, 'violet' )
-    
+    this.myFillRect(100, 200, 300, 300,'green')
+    this.ctx.fillStyle = "orange"
+    this.ctx.font = "30px Arial"
+    this.ctx.fillText(`Congrats! You won ${this.score} points!`, 100, 400, 300)
+    // this.ctx.fillStyle = 'green'
+    // this.myFillRect(200, 400 , 100, 100)     
   },
 
-
   isCrash(){
-    // console.log(this.obstacles[0].obstaclePos.x)
     if(this.obstacles[0].obstaclePos.y > 700){
       this.obstacles.shift();
+      this.score ++
     }
     const xo = this.obstacles[0].obstaclePos.x
     const yo = this.obstacles[0].obstaclePos.y
@@ -156,14 +138,11 @@ const carRaceApp = {
     if( ( yo > yc ) && 
         (( xo < xc && (xo + wo) > xc ) ||
         ( xo > xc) && (xc + wc) > xo)) {
-      console.log('Baaaammm!!!!', xc)
-      
-      
+      console.log('Baaaammm!!!!', xc)     
       return true
     }
     
   },
-
   
   moveAllObstacles() {
     this.obstacles.forEach(obstacle => obstacle.move())
