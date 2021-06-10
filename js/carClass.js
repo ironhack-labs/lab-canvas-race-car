@@ -23,11 +23,16 @@ class Car{
     }
   
     moveLeft() {
+      if(this.carPos.x > 70){
         this.carPos.x -= 25
+      }
     }
 
     moveRight() {
+      if(this.carPos.x < 380){
         this.carPos.x += 25
+      }
+        
     }
   
   
