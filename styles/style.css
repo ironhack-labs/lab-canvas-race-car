@@ -10,7 +10,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -33,6 +33,28 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+  position: relative;
+}
+
+#end-game {
+  position: absolute;
+  top: 200px;
+  left: 0px;
+
+  width: 80%;
+  margin: 20px;
+  padding: 20px;
+  background-color: black;
+  border: 5px solid darkred;
+  border-radius: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  font-weight: 900;
+  text-align: center;
+  color: darkred;
+  text-transform: uppercase;
+  z-index: 5;
+  display: none;
 }
