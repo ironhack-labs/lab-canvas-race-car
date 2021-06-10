@@ -89,8 +89,8 @@ const gameApp = {
             this.drawAll()
             this.framesCounter++
             if (this.framesCounter % 20 === 0) {
-                numRandom =Math.floor(Math.random() * (450 -350) - 350)
-                numRandom2 = Math.floor(Math.random() * (450))
+                numRandom =Math.floor(Math.random() * (450-200)+100)
+                numRandom2 = Math.floor(Math.random() * (450-200))
                 this.obstacles.push(new Obstacle(this.ctx, numRandom2, -75, numRandom, 150, 10, this.canvasSize))
             }
         }, 100/2)
