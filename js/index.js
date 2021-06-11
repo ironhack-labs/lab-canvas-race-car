@@ -1,7 +1,11 @@
 window.onload = () => {
+  let started = false;
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    if (!started) startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    started = true;
+    raceApp.init()
+  }
 };
