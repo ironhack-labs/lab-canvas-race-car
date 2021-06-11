@@ -3,13 +3,15 @@ const interactionApp = {
     canvasDOM: undefined,
     car: undefined,
     canvasSize: { w: undefined, h: undefined },
-    obstacles: [],
+    otherCars: [],
+
     init() {
         this.setContext()
         this.setDimensions()
         this.backgroundColor()
         this.start()
     },
+
     setContext() {
         this.canvasDOM = document.querySelector('#canvas')
         this.ctx = this.canvasDOM.getContext('2d')
@@ -31,6 +33,8 @@ const interactionApp = {
         this.ctx.fillStyle = 'grey'
         this.ctx.fillRect(80, 0, 340, 700)
         this.ctx.lineWidth = 5
+        
+
         this.ctx.beginPath()
         this.ctx.strokeStyle = 'white';
         this.ctx.setLineDash([60, 20])
@@ -38,6 +42,8 @@ const interactionApp = {
         this.ctx.lineTo(this.canvasSize.w / 2 - 10, this.canvasSize.h - 0)
         this.ctx.stroke()
         this.ctx.closePath()
+
+        
     },
     setListeners() {
         document.onkeyup = e => {
@@ -50,11 +56,15 @@ const interactionApp = {
     },
     start() {
         this.createCar()
+        this.createCObs()
         this.setListeners()
 
         setInterval(() => {
             this.clearScreen()
+            this.moveAll()
             this.drawAll()
+
+
         }, 70)
     },
 
@@ -69,16 +79,50 @@ const interactionApp = {
     drawAll() {
         this.backgroundColor()
         this.car.draw()
-        this.createObstacles()
+        this.otherCars.forEach(elm => elm.draw())
 
+      //  this.createObstacles()
+      //  this.createObstacles2()
+
+    },
+    moveAll() {
+        this.otherCars.forEach(elm => elm.move())
+    },
+
+    createCObs() {
+        const otherCar1 = new CarObstacles(this.ctx, 100, -100, 60, 100, 5, this.canvasSize)
+        const otherCar2 = new CarObstacles(this.ctx, 300, -200, 60, 100, 10, this.canvasSize)
+        const otherCar3 = new CarObstacles(this.ctx, 200, -300, 60, 100, 7, this.canvasSize)
+        const otherCar4 = new CarObstacles(this.ctx, 400, -400, 60, 100, 3, this.canvasSize)
+        const otherCar5 = new CarObstacles(this.ctx, 50, -500, 60, 100, 8, this.canvasSize)
+        const otherCar6 = new CarObstacles(this.ctx, 400, -200, 60, 100, 7, this.canvasSize)
+        const otherCar7 = new CarObstacles(this.ctx, 450, -150, 60, 100, 8, this.canvasSize)
+        const otherCar8 = new CarObstacles(this.ctx, 300, -350, 60, 100, 6, this.canvasSize)
+        const otherCar9 = new CarObstacles(this.ctx, 250, 0, 60, 100, 7, this.canvasSize)
+
+        this.otherCars.push(otherCar1, otherCar2, otherCar3,otherCar4, otherCar5, otherCar6,otherCar7, otherCar8, otherCar9)
+    },
+
+    // ------------------
+
+    
+    /*drawAllObstacles() {
+        this.createObstacles()
     },
 
     // -----------------------------------------------------------------------
 
     createObstacles() {
+        let randomH = Math.floor(Math.random()*700)
+        let randomW = Math.floor(Math.random()*500)
         this.ctx.fillStyle = 'blue'
-        this.ctx.fillRect(0, 0, 100, 100)
-    }
+        this.ctx.fillRect(randomH, randomW, 100, 10)
+    },
+
+    createObstacles2() {
+        this.ctx.fillStyle = 'red'
+        this.ctx.fillRect(100, 200, 100, 10)
+    }*/
 }
 
 
@@ -117,5 +161,44 @@ class Car {
     }
     moveDown () {
         this.carPos.y += 20
+    }
+}
+
+
+
+
+class CarObstacles {
+
+    constructor(ctx, posX, posY, width, height, speed, canvasSize) {
+        this.ctx = ctx
+        this.cObsPos = { x: posX, y: posY }
+        this.cObsSize = { w: width, h: height }
+        this.cObsImage = 'car.png'
+        this.imageInstance = undefined
+        this.cObsSpeed = speed
+        this.canvasSize = canvasSize
+
+        this.init()
+    }
+
+    init() {
+        this.imageInstance = new Image()
+        this.imageInstance.src = `images/${this.cObsImage}`
+    }
+
+    draw() {
+        this.ctx.drawImage(this.imageInstance, this.cObsPos.x, this.cObsPos.y, this.cObsSize.w, this.cObsSize.h)
+    }
+
+    move() {
+
+        if (this.cObsPos.y >= this.canvasSize.h - this.cObsSize.h|| this.cObsPos.x <= -600) {
+            this.turn()
+        }
+
+        this.cObsPos.y += this.cObsSpeed    }
+
+    turn() {
+        this.cObsSpeed *= -1
     }
 }
