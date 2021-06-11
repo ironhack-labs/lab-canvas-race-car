@@ -1,7 +1,11 @@
 window.onload = () => {
+  gameApp.init()
   document.getElementById('start-button').onclick = () => {
-    startGame();
+        startGame();
+    console.log('start-button');
+    
   };
 
-  function startGame() {}
+  function startGame() {
+  }
 };
