@@ -76,9 +76,8 @@ function updateCanvas(){
       currentGame.obstacles = [];
       document.getElementById('score').innerHTML = 0;
       document.getElementById('game-board').style.display = 'none';
-      alert('BOOOM! GAME OVER')
-
-
+      cancelAnimationFrame(currentGame.animationId); //cancel animation so it doesn't keep playing once the game is over
+      alert('BOOOM! GAME OVER');
 
     }
 
@@ -101,9 +100,14 @@ function updateCanvas(){
   });
 
 
-  console.log(currentGame.obstacles);
-  requestAnimationFrame(updateCanvas); //same as the set interval_but this one makes the animation smoother. but it is always 60.
-  //Set interval allows you to put things faster or slower.
+  // console.log(currentGame.obstacles);
+  if(!currentGame.gameOver){ 
+    currentGame.animationId = requestAnimationFrame(updateCanvas); //same as the set interval_but this one makes the animation smoother. but it is always 60.
+    //Set interval allows you to put things faster or slower.
+    //It is important to have animationId otherwise it will get faster and faster
+    //Since it is an animation inside an animation
+  }
+  
 }
 
 
