@@ -12,6 +12,7 @@ const raceCarApp = {
   intervalId: undefined,
   score: 0,
   obstacles: [],
+  speed: 5,
 
   init() {
     this.setContext();
@@ -39,6 +40,8 @@ const raceCarApp = {
     document.addEventListener('keyup', e => {
       e.key === 'ArrowLeft' ? this.newCar.moveLeft() : '';
       e.key === 'ArrowRight' ? this.newCar.moveRight() : '';
+      e.key === 'ArrowUp' ? (this.speed += 1) : '';
+      e.key === 'ArrowDown' ? (this.speed -= 1) : '';
     });
   },
 
@@ -133,7 +136,8 @@ const raceCarApp = {
           randomWidth,
           randomHeight,
           this.canvasSize,
-          xRandomPosition
+          xRandomPosition,
+          this.speed
         );
 
         this.obstacles.push(newObstacle);
@@ -209,14 +213,14 @@ class Car {
 }
 
 class obstacles {
-  constructor(ctx, width, height, canvasSize, position) {
+  constructor(ctx, width, height, canvasSize, position, speed) {
     (this.ctx = ctx),
       (this.obstacleSize = { w: width, h: height }),
       (this.canvasSize = canvasSize);
     this.obstaclePosition = { x: position, y: -100 };
     this.obstacleImg = undefined;
     this.randomImage = Math.trunc(Math.random() * (8 - 1) + 1);
-    this.speed = 5;
+    this.speed = speed;
 
     this.init();
   }
