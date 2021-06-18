@@ -21,6 +21,10 @@ body {
   width: 150px;
 }
 
+#canvas{
+  border: 1px solid red;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
