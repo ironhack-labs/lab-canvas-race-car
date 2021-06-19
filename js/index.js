@@ -48,21 +48,28 @@ let car = new Car(50, 350, 75, 125);
 // Obstacles
 
 let obstacles = [];
+let gameFrames = 0;
 class Obstacle {
     constructor() {
-        this.x = Math.floor(Math.random()* road.width);;
-        this.y = Math.floor(Math.random()* road.height);;
-        this.width = Math.floor(Math.random()*80);
-        this.height = Math.floor(Math.random()*100);
-        this.color = '#000';
+        this.x = Math.floor(Math.random() * 300);
+        this.y = 0;
+        this.vy = 5;
+        this.width = Math.floor(Math.random() * 80);
+        this.height = Math.floor(Math.random() * 100);
+        this.color = "#000";
     }
 
     drawObstacle() {
-      ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
-      obstacles.push(new Obstacle());
+        ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
+    }
+    createObstacle() {
+      if (gameFrames % 200 === 0) {
+        gameFrames = 0;
+        obstacles.push(new Obstacle());
+      }
+
     }
 }
-
 
 
 // Arrow Keys
@@ -70,18 +77,19 @@ class Obstacle {
 document.onkeydown = function (e) {
     console.log("it moves", e);
     if (e.keyCode === 37) {
-      if (car.x >= 25) {
-        car.x -= 20;
-      }
+        if (car.x >= 25) {
+            car.x -= 20;
+        }
     }
     if (e.keyCode === 39) {
-      if (car.x <= 200 ) {
-        car.x += 20;
-      }
+        if (car.x <= 200) {
+            car.x += 20;
+        }
     }
 };
 
 // Start Game
+
 function startGame() {
     console.log("Game has started!");
 
@@ -93,6 +101,18 @@ function startGame() {
 
         // Car Image
         car.drawCar();
-    }, 15);
-}
 
+
+        // Create Obstacle
+          let newObs = new Obstacle();
+          newObs.createObstacle();
+
+        // Update Obstacles
+        for (let i = 0; i <= obstacles.length; i++) {
+            obstacles[i].y += obstacles[i].vy;
+            obstacles[i].drawObstacle();
+        }
+
+        gameFrames ++;
+    }, 20);
+}
