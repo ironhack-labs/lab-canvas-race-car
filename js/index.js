@@ -8,32 +8,35 @@ window.onload = () => {
 const canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-// The Road
+// The Road Canvas
 const roadCanvas = document.getElementById("road");
 let roadCtx = roadCanvas.getContext("2d");
+
 class Road {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.width = roadCanvas.width;
+        this.height = roadCanvas.height;
         this.img = new Image();
         this.img.src = "../images/road.png";
-        this.gameFrames = 0;
-        this.speed = -1;
+        this.speed = 2;
     }
 
     drawRoad() {
-        ctx.drawImage(this.img, this.x, this.y);
-        if (this.speed < 0) {
-            ctx.drawImage(this.img, this.x, this.y + this.img.height);
-        } else {
-            ctx.drawImage(this.img, this.x, this.y - roadCanvas.height);
-        }
-        
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.drawImage(
+            this.img,
+            this.x,
+            this.y - roadCanvas.height,
+            this.width,
+            this.height
+        );
     }
 
     move() {
         this.y += this.speed;
-        this.y %= canvas.height;
+        this.y %= roadCanvas.height;
     }
 }
 
@@ -74,11 +77,21 @@ class Obstacle {
     drawObstacle() {
         ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
     }
-    createObstacle() {
-        if (road.gameFrames % 200 === 0) {
-            road.gameFrames = 0;
-            obstacles.push(new Obstacle());
-        }
+}
+
+let gameFrames = 0;
+
+function createObstacles() {
+    if (gameFrames % 180 === 0) {
+        console.log("adding obs ", gameFrames);
+        obstacles.push(new Obstacle());
+    }
+}
+
+function updateObstacles() {
+    for (let i = 0; i < obstacles.length; i++) {
+        obstacles[i].y += obstacles[i].vy;
+        obstacles[i].drawObstacle();
     }
 }
 
@@ -113,16 +126,9 @@ function startGame() {
         // Car Image
         car.drawCar();
 
-        // Create Obstacle
-        let newObs = new Obstacle();
-        newObs.createObstacle();
+        createObstacles();
+        updateObstacles();
 
-        // Update Obstacles
-        for (let i = 0; i <= obstacles.length; i++) {
-            obstacles[i].y += obstacles[i].vy;
-            obstacles[i].drawObstacle();
-        }
-
-        road.gameFrames++;
+        gameFrames++;
     }, 20);
 }

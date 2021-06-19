@@ -21,3 +21,6 @@ let intersect = (obj1, obj2) => {
         obj1bottom < obj2top
     );
 };
+
+// return boolean
+// Wenn sie sich berühre, return true
