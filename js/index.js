@@ -9,23 +9,35 @@ const canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
 // The Road
+const roadCanvas = document.getElementById("road");
+let roadCtx = roadCanvas.getContext("2d");
 class Road {
-    constructor(x, y, width, height) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
         this.img = new Image();
         this.img.src = "../images/road.png";
         this.gameFrames = 0;
+        this.speed = -1;
     }
 
     drawRoad() {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.img, this.x, this.y);
+        if (this.speed < 0) {
+            ctx.drawImage(this.img, this.x, this.y + this.img.height);
+        } else {
+            ctx.drawImage(this.img, this.x, this.y - roadCanvas.height);
+        }
+        
+    }
+
+    move() {
+        this.y += this.speed;
+        this.y %= canvas.height;
     }
 }
 
-let road = new Road(0, 0, 300, 600);
+let road = new Road(0, 0);
 
 // The Car
 
@@ -44,7 +56,7 @@ class Car {
     }
 }
 
-let car = new Car(50, 350, 75, 125);
+let car = new Car(50, 450, 75, 125);
 
 // Obstacles
 
@@ -63,14 +75,12 @@ class Obstacle {
         ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
     }
     createObstacle() {
-      if (road.gameFrames % 200 === 0) {
-        road.gameFrames = 0;
-        obstacles.push(new Obstacle());
-      }
-
+        if (road.gameFrames % 200 === 0) {
+            road.gameFrames = 0;
+            obstacles.push(new Obstacle());
+        }
     }
 }
-
 
 // Arrow Keys
 
@@ -97,15 +107,15 @@ function startGame() {
         ctx.clearRect(0, 0, 500, 700);
 
         // Road Image
+        road.move();
         road.drawRoad();
 
         // Car Image
         car.drawCar();
 
-
         // Create Obstacle
-          let newObs = new Obstacle();
-          newObs.createObstacle();
+        let newObs = new Obstacle();
+        newObs.createObstacle();
 
         // Update Obstacles
         for (let i = 0; i <= obstacles.length; i++) {
@@ -113,6 +123,6 @@ function startGame() {
             obstacles[i].drawObstacle();
         }
 
-        road.gameFrames ++;
+        road.gameFrames++;
     }, 20);
 }
