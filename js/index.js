@@ -17,6 +17,7 @@ class Road {
         this.height = height;
         this.img = new Image();
         this.img.src = "../images/road.png";
+        this.gameFrames = 0;
     }
 
     drawRoad() {
@@ -48,7 +49,6 @@ let car = new Car(50, 350, 75, 125);
 // Obstacles
 
 let obstacles = [];
-let gameFrames = 0;
 class Obstacle {
     constructor() {
         this.x = Math.floor(Math.random() * 300);
@@ -63,8 +63,8 @@ class Obstacle {
         ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
     }
     createObstacle() {
-      if (gameFrames % 200 === 0) {
-        gameFrames = 0;
+      if (road.gameFrames % 200 === 0) {
+        road.gameFrames = 0;
         obstacles.push(new Obstacle());
       }
 
@@ -113,6 +113,6 @@ function startGame() {
             obstacles[i].drawObstacle();
         }
 
-        gameFrames ++;
+        road.gameFrames ++;
     }, 20);
 }
