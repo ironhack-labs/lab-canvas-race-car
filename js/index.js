@@ -10,19 +10,21 @@ let ctx = canvas.getContext("2d");
 
 // The Road
 class Road {
-    constructor(x, y) {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
         this.img = new Image();
         this.img.src = "../images/road.png";
     }
 
     drawRoad() {
-        ctx.drawImage(this.img, this.x, this.y);
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 }
 
-let road = new Road(0, 0);
+let road = new Road(0, 0, 300, 600);
 
 // The Car
 
@@ -41,7 +43,7 @@ class Car {
     }
 }
 
-let car = new Car(50, 200, 75, 125);
+let car = new Car(50, 350, 75, 125);
 
 class Obstacle {
     constructor(x, y) {
@@ -61,10 +63,14 @@ class Obstacle {
 document.onkeydown = function (e) {
     console.log("it moves", e);
     if (e.keyCode === 37) {
+      if (car.x >= 25) {
         car.x -= 20;
+      }
     }
     if (e.keyCode === 39) {
+      if (car.x <= 200 ) {
         car.x += 20;
+      }
     }
 };
 
@@ -83,26 +89,3 @@ function startGame() {
     }, 15);
 }
 
-// Code from the Course
-
-intersect(
-    { x: 10, y: 10, width: 100, height: 100 },
-    { x: 50, y: 0, width: 200, height: 50 }
-);
-
-let intersect = (obj1, obj2) => {
-    let obj1left = obj1.x;
-    let obj1top = obj1.y;
-    let obj1right = obj1.x + obj1.width;
-    let obj1bottom = obj1.y + obj1.height;
-    let obj2left = obj2.x;
-    let obj2top = obj2.y;
-    let obj2right = obj2.x + obj2.width;
-    let obj2bottom = obj2.y + obj2.height;
-    return !(
-        obj1left > obj2right ||
-        obj1top > obj2bottom ||
-        obj1right < obj2left ||
-        obj1bottom < obj2top
-    );
-};
