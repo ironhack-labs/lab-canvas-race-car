@@ -45,18 +45,25 @@ class Car {
 
 let car = new Car(50, 350, 75, 125);
 
+// Obstacles
+
+let obstacles = [];
 class Obstacle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.width = Math.floor(Math.random()*100);
-        this.height = Math.floor(Math.random()*50);
+    constructor() {
+        this.x = Math.floor(Math.random()* road.width);;
+        this.y = Math.floor(Math.random()* road.height);;
+        this.width = Math.floor(Math.random()*80);
+        this.height = Math.floor(Math.random()*100);
+        this.color = '#000';
     }
 
     drawObstacle() {
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx.fillRect(this.x, this.y, this.width, this.height, this.color);
+      obstacles.push(new Obstacle());
     }
 }
+
+
 
 // Arrow Keys
 
