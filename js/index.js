@@ -1,6 +1,7 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();  
+    //setInterval(startGame,20);
   };   
 };
 
@@ -9,13 +10,14 @@ const ctx = canvas.getContext('2d');
 
 const myObstacles = [];
 
+
 function startGame() {
   //let frames = 0;
   clear();
   drawRoad();
   car.newPos();
   car.update();
-  updateObstacles();
+  updateObstacles();  
 };
 
 
@@ -108,5 +110,36 @@ function clear() {
 //     myObstacles.push(new Component(10, width - y - gap, 'red', width, y + gap));
 //   }
 // };
+
+// function drawObstacle(x,y,w,h) {
+//   ctx.fillStyle = 'red';
+//   //ctx.fillRect(100, 10, 150, 10);
+//   ctx.fillRect(x, y, w, h);
+// }
+
+class Obstacle {
+  constructor(x, y, w, h) {
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+
+  }
+  update() {
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+}
+
+function updateObstacles() {
+  for (i = 0; i < myObstacles.length; i++) {
+    myObstacles[i].y += 1;
+    myObstacles[i].update();
+  }
+  myObstacles.push(new Obstacle(100, 10, 100, 10));
+  myObstacles.push(new Obstacle(300, 20, 300, 10));
+}
+
+
 
 
