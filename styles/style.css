@@ -36,3 +36,23 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+#score-painel{
+  text-align: left;
+  padding-left: 20px;
+  width: 294px;
+  height: 58px;
+  color: white;
+  background-color: black;
+  margin-top: 10px;
+}
+#score-painel > p {
+  font-size: 50px;
+  margin-top: 0px;
+}
+#score-painel > p > span{
+  background-color: white;
+  margin-left: 41px;
+  padding-right: 50px;
+  padding-left: 50px;
+  color: red;
+}
