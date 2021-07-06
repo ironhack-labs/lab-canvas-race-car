@@ -74,7 +74,7 @@ window.onload = () => {
     }
 
     //Draw the obtacles 60fps
-    const drawObstacles = setInterval(() => {
+    function drawObstacles(){
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       if(toogleCar === -1) carX -= 10
@@ -104,7 +104,7 @@ window.onload = () => {
               boomImg, 
               ctx,
               carX - 10, 
-              canvas.height - 200, 
+              o[1] - 50, 
               100, 
               100,
               GOver)
@@ -121,7 +121,7 @@ window.onload = () => {
               boomImg, 
               ctx,
               carX - 50, 
-              canvas.height - 200, 
+              o[1] - 50, 
               100, 
               100,
               GOver)
@@ -146,12 +146,17 @@ window.onload = () => {
       //Drawing Game Over
       if (GOver){
         clearInterval(createObstacles)
-        clearInterval(drawObstacles)
+        //clearInterval(drawObstacles)
         document.removeEventListener('keydown', carMoves)
         ctx.drawImage(gameOver, canvas.width/2 - gameOver.width/2, canvas.height/2 - gameOver.height/2, gameOver.width, gameOver.height)
         gameLaunched = false
+        return window.cancelAnimationFrame(rAF)
       } 
-    }, 16)
+
+      requestAnimationFrame(drawObstacles)
+    }
+
+    let rAF = requestAnimationFrame(drawObstacles)
   }
 };
 
