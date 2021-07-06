@@ -1,31 +1,29 @@
-let alreadyClicked = false
+let gameLaunched = false
+
+const gameImages = [    
+  {name: 'roadImg', url: '../images/road.png', image: null},
+  {name: 'carImg', url: '../images/car.png', image: null},
+  {name: 'boomImg', url: '../images/boom.png', image: null},
+  {name: 'gameOver', url: '../images/gameover.png', image: null},
+]
 
 window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    if(alreadyClicked) return
+  document.getElementById('start-button').onclick = async () => {
+    if(gameLaunched) return
 
-    alreadyClicked = true 
-    
-    const roadImg = new Image
-    const carImg = new Image
-    const boomImg = new Image
-    const gameOver = new Image 
+    gameLaunched = true 
 
-    roadImg.src = '../images/road.png'
-    carImg.src = '../images/car.png'
-    boomImg.src = '../images/boom.png'
-    gameOver.src = '../images/gameover.png'  
-
-    boomImg.addEventListener('load', () => startGame(roadImg, carImg, boomImg, gameOver))
-  /*   let images = Promise.all(ImagesLoader())
-    images.then(console.log(images)) */
-    
+    Promise
+      .all(gameImages.map(i => imageLoader(i)))
+      .then(() => startGame(gameImages[0].image, gameImages[1].image, gameImages[2].image, gameImages[3].image))
+      .catch(error => window.alert('Cannot load game images'))
   };
 
   function startGame(roadImg, carImg, boomImg, gameOver) {
     const canvas = document.getElementById('canvas')
     const ctx = canvas.getContext('2d')    
 
+    let toogleCar = 0
     let GOver = false
     let carX = 250 - Math.floor(47.4/2)
 
@@ -41,27 +39,12 @@ window.onload = () => {
 
     //Moving the car
     document.addEventListener('keydown', carMoves)
-
+    document.addEventListener('keyup', () => toogleCar = 0)
     function carMoves(e){
-      if(e.key === "ArrowRight"){
-        if(carX >= 397) return
-  
-        carX += 10
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        ctx.drawImage(roadImg, 0, 0, 500, 700)
-        ctx.drawImage(carImg, carX, canvas.height - 150, 47.4, 95.7)
-        return carX
-      }
-      
-      if(e.key === "ArrowLeft"){
-        if(carX <= 57) return
-  
-        carX -= 10
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        ctx.drawImage(roadImg, 0, 0, 500, 700)
-        ctx.drawImage(carImg, carX, canvas.height - 150, 47.4, 95.7)
-        return carX
-      }
+      if(e.key === "ArrowRight") return toogleCar = 1         
+      if(e.key === "ArrowLeft") return toogleCar = -1
+
+      return toogleCar = 0
     }
 
     //countdown at start
@@ -87,13 +70,17 @@ window.onload = () => {
       clearInterval(createObstacles)
       newObstacle(obstacles)
       timer = changeTimer(timer)
-      console.log(timer)
       createObstacles = setInterval(interval, timer)
     }
 
     //Draw the obtacles 60fps
     const drawObstacles = setInterval(() => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      if(toogleCar === -1) carX -= 10
+      if(toogleCar === 1) carX += 10
+      if(carX < -10 || carX > 460) GOver = !GOver
+
       ctx.drawImage(roadImg, 0, 0, 500, 700)
       ctx.drawImage(carImg, carX, canvas.height - 150, 47.4, 95.7)
 
@@ -113,11 +100,14 @@ window.onload = () => {
 
           //collision detection
           if(o[1] > canvas.height - 150 && o[1] < canvas.height - 54 && carX + 48 > canvas.width - 61 - o[0]){
-            ctx.drawImage(boomImg, carX - 10, canvas.height - 200, 100, 100)
-            clearInterval(createObstacles)
-            clearInterval(drawObstacles)
-            document.removeEventListener('keydown', carMoves)
-            GOver = !GOver
+            GOver = drawAfterCollision(
+              boomImg, 
+              ctx,
+              carX - 10, 
+              canvas.height - 200, 
+              100, 
+              100,
+              GOver)
           }
         }
         //left
@@ -127,11 +117,14 @@ window.onload = () => {
 
           //collision detection
           if(o[1] > canvas.height - 150 && o[1] < canvas.height - 54 && carX < 65 + o[0]){
-            ctx.drawImage(boomImg, carX - 50, canvas.height - 200, 100, 100)
-            clearInterval(createObstacles)
-            clearInterval(drawObstacles)
-            document.removeEventListener('keydown', carMoves)
-            GOver = !GOver
+            GOver = drawAfterCollision(
+              boomImg, 
+              ctx,
+              carX - 50, 
+              canvas.height - 200, 
+              100, 
+              100,
+              GOver)
           }
         }
 
@@ -152,8 +145,11 @@ window.onload = () => {
 
       //Drawing Game Over
       if (GOver){
+        clearInterval(createObstacles)
+        clearInterval(drawObstacles)
+        document.removeEventListener('keydown', carMoves)
         ctx.drawImage(gameOver, canvas.width/2 - gameOver.width/2, canvas.height/2 - gameOver.height/2, gameOver.width, gameOver.height)
-        alreadyClicked = false
+        gameLaunched = false
       } 
     }, 16)
   }
@@ -180,23 +176,22 @@ function getRandomColor() {
   return color;
 }
 
-async function ImagesLoader(){
-  const images = Array.of(
-    {name: 'boomImg', url: '../images/boom.png', image: null},
-    {name: 'roadImg', url: '../images/boom.png', image: null},
-    {name: 'carImg', url: '../images/boom.png', image: null})
-
-  images.forEach(img => {
-    img.image = new Promise((res, rej) => {
-      let imgP = new Image()
-      imgP.onload = () => res(imgP)
-      const errorMsg = 'Unable to load image at ' + img.url
-      imgP.onerror = () => rej(new Error(errorMsg))
-      imgP.src = img.url
-    })
-  })
-
-  return images
+function drawCar(ctx, canvas, roadImg, carImg){
+  ctx.drawImage(roadImg, 0, 0, 500, 700)
+  ctx.drawImage(carImg, carX, canvas.height - 150, 47.4, 95.7)
 }
 
- 
+function drawAfterCollision(img, ctx, x, y, w, h, toogle){
+  ctx.drawImage(img, x, y, w, h)
+  return !toogle
+}
+
+function imageLoader(obj){
+  return new Promise((res, rej) => {
+    obj.image = new Image
+    obj.image.onload = () => res() 
+    obj.image.onerror = () => rej(new Error(`Unable to load image: ${obj.url}`))
+
+    obj.image.src = obj.url
+  })
+}
