@@ -7,6 +7,25 @@ car_image.src = './images/car.png';
 background_image = new Image();
 background_image.src = './images/road.png';
 
+// const background = {
+//   x: 0,
+//   y: 100,
+//   h: 900,
+//   w: 500,
+//   draw: function(){
+//     c.drawImage(background_image, this.x, this.y, this.w, this.h)
+//   }
+// }
+
+// const car = {
+// 	x: 200,
+// 	y: 700,
+// 	h: 150,
+// 	w: 100,
+// 	draw: function () {
+// 		c.drawImage(car_image, this.x, this.y, this.w, this.h);
+// 	}
+// };
 
 const background = new Background(background_image, c, 0, 100, 500, 900);
 const car = new Car(car_image, c, 200, 700, 100, 150);
