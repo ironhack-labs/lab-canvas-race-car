@@ -1,19 +1,22 @@
 startButton = document.getElementById("start-button");
 
-let animationID, context;
-const roadImage = new Image();
-const carImage = new Image();
 
-roadImage.src = "../images/road.png";
-carImage.src = "../images/car.png";
 
-roadImage.onload = function () {
+
+startButton.onclick = () => {
+  
+  let animationID, context;
+  const roadImage = new Image();
+  const carImage = new Image();
+
+  roadImage.src = "../images/road.png";
+  carImage.src = "../images/car.png";
+
+  roadImage.onload = function () {
   carImage.onload = function () {
     const canvas = document.querySelector("#canvas");
     context = canvas.getContext("2d");
     context.font = "35px sans-serif";
-  };
-};
 
 const road = {
   img: roadImage,
@@ -198,7 +201,15 @@ function startGame() {
   updateBackground();
 }
 
-startButton.onclick = () => {
+  };
+};
   startGame();
   startButton.disabled = true;
 };
+
+
+
+
+
+
+
