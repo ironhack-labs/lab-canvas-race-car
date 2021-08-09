@@ -1,6 +1,6 @@
 startButton = document.getElementById("start-button");
 
-let animationID;
+let animationID, context;
 const roadImage = new Image();
 const carImage = new Image();
 
@@ -9,7 +9,7 @@ carImage.src = "../images/car.png";
 
 roadImage.onload = function () {
   carImage.onload = function () {
-    canvas = document.querySelector("#canvas");
+    const canvas = document.querySelector("#canvas");
     context = canvas.getContext("2d");
     context.font = "35px sans-serif";
   };
