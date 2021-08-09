@@ -1,5 +1,4 @@
-//ORIGINAL CODE WORKING ON VS.CODE (AT LEAST, MY VS.CODE)
-
+/*
 startButton = document.getElementById("start-button");
 
   
@@ -205,10 +204,9 @@ startButton.onclick = () => {
   startGame();
   startButton.disabled = true;
 };
+*/
 
 
-
-/* CORRECTED CODE->
 startButton = document.getElementById("start-button");
 
 startButton.onclick = () => {
@@ -217,8 +215,8 @@ startButton.onclick = () => {
   const roadImage = new Image();
   const carImage = new Image();
 
-  roadImage.src = "../images/road.png";
-  carImage.src = "../images/car.png";
+  roadImage.src = "./images/road.png";
+  carImage.src = "./images/car.png";
 
   roadImage.onload = function () {
   carImage.onload = function () {
@@ -413,7 +411,7 @@ function startGame() {
   };
 };
 };
-*/
+
 
 
 
