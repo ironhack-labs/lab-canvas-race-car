@@ -1,8 +1,5 @@
 startButton = document.getElementById("start-button");
 
-
-
-
 startButton.onclick = () => {
   
   let animationID, context;
@@ -200,11 +197,10 @@ function startGame() {
   car.y = (3 * canvas.height) / 5;
   updateBackground();
 }
-
-  };
-};
   startGame();
   startButton.disabled = true;
+  };
+};
 };
 
 
