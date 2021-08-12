@@ -4,6 +4,8 @@ obstáculo: width, height, posX, posY, context, canvas, color, drawObstacle, mov
 player: width, height, posX, posY, context, canvas, image, drawCar, moveCar, collisionVerification
 */
 
+
+
 class Object {
    constructor (canvas, context, posX, posY, width, height) {
     this.canvas = canvas;
@@ -12,7 +14,7 @@ class Object {
     this.posY = posY;
     this.width = width;
     this.height = height;
- }
+   }
 }
 
 class Field extends Object {
@@ -20,22 +22,41 @@ class Field extends Object {
        super (canvas, context, posX, posY, width, height);
        this.image = image;
    }
-}
 
-drawField() {
+   drawField() {
     this.context.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+    this.context.drawImage(this.image, this.posX, this.posY - this.height, this.width, this.height);
+
+    this.resetFieldPos();
+  }
+
+  moveField(speed) {
+    this.posY += speed;
+    }
+  resetFieldPos() {
+    if (this.posY > this.height) {
+      this.posY = 0;
+    }
+  }
 }
 
-moveField(speed) {
-this.posY += speed;
-}
+
+
+
+
 
 class Obstacle extends Object {
-    constructor(canvas, context, posX, posY, width, height,color){
-        super (canvas, context, posX, posY, width, height);
-        this.color = color;
+    constructor(canvas, context, posX, posY, width, height, color) {
+      super(canvas, context, posX, posY, width, height);
+      this.color = color;
+  
+      this.context.fillStyle = this.color;
     }
-}
+  
+    drawObstacle() {
+      this.context.fillRect(this.posX, this.posY, this.width, this.height);
+    }
+  }
 
 class PLayer extends Object {
     constructor(canvas, context, posX, posY, width, height, image) {

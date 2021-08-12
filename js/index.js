@@ -9,10 +9,49 @@
 9- Game Over + Final Score
 */
 
+
+
+
+class Game {
+  constructor (canvas, context, field, player) {
+    this.canvas = canvas;
+    this.context = context;
+    this.field = field  ;
+    this.player = player;
+    this.obstacle = [];
+    this.speed = 2;
+  }
+
+  startGame() {
+    this.clearField();
+    this.field.drawField();
+    this.field.moveField(this.speed);
+
+window.webkitRequestAnimationFrame(()=> this.startGame());
+  }
+
+clearField() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+}
+
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+    const canvas = document.querySelector('canvas');
+    const context = canvas.getContext('2d');
+    
+    const fieldImg = new Image();
+    fieldImg.src = './images/road.png';
 
-  function startGame() {}
+    fieldImg.onload = () => {
+      const field = new Field(
+        canvas, context, 0, 0, canvas.width, canvas.height, fieldImg,
+      );
+      //const player = new Player();
+    
+      const game = new Game(canvas, context, field);
+    
+      game.startGame();
+  };
+ };
 };
