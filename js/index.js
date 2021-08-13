@@ -13,24 +13,47 @@
 
 
 class Game {
-  constructor (canvas, context, field, player) {
+  constructor (canvas, context, field, player, obstacle) {
     this.canvas = canvas;
     this.context = context;
-    this.field = field  ;
+    this.field = field;
     this.player = player;
-    this.obstacle = [];
-    this.speed = 2;
+    this.obstacle = obstacle;
+    this.obstacles = [];
+    this.fieldSpeed = 2;
+    this.playerSpeed = {  
+      initialSpeed: 0,
+      speedIncrement: 1,
+    };
   }
 
-  startGame() {
+  configurarTeclado = () => {
+    document.onkeydown = (event) => {
+      this.playerSpeed.initialSpeed += this.playerSpeed.speedIncrement;
+    
+      this.player.movePlayer(event.keyCode, this.playerSpeed.initialSpeed);
+    };
+
+    document.onkeyup = () => {
+      this.playerSpeed.initialSpeed = 0;
+    };
+  }
+
+  startGame = () => {
+    console.log(this.obstacle)
     this.clearField();
-    this.field.drawField();
-    this.field.moveField(this.speed);
 
-window.webkitRequestAnimationFrame(()=> this.startGame());
+    this.field.drawField();
+    this.field.moveField(this.fieldSpeed);
+
+    this.player.drawPlayer();
+
+    this.obstacle.drawObstacle();
+
+    window.requestAnimationFrame(this.startGame);
   }
 
-clearField() {
+clearField= () => {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
@@ -42,16 +65,26 @@ window.onload = () => {
     
     const fieldImg = new Image();
     fieldImg.src = './images/road.png';
+    const playerImg = new Image();
+    playerImg.src = './images/car.png';
 
     fieldImg.onload = () => {
+      playerImg.onload = () => {
       const field = new Field(
         canvas, context, 0, 0, canvas.width, canvas.height, fieldImg,
       );
-      //const player = new Player();
+      const player = new Player(
+        canvas, context, 220, 550, 60, 120, playerImg,
+      );
+      const obstacle = new Obstacle (
+        canvas, context, 0, 0, 400, 50, 'red',
+      );
     
-      const game = new Game(canvas, context, field);
+      const game = new Game(canvas, context, field, player, obstacle);
     
+      game.configurarTeclado();
       game.startGame();
+    };
   };
  };
 };
