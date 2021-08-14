@@ -1,11 +1,3 @@
-/* Objetos a se criar: pista, obstáculos
-pista: imagem, width, height, posX, posY, context, canvas, drawField, move
-obstáculo: width, height, posX, posY, context, canvas, color, drawObstacle, moveObstacle, collisionVerification
-player: width, height, posX, posY, context, canvas, image, drawCar, moveCar, collisionVerification
-*/
-
-
-
 class Object {
    constructor (canvas, context, posX, posY, width, height) {
     this.canvas = canvas;
@@ -15,6 +7,30 @@ class Object {
     this.width = width;
     this.height = height;
    }
+  move (speed) {
+    this.posY += speed;
+  }
+  top = () => {
+  return this.posY;
+
+  };
+  bottom = () => {
+  return this.posY + this.height;
+
+  };
+  left = () => {
+  return this.posX;
+
+  };
+  right = () => {
+  return this.posX + this.width;
+
+  };
+
+  crashWith = (obstacle) => {
+    return !(this.bottom() < obstacle.top() || this.top() > obstacle.bottom()
+    || this.right() < obstacle.left() || this.left() > obstacle.right());
+  };
 }
 
 class Field extends Object {
@@ -30,10 +46,6 @@ class Field extends Object {
     this.resetFieldPos();
   }
 
-  moveField = (speed) => {
-    console.log(speed);
-    this.posY += speed;
-    }
   resetFieldPos = () => {
     if (this.posY > this.height) {
       this.posY = 0;
@@ -62,7 +74,7 @@ class Player extends Object {
     drawPlayer = () => {
       this.context.drawImage(this.image, this.posX, this.posY, this.width, this.height);
     }
-    movePlayer = (keyCode, speed) => {
+    move = (keyCode, speed) => {
       switch (keyCode) {
         case 37:
           if (this.posX < 60) return;
