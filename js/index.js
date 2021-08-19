@@ -1,14 +1,20 @@
 /*
 TODO
-- Pintar road --
-- Pintar car --
-- Make de car move right and left with arrows --
-- Create obstacles (minimo y ancho de carretera) - OJO con los intervalos cortos
-	- Class and classchildren
-	- Moving obstacles
-- Points 
+1) Pintar road --
+2) Pintar car --
+3) Make de car move right and left with arrows --
+4) Create obstacles (minimo y ancho de carretera) - OJO con los intervalos cortos
+	4-1) Class and classchildren
+	4.2) Moving obstacles
+5) Points 
 
-- Intentar que se mueva la carretera
+Bonus
+6) Intentar que se mueva la carretera
+
+Obstaculos
+	6.1) Pintar carretera antes que se mueva --
+	6.2) Bajar velocidad carretera al llamar cada vez dentro del addEventListener, esta llama a la misma funcion
+	y aumenta la velocidad
 */
 //---------------------------------------------------------------
 //Variables que necesitaremos por todo
@@ -43,6 +49,7 @@ window.onload = () => {
 			move: function() {
 				this.y += this.speed;
 				this.y %= canvas.height;
+				//alert((this.y %= canvas.height));
 			},
 
 			draw: function() {
@@ -65,8 +72,8 @@ window.onload = () => {
 		//---------------------------------------------------------------
 		class Car {
 			constructor() {
-				this.x = 25;
-				this.y = 25;
+				this.x = anchoCanvas / 2 - 30;
+				this.y = alturaCanvas / 2 + 250;
 
 				const car = new Image();
 				car.addEventListener('load', () => {
@@ -104,7 +111,7 @@ window.onload = () => {
 		//---------------------------------------------------------------
 		function updateCanvas() {
 			//backgroundImage.remove();
-			backgroundImage.move();
+			//backgroundImage.move();
 			objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
 			backgroundImage.draw();
 			car.draw();
