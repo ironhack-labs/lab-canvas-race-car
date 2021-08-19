@@ -18,6 +18,8 @@ window.onload = () => {
       constructor() {
         this.carX = (canvas.width/2)-25;
         this.carY = 500
+        this.carW = 50
+        this.carH = 100
  
         const carImg = new Image()
         this.img = carImg
@@ -33,7 +35,7 @@ window.onload = () => {
           this.carX += 25;        
       }
       draw() {
-       ctx.drawImage(this.img, this.carX, this.carY, 50, 100),500
+       ctx.drawImage(this.img, this.carX, this.carY, this.carW, this.carH),500
       }
     }
 
@@ -48,7 +50,9 @@ window.onload = () => {
       this.x = (Math.random()*200)+50
       this.w = (Math.random()*500)
       this.h = 30
-      ctx.fillStyle = '#9B0000'      
+      ctx.fillStyle = '#9B0000'   
+      
+
       }
       speed(){
       this.y += 5  
@@ -84,6 +88,26 @@ window.onload = () => {
       arrObstaculos.push(new obstaculoClass)
     }, 1000)
 
+    //COLLISION DETECTOR
+    const isColliding = (obj1,obj2) =>{
+
+      if(obj1.carX > obj2.x + obj2.w ||
+        obj1.carX + obj1.carW < obj2.x||
+        obj1.carY > obj2.y + obj2.h||
+        obj1.carY + obj1.carW < obj2.y){
+          //no collision 
+          
+        }else{
+          //collision 
+          const gameOver = new Image()
+          gameOver.src = 'http://pngimg.com/uploads/game_over/game_over_PNG58.png'
+
+          ctx.drawImage(gameOver, (canvas.width/2)-250,(canvas.height/2)-250, 500, 500)
+          setTimeout(()=>{alert ('Prueba otra vez!!!');
+          return},200)  
+        }
+    }
+
 
     let score = 0
     
@@ -103,6 +127,14 @@ window.onload = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(road, 0, 0, canvas.width, canvas.height)
         
+        //llamada collapse
+        for(let i = 0; i < arrObstaculos.length; i++){
+          isColliding(playerOne, arrObstaculos[i])
+        }
+
+        /* console.log(isColliding) */
+        //-------
+
         ctx.fillStyle = '#9B0000'
         arrObstaculos.forEach(obstaculo=>{obstaculo.speed()})
         arrObstaculos.forEach(obstaculo=>{obstaculo.draw()})
@@ -126,6 +158,7 @@ window.onload = () => {
 
     refreshObstaculo()
     refreshCar()
+
     
     
     
