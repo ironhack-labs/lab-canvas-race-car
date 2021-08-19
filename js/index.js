@@ -3,9 +3,17 @@ TODO
 1) Pintar road --
 2) Pintar car --
 3) Make de car move right and left with arrows --
+
 4) Create obstacles (minimo y ancho de carretera) - OJO con los intervalos cortos
 	4-1) Class and classchildren
 	4.2) Moving obstacles
+//apuntes
+- que sea una clase
+- que vaya haciendo randoms
+- de diferentes medidas
+- pintando de arriba a abajo
+
+
 5) Points 
 
 Bonus
@@ -35,15 +43,16 @@ window.onload = () => {
 		//context
 		const printRoad = canvas.getContext('2d');
 		const objectCar = canvas.getContext('2d');
+		const obstaculo = canvas.getContext('2d');
 
 		let imgRoad = new Image();
 		imgRoad.src = '../images/road.png';
 
 		//---------------------------------------------------------------
+		// Background image - Game area
 		const backgroundImage = {
 			imgRoad: imgRoad,
 			y: 0,
-			//x: 1,
 			speed: 1,
 
 			move: function() {
@@ -70,10 +79,12 @@ window.onload = () => {
 		};
 
 		//---------------------------------------------------------------
+		// Class car
 		class Car {
 			constructor() {
 				this.x = anchoCanvas / 2 - 30;
 				this.y = alturaCanvas / 2 + 250;
+				this.health = 1;
 
 				const car = new Image();
 				car.addEventListener('load', () => {
@@ -93,11 +104,17 @@ window.onload = () => {
 				objectCar.drawImage(this.car, this.x, this.y, 50, 50);
 				//objectCar.globalCompositeOperation = 'destination-over';
 			}
+
+			receiveDamage(damage) {
+				this.health -= damage;
+				return 'Coche boom';
+			}
 		}
 		//---------------------------------------------------------------
 		const car = new Car();
 		//---------------------------------------------------------------
-		document.addEventListener('keydown', (e) => {
+		// document.addEventListener('keydown', (e) => {
+		document.onkeydown = function(e) {
 			switch (e.keyCode) {
 				case 37:
 					car.moveLeft();
@@ -107,82 +124,61 @@ window.onload = () => {
 					break;
 			}
 			updateCanvas();
-		});
+		};
+		//---------------------------------------------------------------
+		// OBSTACULOS - sin objetos, tal cómo hemos empezado, mal acabamos
+		const myObstacles = [];
+		class Obstaculo {
+			constructor() {}
+			// 	constructor(x, speed, width, height, color) {
+			// 		this.x = x;
+			// 		this.speed = speed;
+			// 		this.width = width;
+			// 		this.height = height;
+			// 		this.color = color;
+
+			draw() {
+				// obstaculo.drawImage(this.car, this.x, this.y, 50, 50);
+			}
+
+			crash() {}
+		}
+
+		// 	//metodo update para pintar
+		// 	draw(x, speed, width, height, color) {
+		// 		const ctx = canvas.getContext('2d');
+		// 		ctx.fillStyle = color;
+		// 		ctx.fillRect(x, speed, width, height);
+		// 	}
+
+		// 	//metodo crash
+		// 	crash() {}
+		// }
+
+		// let speed1 = 0;
+
+		// const obstaculo = new Obstaculo(50, speed1, 100, 30, 'red');
 		//---------------------------------------------------------------
 		function updateCanvas() {
+			speed1 = 1;
 			//backgroundImage.remove();
-			//backgroundImage.move();
+			backgroundImage.move();
+			// redraw the canvas
+			// obstaculo.draw(50, speed1, 100, 30, 'red');
+			// obstaculo.draw(150, speed1, 100, 30, 'green');
+			// obstaculo.draw(250, speed1, 100, 30, 'yellow');
+
 			objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
 			backgroundImage.draw();
 			car.draw();
+			// obstaculo.draw();
 
 			requestAnimationFrame(updateCanvas);
 		}
 		//---------------------------------------------------------------
-		//updateCanvas();
 		imgRoad.onload = updateCanvas;
 	}
 	//---------------------------------------------------------------
 };
 //---------------------------------------------------------------
 //Otros testings
-/*
-function printRoad() {
-	const printRoad = canvas.getContext('2d');
-	let imgRoad = new Image();
-	imgRoad.src = '../images/road.png';
-	printRoad.drawImage(imgRoad, 0, 0, anchoCanvas, alturaCanvas);
-}
-*/
-//Función crear coche
-// function printCar() {
-// 	const objectCar = canvas.getContext('2d');
-// 	//creamos clase coche con sus metodos
-// 	class Car {
-// 		constructor() {
-// 			this.x = 25;
-// 			this.y = 25;
-
-// 			// Load the image
-// 			const car = new Image();
-// 			car.addEventListener('load', () => {
-// 				// Once image loaded => draw
-// 				this.car = car;
-// 				this.draw();
-// 			});
-// 			car.src = '../images/car.png';
-// 		}
-// 		moveLeft() {
-// 			this.x -= 25;
-// 		}
-// 		moveRight() {
-// 			this.x += 25;
-// 		}
-// 		draw() {
-// 			objectCar.drawImage(this.car, this.x, this.y, 50, 50);
-// 			objectCar.globalCompositeOperation = 'destination-over';
-// 		}
-// 	}
-
-// 	const car = new Car();
-
-// 	document.addEventListener('keydown', (e) => {
-// 		switch (e.keyCode) {
-// 			case 37:
-// 				car.moveLeft();
-// 				break;
-// 			case 39:
-// 				car.moveRight();
-// 				break;
-// 		}
-// 		updateCanvas();
-// 	});
-
-// 	function updateCanvas() {
-// 		objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
-// 		car.draw();
-// 		printRoad();
-// 	}
-
-// 	updateCanvas();
-// }
