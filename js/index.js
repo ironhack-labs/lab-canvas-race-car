@@ -16,7 +16,7 @@ function updateCanvas(speed){
   ctx.clearRect(0,0,500,700)
     car()
     drawRoad()
-    drawMiddeLine()
+    drawWhiteLine()
     
   
  // 
@@ -36,13 +36,13 @@ function setKeyboards(){
 
       switch(e.key){ 
         case "ArrowRight":
-        positionX += 10
+        positionX += 3
         car()
         collisions()
         console.log(positionX)
         break;
         case "ArrowLeft":
-        positionX -= 10
+        positionX -= 3
         console.log(positionX)
         car()
         collisions()
@@ -91,7 +91,7 @@ function drawRoad() {
 
   function startGame() {
     
-    let intervalID = window.setInterval(updateCanvas, 80);
+    let intervalID = window.setInterval(updateCanvas, 40);
    
 }
  
