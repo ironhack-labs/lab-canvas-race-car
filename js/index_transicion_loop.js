@@ -65,8 +65,6 @@ window.onload = () => {
 
 		// start calling updateCanvas once the image is loaded
 		imgRoad.onload = updateCanvas;
-
-		printCar();
 	}
 
 	//Función crear coche

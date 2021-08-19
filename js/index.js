@@ -10,28 +10,47 @@ TODO
 
 - Intentar que se mueva la carretera
 */
-
+//---------------------------------------------------------------
 //Variables que necesitaremos por todo
-const canvas = document.getElementById('canvas');
-let anchoCanvas = canvas.width;
-let alturaCanvas = canvas.height;
 
+//---------------------------------------------------------------
 window.onload = () => {
 	document.getElementById('start-button').onclick = () => {
 		startGame();
 	};
-
+	//---------------------------------------------------------------
 	function startGame() {
+		const canvas = document.getElementById('canvas');
+		let anchoCanvas = canvas.width;
+		let alturaCanvas = canvas.height;
 		const printRoad = canvas.getContext('2d');
 		const objectCar = canvas.getContext('2d');
 
 		let imgRoad = new Image();
 		imgRoad.src = '../images/road.png';
+		//---------------------------------------------------------------
+		const backgroundImage = {
+			imgRoad: imgRoad,
+			y: 0,
+			speed: 1,
 
-		imgRoad.onload = function() {
-			printRoad.drawImage(imgRoad, 0, 0, canvas.width, canvas.height);
+			move: function() {
+				this.y += this.speed;
+				this.y %= canvas.height;
+				//alert(this.y);
+			},
+
+			draw: function() {
+				printRoad.drawImage(this.imgRoad, 0, this.y, canvas.width, canvas.height);
+
+				if (this.speed < 0) {
+					printRoad.drawImage(this.imgRoad, 0, this.y + canvas.height, canvas.width, canvas.height);
+				} else {
+					printRoad.drawImage(this.imgRoad, 0, this.y - canvas.height, canvas.width, canvas.height);
+				}
+			}
 		};
-
+		//---------------------------------------------------------------
 		class Car {
 			constructor() {
 				this.x = 25;
@@ -51,14 +70,14 @@ window.onload = () => {
 				this.x += 25;
 			}
 			draw() {
-				printRoad.drawImage(imgRoad, 0, 0, canvas.width, canvas.height);
+				//printRoad.drawImage(imgRoad, 0, 0, canvas.width, canvas.height);
 				objectCar.drawImage(this.car, this.x, this.y, 50, 50);
 				//objectCar.globalCompositeOperation = 'destination-over';
 			}
 		}
-
+		//---------------------------------------------------------------
 		const car = new Car();
-
+		//---------------------------------------------------------------
 		document.addEventListener('keydown', (e) => {
 			switch (e.keyCode) {
 				case 37:
@@ -70,72 +89,25 @@ window.onload = () => {
 			}
 			updateCanvas();
 		});
-
+		//---------------------------------------------------------------
 		function updateCanvas() {
+			let test = true;
 			objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
-			car.draw();
-			printRoad();
-		}
+			backgroundImage.move(test);
+			objectCar.clearRect(0, 0, canvas.width, canvas.height);
+			backgroundImage.draw();
 
+			car.draw();
+
+			requestAnimationFrame(updateCanvas);
+		}
+		//---------------------------------------------------------------
 		updateCanvas();
 	}
-
-	//Función crear coche
 	//---------------------------------------------------------------
-	// function printCar() {
-	// 	const objectCar = canvas.getContext('2d');
-	// 	//creamos clase coche con sus metodos
-	// 	class Car {
-	// 		constructor() {
-	// 			this.x = 25;
-	// 			this.y = 25;
-
-	// 			// Load the image
-	// 			const car = new Image();
-	// 			car.addEventListener('load', () => {
-	// 				// Once image loaded => draw
-	// 				this.car = car;
-	// 				this.draw();
-	// 			});
-	// 			car.src = '../images/car.png';
-	// 		}
-	// 		moveLeft() {
-	// 			this.x -= 25;
-	// 		}
-	// 		moveRight() {
-	// 			this.x += 25;
-	// 		}
-	// 		draw() {
-	// 			objectCar.drawImage(this.car, this.x, this.y, 50, 50);
-	// 			objectCar.globalCompositeOperation = 'destination-over';
-	// 		}
-	// 	}
-
-	// 	const car = new Car();
-
-	// 	document.addEventListener('keydown', (e) => {
-	// 		switch (e.keyCode) {
-	// 			case 37:
-	// 				car.moveLeft();
-	// 				break;
-	// 			case 39:
-	// 				car.moveRight();
-	// 				break;
-	// 		}
-	// 		updateCanvas();
-	// 	});
-
-	// 	function updateCanvas() {
-	// 		objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
-	// 		car.draw();
-	// 		printRoad();
-	// 	}
-
-	// 	updateCanvas();
-	// }
 };
-
 //---------------------------------------------------------------
+//Otros testings
 /*
 function printRoad() {
 	const printRoad = canvas.getContext('2d');
@@ -144,3 +116,55 @@ function printRoad() {
 	printRoad.drawImage(imgRoad, 0, 0, anchoCanvas, alturaCanvas);
 }
 */
+//Función crear coche
+// function printCar() {
+// 	const objectCar = canvas.getContext('2d');
+// 	//creamos clase coche con sus metodos
+// 	class Car {
+// 		constructor() {
+// 			this.x = 25;
+// 			this.y = 25;
+
+// 			// Load the image
+// 			const car = new Image();
+// 			car.addEventListener('load', () => {
+// 				// Once image loaded => draw
+// 				this.car = car;
+// 				this.draw();
+// 			});
+// 			car.src = '../images/car.png';
+// 		}
+// 		moveLeft() {
+// 			this.x -= 25;
+// 		}
+// 		moveRight() {
+// 			this.x += 25;
+// 		}
+// 		draw() {
+// 			objectCar.drawImage(this.car, this.x, this.y, 50, 50);
+// 			objectCar.globalCompositeOperation = 'destination-over';
+// 		}
+// 	}
+
+// 	const car = new Car();
+
+// 	document.addEventListener('keydown', (e) => {
+// 		switch (e.keyCode) {
+// 			case 37:
+// 				car.moveLeft();
+// 				break;
+// 			case 39:
+// 				car.moveRight();
+// 				break;
+// 		}
+// 		updateCanvas();
+// 	});
+
+// 	function updateCanvas() {
+// 		objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
+// 		car.draw();
+// 		printRoad();
+// 	}
+
+// 	updateCanvas();
+// }
