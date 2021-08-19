@@ -1,9 +1,16 @@
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
-
 let xCar = 225
 
-
+// const secondCanvas = canvas
+// // secondCanvas.classList.add("second-canvas")
+// // secondCanvas.setAttribute("id", "second-canvas")
+// // const ctx2  = secondCanvas.getElementById("second-canvas")
+// console.log(canvas)
+// console.log(secondCanvas)
+// const arr = []
+// arr.push(secondCanvas)
+// console.log()
 // class Car {
 
 //   constructor(){
@@ -16,6 +23,8 @@ let xCar = 225
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();    
+    createObstacles()
+
 
   };
 
@@ -27,10 +36,10 @@ window.onload = () => {
     printCanvas();
     setInterval(()=> {
 
-    updateGame()
+      updateGame()
+      printArrObstacles()
+    }, 10000/60)
 
-
-    }, 1000/60)
   }
 
   function printCanvas () {
@@ -126,6 +135,41 @@ window.onload = () => {
     printCar()
     
 
+  }
+
+  function randomNumber() {
+    let num = Math.floor(Math.random()*400)
+
+    return num
+  }
+  function createObstacles() {
+    let xRandom = randomNumber()
+    let y = 0
+    let widthRandom = randomNumber()
+    let height = 15
+    randomNumber()
+    ctx.fillStyle = "red"
+    ctx.fillRect(xRandom, y, widthRandom, height)
+    console.log({xRandom, y, widthRandom, height})
+
+    return {xRandom, y, widthRandom, height}
+  }
+
+  function keepObstacles() {
+    const obstacles = createObstacles()
+    const arrObstacles = []
+    arrObstacles.push(arrObstacles)
+
+    return arrObstacles
+  }
+
+  function printArrObstacles() {
+    const arr = keepObstacles()
+    // for (let i = 0; i < arr.length; i++){
+    //   ctx.fillStyle = "red"
+    //   ctx.fillRect(arr[i][j], arr[i], widthRandom, height)
+    // }
+    
   }
 
   document.addEventListener('keydown', e => {
