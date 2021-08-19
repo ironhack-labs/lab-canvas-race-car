@@ -22,14 +22,51 @@ window.onload = () => {
 	};
 
 	function startGame() {
-		const printRoad = canvas.getContext('2d');
+		printRoad();
+		printCar();
+	}
 
-		let imgRoad = new Image();
+	function printRoad() {
+		const imgRoad = new Image();
 		imgRoad.src = '../images/road.png';
 
-		imgRoad.onload = function() {
-			printRoad.drawImage(imgRoad, 0, 0, canvas.width, canvas.height);
+		const canvas = document.getElementById('canvas');
+		const ctx = canvas.getContext('2d');
+
+		const backgroundImage = {
+			imgRoad: imgRoad,
+			y: 0,
+			speed: 1,
+
+			move: function() {
+				this.y += this.speed;
+				this.y %= canvas.height;
+			},
+
+			draw: function() {
+				ctx.drawImage(this.imgRoad, 0, this.y, canvas.width, canvas.height);
+
+				if (this.speed < 0) {
+					ctx.drawImage(this.imgRoad, 0, this.y + canvas.height, canvas.width, canvas.height);
+				} else {
+					ctx.drawImage(this.imgRoad, 0, this.y - canvas.height, canvas.width, canvas.height);
+				}
+			}
 		};
+
+		function updateCanvas() {
+			backgroundImage.move();
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			backgroundImage.draw();
+
+			requestAnimationFrame(updateCanvas);
+		}
+
+		// start calling updateCanvas once the image is loaded
+		imgRoad.onload = updateCanvas;
+
+		printCar();
 	}
 
 	//Función crear coche
