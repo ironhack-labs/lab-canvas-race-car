@@ -21,35 +21,47 @@ window.onload = () => {
 	//---------------------------------------------------------------
 	function startGame() {
 		const canvas = document.getElementById('canvas');
+
+		//anchura - altura
 		let anchoCanvas = canvas.width;
 		let alturaCanvas = canvas.height;
+
+		//context
 		const printRoad = canvas.getContext('2d');
 		const objectCar = canvas.getContext('2d');
 
 		let imgRoad = new Image();
 		imgRoad.src = '../images/road.png';
+
 		//---------------------------------------------------------------
 		const backgroundImage = {
 			imgRoad: imgRoad,
 			y: 0,
+			//x: 1,
 			speed: 1,
 
 			move: function() {
 				this.y += this.speed;
 				this.y %= canvas.height;
-				//alert(this.y);
 			},
 
 			draw: function() {
-				printRoad.drawImage(this.imgRoad, 0, this.y, canvas.width, canvas.height);
+				printRoad.drawImage(this.imgRoad, 0, this.y, anchoCanvas, alturaCanvas);
 
 				if (this.speed < 0) {
-					printRoad.drawImage(this.imgRoad, 0, this.y + canvas.height, canvas.width, canvas.height);
+					printRoad.drawImage(this.imgRoad, 0, this.y + alturaCanvas, anchoCanvas, alturaCanvas);
 				} else {
-					printRoad.drawImage(this.imgRoad, 0, this.y - canvas.height, canvas.width, canvas.height);
+					printRoad.drawImage(this.imgRoad, 0, this.y - alturaCanvas, anchoCanvas, alturaCanvas);
 				}
+
+				//this.y = this.x;
 			}
+
+			// remove: function() {
+			// 	printRoad.clearRect(imgRoad, 0, 0, canvas.width, canvas.height);
+			// }
 		};
+
 		//---------------------------------------------------------------
 		class Car {
 			constructor() {
@@ -91,18 +103,17 @@ window.onload = () => {
 		});
 		//---------------------------------------------------------------
 		function updateCanvas() {
-			let test = true;
+			//backgroundImage.remove();
+			backgroundImage.move();
 			objectCar.clearRect(0, 0, anchoCanvas, alturaCanvas);
-			backgroundImage.move(test);
-			objectCar.clearRect(0, 0, canvas.width, canvas.height);
 			backgroundImage.draw();
-
 			car.draw();
 
 			requestAnimationFrame(updateCanvas);
 		}
 		//---------------------------------------------------------------
-		updateCanvas();
+		//updateCanvas();
+		imgRoad.onload = updateCanvas;
 	}
 	//---------------------------------------------------------------
 };
