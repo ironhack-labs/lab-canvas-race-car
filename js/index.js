@@ -34,7 +34,7 @@ const context = canvas.getContext("2d");
 
 
 class Player {
-  constructor(x, y, width, height) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
 
@@ -132,7 +132,7 @@ function checkGameOver() {
 
 function drawObstacles() {
   game.obstacles.forEach((obstacle) => {
-    obstacle.y += 1;
+    obstacle.y += 5;
     obstacle.draw();
   })
 
@@ -151,11 +151,8 @@ function drawObstacles() {
 
 
     //Create left obstacle
-    const obstacleLeft = new Component(randomX, 0, randomWidth, 30, "green");
-
-    setInterval(() => {
-      game.obstacles.push(obstacleLeft);
-    }, 100);
+    const obstacleLeft = new Component(randomX, 0, randomWidth, 30, "brown");
+    game.obstacles.push(obstacleLeft);
   }
 }
 
