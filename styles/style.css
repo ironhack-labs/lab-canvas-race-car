@@ -1,3 +1,7 @@
+canvas{
+  border: 1px black solid;
+}
+
 body {
   padding: 0;
   text-align: center;
@@ -19,6 +23,10 @@ body {
 
 .arrows-img {
   width: 150px;
+}
+
+.road-img{
+  width: 450px;
 }
 
 body button {
