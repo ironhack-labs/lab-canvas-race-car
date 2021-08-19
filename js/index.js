@@ -1,11 +1,10 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-
-window.onload = () => {
+const game = (window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
   };
-};
+});
 
 function startGame() {
   const cvHeight = 700;
@@ -25,6 +24,6 @@ function startGame() {
     ctx.fillRect(240, i, 10, 30);
   }
   const img = new Image();
-  img.src = '../images/car.png';
+  img.src = 'images/car.png';
   img.onload = () => ctx.drawImage(img, 250, 350, 158 / 2, 319 / 2);
 }
