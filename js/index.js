@@ -77,11 +77,16 @@ window.onload = () => {
 
     //COLLISION DETECTOR
       const isColliding = (obj1,obj2) =>{
+      const isCarAtRightToObst = obj1.carX > obj2.obsX + obj2.width
+      const isCarAtLeftToObst = obj1.carX + obj1.width < obj2.obsX
+      const isCarAtBottomToObst = obj1.carY > obj2.obsY + obj2.height
+      const isCarAboveToObst = obj1.carY + obj1.height < obj2.obsY
 
-        if(obj1.carX > obj2.obsX + obj2.width ||
-          obj1.carX + obj1.width < obj2.obsX||
-          obj1.carY > obj2.obsY + obj2.height||
-          obj1.carY + obj1.height < obj2.obsY){
+
+        if( isCarAtRightToObst||
+          isCarAtLeftToObst||
+          isCarAtBottomToObst||
+          isCarAboveToObst){
             //no collision 
             
           }else{
