@@ -38,6 +38,10 @@ class Obstacles extends GameComponent {
     });
   }
 
+  reset() {
+    this.arrObstacles = [];
+  }
+
   update() {
     this.clear();
     this.draw();

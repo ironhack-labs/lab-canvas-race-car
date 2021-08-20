@@ -30,6 +30,12 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
+  cursor: pointer;
+}
+
+body button:disabled {
+  cursor: not-allowed;
+  background-color: #a36c6e;
 }
 
 #game-board {

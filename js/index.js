@@ -1,8 +1,5 @@
 window.onload = () => {
-  const startButton = document.getElementById("start-button");
-
-  startButton.onclick = () => {
+  document.querySelector("#start-button").onclick = () => {
     app.startGame();
-    startButton.setAttribute("disabled", true);
   };
 };

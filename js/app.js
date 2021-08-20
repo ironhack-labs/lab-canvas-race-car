@@ -1,4 +1,5 @@
 const app = {
+  startButton: document.getElementById("start-button"),
   carCanvas: document.getElementById("car-canvas"),
   roadCanvas: document.getElementById("road-canvas"),
   obstacleCanvas: document.getElementById("car-canvas"),
@@ -10,8 +11,12 @@ const app = {
   obstacles: null,
   speed: 3,
   score: 0,
+  over: false,
+  intervalId: null,
 
   startGame() {
+    this.startButton.setAttribute("disabled", true);
+
     this.car = new Car(
       60,
       120,
@@ -54,7 +59,8 @@ const app = {
         this.obstacleImgPath
       )
     );
-    setInterval(() => {
+
+    this.intervalId = setInterval(() => {
       this.obstacles.add(
         new Obstacles(
           180,
@@ -75,8 +81,8 @@ const app = {
     const carTop = car.y;
     const carBottom = car.y + car.height;
 
-    const obstacleLeft = obstacle.x;
-    const obstacleRight = obstacle.x + obstacle.width;
+    const obstacleLeft = obstacle.x + 2;
+    const obstacleRight = obstacle.x + obstacle.width - 2;
     const obstacleTop = obstacle.y;
     const obstacleBottom = obstacle.y + obstacle.height;
 
@@ -90,13 +96,13 @@ const app = {
     ) {
       crash = false;
     }
-    this.gameOver(crash);
+    return this.gameOver(crash);
   },
   updateScore() {
     this.score = Math.floor(this.score + 1);
     const context = this.carCanvas.getContext("2d");
     context.font = "30px serif";
-    
+
     context.fillStyle = "#b70009";
     context.strokeStyle = "#ffe800";
     context.fillText(`Score: ${this.score}`, 20, 50);
@@ -105,9 +111,15 @@ const app = {
   },
 
   updateAllCanvas() {
+    if (this.checkCollision()) {
+      this.startButton.removeAttribute("disabled");
+      clearInterval(this.intervalId);
+      this.score = 0;
+      return;
+    }
+
     this.road.update();
     this.car.update();
-    this.checkCollision();
     this.obstacles.arrObstacles.forEach((obstacle) => {
       obstacle.update();
     });
@@ -119,8 +131,17 @@ const app = {
 
   gameOver(over) {
     if (over) {
-      alert("Game over");
-      location.reload();
+      const context = this.carCanvas.getContext("2d");
+      context.fillStyle = "#000000";
+      context.fillRect(0, 0, this.carCanvas.width, this.carCanvas.height);
+      context.font = "30px serif";
+      context.fillStyle = "#b70009";
+      context.fillText(`GAME OVER`, 167, 250);
+      context.fillStyle = "#FFFFFF";
+      context.fillText(`Your final score:`, 143, 350);
+      context.fillStyle = "#2064bd";
+      context.fillText(`${this.score}`, 240, 400);
     }
+    return over;
   },
 };
