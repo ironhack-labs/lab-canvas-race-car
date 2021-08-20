@@ -10,10 +10,15 @@ const raceCarApp = {
 	y: 0,
 	//speed: 1,
 
-	init(canvas) {
+	init(canvas, endgame, scoreEnd, buttonRestart) {
 		this.setContext(canvas);
 		this.setCanvasDimensions(canvas);
 		this.createNewCar();
+		this.endgame = endgame;
+		this.scoreEnd = scoreEnd;
+		this.buttonRestart = buttonRestart;
+
+		//console.log(this.endgame);
 		// Esto podría estar en otra función, pero ha de estar disponible en todos los sitios
 		// si fuese const, no podria ser, por eso le decimos this y lo inicializamos en el objeto
 		this.imageBackground = new Image();
@@ -45,6 +50,9 @@ const raceCarApp = {
 	//----------------------------------------------
 	setContext(canvas) {
 		this.ctx = canvas.getContext('2d');
+		this.ctx.globalCompositeOperation = 'source-over';
+		this.ctx2 = canvas.getContext('2d');
+		this.ctx2.globalCompositeOperation = 'destination-out';
 	},
 
 	setCanvasDimensions(canvas) {
@@ -86,13 +94,13 @@ const raceCarApp = {
 		this.clearCanvas();
 		this.drawAll();
 
+		//Pantalla final ending
+		//this.showEndingScreen();
+
+		//pintamos coche moviendose
 		this.newCar.move();
 
 		this.framesCounter++;
-
-		if (this.framesCounter % 200 === 0) {
-			this.score++;
-		}
 
 		if (this.framesCounter % 100 === 0) {
 			this.createObstacle();
@@ -166,10 +174,21 @@ const raceCarApp = {
 
 	showScores() {
 		// show scores
-		this.ctx.font = '25px Verdana';
-		this.ctx.fillStyle = 'black';
-		this.ctx.fillText('Score: ' + this.score, 300, 90);
+		this.ctx.font = '35px Verdana';
+		this.ctx.fillStyle = 'red';
+		this.ctx.fillText('Score: ' + this.score++, 50, 90);
 	},
+
+	// showEndingScreen() {
+	// 	// show scores
+	// 	this.ctx2.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h);
+	// 	//this.ctx.globalCompositeOperation = 'destination-over';
+	// 	//this.ctx2.globalAlpha = 0.5;
+	// 	this.ctx2.font = '30px Verdana';
+	// 	this.ctx2.strokeStyle = 'red';
+	// 	this.ctx2.strokeText('Game over:', 150, 300);
+	// 	this.ctx2.strokeText('Your score was ->' + this.score, 80, 350);
+	// },
 
 	checkIfCollision() {
 		if (this.obstacles.length) {
@@ -183,21 +202,25 @@ const raceCarApp = {
 					this.newCar.carSize.h - 10 + this.newCar.carPosition.y > elem.obstaclePosition.y
 				) {
 					//clearInterval(this.intervalId);
-					window.cancelAnimationFrame(this.intervalId);
+					//this.showEndingScreen();
+					//window.cancelAnimationFrame(this.intervalId);
+					this.stopGame();
 				}
 			});
 		}
+	},
+
+	stopGame() {
+		window.cancelAnimationFrame(this.intervalId);
+		this.endgame.style.display = 'initial';
+		this.scoreEnd.innerHTML = this.score;
+		this.buttonRestart.setAttribute('onclick', 'window.location.reload()');
+
+		//esperamos un segundo, reiniciamos game
+		// setInterval(() => {
+		// 	location.reload();
+		// }, 1000);
 	}
-
-	// looser() {
-	//   // this.ctx.drawImage(this.image, 0, 0, this.canvasSize.w, this.canvasSize.h);
-	// },
-
-	// reset() {
-	//   this.score = 0
-	//   this.obstacles = []
-	//   this.start()
-	// }
 };
 
 // const backgroundImage = {

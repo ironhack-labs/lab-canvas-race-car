@@ -31,7 +31,11 @@ Obstaculos
 window.onload = () => {
 	document.getElementById('start-button').onclick = () => {
 		const canvas = document.querySelector('#canvas');
-		raceCarApp.init(canvas);
+		const endGame = document.getElementById('endScreen');
+		const scoreEndGame = document.getElementById('score');
+		const restartButton = document.getElementById('restartButton');
+
+		raceCarApp.init(canvas, endGame, scoreEndGame, restartButton);
 	};
 };
 

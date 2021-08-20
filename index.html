@@ -14,13 +14,26 @@
     <img src="./images/logo.png" alt="" class="logo-img" />
     <br />
     <button id="start-button">StartGame</button>
-    <p>Use the left and right arrow to control the car!</p>
+    <p>Use the <span class="redText">left</span>, <span class="redText">right</span>, <span class="redText">up</span>
+      and <span class="redText">down</span> arrow to
+      control
+      the
+      car!</p>
     <img src="./images/arrows.png" alt="" class="arrows-img" />
   </div>
 
   <div id="game-board">
-    <canvas id="canvas" width="500" height="700"></canvas>
+    <div id="endScreen" style="display:none">
+      <h1>Game Over</h1>
+      <p>Your score was: <span id="score"></span></p>
+      <input id="restartButton" class="button" type="button" value="Restart" />
+    </div>
+
+    <canvas id="canvas" width="500" height="700">
+    </canvas>
+
   </div>
+
 
   <script type="text/javascript" src="js/Obstacle.js"></script>
   <script type="text/javascript" src="js/Car.js"></script>

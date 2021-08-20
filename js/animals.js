@@ -1,35 +1,28 @@
 class Animal {
-	constructor(ctx, width, height, canvasSize) {
+	constructor(ctx, width, height, canvasSize, position, speed) {
 		this.ctx = ctx;
-		this.carSize = { w: width, h: height };
+		this.obstacleSize = { w: width, h: height };
 		this.canvasSize = canvasSize;
-		this.image = undefined;
-		this.carPosition = {
-			x: this.canvasSize.w / 2 - 50,
-			y: this.canvasSize.h - 140
-		};
-		this.moveLeft = false;
-		this.moveRight = false;
-		this.image = new Image();
-		this.image.src = `./images/car.png`;
+		this.obstaclePosition = { x: position, y: -100 };
+		this.randomImage = Math.trunc(Math.random() * (4 - 1) + 1);
+		this.speed = speed;
+		this.imageInstance = new Image();
+		this.imageInstance.src = `../images/rotatedCars/car${this.randomImage}.png`;
 	}
 
-	drawCar() {
-		//Primer parametro Image, posicion X, posicion Y, dimension coche W, dimension coche H
-		this.ctx.drawImage(this.image, this.carPosition.x, this.carPosition.y, this.carSize.w, this.carSize.h);
-		//console.log(this.ctx.drawImage(this.carImage, 20, 10, this.width, this.height));
+	draw() {
+		this.ctx.drawImage(
+			this.imageInstance,
+			this.obstaclePosition.x,
+			this.obstaclePosition.y,
+			this.obstacleSize.w,
+			this.obstacleSize.h
+		);
+		// console.log('me muevo');
+		this.move();
 	}
 
 	move() {
-		this.carPosition.x <= this.canvasSize.w - 130 && this.moveRight ? (this.carPosition.x += 4) : null;
-		this.carPosition.x >= 30 && this.moveLeft ? (this.carPosition.x -= 4) : null;
+		this.obstaclePosition.y += this.speed;
 	}
-
-	// moveRight() {
-	// 	this.carPosition.x += 10;
-	// }
-
-	// moveLeft() {
-	// 	this.carPosition.x -= 10;
-	// }
 }
