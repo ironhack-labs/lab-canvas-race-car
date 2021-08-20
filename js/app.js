@@ -76,6 +76,10 @@ const raceCarApp = {
 			e.key === 'ArrowDown' ? (this.newCar.moveDown = true) : null;
 			e.key === 'ArrowLeft' ? (this.newCar.moveLeft = true) : null;
 			e.key === 'ArrowRight' ? (this.newCar.moveRight = true) : null;
+			e.code === 'KeyW' ? (this.newCar.moveUpGamer = true) : null;
+			e.code === 'KeyS' ? (this.newCar.moveDownGamer = true) : null;
+			e.code === 'KeyA' ? (this.newCar.moveLeftGamer = true) : null;
+			e.code === 'KeyD' ? (this.newCar.moveRightGamer = true) : null;
 		});
 		//condicion ternaria, despues del interrogante es el true, despues de los 2 puntos es el false
 		document.addEventListener('keyup', (e) => {
@@ -83,6 +87,10 @@ const raceCarApp = {
 			e.key === 'ArrowDown' ? (this.newCar.moveDown = false) : null;
 			e.key === 'ArrowLeft' ? (this.newCar.moveLeft = false) : null;
 			e.key === 'ArrowRight' ? (this.newCar.moveRight = false) : null;
+			e.code === 'KeyW' ? (this.newCar.moveUpGamer = false) : null;
+			e.code === 'KeyS' ? (this.newCar.moveDownGamer = false) : null;
+			e.code === 'KeyA' ? (this.newCar.moveLeftGamer = false) : null;
+			e.code === 'KeyD' ? (this.newCar.moveRightGamer = false) : null;
 		});
 	},
 
