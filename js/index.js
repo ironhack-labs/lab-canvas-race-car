@@ -34,8 +34,9 @@ window.onload = () => {
 		const endGame = document.getElementById('endScreen');
 		const scoreEndGame = document.getElementById('score');
 		const restartButton = document.getElementById('restartButton');
+		const audio = document.querySelector('audio');
 
-		raceCarApp.init(canvas, endGame, scoreEndGame, restartButton);
+		raceCarApp.init(canvas, endGame, scoreEndGame, restartButton, audio);
 	};
 };
 

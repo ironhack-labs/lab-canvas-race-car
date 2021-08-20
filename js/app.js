@@ -9,11 +9,13 @@ const raceCarApp = {
 	score: 0,
 	y: 0,
 	//speed: 1,
+	audio: undefined,
 
-	init(canvas, endgame, scoreEnd, buttonRestart) {
+	init(canvas, endgame, scoreEnd, buttonRestart, audio) {
 		this.setContext(canvas);
 		this.setCanvasDimensions(canvas);
 		this.createNewCar();
+		this.playBackgroundSong(audio);
 		this.endgame = endgame;
 		this.scoreEnd = scoreEnd;
 		this.buttonRestart = buttonRestart;
@@ -111,6 +113,18 @@ const raceCarApp = {
 		// backgroundImage.draw();
 	},
 
+	playBackgroundSong(audio) {
+		this.audio = audio;
+		this.audio.src = '../sounds/krt.mp3';
+
+		this.audio.play();
+	},
+
+	audioPause() {
+		this.audio = document.querySelector('audio');
+		this.audio.pause();
+	},
+
 	drawAll() {
 		this.drawBackground();
 		this.moveBackground();
@@ -179,6 +193,16 @@ const raceCarApp = {
 		this.ctx.fillText('Score: ' + this.score++, 50, 90);
 	},
 
+	stopScore() {
+		this.ctx.font = '0px Verdana';
+		this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h);
+		//Despues de probar todos los globalCompositeOperation, este es el mejor
+		this.ctx.globalCompositeOperation = 'destination-over';
+		//this.ctx.fillStyle = 'rgba(255, 255, 255, 0)';
+		//this.ctx.globalCompositeOperation = 'lighter';
+		// this.ctx.globalAlpha = 0;
+	},
+
 	// showEndingScreen() {
 	// 	// show scores
 	// 	this.ctx2.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h);
@@ -211,10 +235,19 @@ const raceCarApp = {
 	},
 
 	stopGame() {
+		//https://www.youtube.com/watch?v=eI9idPTT0c4&ab_channel=ChrisCourses
+		//este recurso ha ido bien para acabar la parte del menú final
 		window.cancelAnimationFrame(this.intervalId);
 		this.endgame.style.display = 'initial';
 		this.scoreEnd.innerHTML = this.score;
+
+		//Hacer un refresh
 		this.buttonRestart.setAttribute('onclick', 'window.location.reload()');
+
+		//llamamos a parar el audio
+		this.audioPause();
+		//Limpiamos el score ya que lo mostramos por pantalla al finalizar
+		this.stopScore();
 
 		//esperamos un segundo, reiniciamos game
 		// setInterval(() => {
