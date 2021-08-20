@@ -62,11 +62,15 @@ const raceCarApp = {
 	setListeners() {
 		//condicion ternaria, despues del interrogante es el true, despues de los 2 puntos es el false
 		document.addEventListener('keydown', (e) => {
+			e.key === 'ArrowUp' ? (this.newCar.moveUp = true) : null;
+			e.key === 'ArrowDown' ? (this.newCar.moveDown = true) : null;
 			e.key === 'ArrowLeft' ? (this.newCar.moveLeft = true) : null;
 			e.key === 'ArrowRight' ? (this.newCar.moveRight = true) : null;
 		});
 		//condicion ternaria, despues del interrogante es el true, despues de los 2 puntos es el false
 		document.addEventListener('keyup', (e) => {
+			e.key === 'ArrowUp' ? (this.newCar.moveUp = false) : null;
+			e.key === 'ArrowDown' ? (this.newCar.moveDown = false) : null;
 			e.key === 'ArrowLeft' ? (this.newCar.moveLeft = false) : null;
 			e.key === 'ArrowRight' ? (this.newCar.moveRight = false) : null;
 		});

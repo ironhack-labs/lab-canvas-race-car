@@ -10,6 +10,8 @@ class Car {
 		};
 		this.moveLeft = false;
 		this.moveRight = false;
+		this.moveUp = false;
+		this.moveDown = false;
 		this.image = new Image();
 		this.image.src = `./images/car.png`;
 	}
@@ -23,6 +25,10 @@ class Car {
 	move() {
 		this.carPosition.x <= this.canvasSize.w - 130 && this.moveRight ? (this.carPosition.x += 4) : null;
 		this.carPosition.x >= 30 && this.moveLeft ? (this.carPosition.x -= 4) : null;
+
+		//testing with up and down arrows
+		this.carPosition.y <= this.canvasSize.h - 130 && this.moveDown ? (this.carPosition.y += 4) : null;
+		this.carPosition.y >= 30 && this.moveUp ? (this.carPosition.y -= 4) : null;
 	}
 
 	// moveRight() {
