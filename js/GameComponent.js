@@ -14,5 +14,4 @@ class GameComponent {
     img.src = imagePath;
     this.image = img;
   }
-
 }
