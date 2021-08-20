@@ -8,6 +8,13 @@
     <title>Race Car</title>
   </head>
   <body>
+    <div class = "container">
+      <td height="380" colspan="3" valign="middle" class="bb">
+        <audio autoplay>
+            <source src="/music/Lesson Of Harmony No.3 - Niklas Ibach.mp3" type="audio/mpeg">
+            Tu navegador no es compatible para reproducir audio.
+        </audio>
+    </td>
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
@@ -18,8 +25,11 @@
 
     <div id="game-board">
       <canvas id="canvas" width="500" height="700"></canvas>
+      <canvas id="background-canvas" width="500" height="700"></canvas>
+      <canvas id="main-canvas" width="500" height="700"></canvas> 
     </div>
-
     <script type="text/javascript" src="js/index.js"></script>
+  </div>
+
   </body>
 </html>

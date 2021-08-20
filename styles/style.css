@@ -1,8 +1,12 @@
-
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
 
 body {
   padding: 0;
   text-align: center;
+  max-height: 400px;
 }
 
 .game-intro {
