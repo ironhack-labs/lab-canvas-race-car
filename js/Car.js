@@ -1,16 +1,17 @@
-class Car {
-  constructor(carWidth, carHeight, x, y, speed) {
-    this.carWidth = carWidth;
-    this.carHeight = carHeight;
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-
-    const carImg = new Image();
-    carImg.src = "../images/car.png";
-    this.carImg = carImg;
+class Car extends GameComponent {
+  constructor(width, height, speed, canvas, imagePath) {
+    super(width, height, speed, canvas, imagePath);
   }
 
+  draw() {
+    this.context.drawImage(
+      this.image,
+      (this.canvas.width + this.x - this.width) / 2,
+      this.canvas.height + this.y - this.height - 20,
+      this.width,
+      this.height
+    );
+  }
   moveLeft(borderLeft) {
     if (this.x > borderLeft) this.x -= this.speed;
   }
@@ -19,18 +20,12 @@ class Car {
     if (this.x < borderRight) this.x += this.speed;
   }
 
-  draw() {
-    carContext.drawImage(
-      this.carImg,
-      (carCanvas.width + this.x - this.carWidth) / 2,
-      carCanvas.height + this.y - this.carHeight - 20,
-      this.carWidth,
-      this.carHeight
-    );
+  clear() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   update() {
-    carContext.clearRect(0, 0, carCanvas.width, carCanvas.height);
+    this.clear();
     this.draw();
   }
 }

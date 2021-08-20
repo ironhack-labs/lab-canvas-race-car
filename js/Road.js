@@ -1,49 +1,39 @@
-class Road {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
-    this.speed = 2;
+class Road extends GameComponent {
+  constructor(width, height, speed, canvas, imagePath) {
+    super(width, height, speed, canvas, imagePath);
+  }
 
-    this.x = 0;
-    this.y = 0;
+  draw() {
+    this.context.drawImage(
+      this.image,
+      0,
+      this.y,
+      this.canvas.width,
+      this.canvas.height
+    );
 
-    const roadImg = new Image();
-    roadImg.src = "../images/road.jpg";
-    this.roadImg = roadImg;
+    if (this.speed > 0) {
+      this.context.drawImage(
+        this.image,
+        0,
+        this.y - this.canvas.height,
+        this.canvas.width,
+        this.canvas.height
+      );
+    }
   }
 
   move() {
     this.y += this.speed;
     this.y %= this.height;
   }
+  clear() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
 
-  draw() {
-    // roadContext.drawImage(this.roadImg, 0, 0, roadCanvas.width, roadCanvas.height);
-    // this.interval = setInterval(this.update, 1);
-
-    roadContext.drawImage(
-      this.roadImg,
-      0,
-      this.y,
-      roadCanvas.width,
-      roadCanvas.height
-    );
-    if (this.speed < 0) {
-      roadContext.drawImage(
-        this.roadImg,
-        0,
-        this.y + roadCanvas.height,
-        roadCanvas.width,
-        roadCanvas.height
-      );
-    } else {
-      roadContext.drawImage(
-        this.roadImg,
-        0,
-        this.y - roadCanvas.height,
-        roadCanvas.width,
-        roadCanvas.height
-      );
-    }
+  update() {
+    this.clear();
+    this.draw();
+    this.move();
   }
 }
