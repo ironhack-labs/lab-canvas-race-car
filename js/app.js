@@ -13,6 +13,7 @@ const app = {
   score: 0,
   over: false,
   intervalId: null,
+  animationFrameId: null,
 
   startGame() {
     this.startButton.setAttribute("disabled", true);
@@ -38,8 +39,8 @@ const app = {
       this.obstacleCanvas,
       this.obstacleImgPath
     );
+    
     document.addEventListener("keydown", (e) => this.keyAction(e));
-
     this.createObstacles();
     this.updateAllCanvas();
   },
@@ -99,14 +100,13 @@ const app = {
     return this.gameOver(crash);
   },
   updateScore() {
-    this.score = Math.floor(this.score + 1);
+    this.score++;
+
     const context = this.carCanvas.getContext("2d");
     context.font = "30px serif";
-
     context.fillStyle = "#b70009";
     context.strokeStyle = "#ffe800";
     context.fillText(`Score: ${this.score}`, 20, 50);
-
     context.strokeText(`Score: ${this.score}`, 20, 50);
   },
 
@@ -114,6 +114,7 @@ const app = {
     if (this.checkCollision()) {
       this.startButton.removeAttribute("disabled");
       clearInterval(this.intervalId);
+      cancelAnimationFrame(this.animationFrameId);
       this.score = 0;
       return;
     }
@@ -126,7 +127,7 @@ const app = {
     this.obstacles.delete();
     this.updateScore();
 
-    requestAnimationFrame(() => this.updateAllCanvas());
+    this.animationFrameId = requestAnimationFrame(() => this.updateAllCanvas());
   },
 
   gameOver(over) {
