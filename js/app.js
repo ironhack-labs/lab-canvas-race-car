@@ -5,7 +5,7 @@ const raceCarApp = {
 	intervalId: undefined,
 	framesCounter: 0,
 	obstacles: [],
-	speed: 2,
+	speed: 1,
 	score: 0,
 	y: 0,
 	//speed: 1,
@@ -76,6 +76,8 @@ const raceCarApp = {
 	refreshScreen() {
 		this.intervalId = requestAnimationFrame(() => this.refreshScreen());
 
+		//ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		this.checkIfCollision();
 		this.clearCanvas();
 		this.drawAll();
@@ -99,6 +101,7 @@ const raceCarApp = {
 
 	drawAll() {
 		this.drawBackground();
+		this.moveBackground();
 		this.newCar.drawCar();
 		this.obstacles.forEach((obstacle) => obstacle.draw());
 
@@ -125,15 +128,32 @@ const raceCarApp = {
 	},
 
 	drawBackground() {
-		this.ctx.drawImage(this.imageBackground, 0, 0, this.canvasSize.w, this.canvasSize.h);
+		//this.ctx.drawImage(this.imageBackground, 0, 0, this.canvasSize.w, this.canvasSize.h);
 
-		// this.ctx.drawImage(this.imageBackground, 0, this.y, this.canvasSize.w, this.canvasSize.w);
+		this.ctx.drawImage(this.imageBackground, 0, this.y, this.canvasSize.w, this.canvasSize.h);
 
-		// if (this.speed < 0) {
-		// 	ctx.drawImage(this.imageBackground, 0, this.y + this.canvasSize.h, this.canvasSize.w, this.canvasSize.h);
-		// } else {
-		// 	ctx.drawImage(this.imageBackground, 0, this.y - this.canvasSize.h, this.canvasSize.w, this.canvasSize.h);
-		// }
+		if (this.speed < 0) {
+			this.ctx.drawImage(
+				this.imageBackground,
+				0,
+				this.y + this.canvasSize.h,
+				this.canvasSize.w,
+				this.canvasSize.h
+			);
+		} else {
+			this.ctx.drawImage(
+				this.imageBackground,
+				0,
+				this.y - this.canvasSize.h,
+				this.canvasSize.w,
+				this.canvasSize.h
+			);
+		}
+	},
+
+	moveBackground() {
+		this.y += this.speed;
+		this.y %= this.canvasSize.h;
 	},
 
 	clearCanvas() {
