@@ -1,4 +1,6 @@
 body {
+  display: flex;
+  flex-direction: row;
   padding: 0;
   text-align: center;
 }
@@ -35,4 +37,8 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
+}
+
+#id {
+  border: 1px solid green;
 }
