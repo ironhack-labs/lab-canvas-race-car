@@ -61,14 +61,21 @@ function updateCanvas() {
 
 
 //OBSTACULOS//  NO CONSEGUI LLEGAR A NADA   :(
-
+/*
 let myObstacles = [];
 
-function drawObstacle() {
 
-  ctx.fillStyle = "blue";
-  ctx.fillRect(20, 0, 400, 30);
+function randomObject(x, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
+
+
+function drawObstacle() {
+  ctx.fillStyle = "blue";
+  ctx.fillRect(x, 0, width, 50);
+
+}
+*/
 
 drawObstacle()
 
