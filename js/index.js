@@ -58,9 +58,9 @@ window.onload = () => {
       constructor(){
         // Definimos las propiedades del obstáculo
         // Math.random() * (max - min) + min  ---->  número random entre 2 valores
-        this.obstacleWidth = (Math.random()* (canvas.width - 200) + 50) // limita el tamaño para que siempre este dentro de la carretera y siempre quepa el coche
+        this.obstacleWidth = (Math.random()* (canvas.width - 180) + 50) // limita el tamaño para que siempre este dentro de la carretera y siempre quepa el coche
         this.obstacleHeight = 20
-        this.obstacleX = (Math.random() * (canvas.width - 90 - this.obstacleWidth)) + 40  // empiezan desde cualquier posición en X >= 40 y lo limita a la carretera sin coger cesped y que siempre quepa el coche 
+        this.obstacleX = (Math.random() * (canvas.width - 130 - this.obstacleWidth)) + 40  // empiezan desde cualquier posición en X >= 40 y lo limita a la carretera sin coger cesped y que siempre quepa el coche 
         this.obstacleY = 0  // aparecen siempre desde arriba 
       }
 
