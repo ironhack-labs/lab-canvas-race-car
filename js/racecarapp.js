@@ -4,6 +4,11 @@ const raceCarApp = {
     w: undefined,
     h: undefined,
   },
+  intervalId: undefined,
+  obstacles: [],
+  framesCounter: 0,
+  points: 0,
+
   init(canvas) {
     this.setContext(canvas);
     this.setCanvasDimensions(canvas);
@@ -48,9 +53,20 @@ const raceCarApp = {
 
   refreshScreen() {
     this.intervalId = setInterval(() => {
+      this.checkIfColision();
       this.clearAll();
-      this.newCar.move();
       this.drawAll();
+      this.newCar.move();
+
+      this.framesCounter++;
+
+      if (this.framesCounter % 200 === 0) {
+        this.points++;
+      }
+
+      if (this.framesCounter % 100 === 0) {
+        this.createObstacle();
+      }
     }, 1000 / 60);
   },
 
@@ -61,5 +77,40 @@ const raceCarApp = {
   drawAll() {
     this.roadDraw();
     this.newCar.carDraw();
+    this.obstacles.forEach((obstacle) => obstacle.draw());
+    this.showPoints();
+  },
+
+  createObstacle() {
+    const newObstacle = new Obstacle(this.ctx, this.canvasSize);
+    this.obstacles.push(newObstacle);
+  },
+
+  showPoints() {
+    // show scores
+    this.ctx.font = "25px Arial";
+    this.ctx.fillStyle = "purple";
+    this.ctx.fillText("Points: " + this.points, 300, 90);
+  },
+
+  checkIfColision() {
+    if (this.obstacles.length) {
+      this.obstacles.forEach((elem) => {
+        elem.draw();
+
+        if (
+          this.newCar.carPosition.x <
+            elem.obstaclePosition.x + elem.obstacleSize.w - 10 &&
+          this.newCar.carPosition.x + this.newCar.carSize.w - 10 >
+            elem.obstaclePosition.x &&
+          this.newCar.carPosition.y <
+            elem.obstaclePosition.y + elem.obstacleSize.h - 10 &&
+          this.newCar.carSize.h - 10 + this.newCar.carPosition.y >
+            elem.obstaclePosition.y
+        ) {
+          clearInterval(this.intervalId);
+        }
+      });
+    }
   },
 };

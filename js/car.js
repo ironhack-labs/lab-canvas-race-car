@@ -26,7 +26,7 @@ class Car {
   }
 
   move() {
-    this.carPosition.x <= this.canvasSize.w - 130 && this.moveRight
+    this.carPosition.x <= this.canvasSize.w - 100 && this.moveRight
       ? (this.carPosition.x += 4)
       : null;
     this.carPosition.x >= 30 && this.moveLeft

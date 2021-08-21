@@ -1,6 +1,6 @@
 window.onload = () => {
-  // document.getElementById("start-button").onclick = () => {
-  const canvas = document.querySelector("#canvas");
-  raceCarApp.init(canvas);
-  // };
+  document.getElementById("start-button").onclick = () => {
+    const canvas = document.querySelector("#canvas");
+    raceCarApp.init(canvas);
+  };
 };
