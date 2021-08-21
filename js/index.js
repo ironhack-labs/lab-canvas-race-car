@@ -48,11 +48,11 @@ class Car {
 
   moveLeft() {
     console.log("left");
-    this.carX -= 1;
+    this.carX -= 30;
   }
   moveRight() {
     console.log("right");
-    this.carX += 1;
+    this.carX += 30;
   }
 
   init() {
