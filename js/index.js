@@ -37,11 +37,11 @@ window.onload = () => {
         // if --> Limitamos su rango de movimiento para que no se salga del canvas
         // Le decimos cuanto en X se desplaza por cada click de tecla
       moveRight(){
-      if(this.carX < canvas.width - this.carWidth)
+      if(this.carX < canvas.width - 40 - this.carWidth) // limita el movimiento del coche dentro de la carretera sin pisar cesped
       this.carX += 10
       }
       moveLeft(){
-      if(this.carX > 0 )
+      if(this.carX - 40 > 0 ) // limita el movimiento del coche dentro de la carretera sin pisar cesped
       this.carX -= 10
       }
 
@@ -58,9 +58,9 @@ window.onload = () => {
       constructor(){
         // Definimos las propiedades del obstáculo
         // Math.random() * (max - min) + min  ---->  número random entre 2 valores
-        this.obstacleWidth = (Math.random()* (canvas.width - 52)+ 100) 
+        this.obstacleWidth = (Math.random()* (canvas.width - 200) + 50) // limita el tamaño para que siempre este dentro de la carretera y siempre quepa el coche
         this.obstacleHeight = 20
-        this.obstacleX = (Math.random() * canvas.width)  // empiezan desde cualquier posición en X
+        this.obstacleX = (Math.random() * (canvas.width - 90 - this.obstacleWidth)) + 40  // empiezan desde cualquier posición en X >= 40 y lo limita a la carretera sin coger cesped y que siempre quepa el coche 
         this.obstacleY = 0  // aparecen siempre desde arriba 
       }
 
