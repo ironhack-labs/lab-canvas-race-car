@@ -73,3 +73,19 @@ body button {
  color:red;
  font-weight: bolder;
 }
+
+#placeHolderImg{
+  width: 500px;
+  height: 700px;
+  position: absolute;
+  display: none;
+  background-image: url("../images/road2.png");
+  background-repeat: no-repeat;
+  background-size: 500px 700px;
+}
+
+.divInstructions{
+  border:1px solid black;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}

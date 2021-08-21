@@ -5,51 +5,35 @@ const raceCarApp = {
 	intervalId: undefined,
 	framesCounter: 0,
 	obstacles: [],
+	//animals: [],
 	speed: 1,
 	score: 0,
 	y: 0,
-	//speed: 1,
-	audio: undefined,
 
-	init(canvas, endgame, scoreEnd, buttonRestart, audio) {
+	init(canvas, endgame, scoreEnd, buttonRestart, audio, audio2) {
 		this.setContext(canvas);
 		this.setCanvasDimensions(canvas);
-		this.createNewCar();
-		this.playBackgroundSong(audio);
+
+		this.playStartingSound(audio2);
+		this.imageBackground = new Image();
+		this.imageBackground.src = '../images/road.png';
 		this.endgame = endgame;
 		this.scoreEnd = scoreEnd;
 		this.buttonRestart = buttonRestart;
+		this.createNewCar();
 
-		//console.log(this.endgame);
-		// Esto podría estar en otra función, pero ha de estar disponible en todos los sitios
-		// si fuese const, no podria ser, por eso le decimos this y lo inicializamos en el objeto
-		this.imageBackground = new Image();
-		this.imageBackground.src = './images/road.png';
+		setTimeout(() => {
+			this.playBackgroundSong(audio, audio2);
+
+			//console.log(this.endgame);
+			// Esto podría estar en otra función, pero ha de estar disponible en todos los sitios
+			// si fuese const, no podria ser, por eso le decimos this y lo inicializamos en el objeto
+		}, 4000);
 
 		//Que el coche se mueva
 		this.setListeners();
 		this.refreshScreen();
 	},
-
-	//----------------------------------------------
-	// moveBackGround: function() {
-	// 	this.y += this.speed;
-	// 	this.y %= canvas.height;
-	// },
-
-	// drawBackGround: function() {
-	// 	let imgRoad = new Image();
-	// 	imgRoad.src = './images/road.png';
-
-	// 	ctx.drawImage(this.imgRoad, 0, this.y, canvasSize.w, canvasSize.h);
-
-	// 	if (this.speed < 0) {
-	// 		ctx.drawImage(this.imgRoad, 0, this.y + canvasSize.h, canvasSize.w, canvasSize.h);
-	// 	} else {
-	// 		ctx.drawImage(this.imgRoad, 0, this.y - canvasSize.h, canvasSize.w, canvasSize.h);
-	// 	}
-	// },
-	//----------------------------------------------
 	setContext(canvas) {
 		this.ctx = canvas.getContext('2d');
 		this.ctx.globalCompositeOperation = 'source-over';
@@ -114,14 +98,20 @@ const raceCarApp = {
 
 		if (this.framesCounter % 100 === 0) {
 			this.createObstacle();
+			this.createAnimal();
 		}
-
-		// backgroundImage.move();
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// backgroundImage.draw();
 	},
 
-	playBackgroundSong(audio) {
+	playStartingSound(audio2) {
+		//starting sound
+		this.audio2 = audio2;
+		this.audio2.src = '../sounds/marioStart.mp3';
+
+		this.audio2.play();
+	},
+
+	playBackgroundSong(audio, audio2) {
+		//background song
 		this.audio = audio;
 		this.audio.src = '../sounds/krt.mp3';
 
@@ -129,15 +119,20 @@ const raceCarApp = {
 	},
 
 	audioPause() {
-		this.audio = document.querySelector('audio');
+		this.audio = document.getElementById('backgroundMusic');
+		this.audio2 = document.getElementById('startingSound');
+
 		this.audio.pause();
+		this.audio2.pause();
 	},
 
 	drawAll() {
 		this.drawBackground();
 		this.moveBackground();
 		this.newCar.drawCar();
+
 		this.obstacles.forEach((obstacle) => obstacle.draw());
+		//this.animals.forEach((animal) => animal.draw());
 
 		this.showScores();
 	},
@@ -160,6 +155,18 @@ const raceCarApp = {
 
 		this.obstacles.push(newObstacle);
 	},
+
+	// createAnimal() {
+	// 	//const randomWidth = Math.trunc(Math.random() * (300 - 100) + 100);
+	// 	//const randomHeight = Math.trunc(Math.random() * (100 - 70) + 70);
+	// 	const randomWidth = 80;
+	// 	const randomHeight = 100;
+	// 	const xRandomPosition = Math.trunc(Math.random() * (this.canvasSize.w - 100));
+
+	// 	const newAnimal = new Animal(this.ctx, randomWidth, randomHeight, this.canvasSize, xRandomPosition, this.speed);
+
+	// 	this.animals.push(newAnimal);
+	// },
 
 	drawBackground() {
 		//this.ctx.drawImage(this.imageBackground, 0, 0, this.canvasSize.w, this.canvasSize.h);
@@ -206,21 +213,7 @@ const raceCarApp = {
 		this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h);
 		//Despues de probar todos los globalCompositeOperation, este es el mejor
 		this.ctx.globalCompositeOperation = 'destination-over';
-		//this.ctx.fillStyle = 'rgba(255, 255, 255, 0)';
-		//this.ctx.globalCompositeOperation = 'lighter';
-		// this.ctx.globalAlpha = 0;
 	},
-
-	// showEndingScreen() {
-	// 	// show scores
-	// 	this.ctx2.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h);
-	// 	//this.ctx.globalCompositeOperation = 'destination-over';
-	// 	//this.ctx2.globalAlpha = 0.5;
-	// 	this.ctx2.font = '30px Verdana';
-	// 	this.ctx2.strokeStyle = 'red';
-	// 	this.ctx2.strokeText('Game over:', 150, 300);
-	// 	this.ctx2.strokeText('Your score was ->' + this.score, 80, 350);
-	// },
 
 	checkIfCollision() {
 		if (this.obstacles.length) {
@@ -233,9 +226,6 @@ const raceCarApp = {
 					this.newCar.carPosition.y < elem.obstaclePosition.y + elem.obstacleSize.h - 10 &&
 					this.newCar.carSize.h - 10 + this.newCar.carPosition.y > elem.obstaclePosition.y
 				) {
-					//clearInterval(this.intervalId);
-					//this.showEndingScreen();
-					//window.cancelAnimationFrame(this.intervalId);
 					this.stopGame();
 				}
 			});
@@ -256,31 +246,5 @@ const raceCarApp = {
 		this.audioPause();
 		//Limpiamos el score ya que lo mostramos por pantalla al finalizar
 		this.stopScore();
-
-		//esperamos un segundo, reiniciamos game
-		// setInterval(() => {
-		// 	location.reload();
-		// }, 1000);
 	}
 };
-
-// const backgroundImage = {
-// 	imgRoad: imgRoad,
-// 	y: 0,
-// 	speed: 1,
-
-// 	move: function() {
-// 		this.y += this.speed;
-// 		this.y %= canvas.height;
-// 	},
-
-// 	draw: function() {
-// 		ctx.drawImage(this.imgRoad, 0, this.y, canvas.width, canvas.height);
-
-// 		if (this.speed < 0) {
-// 			ctx.drawImage(this.imgRoad, 0, this.y + canvas.height, canvas.width, canvas.height);
-// 		} else {
-// 			ctx.drawImage(this.imgRoad, 0, this.y - canvas.height, canvas.width, canvas.height);
-// 		}
-// 	}
-// };

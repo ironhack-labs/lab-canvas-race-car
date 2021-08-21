@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
   <link rel="stylesheet" href="styles/style.css" />
-  <audio src="sounds/krt.mp3"></audio>
+  <audio src="sounds/krt.mp3" id="backgroundMusic"></audio>
+  <audio src="sounds/marioStart.mp3" id="startingSound"></audio>
   <title>Race Car</title>
 </head>
 
@@ -15,11 +16,14 @@
     <img src="./images/logo.png" alt="" class="logo-img" />
     <br />
     <button id="start-button">StartGame</button>
-    <p>Use the <span class="redText">left</span>, <span class="redText">right</span>, <span class="redText">up</span>
-      and <span class="redText">down</span> arrow to
-      control
-      the
-      car!</p>
+    <div class="divInstructions">
+      <p>Use the <span class="redText">left</span>, <span class="redText">right</span>, <span class="redText">up</span>
+        and <span class="redText">down</span> arrow to
+        control
+        the
+        car!</p>
+      <p>Or <span class="redText">WASD</span> gaming too</p>
+    </div>
     <img src="./images/arrows.png" alt="" class="arrows-img" />
   </div>
 
@@ -29,7 +33,9 @@
       <p>Your score was: <span id="score"></span></p>
       <input id="restartButton" class="button" type="button" value="Refresh" />
     </div>
+    <div id="placeHolderImg">
 
+    </div>
     <canvas id="canvas" width="500" height="700">
     </canvas>
 
@@ -37,6 +43,7 @@
 
 
   <script type="text/javascript" src="js/Obstacle.js"></script>
+  <script type="text/javascript" src="js/Animals.js"></script>
   <script type="text/javascript" src="js/Car.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/index.js"></script>

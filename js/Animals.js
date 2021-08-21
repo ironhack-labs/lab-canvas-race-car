@@ -3,7 +3,7 @@ class Animal {
 		this.ctx = ctx;
 		this.obstacleSize = { w: width, h: height };
 		this.canvasSize = canvasSize;
-		this.obstaclePosition = { x: position, y: -100 };
+		this.obstaclePosition = { x: -100, y: position };
 		this.randomImage = Math.trunc(Math.random() * (4 - 1) + 1);
 		this.speed = speed;
 		this.imageInstance = new Image();
@@ -18,7 +18,7 @@ class Animal {
 			this.obstacleSize.w,
 			this.obstacleSize.h
 		);
-		// console.log('me muevo');
+
 		this.move();
 	}
 

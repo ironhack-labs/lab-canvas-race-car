@@ -18,7 +18,6 @@ class obstacles {
 			this.obstacleSize.w,
 			this.obstacleSize.h
 		);
-		// console.log('me muevo');
 		this.move();
 	}
 
