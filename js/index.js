@@ -22,10 +22,10 @@ window.onload = () => {
     class Car {
       constructor(){
         // Definimos las propiedades del Coche  
-        this.carHeight = 90
+        this.carHeight = 100
         this.carWidth = 50
         this.carX = (canvas.width / 2) - ( this.carWidth/2) // situa el eje central del coche en el eje central del canvas
-        this.carY = canvas.height-(this.carHeight+20) // lo situa abajo del canvas con "margen inferior 20"
+        this.carY = canvas.height-(this.carHeight + 40) // lo situa abajo del canvas con "margen inferior 40"
         
         // Creamos la imagen Coche
         const carImg = new Image()
@@ -59,7 +59,7 @@ window.onload = () => {
         // Definimos las propiedades del obstáculo
         // Math.random() * (max - min) + min  ---->  número random entre 2 valores
         this.obstacleWidth = (Math.random()* (canvas.width - 180) + 50) // limita el tamaño para que siempre este dentro de la carretera y siempre quepa el coche
-        this.obstacleHeight = 20
+        this.obstacleHeight = 30
         this.obstacleX = (Math.random() * (canvas.width - 130 - this.obstacleWidth)) + 40  // empiezan desde cualquier posición en X >= 40 y lo limita a la carretera sin coger cesped y que siempre quepa el coche 
         this.obstacleY = 0  // aparecen siempre desde arriba 
       }
@@ -79,7 +79,26 @@ window.onload = () => {
     const obstaclesArray = []
     // Añade los obstaculos al array con un delay de 2 segundos, es decir frecuencia con la que aparecen (hacerlo aleatorio¿?)
     setInterval(() => {obstaclesArray.push(new Obstacle); console.log(obstaclesArray)}, 2000)
-     
+
+    // ******* ¿ HAY CHOQUE ? ******** //
+    const isCarCrashed = (objCar,objObstacle) =>{
+      const isCarAtRightToObst = objCar.carX > objObstacle.obstacleX + objObstacle.obstacleWidth
+      const isCarAtLeftToObst = objCar.carX + objCar.carWidth < objObstacle.obstacleX
+      const isCarAtBottomToObst = objCar.carY > objObstacle.obstacleY + objObstacle.obstacleHeight
+      const isCarAboveToObst = objCar.carY + objCar.carHeight < objObstacle.obstacleY
+
+      if(isCarAtRightToObst || isCarAtLeftToObst || isCarAtBottomToObst || isCarAboveToObst){         
+        // no hay choque          
+      }else{
+        alert(`GAME OVER \nYOUR SCORE : ${score}` ); // hay choque y sale pop-up de game over   
+/* 
+        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(newCar.carX, newCar.carY, newCar.carWidth, newCar.carHeight)
+ */
+        windows.document.reload() // al aceptar el alert se va y si pulsamos StarGame de nuevo, se reinicia   
+      }
+    }
+    
 
     // ***** Creamos la PUNTUACION como TEXTO ***** //
     // Empieza en 0 
@@ -92,7 +111,6 @@ window.onload = () => {
       ctx.fillStyle = "white"
       ctx.fillText(`Score:${number}`, 80, 100)
     }
-
 
   // ***** ANIMAMOS LOS ELEMENTOS ***** //
   
@@ -118,6 +136,11 @@ window.onload = () => {
       obstaclesArray.forEach( obstacle => obstacle.obstacleUpdate() )
       obstaclesArray.forEach( obstacle => obstacle.drawObstacle() )
 
+      // le decimos que pase por cada obstaculo del array y compruebe si se cumple la funcion de la variable isCarCrashed con los parametros coche y obstaculo[i] 
+      for(let i = 0; i < obstaclesArray.length; i++){
+        isCarCrashed(newCar, obstaclesArray[i]) 
+      }
+
       // Pintamos la puntuacion  
       drawScore(score)
 
@@ -125,6 +148,9 @@ window.onload = () => {
       requestAnimationFrame(animateObstacle)
     }
     
+
+
+  
 
   // ***** ORDENES DESDE EL TECLADO ***** //
     document.addEventListener("keydown", (e) =>{
