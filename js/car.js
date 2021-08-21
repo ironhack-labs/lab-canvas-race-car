@@ -10,11 +10,11 @@ class Car {
         x: this.canvasSize.w / 2 - this.carSize.w / 2,
         y: this.canvasSize.h - this.carSize.h - 100,
       }),
-      (this.moveRight = false);
-    this.moveLeft = false;
-    (this.car = new Image()), (this.car.src = "../images/car.png");
+      (this.moveRight = false),
+      (this.moveLeft = false),
+      (this.car = new Image()),
+      (this.car.src = "../images/car.png");
   }
-
   carDraw() {
     this.ctx.drawImage(
       this.car,
@@ -30,7 +30,7 @@ class Car {
       ? (this.carPosition.x += 4)
       : null;
     this.carPosition.x >= 30 && this.moveLeft
-      ? (this.carPosition.x += 4)
+      ? (this.carPosition.x -= 4)
       : null;
   }
 }

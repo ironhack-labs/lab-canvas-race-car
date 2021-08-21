@@ -6,11 +6,11 @@ const raceCarApp = {
   },
   init(canvas) {
     this.setContext(canvas);
-    this.setCanvasDimensions();
+    this.setCanvasDimensions(canvas);
     this.newCar();
     this.road = new Image();
     this.road.src = "../images/road.png";
-    this.setEventListeners;
+    this.setEventListeners();
     this.refreshScreen();
   },
 
@@ -18,7 +18,7 @@ const raceCarApp = {
     this.ctx = canvas.getContext("2d");
   },
 
-  setCanvasDimensions() {
+  setCanvasDimensions(canvas) {
     this.canvasSize.w = 500;
     this.canvasSize.h = 700;
     canvas.setAttribute("width", this.canvasSize.w);
@@ -35,18 +35,23 @@ const raceCarApp = {
 
   setEventListeners() {
     document.addEventListener("keydown", (e) => {
-      e.key === "d" ? (this.newCar.moveRight = true) : null;
+      console.log("izquierda");
       e.key === "a" ? (this.newCar.moveLeft = true) : null;
+      e.key === "d" ? (this.newCar.moveRight = true) : null;
+    });
+
+    document.addEventListener("keyup", (e) => {
+      e.key === "a" ? (this.newCar.moveLeft = false) : null;
+      e.key === "d" ? (this.newCar.moveRight = false) : null;
     });
   },
 
   refreshScreen() {
-    this.clearAll();
-    this.drawAll();
-
-    requestAnimationFrame(() => {
-      this.refreshScreen;
-    });
+    this.intervalId = setInterval(() => {
+      this.clearAll();
+      this.newCar.move();
+      this.drawAll();
+    }, 1000 / 60);
   },
 
   clearAll() {
