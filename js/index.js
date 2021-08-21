@@ -1,112 +1,150 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
- /*    raceCap.init */
     startGame();
-  }; 
+  };
 
-
-    
   function startGame() {
-    var myObstacles = [];
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-  
-    // ***** CARRETERA ***** //
-    // Creala imagen de carretera
-    const roadImg = new Image(); 
-    roadImg.src = '../images/road.png';
-    // Pinta la imagen
-    roadImg.onload = function() {
-      ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
-    };
 
-    // ***** COCHE ***** //
+  // ***** DEFINIMOS EL CANVAS ***** //
+    const canvas = document.querySelector("canvas")
+    const ctx = canvas.getContext("2d")
+
+  // ***** CREAMOS Y DEFINIMOS LOS ELEMENTOS ***** //
+  
+    // ***** CARRETERA como IMAGEN***** //
+    // Creamos la imagen
+    let roadImg = new Image()
+    roadImg.src = "../images/road.png"
+    // Pintamos la imagen (OJO --> drawImage porque es una imagen)
+    ctx.drawImage(roadImg,0,0,canvas.width,canvas.height)
+
+    // ***** COCHE como OBJETO ***** //
     class Car {
-      constructor() {
-        this.x = (canvas.width/2)-40;
-        this.y = (canvas.height)-200;
+      constructor(){
+        // Definimos las propiedades del Coche  
+        this.carHeight = 90
+        this.carWidth = 50
+        this.carX = (canvas.width / 2) - ( this.carWidth/2) // situa el eje central del coche en el eje central del canvas
+        this.carY = canvas.height-(this.carHeight+20) // lo situa abajo del canvas con "margen inferior 20"
         
-        // Creala imagen de coche
-        const carImg = new Image();
-        carImg.addEventListener('load', () => {
-          // Pinta la imagen del coche
-          this.carImg = carImg;
-          this.draw();
-        });
-        carImg.src = '../images/car.png';
+        // Creamos la imagen Coche
+        const carImg = new Image()
+        this.img = carImg
+        // Pintamos la imagen Coche (OJO --> drawImage porque es una imagen)
+        carImg.src = "../images/car.png"
+        }
+      // Definimos el movimiento del Coche
+        // if --> Limitamos su rango de movimiento para que no se salga del canvas
+        // Le decimos cuanto en X se desplaza por cada click de tecla
+      moveRight(){
+      if(this.carX < canvas.width - this.carWidth)
+      this.carX += 10
       }
-    
-      moveLeft() {
-        this.x --;
-      }
-      moveRight() {
-        this.x ++;
+      moveLeft(){
+      if(this.carX > 0 )
+      this.carX -= 10
       }
 
-      draw() {
-        ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
-        ctx.drawImage(this.carImg, this.x, this.y,  this.carImg.width/2, this.carImg.height/2);// imagen, posición X, posición Y, ancho y alto
-        
+      // Pintamos la imagen Coche
+      drawCar(){
+      ctx.drawImage(this.img, this.carX, this.carY, this.carWidth, this.carHeight)
       }
     }
+       const newCar = new Car
+
     
-    const car = new Car();
-    
-    document.addEventListener('keydown', e => {
-      switch (e.keyCode) {
-        case 37: car.moveLeft();  console.log('left',  car); break;
-        case 39: car.moveRight(); console.log('right', car); break;
+    // ***** OBSTACULOS como OBJETO ***** //
+    class Obstacle {
+      constructor(){
+        // Definimos las propiedades del obstáculo
+        // Math.random() * (max - min) + min  ---->  número random entre 2 valores
+        this.obstacleWidth = (Math.random()* (canvas.width - 52)+ 100) 
+        this.obstacleHeight = 20
+        this.obstacleX = (Math.random() * canvas.width)  // empiezan desde cualquier posición en X
+        this.obstacleY = 0  // aparecen siempre desde arriba 
       }
-      updateCanvas();
-    })
 
-
-    // ***** OBSTACULOS ***** //
-    let speed1 = 0;
-
-    function drawObstacles(x, y, w, h, color) {
-      speed1 += 1;
-      ctx.fillStyle = color;
-      ctx.fillRect(x, y, w, h);
-      var minWidth = 20;
-      var maxWidth = 400;
-      var width = Math.floor(Math.random() * (maxWidth - minWidth+ 1) + minWidth)
-      myObstacles = [];
-      for (i = 0; i < myObstacles.length; i++) {
-        myObstacles[i].x += -1;
-        myObstacles[i].update();
+      obstacleUpdate(){
+        // Definimos la velocidad de los obstaculos en Y
+        this.obstacleY +=  2
       }
-      myObstacles.push(new Component(0, 0, width, 20, 'red'));
+            
+      drawObstacle(){
+        // Pintamos la forma obstaculo (OJO --> fillRect porque no es un archivo imagen)
+        ctx.fillRect(this.obstacleX, this.obstacleY, this.obstacleWidth, this.obstacleHeight)
+      }
+    }
 
-    }   
+    // Creamos un array para ir añadiendo obstaculos (no solo uno)
+    const obstaclesArray = []
+    // Añade los obstaculos al array con un delay de 2 segundos, es decir frecuencia con la que aparecen (hacerlo aleatorio¿?)
+    setInterval(() => {obstaclesArray.push(new Obstacle); console.log(obstaclesArray)}, 2000)
+     
+
+    // ***** Creamos la PUNTUACION como TEXTO ***** //
+    // Empieza en 0 
+    let score = 0
+    // Aumenta 1 punto por segundo
+    setInterval(() =>{score ++;}, 1000)
+    // Pintamos el texto (OJO --> fillText porque es un texto)
+    const drawScore = (number) =>{ 
+      ctx.font = "30px arial"
+      ctx.fillStyle = "white"
+      ctx.fillText(`Score:${number}`, 80, 100)
+    }
 
 
+  // ***** ANIMAMOS LOS ELEMENTOS ***** //
+  
+    // ***** Coche ******//
+    const carUpdate = () =>{
+      ctx.clearRect(newCar.carX, newCar.carY, 0, 0)
+      newCar.drawCar()
+      requestAnimationFrame(carUpdate) //callback¿?
+    }
+  
+    //****** Obstaculos ******//
+    const animateObstacle = () =>{
+      // Limpiamos todo
+      ctx.clearRect(0,0,canvas.width,canvas.height)
 
-    // Retorna un entero aleatorio entre min (incluido) y max (excluido)
-  // ¡Usando Math.round() te dará una distribución no-uniforme!
+      // Pintamos el fondo para que no haya estela en los obstaculos
+      ctx.drawImage(roadImg,0,0,canvas.width,canvas.height)
 
-    // ***** UPDATE CANVAS ***** //
-    function updateCanvas() {
-    
-      ctx.clearRect(0, 0, 500, 700);
-      car.draw();
-      // redraw the canvas
-      
-      drawObstacles(0, speed1, (Math.floor(Math.random() * (450 - 50)) + 50), 50, 'red');
-      requestAnimationFrame(updateCanvas);
+      // Coloreamos los Obstaculos
+      ctx.fillStyle = "#870007"
+
+      // Por cada Obstaculo del array le decimos que ejecute la funcion metodo que creamos en class obstaculos
+      obstaclesArray.forEach( obstacle => obstacle.obstacleUpdate() )
+      obstaclesArray.forEach( obstacle => obstacle.drawObstacle() )
+
+      // Pintamos la puntuacion  
+      drawScore(score)
+
+      // Le decimos que queremos iniciar una animacion y que repinte para cada ciclo todo lo que hay en animateObstacle
+      requestAnimationFrame(animateObstacle)
     }
     
+
+  // ***** ORDENES DESDE EL TECLADO ***** //
+    document.addEventListener("keydown", (e) =>{
+      switch(e.key){
+        case "a":
+        case "ArrowLeft":
+          console.log("left")
+          newCar.moveLeft()
+          break; 
+        case "d":
+        case "ArrowRight":
+          newCar.moveRight()
+          console.log("rigth")
+          break;
+      }
+      carUpdate()
+     })
     
+    animateObstacle()
+    carUpdate()
 
-   
-
-
-    
-    
-
-
-  
-    updateCanvas()
-  
   }
 };
