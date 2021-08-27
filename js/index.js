@@ -1,58 +1,55 @@
 window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
-
-  drawRoad();
-  drawCar(250, 600);
-
-  function startGame() {
-    
-    
-  }
+	document.getElementById('start-button').onclick = () => {
+		startGame();
+	};
 };
 
-function drawRoad() {
-const ctx = document.getElementById('canvas').getContext('2d');
-
-ctx.clearRect(0, 0, 500, 700);
-
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const road = new Image();
-road.src = "../images/road.png"
+road.src = './images/road.png';
+const car = new Image();
+car.src = './images/car.png';
+canvas.width = 500;
+canvas.height = 700;
 
-road.onload = function() {
-  ctx.drawImage(road, 0, 0, canvas.width, canvas.height)
- }
+let honda = {
+	w: 25,
+	h: 50,
+	x: 235,
+	y: 650
 };
 
-function drawCar() {
-  const ctx = document.getElementById('canvas').getContext('2d');
-
-  const car = new Image();
-  car.src = "../images/car.png"
-
-  car.onload = function() {
-    ctx.drawImage(car, x, y, x + 50, y + 100);
- }
+function startGame() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(road, 0, 0, canvas.width, canvas.height);
+	ctx.drawImage(car, honda.x, honda.y, honda.w, honda.h);
+	requestAnimationFrame(startGame);
 }
 
-
-
-
-
-// const img = new Image();
-// imgScale = 640/480;
-// img.onload = function() {
-//   ctx.drawImage(img, 215, 525,50*imgScale,150);
-// };
-
-// img.src = '/images/car.png';
-
-// const ctx2 = document.getElementById('canvas').getContext('2d');
-// const img2 = new Image();
-// imgScale = 640/480;
-// img2.onload = function() {
-//   ctx2.drawImage(img2, 0, 0,350*imgScale,600);
-// };
- 
-// img2.src = '/images/road.png';
+//CONTROLS
+window.onkeydown = function(e) {
+	console.log(e.key, honda);
+	switch (e.key) {
+		case 'ArrowRight':
+			if (honda.x < canvas.width - honda.w) {
+				honda.x += 10;
+			}
+			break;
+		case 'ArrowLeft':
+			if (honda.x > 0) {
+				honda.x -= 10;
+			}
+			break;
+		case 'ArrowUp':
+			if (honda.y > 0) {
+				honda.y -= 10;
+			}
+			break;
+		case 'ArrowDown':
+			if (honda.y < canvas.height - honda.h) {
+				honda.y += 10;
+			}
+			break;
+	}
+};
