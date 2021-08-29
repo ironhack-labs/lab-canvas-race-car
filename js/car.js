@@ -18,8 +18,12 @@ class Car {
   }
 
   move() {
-  this.carPosition.x <= this.dimensionCanvas.w - 100 && this.moveRight ? this.carPosition.x += 7 : null;
-  this.carPosition.x >= 30 && this.moveLeft ? this.carPosition.x -= 7 : null;
+    this.carPosition.x <= this.dimensionCanvas.w - 100 && this.moveRight
+      ? (this.carPosition.x += 7)
+      : null;
+    this.carPosition.x >= 30 && this.moveLeft
+      ? (this.carPosition.x -= 7)
+      : null;
   }
 
   draw() {
@@ -33,5 +37,4 @@ class Car {
       this.carHeight
     );
   }
- 
 }
