@@ -31,9 +31,6 @@ this.width,
 this.height
 );
 }
-frames(){
-  frames=0
-}
 
 }
 
@@ -88,7 +85,7 @@ crashWith(obstacle) {
 
   // SI CUMPLE CUALQUIERA CON ESTAS CONDICIONES, ENTONCES, CHOCAMOS
   return !(
-      //this.bottom() < obstacle.top() ||
+      this.bottom() < obstacle.top() ||
       this.top() > obstacle.bottom() || // CHOQUE CON LA PARTE SUPERIOR DEL CUADRADO ROJO HACIA LA PARTE INFERIOR DEL TUBO VERDE
       this.right() < obstacle.left() || // CHOQUE CON LA PARTE LATERAL DERECHA DE MI CUADRADO ROJO HACIA EL LATERAL IZQUIERDO CON EL OBSTÁCULO
       this.left() > obstacle.right() // CHOQUE CON LA PARTE LATERAL IZQUIERDA DE MI CUADRADO ROJO HACIA EL LATERAL DERECHO DE MI OBSTÁCULO
@@ -119,6 +116,21 @@ class Component {
 
 }
 
+left() {
+  return this.x
+}
+
+right() {
+  return this.x + this.width
+}
+
+top() {
+  return this.y
+}
+
+bottom() {
+  return this.y + this.height 
+}
 
 }
 
@@ -148,6 +160,7 @@ board.draw()
 coche.newPos()
 coche.draw()
 updateObstacles()
+Score()
 checkGameOver() 
 
 }
@@ -160,6 +173,16 @@ checkGameOver()
 function clearCanvas(){
   ctx.clearRect(0,0,$canvas.width,$canvas.height)
 }
+
+
+function Score () {
+  const points = Math.floor(frames / 5)
+  ctx.font = '18px serif',
+  ctx.fillStyle = 'black',
+  ctx.fillText(`Score: ${points}`, 250, 50)
+
+}
+
 
 
 const myObstacles=[];
@@ -182,25 +205,22 @@ if(frames%120===0){
   let canvasHeight= Board.height
 
   //EStablecemos el tamano del obstaculo rojo
-  let minHeight=100
-  let maxHeight=600
-  let height      = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight )
+  let minWidth=28
+  let maxWidth=420
+  let width    = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth )
     // ESTABLECEMOS EL ESPACIO DE SEPARACIÓN VERTICAL ENTRE LOS TUBOS
     let minGap      = 50
     let maxGap      = 300
     let gap         = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap)
        // AGREGAR LOS OBSTÁCULOS A UN ARREGLO
         // 1. TUBO VERDE SUPERIOR       x   y             x     y
-        myObstacles.push(new Component(height, 10, "red", height, 10))
+        myObstacles.push(new Component(width, 10, "red", gap, 10))
 
         // 2. TUBO VERDE INFERIOR
-        myObstacles.push(new Component(-height, 10, 'purple', gap,100))
+       // myObstacles.push(new Component(width, 10, 'purple', gap,10))
         
         
 }
-
-// REVISA EL GAME OVER
-
 
 }
 
