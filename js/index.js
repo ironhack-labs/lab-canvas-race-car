@@ -1,7 +1,6 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    const canvas = document.querySelector('#canvas');
+    raceCarApp.init(canvas);
   };
-
-  function startGame() {}
 };
