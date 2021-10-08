@@ -42,6 +42,39 @@ class Car {
   }
 }
 
+class Obstacle {
+  constructor() {
+    this.obtacleWidth = Math.random() * canvas.width * 0.25 + 20;
+    this.obtacleHeight = Math.random() * 50 + 15;
+    // si al canvas
+    this.obstaclePositionX = Math.random() * canvas.width - this.obtacleWidth;
+    this.obstaclePositionY = 0;
+    //Pintar coche --> 1.cargar la imagen; 2.pintar la imagen
+    let img = new Image();
+    img.addEventListener("load", () => {
+      this.img = img;
+      setTimeout(() => this.draw(), 400);
+    });
+    img.src = "/images/tetris.png";
+  }
+
+  moveDown() {
+    this.obstaclePositionY += 10;
+  }
+
+  draw() {
+    setInterval(() => {
+      ctx.drawImage(
+        this.img,
+        this.obstaclePositionX,
+        this.obstaclePositionY,
+        this.obtacleWidth,
+        this.obtacleHeight
+      );
+    }, 2);
+  }
+}
+
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
     startGame();
@@ -59,6 +92,9 @@ window.onload = () => {
     //Crear coche
     const car = new Car();
 
+    // crear obstaculo
+    const obstacle = new Obstacle();
+
     //crear movimiento del coche
 
     document.addEventListener("keydown", (e) => {
@@ -73,6 +109,36 @@ window.onload = () => {
       updateCanvas();
     });
 
+    // crear obstaculos y movimiento obstaculos
+    setInterval(() => {
+      const obstacle = new Obstacle();
+
+      setInterval(() => {
+        obstacle.moveDown();
+        updateCanvas();
+      }, 200);
+    }, 4000);
+
+    /*
+    const numeroObastaculos = [(obstacle = new Obstacle())];
+
+    for (let i = 0; i < numeroObastaculos.length; i++) {
+      const obstacle = new Obstacle();
+      numeroObastaculos.push(numeroObastaculos[i]);
+    }
+*/
+    /*
+    let crearObstaculos = setInterval(() => {
+      const obstacle = new Obstacle();
+    }, 3000);
+
+    setInterval(() => {
+      obstacle.moveDown();
+      updateCanvas();
+    }, 200);
+
+    */
+
     //Que el coche se mueva a los lados -->
     function updateCanvas() {
       //Borrar el canvas actual
@@ -81,7 +147,11 @@ window.onload = () => {
       ctx.drawImage(road, 0, 0, canvas.width, canvas.height);
       //Hacer que se mueva
       car.draw();
+
+      obstacle.draw();
     }
+
+    // crear obstaculos loop
 
     //setTimeout ( () => car.draw()
     //,500);
