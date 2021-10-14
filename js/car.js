@@ -7,7 +7,9 @@ class Car {
         this.carWidth = 158 * this.scale;
         this.carHeight = 319 * this.scale;
         this.canvas = canvas;
-        this.ctx = document.querySelector('canvas').getContext('2d');
+        this.ctx = document.querySelector("canvas").getContext("2d");
+        this.direction = 0;
+        this.speed = 5;
     }
 
     drawCar() {
@@ -15,5 +17,11 @@ class Car {
 
     }
 
-}
+    setDirection(direction) {
+        this.direction = direction;
+    }
 
+    gibGummi(speed) {
+        this.speed *= speed;
+    }
+}
