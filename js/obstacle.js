@@ -2,7 +2,7 @@ class Obstacle extends Car {
     constructor(canvas) {
         super(canvas);
         // this.posX = canvas.clientWidth * 0.5;
-        this.posX = this.randomRange(canvas.clientWidth*0.2, canvas.clientWidth*0.8);
+        this.posX = this.randomRange(canvas.clientWidth*0.1, canvas.clientWidth*0.8);
         this.posY = -this.carHeight;
         this.direction = 1;
         this.speed = 2;

@@ -32,6 +32,9 @@ function update() {
         obstacle.splice(element, 1)
       }
     }
+    //add new obstacles
+    if (Math.random() > 0.98)
+      obstacle.push(new Obstacle(canvas))
 }
 
 function steering() {
