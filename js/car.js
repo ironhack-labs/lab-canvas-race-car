@@ -40,4 +40,13 @@ class Car {
         else
             return true
     }
+
+    checkCrash(obstacleCar){
+        let isSamePosX = obstacleCar.posX < this.posX+this.carWidth/2 &&
+        obstacleCar.posX > this.posX-this.carWidth/2
+        let isSamePosY = obstacleCar.posY > this.poxY-this.carHeight*0.2
+        
+        if (isSamePosY && isSamePosX)
+            return true
+    }
 }
