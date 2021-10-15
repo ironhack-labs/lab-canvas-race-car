@@ -21,7 +21,11 @@ window.onload = () => {
     }
   }
   function buildGameOver() {
-    alert('Game Over');
+    const gameOverImg = new Image();
+    gameOverImg.addEventListener('load', () => {
+      ctx.drawImage(gameOverImg, 0, 0, 564, 230);
+    });
+    gameOverImg.src = '../images/gameover.png';
   }
 
   document.addEventListener('keydown', carMove);
