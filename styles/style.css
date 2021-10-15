@@ -36,3 +36,26 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#game-over {
+  width: 100vw;
+  height: 20%;
+  visibility: hidden;
+  position: absolute;
+  bottom: 100px;
+  background: black;
+}
+.game-over-msg {
+  color: yellow;
+}
+
+.game-score {
+  color: white;
+}
+
+#score {
+  color: greenyellow;
+}
+
+
+
