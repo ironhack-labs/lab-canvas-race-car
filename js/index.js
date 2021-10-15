@@ -31,12 +31,11 @@ function update() {
     // obstackle clearout by out of bounds
     // AND check for crashs
     for (element in obstacle) {
-        if (obstacle[element].checkBoundaries()) {
-            obstacle.splice(element, 1);
-        }
         if (car.checkCrash(obstacle[element])) {
             obstacle.splice(element, 1);
-            console.log(car.checkCrash(obstacle[element]))
+        }
+        if (obstacle[element].checkBoundaries()) {
+            obstacle.splice(element, 1);
         }
     }
     //add new obstacles
