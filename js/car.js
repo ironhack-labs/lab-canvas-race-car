@@ -28,6 +28,16 @@ class Car {
     }
 
     updateCarPos() {
-        this.posX += this.direction * this.speed;
+        if (this.checkBoundaries())
+            this.posX += this.direction * this.speed;
+    }
+
+    checkBoundaries() {
+        if (this.posX < canvas.clientWidth * 0.1)
+            this.posX += 1 * this.speed;
+        else if (this.posX > canvas.clientWidth * 0.9)
+            this.posX += -1 * this.speed;
+        else
+            return true
     }
 }
