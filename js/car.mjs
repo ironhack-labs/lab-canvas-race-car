@@ -8,7 +8,7 @@ class Car {
     this.y = 650;
     this.width = 70;
     this.height = 140;
-    this.speed = 15;
+    this.speed = 17;
     this.lives = lives;
   }
   draw() {

@@ -10,6 +10,9 @@ class Game {
     this.obstacles = [];
     this.onGameOver;
     this.isGameOver = false;
+    this.pointsCounter = -1;
+    this.points = 0;
+    this.pointsView;
   }
 
   startLoop() {
@@ -21,9 +24,10 @@ class Game {
       this.obstacles.forEach((obstacle) => {
         obstacle.update();
       });
-      if (!last || now - last >= 2 * 1000) {
+      if (!last || now - last >= 3 * 1000) {
         last = now;
         let y = this.canvas.height;
+        this.pointsCounter++;
         let minWidth = 70;
         let maxWidth = 300;
         let width = Math.floor(
@@ -65,6 +69,7 @@ class Game {
     this.drawRoad();
     this.car.draw();
     this.obstacles.forEach((obstacle) => obstacle.draw());
+    this.pointsView(this.points);
   }
 
   clearCanvas() {
@@ -75,6 +80,7 @@ class Game {
     this.obstacles.forEach((obstacle, index) => {
       if (this.car.checkCollisionObstacle(obstacle)) {
         this.car.loseLive();
+        this.pointsCounter--;
         console.log(obstacle);
         this.obstacles.splice(index, 1);
         if (this.car.lives === 0) {
@@ -84,12 +90,17 @@ class Game {
       }
       if (obstacle.y > this.car.y + 100) {
         this.obstacles.splice(index, 1);
+        this.points = this.pointsCounter;
       }
     });
   }
 
   gameOverCallback(callback) {
     this.onGameOver = callback;
+  }
+
+  pointsCallback(callback) {
+    this.pointsView = callback;
   }
 }
 

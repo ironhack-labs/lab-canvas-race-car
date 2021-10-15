@@ -5,7 +5,7 @@ class Obstacles {
     this.ctx = this.canvas.getContext('2d');
     this.x = x;
     this.y = y;
-    this.speed = 5;
+    this.speed = 4;
     this.width = width;
     this.height = height;
   }
