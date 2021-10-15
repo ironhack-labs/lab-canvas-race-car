@@ -80,6 +80,9 @@ class Game {
     this.obstacles.forEach((obstacle, index) => {
       if (this.player.checkCollisionObstacle(obstacle)) {
         this.player.loseLive();
+        const bang = new Image();
+        bang.scr = '../images/bang.png';
+        this.ctx.drawImage(bang, this.player.x, this.player.y, 40, 40);
         this.obstacles.splice(index, 1);
         if(obstacle.bottom > this.canvas.height) {
           this.obstacles.splice(index,1);

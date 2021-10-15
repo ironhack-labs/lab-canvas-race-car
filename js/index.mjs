@@ -13,6 +13,7 @@ const score = document.querySelector("#score");
 const gameOverContainer = document.querySelector("#game-over")
 
 function buildGameScreen() {
+  gameOverContainer.style.visibility = "hidden"
   // get the canvas
   const canvas = document.querySelector('#canvas');
   canvas.width = canvas.width;
@@ -37,12 +38,6 @@ function buildGameScreen() {
   function buildGameOver() {
     gameOverContainer.style.visibility = "visible"
     score.textContent = this.player.score;
-    this.canvas = canvas;
-    this.ctx = this.canvas.getContext("2d");
-    const bang = new Image();
-    bang.scr = '../images/bang.png';
-    this.ctx.drawImage(bang, this.player.x, this.player.y, 40, 40);
-   
   }
 
  
