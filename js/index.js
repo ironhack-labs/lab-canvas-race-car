@@ -1,6 +1,7 @@
 const canvas = document.querySelector("canvas");
 const road = new Road(canvas);
 const car = new Car(canvas);
+const obstacle = new Obstacle(canvas)
 
 window.onload = () => {
     document.getElementById("start-button").onclick = () => {
@@ -17,11 +18,13 @@ function update() {
     road.drawRoad();
     car.drawCar();
     car.updateCarPos();
+    obstacle.drawCar();
+    obstacle.updateCarPos();
     // driving
-    driving();
+    steering();
 }
 
-function driving() {
+function steering() {
     car.setDirection(0);
     window.addEventListener("keydown", (event) => {
         if (event.key === "ArrowRight") {
