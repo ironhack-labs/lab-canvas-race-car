@@ -9,11 +9,6 @@ class Player {
        this.lives = lives;
 
     }
-     drawCar() {
-            const carImg = new Image();
-            carImg.src ='../images/car.png';
-            this.ctx.carImg(mg, this.x, this.y, this.width, this.height);
-          }
-          checkCollision(obstacle)
+     
 
      }

@@ -3,7 +3,7 @@ class Obstacles {
         this.canvas = canvas;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.rectWidth = rectWidth;
+        this.rectWidth = Math.random() * canvas.with * 0.4; 
         this.rectHeight = 30;
         this.ctx = this.canvas.getContext("2d");
     }
