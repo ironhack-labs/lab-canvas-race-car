@@ -1,5 +1,6 @@
 const canvas = document.querySelector("canvas");
 const road = new Road(canvas);
+const hud = new HUD(canvas)
 const car = new Car(canvas);
 //const obstacle = new Obstacle(canvas)
 const obstacle = [];
@@ -18,6 +19,7 @@ function update() {
     window.requestAnimationFrame(update);
     //drawings
     road.drawRoad();
+    hud.drawHUD()
     car.drawCar();
     car.updateCarPos();
     obstacle.forEach((obstacle) => {
