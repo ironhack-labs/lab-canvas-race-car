@@ -2,6 +2,8 @@ class Obstacle extends Car {
     constructor(canvas) {
         super(canvas);
         // this.posX = canvas.clientWidth * 0.5;
+        this.url = "/images/carObstacle.png";
+        this.img.src = this.url;
         this.posX = this.randomRange(canvas.clientWidth*0.1, canvas.clientWidth*0.8);
         this.posY = -this.carHeight;
         this.direction = 1;
@@ -13,7 +15,7 @@ class Obstacle extends Car {
     }
 
     drawCar() {
-        this.ctx.filter = "invert(1)";
+        //this.ctx.filter = "invert(1)";
         this.ctx.save();
         this.ctx.translate(this.posX, this.posY);
         this.ctx.rotate(Math.PI);
@@ -26,7 +28,7 @@ class Obstacle extends Car {
             this.carHeight
         );
         this.ctx.restore();
-        this.ctx.filter = "invert(0)";
+        //this.ctx.filter = "invert(0)";
     }
 
     updateCarPos() {

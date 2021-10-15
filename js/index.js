@@ -33,7 +33,7 @@ function update() {
       }
     }
     //add new obstacles
-    if (Math.random() > 0.98)
+    if (Math.random() > 0.982)
       obstacle.push(new Obstacle(canvas))
 }
 
