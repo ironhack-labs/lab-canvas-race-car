@@ -29,10 +29,6 @@ class Car {
                 this.url = "/images/car-damaged2.png";
         this.img.src = this.url;
                 break;
-            case 0:
-                break;
-            default:
-                break;
         }
         this.ctx.drawImage(
             this.img,

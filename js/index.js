@@ -1,10 +1,11 @@
 const canvas = document.querySelector("canvas");
 const road = new Road(canvas);
-const hud = new HUD(canvas)
+const hud = new HUD(canvas);
 const car = new Car(canvas);
 //const obstacle = new Obstacle(canvas)
 const obstacle = [];
 obstacle.push(new Obstacle(canvas));
+let gameOver = false;
 
 window.onload = () => {
     document.getElementById("start-button").onclick = () => {
@@ -16,10 +17,12 @@ function startGame() {
 }
 
 function update() {
-    window.requestAnimationFrame(update);
-    //drawings
     road.drawRoad();
-    hud.drawHUD()
+    if (gameOver) hud.drawGameOver();
+      hud.drawHUD();
+    // stops game if Game Over
+    if (!gameOver)
+        window.requestAnimationFrame(update);
     car.drawCar();
     car.updateCarPos();
     obstacle.forEach((obstacle) => {
@@ -35,6 +38,9 @@ function update() {
     for (element in obstacle) {
         if (car.checkCrash(obstacle[element])) {
             obstacle.splice(element, 1);
+            if (car.health === 0) {
+                gameOver = true;
+            }
         }
         if (obstacle[element].checkBoundaries()) {
             obstacle.splice(element, 1);
