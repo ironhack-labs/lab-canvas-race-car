@@ -1,4 +1,4 @@
-class Obstacle {
+class Obstacles {
     constructor(canvas, x, y){
         this.size = 5;
         this.canvas = canvas;
@@ -24,3 +24,4 @@ class Obstacle {
 
 }
 
+export default Obstacles;

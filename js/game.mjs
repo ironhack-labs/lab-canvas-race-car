@@ -1,3 +1,8 @@
+"use strict";
+
+import Car from "./car.mjs";
+import Obstacles from "./obstacles.mjs";
+
 class Game {
   constructor(canvas){
       this.canvas = canvas;
@@ -13,7 +18,7 @@ class Game {
       const loop = () => {
         if (Math.random() > 0.97) {
             const x = Math.random() * this.canvas.height;
-            this.obstacles.push(new Obstacle(this.canvas));
+            this.obstacles.push(new Obstacles(this.canvas));
           }
     
           this.checkAllCollisions();
@@ -80,3 +85,5 @@ class Game {
       this.onGameOver = callback;
   }    
 }
+
+export default Game;

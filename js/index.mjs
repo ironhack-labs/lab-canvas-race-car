@@ -1,3 +1,7 @@
+import Car from './car.mjs';
+import Game from './game.mjs';
+
+
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();

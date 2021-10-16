@@ -1,3 +1,6 @@
+'use strict';
+
+
 class Car {
     constructor(canvas, lives){
         this.canvas = canvas;
@@ -51,3 +54,4 @@ class Car {
     }
 
 }
+export default Car;
