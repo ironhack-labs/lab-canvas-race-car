@@ -1,11 +1,11 @@
 class Obstacles {
-    constructor(canvas, x, y){
-        this.size = 5;
+    constructor(canvas){
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
         this.x = Math.floor(Math.random()*(canvas.width * 0.7)-20);
-        this.y = y;
+        this.y = 0;
         this.speed = 5;
+        this.size = 5;
         this.direction = 1;
     }
 

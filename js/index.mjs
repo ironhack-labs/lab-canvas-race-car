@@ -1,4 +1,4 @@
-import Car from './car.mjs';
+
 import Game from './game.mjs';
 
 
@@ -9,25 +9,21 @@ window.onload = () => {
 
   function startGame() {
     const canvas = document.querySelector("canvas");
-
     const game = new Game(canvas);
-    //game.gameOverCallback(buildGameOver);
-  
+    
     game.startLoop();
   
     const setPlayerDirection = (event) => {
-      if (event.code === "ArrowRight") {
-        game.player.setDirection(-1);
-      } else if (event.code === "ArrowLeft") {
-        game.player.setDirection(1);
+      if (event.code === "ArrowLeft") {
+        game.car.setDirection(-1);
+      } else if (event.code === "ArrowRight") {
+        game.car.setDirection(1);
       }
     };
   
     document.addEventListener("keydown", setPlayerDirection);
   }
 
-  /*function buildGameOver() {
-    alert('Game Over');
-  }*/
+  
 
-  };
+}

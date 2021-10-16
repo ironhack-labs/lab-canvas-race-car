@@ -14,21 +14,20 @@ class Game {
 
   startLoop(){
     this.car = new Car(canvas, 1);
-      
+
       const loop = () => {
         if (Math.random() > 0.97) {
-            const x = Math.random() * this.canvas.height;
-            this.obstacles.push(new Obstacles(this.canvas));
-          }
+          this.obstacles.push(new Obstacles(this.canvas));
+        }
     
-          this.checkAllCollisions();
-          this.updateCanvas();
-          this.clearCanvas();
-          this.car.draw();
+        this.checkAllCollisions();
+        this.updateCanvas();
+        this.clearCanvas();
+        this.drawCanvas();
     
-          if (!this.isGameOver) {
-            window.requestAnimationFrame(loop);
-          }
+        if (!this.isGameOver) {
+         window.requestAnimationFrame(loop);
+        }
       }
     window.requestAnimationFrame(loop);
   }
@@ -57,13 +56,6 @@ class Game {
    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
   
-  drawCanvas() {
-    this.car.draw();
-    this.obstacles.forEach((obstacle) => {
-      obstacle.draw();
-    });
-  }
-
   checkAllCollisions() {
     this.car.checkScreen();
     this.obstacles.forEach((obstacle, index) => {  

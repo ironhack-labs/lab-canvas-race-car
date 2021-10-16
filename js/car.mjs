@@ -5,12 +5,12 @@ class Car {
     constructor(canvas, lives){
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
-        this.x = this.canvas.width / 2;
-        this.y = this.canvas.height - 30;
+        this.width = 50;
+        this.x = (this.canvas.width - this.width) / 2;
+        this.y = 550;
         this.speed = 5;
         this.direction = 0;
-        this.height = 70;
-        this.width = 50;
+        this.height = 140;
         this.lives = lives;
     }
 
@@ -29,13 +29,10 @@ class Car {
     }
 
     checkScreen(){
-      if (this.x - this.width <= 0){
-        this.direction = -1;
-      }
-      else if (this.x + this.width >= this.canvas.height){
-          this.direction = 1;
-      }
+      if (this.x <= 0 || this.x + this.width >= this.canvas.width){
+        this.direction = 1;
     }
+  }
  
     checkCollisionObstacles(obstacle){
       const collideRight = this.x + this.size / 2 > obstacle.x - obstacle.size / 2;
@@ -54,4 +51,5 @@ class Car {
     }
 
 }
+
 export default Car;
