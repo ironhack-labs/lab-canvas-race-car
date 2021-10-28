@@ -4,9 +4,9 @@ window.onload = () => {
   };
 
   function startGame() {
-    
+    islandRacer.init();
   };
 
-  islandRacer.init();
+  
 };
 
