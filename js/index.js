@@ -8,15 +8,23 @@ window.onload = () => {
   };
 
   function startGame() {
+    //Create canvas background
     const road = new Image();
-    road.src = "/images/road.png";
-    road.onload = ()=>{
+    road.src = '/images/road.png';
+    road.onload = () => {
       ctx.drawImage (road, 0, 0, 500, 700);
     }
+    
+    //Draw car img
     const car = new Image();
-      car.src = "/images/car.png";
-      car.onload = () => {
-        ctx.drawImage (car, 225, 575, 50, 100);
-      }
+    car.src  = '/images/car.png';
+    car.onload = () => {
+      ctx.drawImage (car, 224, 575, 50, 100);
     }
   }
+
+
+
+
+
+}
