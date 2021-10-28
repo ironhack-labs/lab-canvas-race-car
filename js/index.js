@@ -13,7 +13,7 @@ window.onload = () => {
 }
 
 const roadCarGame = {
-  name: 'race car',
+  name: 'Race App',
   description: 'Canvas app for basic shapes interaction',
   version: '1.0.0',
   author: 'Iñigo',
