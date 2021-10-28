@@ -72,8 +72,8 @@ const shapeRoad = {
     this.ctx.strokeStyle = 'red';
     this.ctx.lineWidth = 50
     this.ctx.beginPath();
-    this.ctx.moveTo(20, 10)
-    this.ctx.lineTo(170, 10);
+    this.ctx.moveTo(20, 0)
+    this.ctx.lineTo(170, 0);
     this.ctx.setLineDash([]);
     this.ctx.stroke();
     this.ctx.closePath();
@@ -172,12 +172,13 @@ class Car {
 //     moveDown()
 //   }
 //     drawObstacle() {
-  
+    // let randomNumber = Math.floor(Math.random()*500);
+    // randomNumber();
     // this.ctx.strokeStyle = 'red';
     // this.ctx.lineWidth = 50
     // this.ctx.beginPath();
-    // this.ctx.moveTo(20, 10) tanto a esta como
-    // this.ctx.lineTo(170, 10); sumale a la y 60 todo el rato por ejemplo
+    // this.ctx.moveTo(randomNumber, 0) tanto a esta como
+    // this.ctx.lineTo(radomNumber, 0); sumale a la y 60 todo el rato por ejemplo
     // this.ctx.setLineDash([]);
     // this.ctx.stroke();
     // this.ctx.closePath();
