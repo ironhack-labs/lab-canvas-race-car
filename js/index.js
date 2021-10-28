@@ -14,14 +14,14 @@ const roadGame = {
     this.canvasDOM.setAttribute("width", 500)
     this.canvasDOM.setAttribute("height", 700)
 
-    this.drawFilleRectangle()
     this.drawLinesRoad()
     this.drawLinesDashRoad()
-   
  
     this.setListeners()
     this.createCar()
     // this.createObstacles()
+    this.drawAll()
+    this.moveAll()
     this.start()
   },
 
@@ -59,6 +59,7 @@ const roadGame = {
     this.ctx.stroke()
     this.ctx.closePath()
   },
+
   drawLinesDashRoad(){
 
     this.ctx.strokeStyle = 'white'
@@ -72,32 +73,34 @@ const roadGame = {
     this.ctx.closePath()
   },
 
+
    start() {
     setInterval(() => {
-      //  this.framesCounter++
-      //  this.framesCounter % 40 === 0 ? console.log("createObstacles") : null
+      this.framesCounter++
+      this.framesCounter % 40 === 0 ? console.log("createObstacles") : null
   
        this.clearScreen()
-      //  this.obstacles.draw()
+       this.obstacles.draw()
        this.car.draw()
       
        
     }, 1000 / this.FPS)
    },
 
-  //  drawAll() {
-  //   this.obstacles.forEach(obstacles => obstacles.draw())
-  // },
+  drawAll() {
+    this.obstacles.forEach(obstacles => obstacles.drawObstacles())
+   },
 
-  // moveAll() {
-  //   this.obstacles.forEach(obstacles => obstacles.move())
-  // },
+   moveAll() {
+    this.obstacles.forEach(obstacles => obstacles.move())
+   },
 
-  // createObstacles(){
-  //   this.obstacles.push(new Obstacles(this.ctx, 0, 20, this.canvasSize, 200, 200, 5))
+   createObstacles(){
+     this.obstacles.push(new Obstacles(this.ctx, 50, 20, this.canvasSize, 350, 40, 200))
+     this.obstacles.push(new Obstacles(this.ctx, 250, 200, this.canvasSize, 150, 40, 200))
   //   this.obstacles.push(new Obstacles(this.ctx, 0, 200, this.canvasSize, 100, 50, 3))
   //   this.obstacles.push(new Obstacles(this.ctx, 0, 400, this.canvasSize, 200, 100, 7))
-  // },
+   },
   createCar() {
     this.car = new Car(this.ctx, 70, 600, 50, 70)
   },
@@ -115,6 +118,8 @@ const roadGame = {
       this.drawFilleRectangle()
       this.drawLinesRoad()
       this.drawLinesDashRoad()
+      this.createObstacles()
+
    
   },
 
@@ -158,24 +163,30 @@ class Car {
 };
 }
 
-// class Obstacles {
-//   constructor(ctx, posX, posY, canvasSize, width, height, speed) {
-//     this.ctx = ctx
+class Obstacles {
+   constructor(ctx, posX, posY, canvasSize, width, height, speed) {
+   this.ctx = ctx
 
-//     this.posX = posX
-//     this.posY = posY
+     this.posX = posX
+     this.posY = posY
 
-//     this.canvasSize = canvasSize
+    this.canvasSize = canvasSize
 
-//     this.width = width
-//     this.height = height
+     this.width = width
+     this.height = height
 
-//     this.speed = speed
+     this.speed = speed
 
-//     this.image = undefined
+    this.image = undefined
 
-//     this.init()
-//   }
+    this.drawObstacles()
+   }
+
+   drawObstacles(){
+    this.ctx.fillStyle = "red";
+    this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+
+  }
 
 //   init() {
 //     this.ctx.fillStyle = "red";
@@ -186,17 +197,18 @@ class Car {
 //     this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
 //   }
 
-//   move() {
-//     if (this.posX + this.width > this.canvasSize.width || this.posX < 0) {
-//       this.turn()
-//     }
-//     this.posX += this.speed
-//   }
+ move() {
+//     if (this.posX + this.height > this.canvasSize.height || this.posX < 0) {
+//        this.turn()
+//  }
+     this.posX += this.speed
+  //}
 
-//   turn() {
-//     this.speed = this.speed * -1
-//   }
-// }
+  // turn() {
+  //        this.speed = this.speed * -1
+  //  }
+}
+}
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
