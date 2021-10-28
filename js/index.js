@@ -1,10 +1,12 @@
 // Init canvas
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
-ctx.fillStyle = '#870007'
+// ctx.fillStyle = '#870007'
 
 // Flag start game form draw
-let startGame = false;
+let gameOver = false;
+// Score
+let score = 0;
 
 // Load images
 const loadedImages = {}
@@ -60,6 +62,16 @@ class Obstacle {
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
+  checkCrash() {
+    const bothInX = (this.x) < car.x && (this.x + this.width) > car.x
+    const bothInY = (this.y) < car.y && (this.y + this.height) > car.y
+    
+    if( bothInX && bothInY ){ 
+      console.log("PUM")
+      gameOver = true;
+    }
+  }
+
 }
 
 
@@ -88,8 +100,25 @@ const drawObstacle = () => {
       obstacle.drawRectangle(); // Draw obstacle if it is inside canvas
     } else {
       arrayOfObstacles.splice(index, 1); // Delete old obstacles
+      scoreCount() // Update score
     }
   })
+}
+
+const drawScore = () => {
+  ctx.fillText(`Score: ${score}`, 70, 100)
+}
+
+const drawGameOver = () => {
+  ctx.fillStyle = '#000' 
+  ctx.fillRect(0, 0, 500, 700);
+  ctx.fillStyle = '#870007'
+  ctx.textAlign = 'center'
+  ctx.font = '70px serif'
+  ctx.fillText('GAME OVER', 250, 150)
+  ctx.fillStyle = 'white'
+  ctx.font = '50px serif'
+  ctx.fillText(`Your final score: ${score}`, 250, 250)
 }
 
 window.onload = () => {
@@ -140,20 +169,31 @@ const moveCar = () => {
 const moveObstacles = () => {
   arrayOfObstacles.forEach((obstacle)=>{
     obstacle.y += obstacle.speedY;
+    obstacle.checkCrash();
   })
 }
 
+const scoreCount = () => {
+  score++;
+}
+
 const updateCanvas = ()=>{ 
-  if(imageLinks.length === counterForLoadedImages){
-    clearCanvas()
+  if(imageLinks.length === counterForLoadedImages && !gameOver){
+    clearCanvas();
     
     moveCar();
     moveObstacles();
 
     drawRoad();
     drawCar();
+    ctx.fillStyle = '#870007' 
     drawObstacle();
-
+    ctx.fillStyle = 'white'
+    ctx.font = '40px serif'
+    drawScore();
+  } else {
+    clearCanvas();
+    drawGameOver();
   }
   requestAnimationFrame(updateCanvas)
 }
