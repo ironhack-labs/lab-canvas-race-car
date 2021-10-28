@@ -11,8 +11,15 @@ window.onload = () => {
     const road = new Image(); //Create new image for the road
     road.src = "/images/road.png";
 
-    road.onload = ()=>{ //Load road
-      ctx.drawImage (road,0,0,500,700)
+    road.onload = ()=>{ //Draw road on load
+      ctx.drawImage (road, 0, 0, 500, 700)
+    }
+
+    const car = new Image() //Create new image for the car
+    car.src = "/images/car.png"
+
+    car.onload = ()=>{ 
+      ctx.drawImage (car, 0, 0, 90, 135)
     }
 
   }
