@@ -2,6 +2,9 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+// Flag start game form draw
+let startGame = false;
+
 // Load images
 const loadedImages = {}
 
@@ -51,8 +54,55 @@ window.onload = () => {
     startGame();
   };
 
+  document.addEventListener('keydown', (event)=>{
+    if(event.key === "ArrowRight"){
+      car.speedX = 3
+    } else if(event.key === "ArrowLeft"){
+      car.speedX = -3
+    } 
+  })
+  
+  document.addEventListener('keyup', (event)=>{
+    if(event.key === "ArrowRight" || event.key === "ArrowLeft"){
+      car.speedX = 0
+    }
+  })
+
   function startGame() {
-    drawRoad();
-    drawCar();
+    updateCanvas();
   }
 };
+
+const clearCanvas = ()=>{
+  ctx.clearRect(0, 0, 500, 700)
+}
+
+const checkIfTrackLimits = () =>{
+ // RACE CONTROL: Black and white flag for car 9
+ // Reason: Exceeded Track limits
+  if(car.x > 415){
+    car.x = 415;
+  }
+  if(car.x < 50){
+    car.x = 50;
+  }
+}
+
+const moveCar = () => {
+  car.x += car.speedX;
+  checkIfTrackLimits();
+}
+
+const updateCanvas = ()=>{ 
+  if(imageLinks.length === counterForLoadedImages){
+    clearCanvas()
+    
+    moveCar();
+    drawRoad();
+    drawCar();
+
+  }
+  requestAnimationFrame(updateCanvas)
+}
+
+
