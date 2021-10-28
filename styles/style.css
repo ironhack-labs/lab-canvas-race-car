@@ -1,6 +1,13 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   padding: 0;
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .game-intro {
@@ -10,7 +17,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -20,7 +27,25 @@ body {
 .arrows-img {
   width: 150px;
 }
-
+.hidden {
+  display: none;
+}
+.display {
+  display: block;
+}
+.body-color {
+  background-color: black;
+}
+.img {
+  margin: 10px auto;
+  display: block;
+  width: 60%;
+}
+#score-msg {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 72px;
+  color: white;
+}
 body button {
   font-size: 30px;
   background-color: #870007;
@@ -33,6 +58,6 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }

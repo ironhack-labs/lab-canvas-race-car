@@ -7,18 +7,34 @@
     <link rel="stylesheet" href="styles/style.css" />
     <title>Race Car</title>
   </head>
-  <body>
-    <div class="game-intro">
-      <img src="./images/logo.png" alt="" class="logo-img" />
-      <br />
-      <button id="start-button">StartGame</button>
-      <p>Use the left and right arrow to control the car!</p>
-      <img src="./images/arrows.png" alt="" class="arrows-img" />
-    </div>
+  <body id="body">
+    <div id="sonido"></div>
 
-    <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
-    </div>
+    <section id="play">
+      <div class="game-intro">
+        <img src="./images/logo.png" alt="" class="logo-img" />
+        <br />
+        <button id="start-button">StartGame</button>
+        <p>Use the left and right arrow to control the car!</p>
+        <img src="./images/arrows.png" alt="" class="arrows-img" />
+        <p>Score: <span id="score-menu">0</span></p>
+      </div>
+
+      <div id="game-board">
+        <canvas id="canvas" width="500" height="700"></canvas>
+      </div>
+    </section>
+    <section id="win" class="hidden">
+      <img
+        src="https://media.giphy.com/media/dn78NWBwvdYNWfrMmO/giphy.gif"
+        id="img"
+        class="img"
+      />
+      <p id="score-msg">
+        Congratulations your score is
+        <span id="score">0</span> !
+      </p>
+    </section>
 
     <script type="text/javascript" src="js/index.js"></script>
   </body>
