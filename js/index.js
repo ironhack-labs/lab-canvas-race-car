@@ -1,7 +1,18 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    raceCarApp.init();
+
+
+
+    
+    carItem.init();
   };
 
-  function startGame() {}
+  // function startGame() {
+  // }
+
+
+
+
+
 };
