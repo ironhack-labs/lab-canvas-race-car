@@ -1,6 +1,6 @@
 body {
   padding: 0;
-  text-align: center;
+ text-align: center; 
 }
 
 .game-intro {
@@ -33,6 +33,16 @@ body button {
 }
 
 #game-board {
+  /* position:relative;
+    z-index:20; */
     float: left;
     padding: 20px 0px;
 }
+
+/* #road{
+  position: absolute;
+  float:left;
+  padding: 20px 0px;
+  width:500px;
+  height:700px;
+} */
