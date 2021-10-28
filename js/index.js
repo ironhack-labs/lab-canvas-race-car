@@ -1,6 +1,7 @@
 // Init canvas
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
+ctx.fillStyle = '#DF4120'
 
 // Flag start game form draw
 let startGame = false;
@@ -33,13 +34,46 @@ class Car {
     this.x = 230;
     this.y = 600;
     this.speedX = 0;
-    this.speedY = 0;
     this.width = 40;
     this.height = 80;
   }
 }
 
+class Obstacle {
+  constructor() {
+    this.x = Math.floor(Math.random() * (400 - 60 + 1)) + 60; // X position inside track
+    this.y = 0;
+    this.speedY = 1;
+    this.width = Math.floor(Math.random() * (85 + 1)) + 85; // Width between a quarter and a half of the road width
+    this.height = 20;    
+  }
+
+  // Put obstacle inside the road incase it is outside because of the width
+  checkLimits() {
+    if((this.x + this.width) > 400){
+      this.x -= this.width;
+    }
+  }
+
+  drawRectangle(){
+    this.checkLimits()
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+}
+
+
 const car = new Car()
+// const obstacle = new Obstacle()
+
+let arrayOfObstacles = []
+
+const createObstacles = ()=>{
+  const obstacle = new Obstacle()
+  arrayOfObstacles.push(obstacle)
+}
+
+setInterval(function(){ createObstacles(); }, 1000); // Create new obstacles every second (iteration 3)
 
 const drawRoad = () => {
   ctx.drawImage(loadedImages.road, 0, 0, 500, 700);
@@ -47,6 +81,12 @@ const drawRoad = () => {
 
 const drawCar = () => {
   ctx.drawImage(loadedImages.car, car.x, car.y, car.width, car.height);
+}
+
+const drawObstacle = () => {
+  arrayOfObstacles.forEach((obstacle)=>{
+    obstacle.drawRectangle();
+  })
 }
 
 window.onload = () => {
@@ -100,6 +140,7 @@ const updateCanvas = ()=>{
     moveCar();
     drawRoad();
     drawCar();
+    drawObstacle();
 
   }
   requestAnimationFrame(updateCanvas)
