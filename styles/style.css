@@ -21,6 +21,11 @@ body {
   width: 150px;
 }
 
+
+.road-img {
+  width: 400px;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
