@@ -1,7 +1,8 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    roadPainter.init();
+    carMove.init();
   };
 
-  function startGame() {}
+  // function startGame() {}
 };
