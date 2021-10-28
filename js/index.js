@@ -7,6 +7,10 @@ const ctx = canvas.getContext("2d");
 let gameOver = false;
 // Score
 let score = 0;
+// Difficulty
+let difficulty = 1000;
+// Id Timer
+let timerID;
 
 // Load images
 const loadedImages = {};
@@ -68,7 +72,7 @@ class Obstacle {
     const bothInY = this.y < car.y && this.y + this.height > car.y;
 
     if (bothInX && bothInY) {
-      console.log("PUM");
+      clearTimeout(timerID); // Clear timer to prevent create new obstacles
       gameOver = true;
     }
   }
@@ -119,9 +123,22 @@ const drawGameOver = () => {
   ctx.fillText(`Your final score: ${score}`, 250, 250);
 };
 
+const hard = () => {
+  difficulty = 500;
+};
+const easy = () => {
+  difficulty = 1000;
+};
+
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
     startGame();
+  };
+  document.getElementById("hard-button").onclick = () => {
+    hard();
+  };
+  document.getElementById("easy-button").onclick = () => {
+    easy();
   };
 
   document.addEventListener("keydown", (event) => {
@@ -140,10 +157,17 @@ window.onload = () => {
 
   function startGame() {
     updateCanvas();
-    setInterval(function () {
-      createObstacles();
-    }, 1000); // Create new obstacles every second (iteration 3)
+    // setInterval(function () {
+    //   createObstacles();
+    // }, 1000); // Create new obstacles every second
+    newObstacles(); // Change setInterval to a setTimeout to change time repetition dinamically
   }
+};
+
+// Creates obstacles every 500/1000 ms depending on the value of the variable difficulty
+const newObstacles = () => {
+  createObstacles();
+  timerID = window.setTimeout(newObstacles, difficulty);
 };
 
 const clearCanvas = () => {
