@@ -57,8 +57,7 @@ const raceCarApp = {
       this.intervalId = setInterval(() => {
         this.clearScreen()
         this.drawRoad()
-        // this.createObstacle()
-        if (this.framesCounter % 120 === 0) {
+        if (this.framesCounter % 150 === 0) {
           this.createObstacle()
           this.framesCounter = 0
         }
@@ -79,7 +78,7 @@ const raceCarApp = {
     },
 
     createCar() {
-      this.car = new Car(this.ctx, 212, this.canvasSize.h - 140, 75, 100)
+      this.car = new Car(this.ctx, 225, 490, 50, 100)
     },
 
     setListeners() {
@@ -131,7 +130,7 @@ class Car {
   }
 
   moveLeft() {
-    this.posX > 10 ? this.posX -= 30 : null
+    this.posX > 16 ? this.posX -= 30 : null
   }
 
   moveRight() {
