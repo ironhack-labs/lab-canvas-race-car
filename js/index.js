@@ -73,7 +73,6 @@ const createObstacles = ()=>{
   arrayOfObstacles.push(obstacle)
 }
 
-setInterval(function(){ createObstacles(); }, 1000); // Create new obstacles every second (iteration 3)
 
 const drawRoad = () => {
   ctx.drawImage(loadedImages.road, 0, 0, 500, 700);
@@ -84,8 +83,12 @@ const drawCar = () => {
 }
 
 const drawObstacle = () => {
-  arrayOfObstacles.forEach((obstacle)=>{
-    obstacle.drawRectangle();
+  arrayOfObstacles.forEach((obstacle, index)=>{
+    if(obstacle.y < 700) {
+      obstacle.drawRectangle(); // Draw obstacle if it is inside canvas
+    } else {
+      arrayOfObstacles.splice(index, 1); // Delete old obstacles
+    }
   })
 }
 
@@ -110,6 +113,7 @@ window.onload = () => {
 
   function startGame() {
     updateCanvas();
+    setInterval(function(){ createObstacles(); }, 1000); // Create new obstacles every second (iteration 3)
   }
 };
 
