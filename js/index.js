@@ -1,7 +1,7 @@
 // Init canvas
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
-ctx.fillStyle = '#DF4120'
+ctx.fillStyle = '#870007'
 
 // Flag start game form draw
 let startGame = false;
@@ -43,7 +43,7 @@ class Obstacle {
   constructor() {
     this.x = Math.floor(Math.random() * (400 - 60 + 1)) + 60; // X position inside track
     this.y = 0;
-    this.speedY = 1;
+    this.speedY = 3;
     this.width = Math.floor(Math.random() * (85 + 1)) + 85; // Width between a quarter and a half of the road width
     this.height = 20;    
   }
@@ -133,11 +133,19 @@ const moveCar = () => {
   checkIfTrackLimits();
 }
 
+const moveObstacles = () => {
+  arrayOfObstacles.forEach((obstacle)=>{
+    obstacle.y += obstacle.speedY;
+  })
+}
+
 const updateCanvas = ()=>{ 
   if(imageLinks.length === counterForLoadedImages){
     clearCanvas()
     
     moveCar();
+    moveObstacles();
+
     drawRoad();
     drawCar();
     drawObstacle();
