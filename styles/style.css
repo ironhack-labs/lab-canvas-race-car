@@ -1,5 +1,6 @@
 body {
   padding: 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -10,7 +11,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -33,6 +34,6 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 10px 0px;
 }
