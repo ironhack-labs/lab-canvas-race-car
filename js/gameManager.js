@@ -4,11 +4,11 @@ const gameManager = {
 
     winGame(){
         console.log("Win")
-        //Deberia de parar el "setInterval" con la función "stop" del index.js, pero nose como aceder a esas funciones (Help!)
+        stop();
     },
 
     loseGame(){
         console.log("Lose")
-        //Deberia de parar el "setInterval" con la función "stop" del index.js, pero nose como aceder a esas funciones (Help!)
+        stop();
     }
 };
