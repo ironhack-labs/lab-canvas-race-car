@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
 // LOAD ALL IMAGES
-const loadImages = []
+const loadImages = {}
   let counterForLoadedImages = 0
   const imagesLinks = [
     {link: '/images/road.png', name:'road'},
@@ -22,24 +22,32 @@ const loadImages = []
 
   class Car{
     constructor(){
-      this.x = 250;
-      this.y = 550;
-      this.speedX = 0;
-      this.speedY = 0;
-      this.width = 50;
-      this.heigth = 100;
+      this.x = 225
+      this.y = 550
+      this.speedX = 0
+      this.speedY = 0
+      this.width = 50
+      this.heigth = 100
     }
   }
   const car = new Car()
+  
+
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
+    
   };
+  
   // FUNCTIONS
   function startGame() {
+    if(imagesLinks.length === counterForLoadedImages){
+    clearCanvas()
     drawRoad()
     drawCar()
     updateCar()
+    updateObstacle()
+  }
     requestAnimationFrame(startGame)
   }
   function drawRoad() {
@@ -68,18 +76,33 @@ window.onload = () => {
       car.y = 0
     }
   }
+  function Obstacle(width, height, x, y) {
+    this.width = width
+    this.height = height
+    this.x = x
+    this.y = y
+    ctx.fillStyle = 'red'
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+  }
+  function updateObstacle(){
+    let obstacle1 = new Obstacle(200, 50, 100, 0)
+    obstacle1.y += 1
+  }
+  function clearCanvas() {
+  ctx.clearRect(0, 0, 500, 700)
+  }
   
   // EVENT LISTENERS
 
   document.addEventListener('keydown', function(event){
     if(event.key === 'ArrowLeft'){
-      car.speedX = -3
+      car.speedX = -5
     }else if(event.key === 'ArrowRight'){
-      car.speedX = +3
+      car.speedX = +5
     }else if(event.key === 'ArrowUp'){
-      car.speedY = -3
+      car.speedY = -5
     }else if(event.key === 'ArrowDown'){
-      car.speedY = +3
+      car.speedY = +5
     }
   })
   document.addEventListener('keyup', function(event){
