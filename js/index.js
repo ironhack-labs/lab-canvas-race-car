@@ -14,16 +14,15 @@ let timerID;
 
 // Load images
 const loadedImages = {};
-
+// Images array
 const imageLinks = [
-  //Array de objetos con los enlaces (y los nombres para identificarlos) de todas mis imagenes
   { link: "./images/arrows.png", name: "arrows" },
   { link: "./images/car.png", name: "car" },
   { link: "./images/logo.png", name: "logo" },
   { link: "./images/road.png", name: "road" },
 ];
 
-let counterForLoadedImages = 0; //Contador de imagenes cargadas
+let counterForLoadedImages = 0; // Loaded img counter
 
 imageLinks.forEach((imagen) => {
   const img = new Image();
