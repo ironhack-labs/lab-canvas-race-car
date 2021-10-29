@@ -59,6 +59,12 @@ const interactionApp = {
     setInterval(() => {
       this.framesCounter++
       this.framesCounter % 40 === 0 ? this.createObstacles() : null;
+      //destruccion obstacles??
+      // setTimeout(() => {
+      //   this.obstacles === this.canvasDOM.height; ? this.destroyObstacles() : null;
+      // }, 5000);
+      
+
       this.framesCounter % 100 === 0 ? this.stop() : null;
 
       this.clearScreen();
@@ -82,9 +88,17 @@ const interactionApp = {
    this.car = new Car(this.ctx, 250 - 50, 700 - 180, 100, 150, 15);
   },
   createObstacles() {
-    this.obstacles.push(new Obstacle(this.ctx, 200, 0, this.canvasSize, 85, 115, 5));
-    this.obstacles.push(new Obstacle(this.ctx, 300, 0, this.canvasSize, 85, 115, 3));
-    this.obstacles.push(new Obstacle(this.ctx, 500, 00, this.canvasSize, 85, 115, 7));
+    this.obstacles.push(new Obstacle(this.ctx, 200, 0, 100, 85, 115, .5));
+    this.obstacles.push(new Obstacle(this.ctx, 300, 0,  100, 85, 115, .5));
+    this.obstacles.push(new Obstacle(this.ctx, 350, 0, 100, 85, 115, .1));
+  },
+  destroyObstacles() {
+    
+    this.obstacles.pop(new Obstacle(this.ctx, 200, 0, this.canvasSize, 85, 115, 5));
+    this.obstacles.pop(new Obstacle(this.ctx, 300, 0, this.canvasSize, 85, 115, 3));
+    this.obstacles.pop(new Obstacle(this.ctx, 500, 00, this.canvasSize, 85, 115, 7));
+  
+    
   },
  
   setListeners() {
@@ -163,16 +177,17 @@ class Obstacle {
 
   init() {
     this.image = new Image();
-    this.image.src = '../images/obstacle.png';
+    this.image.src = './images/obstacle.png';
   }
 
   draw() {
+    console.log(this)
     this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
 
   move() {
-    if (this.posY + this.width > this.canvasSize.width || this.posY < 0) {
-      this.turn();
+    if (this.posY + this.height > this.canvasSize.height || this.posY < 0) {
+      //this.turn();
     }
     this.posY += this.speed;
   }
