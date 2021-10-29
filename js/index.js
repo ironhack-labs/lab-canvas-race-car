@@ -39,3 +39,15 @@ ctx.moveTo(250, 20);
 ctx.lineTo(250, 850);
 ctx.stroke();
 
+
+//IMAGEN DEL COCHE
+const img = new Image();
+img.src = "../images/car.png";
+
+let startPositionX = 225;
+let startPositionY = 680;
+
+img.onload = () =>{
+  ctx.drawImage(img,225,580,50,90)
+}
+
