@@ -134,6 +134,8 @@ const roadBoard = {
       ) {
         this.stop();
         this.score = 0;
+        this.clearScreen();
+        this.drawRoad();
         win.classList.remove("hidden");
         win.classList.add("display");
         play.classList.remove("display");
