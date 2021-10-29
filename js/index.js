@@ -50,7 +50,7 @@ class Background {
 //IMAGEN DEL COCHE
 
 class Car{
-  constructor(x,y,w,h){
+  constructor(){
     this.x = 225;
     this.y = 580;
     this.width = 50;
@@ -63,27 +63,48 @@ class Car{
   }
 }
 
+
+class Obstacules {
+  constructor(x,width){
+    this.x = x;
+    this.y = 10;
+    this.width = width;
+    this.height = 30;
+  }
+  draw(){
+    this.y++
+    if(this.y >+canvas.height){
+      this.y = 0
+      this.x = Math.floor(Math.random()* canvas.width)
+      this.width = Math.floor(Math.random()* canvas.width)
+    }
+    ctx.fillStyle = "#890000"
+    ctx.fillRect(this.x,this.y,this.width,this.height)
+    //segundo obstáculo
+    }
+}
+
 const background = new Background();
 const car = new Car()
-
+const obstacule = new Obstacules(55,100)
 
 
 function update (){
   frames ++
   background.draw()
   car.draw()
+  obstacule.draw()
   requestAnimationFrame(update)
 }
 
 
-
+update()
 addEventListener('keydown', (event) =>{
   if(event.keyCode === 39){
-     car.x += 20; 
+     car.x += 40; 
   }
   if(event.keyCode === 37){
-    car.x -= 20; 
+    car.x -= 40; 
  }
 })
 
-update()
