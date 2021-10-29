@@ -35,31 +35,31 @@ const interactionApp = {
   },
 
   setContext() {
-    this.canvasDOM = document.querySelector("#canvas")
-    this.ctx = this.canvasDOM.getContext("2d")
+    this.canvasDOM = document.querySelector("#canvas");
+    this.ctx = this.canvasDOM.getContext("2d");
   },
 
   setDimensions() {
     this.canvasDOM.setAttribute("width", 500);
     this.canvasDOM.setAttribute("height", 700);
-    this.canvasSize.width = window.innerWidth
-    this.canvasSize.height = window.innerHeight
+    this.canvasSize.width = window.innerWidth;
+    this.canvasSize.height = window.innerHeight;
   },
   loadImage () {
     this.background = new Image();
-    this.background.src = 'images/road.png';
+    this.background.src = '../images/road.png';
   },
 
   insertImage() {
-    this.ctx.drawImage(this.background, 0, 0, 500, 700)
+    this.ctx.drawImage(this.background, 0, 0, 500, 700);
   },
 
 
   start() {
     setInterval(() => {
       this.framesCounter++
-      this.framesCounter % 40 === 0 ? console.log("createObstacles") : null
-      this.framesCounter % 100 === 0 ? this.stop() : null
+      this.framesCounter % 40 === 0 ? this.createObstacles() : null;
+      this.framesCounter % 100 === 0 ? this.stop() : null;
 
       this.clearScreen();
       this.insertImage();
@@ -69,13 +69,13 @@ const interactionApp = {
       this.car.draw();
       //this.obstacles.draw();
 
-    },1000 / this.FPS)
+    },1000 / this.FPS);
   },
   drawAll() {
-    this.obstacles.forEach(obstacle => obstacle.draw())
+    this.obstacles.forEach(obstacle => obstacle.draw());
   },
   moveAll() {
-    this.obstacles.forEach(obstacle => obstacle.move())
+    this.obstacles.forEach(obstacle => obstacle.move());
   },
 
   createCar() {
@@ -90,53 +90,53 @@ const interactionApp = {
   setListeners() {
     document.onkeydown = e => {
       //console.log("La tecla: ", e.key)
-      e.key === 'ArrowLeft' ? this.car.moveLeft() : null
-      e.key === 'ArrowRight' ? this.car.moveRight() : null
+      e.key === 'ArrowLeft' ? this.car.moveLeft() : null;
+      e.key === 'ArrowRight' ? this.car.moveRight() : null;
     }
   },
 
   clearScreen() {
-    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height)
+    this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
   },
   stop() {
-    clearInterval(this.intervalId)
+    clearInterval(this.intervalId);
   }
 }
 
 class Car {
   constructor(ctx, posX, posY, width, height, speed) {
-    this.ctx = ctx
+    this.ctx = ctx;
 
-    this.posX = posX
-    this.posY = posY
+    this.posX = posX;
+    this.posY = posY;
 
-    this.canvasSize = {width:500,height:700}
+    this.canvasSize = {width:500,height:700};
 
-    this.width = width
-    this.height = height
+    this.width = width;
+    this.height = height;
 
-    this.speed = speed
+    this.speed = speed;
 
-    this.image = undefined
+    this.image = undefined;
 
-    this.init()
+    this.init();
   }
 
   init() {
-    this.image = new Image()
-    this.image.src = 'images/car.png'
+    this.image = new Image();
+    this.image.src = '../images/car.png';
   }
 
   draw() {
-    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
 
   moveLeft(){
-    this.posX -= this.speed
+    this.posX -= this.speed;
   }
 
   moveRight(){
-    this.posX += this.speed
+    this.posX += this.speed;
   }
 
   
@@ -144,40 +144,40 @@ class Car {
 
 class Obstacle {
   constructor(ctx, posX, posY, width, height, speed) {
-    this.ctx = ctx
+    this.ctx = ctx;
 
-    this.posX = posX
-    this.posY = posY
+    this.posX = posX;
+    this.posY = posY;
 
-    this.canvasSize = {width:500,height:700}
+    this.canvasSize = {width:500, height:700}
 
-    this.width = width
-    this.height = height
+    this.width = width;
+    this.height = height;
 
-    this.speed = speed
+    this.speed = speed;
 
-    this.image = undefined
+    this.image = undefined;
 
-    this.init()
+    this.init();
   }
 
   init() {
-    this.image = new Image()
-    this.image.src = 'images/obstacle.png'
+    this.image = new Image();
+    this.image.src = '../images/obstacle.png';
   }
 
   draw() {
-    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
 
   move() {
     if (this.posY + this.width > this.canvasSize.width || this.posY < 0) {
       this.turn();
     }
-    this.posY += this.speed
+    this.posY += this.speed;
   }
 
   turn() {
-    this.speed = this.speed * -1
+    this.speed = this.speed * -1;
   }
 }
