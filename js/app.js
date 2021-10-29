@@ -191,8 +191,8 @@ const carItem = {
   },
 
   createObstacle() {
-    let randomWidth = Math.floor(Math.random() * 300);
-    let randomX = Math.floor(Math.random() * 500);
+    let randomWidth = Math.floor(Math.random() * (300 - 100 + 1) + 100)
+    let randomX = Math.floor(Math.random() * (450 - 100 + 1) + 100)
     this.obstacles.push(new Obstacle(this.ctx, randomX, 10, randomWidth,50, 5));
   },
 
