@@ -25,11 +25,11 @@ console.log(loadedImages)
 //CLASSES
 class Car {
   constructor(){ //Car always starts on the same pos
-    this.x = 205
+    this.x = 225
     this.y = 550
     this.speedX = 0
-    this.width = 90
-    this.height = 135
+    this.width = 50
+    this.height = 100
   }
 }
 
@@ -52,15 +52,15 @@ document.addEventListener('keyup', (event)=>{
 
 //FUNCTIONS
 const drawCar = ()=>{
-  ctx.drawImage(loadedImages.player, car.x, car.y, car.width, car.height)
+  ctx.drawImage(loadedImages.player, car.x, car.y, car.width, car.height)  //Draw car in canvas
 }
 
-const updateCar = ()=>{
+const updateCar = ()=>{ //Refresh car x position. It
   car.x += car.speedX
   checkIfInBounds()
 }
 
-const checkIfInBounds = ()=>{
+const checkIfInBounds = ()=>{ //For not to go over the road limits
   if(car.x > 365){
     car.x = 365
   }
@@ -70,7 +70,7 @@ const checkIfInBounds = ()=>{
   }
 }
 
-const drawRoad = ()=> {
+const drawRoad = ()=> { //Draw road in canvas
   ctx.drawImage(loadedImages.road, 0, 0, 500, 700)
 }
 
@@ -88,5 +88,5 @@ const startGame = ()=>{
     drawCar()
     updateCar()
   }
-  requestAnimationFrame(startGame)
+  requestAnimationFrame(startGame) //Need it for run the game
 }
