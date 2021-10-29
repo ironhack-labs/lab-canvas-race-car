@@ -1,7 +1,7 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    setInterval(() => {
+      gameCar.init();
+    }, 1000 / 70)
   };
-
-  function startGame() {}
 };
