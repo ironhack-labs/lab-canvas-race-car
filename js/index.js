@@ -7,6 +7,7 @@ let frames = 0;
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     startGame();
+    gameOn()
   };
 }
 
@@ -22,6 +23,15 @@ class Car {
 
     draw (){
       ctx.drawImage(this.image,this.x,this.y,this.width,this.height)
+    }
+
+    collision(item){
+      return (
+        this.x < item.x + item.width &&
+        this.x + this.width > item.x &&
+        this.y < item.y + item.height &&
+        this.y + this.height > item.y
+      )
     }
 }
 
@@ -39,16 +49,31 @@ class Background {
   }
   
   draw (){
-    ctx.drawImage(this.image,this.x,this.y,this.width,this.height)
+    // Same speed as abstacles
+    if(frames <= 1000) this.y += 4;
+    if(frames > 1000) this.y += 5;
+    if(frames >= 2000) this.y += 6;
+    // Bring the image again to the beginning
+    if(this.y > canvas.height) this.y = 0;
+
+    ctx.drawImage(this.image,this.x,this.y,this.width,this.height);
+    // Repetitive Background
+    ctx.drawImage(this.image,this.x,this.y - this.height,this.width, this.height);
   }
 
   gameOver(){
-    ctx.font="75px Arial"
-    ctx.fillText("Game Over!",150,150)
+    ctx.fillStyle = "red";
+    ctx.font="50px Arial"
+    ctx.fillText('Game Over!',120,350,400);
+    ctx.fillStyle = "#fff";
+    ctx.font="30px Arial"
+    ctx.fillText('Your final Score',150,390,400);
+    ctx.font="35px Arial"
+    ctx.fillText(`${score}`,250,430,400)
   }
 }
 
-const background = new Background(0,0,canvas.width,canvas.height)
+const background = new Background(0,0,canvas.width,canvas.height);
 
 
 class Obstacle {
@@ -60,7 +85,7 @@ class Obstacle {
   }
 
   draw(){
-    // Dificulty adjusted every 10seg
+    // Dificulty adjusted every 10seg as the background speed
     if(frames <= 1000) this.y += 4;
     if(frames > 1000) this.y += 5;
     if(frames >= 2000) this.y += 6;
@@ -73,12 +98,12 @@ let obstaclesArr = [];
 
 function generateObstacles(){
   if(frames % 100 == 0){
-          // New obstacle (X= 50-220, W= 125-250)
-    let x = Math.floor(Math.random() * (220 - 50) + 50);
-    let w = Math.floor(Math.random() * (250 - 125) + 150);
+                  
+    let x = Math.floor(Math.random() * (220 - 50) + 50); // Range from 50 to 220
+    let w = Math.floor(Math.random() * (250 - 125) + 125); // Range from 125 to 250
 
     const obstacle = new Obstacle(x,w);
-    console.log(obstacle)
+    // console.log(obstacle) To check objets are being created
 
     obstaclesArr.push(obstacle)
   }
@@ -88,9 +113,16 @@ function drawObstacles(){
   obstaclesArr.forEach((obstacle,index_obstacle)=>{
     obstacle.draw()
 
-    if(obstacle.y + obstacle.height >= 700){
-      obstaclesArr.splice(index_obstacle,1)
+    //  Lines commented. Canvas was blinking with each splice
+    // if(obstacle.y + obstacle.height >= 700){
+    //  obstaclesArr.splice(index_obstacle,1)
+    // }
+
+    if(car.collision(obstacle)){
+      // console.log('Crash!') Validating collision
+      endGame()
     }
+
   })
 }
 
@@ -133,7 +165,9 @@ function limitCarMovement (){
 let score = 0;
 
 function countScore(){
-
+  if(frames > 200){
+  if(frames % 97 === 0) score++
+  }
 }
 
 // Show white score on the upper left side 
@@ -161,7 +195,12 @@ function startGame (){
   limitCarMovement();
   generateObstacles();
   drawObstacles();
-  gameOn();
   drawScore()
-  
+  countScore()
+
+  if(requestID){
+    requestID = requestAnimationFrame(startGame)
+  }
+
 }
+
