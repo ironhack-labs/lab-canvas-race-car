@@ -1,6 +1,7 @@
 body {
   padding: 0;
   text-align: center;
+  background-color: rgb(229, 248, 239);
 }
 
 .game-intro {
@@ -9,12 +10,14 @@ body {
 }
 
 .game-intro p {
-  font-size: 18px;
-  font-family: "Verdana"
+  font-size: 22px;
+  font-family: "Arial";
+  color: rgb(106, 114, 111);
+  
 }
 
 .logo-img {
-  width: 350px;
+  width: 400px;
 }
 
 .arrows-img {
@@ -23,16 +26,84 @@ body {
 
 body button {
   font-size: 30px;
-  background-color: #870007;
+  background-color: #b0da9c;
   color: #fff;
   padding: 20px 40px;
   border: 0;
   box-shadow: 0;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  border-radius: 20px;
+  margin-bottom: 60px;
+  font-family: "Arial";
+  font-weight: 900;
+  margin-top: 60px;
+}
+
+body button:hover {
+  padding: 22px 42px;
+  background-color: rgb(80, 102, 79);
 }
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 22px 42px;
+}
+
+#points {
+  font-family: Helvetica, sans-serif;
+  color: rgb(106, 114, 111);
+  font-size: 30px;
+  font-weight: 900;
+  margin: 0px;
+  margin-right: 15em;
+  text-align: end;
+}
+
+h2 {
+  color: rgb(154, 163, 160);
+  font-family: Helvetica, sans-serif;
+  margin: 0px;
+  margin-right: 18em;
+  text-align: end;
+}
+
+#gameOver {
+  width: 303px;
+  display: flex;
+  justify-items: center;
+  position: relative;
+}
+
+#gameOver img {
+  width: 800px;
+  
+}
+#gameOver div {
+  width: 800px;
+  position: absolute;
+  right: 360px;
+  top: 100px;
+}
+
+#gameOver p {
+  position: absolute;
+  bottom: 50px;
+  left: 250px;
+  color:aliceblue;
+  font-family: Helvetica, sans-serif;
+  font-size: 30px;
+}
+
+#gameOver h3 {
+  position: absolute;
+  bottom: 50px;
+  left: 500px;
+  color:aliceblue;
+  font-family: Helvetica, sans-serif;
+  font-size: 30px;
+  
+}
+
+
+.hide {
+  display: none;
 }

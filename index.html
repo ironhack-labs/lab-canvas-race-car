@@ -5,19 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="styles/style.css" />
-    <title>Race Car</title>
+    <title>Quack! Racer</title>
   </head>
   <body>
     <div class="game-intro">
-      <img src="./images/logo.png" alt="" class="logo-img" />
+      <img src="./images/duck_title_logo.png" alt="" class="logo-img" />
       <br />
-      <button id="start-button">StartGame</button>
-      <p>Use the left and right arrow to control the car!</p>
-      <img src="./images/arrows.png" alt="" class="arrows-img" />
+      <button id="start-button">Quack! Go</button>
+      <p>Use the left and right arrow</p>
+      <img src="./images/duck-arrows.png" alt="" class="arrows-img" />
+    </div>
+    
+    <div>
+      <h2>Score :</h2>
+      <p id="points"></p>
     </div>
 
     <div id="game-board">
       <canvas id="myCanvas" width="500" height="700"></canvas>
+    </div>
+
+    <div id="gameOver">
+      <div  class="hide">
+        <img src="./images/duck-game-over.png" alt="duck-game-over">
+        <p>Total points :</p> <h3 id="scoredFinal">32</h3>
+      </div>  
     </div>
 
     <!-- <canvas id="myCanvas"></canvas> -->

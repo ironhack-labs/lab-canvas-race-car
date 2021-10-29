@@ -11,6 +11,8 @@ const basicGame = {
   duck : undefined,
   FPS : 60,
   obstacles : [],
+  framesCounter: 0,
+  points: 0,
   
   
   startGame() {
@@ -22,10 +24,12 @@ const basicGame = {
     this.drawRegularLinesWhite()
     this.drawRegularLinesWhiteRight()
     this.drawPoolVerticalLine()
-    this.createDuck()
     this.createObstacles()
+    this.createDuck()
     this.start()
     this.setListeners()
+    this.createCollision()
+    this.scoreCounter()
 
     
   },
@@ -46,7 +50,6 @@ const basicGame = {
 
 
   drawFilledRectangle() {
-    console.log('object');
     this.ctx.fillStyle = "lightGreen";
     this.ctx.fillRect(0, 0, 500, 800);
     this.ctx.fillStyle = "LightSlateGray";
@@ -59,8 +62,6 @@ const basicGame = {
 
 
   drawRegularLinesRed() {
-
-    console.log('funcion llamada');
     
     this.ctx.strokeStyle = "red";
     this.ctx.lineWidth = 10;
@@ -115,8 +116,6 @@ const basicGame = {
 
   
   drawRegularLinesWhite() {
-
-    console.log('funcion llamada');
     
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
@@ -171,8 +170,6 @@ const basicGame = {
 
 
   drawRegularLinesRedRight() {
-
-    console.log('funcion llamada');
     
     this.ctx.strokeStyle = "red";
     this.ctx.lineWidth = 10;
@@ -227,8 +224,6 @@ const basicGame = {
 
   
   drawRegularLinesWhiteRight() {
-
-    console.log('funcion llamada');
     
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 10;
@@ -283,7 +278,6 @@ const basicGame = {
 
 
   drawPoolVerticalLine() {
-    console.log('object');
     this.ctx.fillStyle = "SkyBlue";
     this.ctx.fillRect(160, 600, 20, 200);
     this.ctx.fillRect(320, 600, 20, 200);
@@ -301,8 +295,8 @@ const basicGame = {
   start() {
     this.intervalId = setInterval(() => {
       this.framesCounter++
-      this.framesCounter % 40 === 0 ? console.log("createObstacles") : null
-      this.framesCounter % 100 === 0 ? this.stop() : null
+      this.framesCounter % 100 === 0 ? this.createObstacles(): null
+      this.framesCounter % 100 === 0 ? this.scoreCounter(): null
       this.clearScreen()
       this.drawFilledRectangle()
       this.drawRegularLinesRed()
@@ -310,21 +304,23 @@ const basicGame = {
       this.drawRegularLinesWhite()
       this.drawRegularLinesWhiteRight()
       this.drawPoolVerticalLine() 
-      this.duck.draw()
       this.drawAll()
       this.moveAll()
+      this.duck.draw()
+      this.createCollision()
+      
+      
        
     }, 1000 / this.FPS)
   },
 
   createDuck() {
-    this.duck = new Duck(this.ctx, 190, 440, 120, 120)
+    this.duck = new Duck(this.ctx, 190, 440, 110, 110)
   },
 
   setListeners() {
     
-    document.onkeydown = e => {
-      console.log("object");      
+    document.onkeydown = e => {   
       e.key === 'ArrowLeft' ? this.duck.moveLeft() : null
       e.key === 'ArrowRight' ? this.duck.moveRight() : null
     }
@@ -338,16 +334,63 @@ const basicGame = {
     this.obstacles.forEach(obstacle => obstacle.move())
   },
 
+  
   createObstacles() {
-    this.obstacles.push(new Obstacle(this.ctx, 0, 0, 200, 15, 5))
-    this.obstacles.push(new Obstacle(this.ctx, 300, 0, 100, 15, 3))
-    this.obstacles.push(new Obstacle(this.ctx, 200, 0, 400, 15, 7))
+
+    this.randomX = Math.floor(Math.random() * 310 + 30)
+    this.randomWidth = Math.floor(Math.random() * 80 + 60)
+    this.randomSpeed = Math.floor(Math.random() * 3 + 2)
+
+    /* this.obstacles.push(new Obstacle(this.ctx, 200, 0, 130, 130, 3))
+    this.obstacles.push(new Obstacle(this.ctx, 300, 0, 80, 80, 1))
+    this.obstacles.push(new Obstacle(this.ctx, 50, 0, 100, 100, 2)) */
+    this.obstacles.push(new Obstacle(this.ctx, this.randomX, 0, this.randomWidth, this.randomWidth, this.randomSpeed))
+  },
+
+
+
+  createCollision() {
+    
+    this.obstacles.forEach((obstacle) => {
+      if (
+        
+        this.duck.posX < obstacle.posX + obstacle.width-50 &&
+        this.duck.posX + this.duck.width-50 > obstacle.posX &&
+        this.duck.posY < obstacle.posY + obstacle.height-50 &&
+        this.duck.height-50 + this.duck.posY > obstacle.posY
+        
+        ) {
+
+        // collision detected!
+        this.stop();
+        this.finalScore();
+        this.points = 0;
+        document.querySelector('#gameOver div').removeAttribute('class', 'hide')
+
+        } 
+    
+        else {
+        // no collision
+        //console.log("still alive");
+        }
+
+      })
   },
 
 
   stop() {
     clearInterval(this.intervalId)
-  }
+  },
+
+  scoreCounter() {
+    this.points++
+    document.querySelector('#points').textContent = this.points
+    console.log(this.points) 
+  },
+
+  finalScore() {
+    document.querySelector('#scoredFinal').textContent = this.points
+  },
 
  
 }
@@ -377,13 +420,14 @@ class Duck {
   }
 
   moveLeft() {
-    this.posX > 40 ? this.posX -= 15 : null
+    this.posX > 50 ? this.posX -= 35 : null
   }
 
   moveRight() {
-    this.posX < 330 ? this.posX += 15 : null
+    this.posX < 330 ? this.posX += 35 : null
   }
 }
+
 
 
 class Obstacle {
@@ -400,11 +444,18 @@ class Obstacle {
     
     this.speed = speed
 
+    this.startGame()
+
   }
 
+  startGame() {
+    this.image = new Image()
+    this.image.src = '../images/water-lily.png'
+  }
+
+
   draw() {
-    this.ctx.fillStyle = "darkGreen";
-    this.ctx.fillRect(0, 0, 200, this.height)
+    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
   }
 
   move() {
