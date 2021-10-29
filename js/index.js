@@ -23,9 +23,10 @@ const raceCarApp = {
 		this.ctx = this.canvasDOM.getContext('2d')
 		this.carImage = new Image()
 		this.carImage.src = '../images/car.png'
+		this.y = 0
 		setInterval(() => {
 			this.draw()
-		}, 1)
+		}, 40)
 	},
 	draw() {
 		this.ctx.clearRect(0, 0, canvaswidth, canvasHeight)
@@ -46,21 +47,30 @@ const raceCarApp = {
 		ctx.drawImage(this.carImage, this.carX, canvasHeight - 110, 50, 100)
 	},
 	printObstacle() {
-		printRec(this.ctx, 40, 0, 100, 40, red)
+		printRec(this.ctx, 40, this.y, 100, 40, red)
 	},
+
 	AddListeners() {
 		document.addEventListener('keydown', movehandler.bind(this))
 
 		function movehandler(e) {
-			console.log('moving ..', e.code)
+			console.log(e.code)
 			switch (e.code) {
 				case 'ArrowLeft':
-					if (this.carX > 37) this.carX -= 4
+					if (this.carX > 37) this.carX -= 6
 					console.log(this.carX)
 					break
 				case 'ArrowRight':
-					if (this.carX < 414) this.carX += 4
+					if (this.carX < 414) this.carX += 6
 					console.log(this.carX)
+					break
+				case 'KeyA':
+					console.log('a pressed')
+					this.y = this.y < canvasHeight ? this.y + 10 : 0
+					break
+				case 'KeyZ':
+					console.log('a pressed')
+					this.y -= 10
 					break
 			}
 		}
