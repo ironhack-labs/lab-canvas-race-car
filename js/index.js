@@ -70,6 +70,7 @@ class Obstacules {
     this.y = 10;
     this.width = width;
     this.height = 30;
+    this.randomNumber = Math.floor(Math.random()*canvas.width)
   }
   draw(){
     this.y++
@@ -78,9 +79,9 @@ class Obstacules {
       this.x = Math.floor(Math.random()* canvas.width)
       this.width = Math.floor(Math.random()* canvas.width)
     }
+    //segundo obstáculo
     ctx.fillStyle = "#890000"
     ctx.fillRect(this.x,this.y,this.width,this.height)
-    //segundo obstáculo
     }
 }
 
