@@ -62,6 +62,8 @@ class Background {
   }
 
   gameOver(){
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0,275,canvas.width,200)
     ctx.fillStyle = "red";
     ctx.font="50px Arial"
     ctx.fillText('Game Over!',120,350,400);
