@@ -156,7 +156,7 @@ const carItem = {
       raceCarApp.drawContinueLine();
       raceCarApp.drawDashedLine();
       
-        this.framesCounter % 40 === 0 ? this.obstacles.createObstacle() : null
+        this.framesCounter % 40 === 0 ? this.createObstacle() : null
         this.car.draw()
         this.drawAll();
         this.moveAll();
@@ -191,7 +191,9 @@ const carItem = {
   },
 
   createObstacle() {
-    this.obstacles.push(new Obstacle(this.ctx, 10, 10, 100,50, 5));
+    let randomWidth = Math.floor(Math.random() * 300);
+    let randomX = Math.floor(Math.random() * 500);
+    this.obstacles.push(new Obstacle(this.ctx, randomX, 10, randomWidth,50, 5));
   },
 
   
