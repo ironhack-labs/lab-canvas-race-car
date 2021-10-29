@@ -148,11 +148,11 @@ function drawObstacles(){
   })
 }
 
-function score(){
+/*function score(){
   let points = 0;
   const points = Math.floor(this.frames / 5);
 
-}
+}*/
 
 
 
