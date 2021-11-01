@@ -1,8 +1,8 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-let requestID;
 const obstacles = [];
+let score = 0;
 
 const game = {
   frames: 0,
@@ -51,24 +51,13 @@ class Car {
     if(this.x > 386) this.x = 386;
   }
 
-  left() {
-    return this.x;
-  }
-  right() {
-    return this.x + this.width;
-  }
-  top() {
-    return this.y;
-  }
-  bottom() {
-    return this.y + this.height;
-  }
-
   collisionDetector(obstacle) {
-    return !(this.bottom() < obstacle.top() ||
-    this.top > obstacle.bottom() ||
-    this.right < obstacle.left() ||
-    this.left > obstacle.right())
+    return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.y + this.height > obstacle.y
+    )
   }
 }
 
@@ -85,28 +74,6 @@ class Obstacle {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height)
   }
-
-  // left() {
-  //   return this.x;
-  // }
-  // right() {
-  //   return this.x + this.width;
-  // }
-  // top() {
-  //   return this.y;
-  // }
-  // bottom() {
-  //   return this.y + this.height;
-  // }
-
-  // collisionDetector(obstacle) {
-  //   return !(
-  //   this.bottom() < obstacle.top() ||
-  //   this.top > obstacle.bottom() ||
-  //   this.right < obstacle.left() ||
-  //   this.left > obstacle.right()
-  //   )
-  // }
 }
 
 function newObstacle() {
@@ -115,7 +82,6 @@ function newObstacle() {
     obstacles[i].draw();
   }
 
-  game.frames++;
   if(game.frames % 250 === 0) {
     let minWidth = 0;
     let maxWidth = 235;
@@ -138,16 +104,27 @@ function checkGameOver() {
   }
 }
 
+function resetGame() {
+  score = 0
+  startGame();
+}
+
 const raceTrack = new BackG;
 const aCar = new Car;
 
 function update() {
+  game.frames++;
+  score++
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   raceTrack.draw();
   aCar.newPos();
   aCar.draw();
   newObstacle();
   checkGameOver();
+
+  ctx.font = '30px Arial';
+  ctx.fillStyle = 'white'
+  ctx.fillText(`Score: ${(score/100).toFixed(0)}`, 70, 150)
 }
 
 window.onload = () => {
@@ -169,6 +146,8 @@ addEventListener('keydown', (e) => {
     case 39:
       aCar.speed += 1
       break;
+    case 82:
+      resetGame();
   }
 })
 
