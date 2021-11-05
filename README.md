@@ -39,7 +39,7 @@ The canvas HTML element is already part of the HTML starter code provided in the
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_9a8f35a079a1343f39cee4028ab8a081.png)
 
-Once we have our road, we need the player's car. The same as for the raod, in the `images` folder, you will find a `.png` file you should use.
+Once we have our road, we need the player's car. The same as for the road, in the `images` folder, you will find a `.png` file you should use.
 
 ### Iteration 3: Make the car move right and left
 
