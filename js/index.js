@@ -3,7 +3,6 @@ const $button = document.querySelector("button");
 const ctx = $canvas.getContext("2d");
 
 let frames = 0;
-let liveScore = 0
 const obstacles = [];
 
 
@@ -124,17 +123,26 @@ class Obstacle extends Car {
 	draw() {
 		this.y+=4;
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+	
 	}
 }
 
 class Score {
+	constructor() {
+		this.x = 100
+		this.y= 60
+		this.score = 0
+	};
   draw() {
-    this.x = 100
-    this.y= 60
-    ctx.fillText = liveScore;
+    ctx.fillText(this.score, 250, 250);
     ctx.font = "50px sans";
-    ctx.fillStyle = blue
+	ctx.fillStyle = "white"
+	
   }
+  scoreIncrement() {
+	  this.score ++
+  }
+
 }
 const car1 = new Car(200, 200);
 const board = new Board();
@@ -159,7 +167,7 @@ function update() {
 	board.draw();
 	car1.draw();
   drawObstacles();
-  scoreUpdate();
+  drawScore()
 	requestAnimationFrame(update);
 }
 
@@ -183,10 +191,13 @@ function generateObstacles() {
 
 function drawObstacles() {
 	obstacles.forEach((obstacle) => obstacle.draw());
+
+
 }
 
 function checkKeys() {
 	document.onkeydown = (event) => {
+		event.preventDefault()
 		switch (event.key) {
 			case "ArrowLeft":
 				car1.moveLeft();
@@ -200,11 +211,14 @@ function checkKeys() {
 		}
 	};
 }
-function scoreUpdate() {
-  liveScore = Math.floor(frames/60);
-}
-function drawScore() {
 
+function drawScore() {
+	obstacles.forEach((obstacle)=> {
+		if(obstacle.y + obstacle.height > car1.y + car1.height) {
+			score.scoreIncrement()
+		}
+	})
+score.draw()
 }
 $button.onclick = start;
 
