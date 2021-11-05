@@ -100,10 +100,12 @@ class Character {
 
   draw() {
   ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  ctx.fillStyle = "red";
-  ctx.fillText("Game over!", 500, 500, 100);
+  ctx.fillStyle = "red"; 
   ctx.font = "100px sans-serif";
-  alert("¡Perdiste!")
+  ctx.fillText("Game over!", 90, 100, 350);
+  ctx.fillStyle = "white";
+  ctx.font = "50px sans-serif";
+  ctx.fillText(`Score: ${scorePoints}`, 170, 170);
 }
   }
 
@@ -179,9 +181,10 @@ function checkKeys() {
 function checkCollitions() {
 	obstacles.forEach((obstacle) => {
 		if (car.isTouching(obstacle)) {
-            
       endgame.draw();
-      return
+	  car = null;
+	  board = null;
+	  alert("¡Perdiste!")
 		}
 	});
 }
