@@ -94,21 +94,21 @@ class Obstacle extends Character {
   }
 }
 
-//class Score {
-//  constructor () {
-//    this.x = 250
-//    this.y = 100
-//    this.score = 0
-//  };
-//  draw() {
-//    ctx.font = "40px sans-serif";
-//    ctx.fillText (this.score, 250, 100)
-//    ctx.fillText = "black"
-//  }
-//  scoreIncrement() {
-//    this.score++
-//  }
-//}
+class Score {
+  constructor () {
+    this.x = 250
+    this.y = 100
+    this.score = 0
+  };
+  draw() {
+    ctx.font = "40px sans-serif";
+    ctx.strokeText (this.score, 250, 100)
+    ctx.fillText = "black"
+  }
+  scoreIncrement() {
+    this.score++
+  }
+}
 
 // 4. Instancias de clase.
 
@@ -118,7 +118,7 @@ const board = new Board();
 const allObstacles = [];
 let isGameOver = false;
 let intervalId;
-// let score = new Score
+let score = new Score
 
 // 5. Funciones del flujo del juego.
 
@@ -132,7 +132,7 @@ function startGame() {
 function gameOver() {
   if (isGameOver) {
     ctx.font = "40px sans-serif";
-    ctx.fillText("Game Over", $canvas.width / 3, $canvas.height / 2);
+    ctx.strokeText("Game Over", $canvas.width / 3, $canvas.height / 2);
   }
 }
 
@@ -169,14 +169,14 @@ function checkCollitions() {
   });
 }
 
-//function drawScore() {
-//  allObstacles.forEach((obstacle) => {
-//    if(obstacle.y + obstacle.height > car1.y + car1.height) {
-//      score.scoreIncrement ()
-//    }
-//  })
-//  score.draw()
-//}
+function drawScore() {
+  allObstacles.forEach((obstacle) => {
+    if(obstacle.y + obstacle.height > car1.y + car1.height) {
+      score.scoreIncrement ()
+    }
+  })
+  score.draw()
+}
 
 // 7. Funciones de interacción con el usuario.
 
@@ -218,6 +218,6 @@ function update() {
   // game over
   gameOver()
   // score
-//  drawScore()
+  drawScore()
 }
 $button.onclick = startGame;
