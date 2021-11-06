@@ -10,11 +10,34 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
   width: 350px;
+}
+
+h4 {
+  color: white;
+}
+.score {
+  position: absolute;
+  color: white;
+  background-color: black;
+  width: 400px;
+  font-size: large;
+}
+
+.finalScore {
+  font-size: x-large;
+}
+
+.modal-header {
+  background-color: brown;
+}
+
+.modal-footer {
+  background-color: burlywood;
 }
 
 .arrows-img {
@@ -33,6 +56,6 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }
