@@ -11,13 +11,27 @@
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
+      <div>
+        <p>Please select difficulty:</p>
+        <div style="text-align: left; background-color: rgb(161, 191, 255);">
+          <input type="radio" id="1" name="difficulty" value="1" checked = "true" >
+          <label for="difficulty">Easy</label><br>
+          <input type="radio" id="2" name="difficulty" value="2">
+          <label for="difficulty">Intermediate</label><br>
+          <input type="radio" id="3" name="difficulty" value="3">
+          <label for="difficulty">I drive in Miami</label>
+      </div>
+      </div>
+      <br>
       <button id="start-button">StartGame</button>
       <p>Use the left and right arrow to control the car!</p>
       <img src="./images/arrows.png" alt="" class="arrows-img" />
     </div>
-
+    <div>
+    
+    </div>
     <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
+      <canvas id="canvas" width="500" height="600"></canvas>
     </div>
 
     <script type="text/javascript" src="js/index.js"></script>
