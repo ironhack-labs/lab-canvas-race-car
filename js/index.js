@@ -73,9 +73,14 @@ class Car {
 class Wall extends Car {
   constructor(x, y) {
     super(x, y);
+    this.x = x;
+    this.y = y;
+    this.width = 100;
+    this.height = 60;
     this.image.src ="/images/brick.png"
   }
   draw() {
+    this.y++;
     ctx.drawImage(this.image,this.x,this.y, this.width,this.height)
   }
 
@@ -94,7 +99,7 @@ function start() {
 function update() {
     // 1. calcular o recalcular el estado de nuestro programa
     frames++;
-
+  generateWalls();
     // 2. Limpiar el canvas
     ctx.clearRect(0, 0, $canvas.width, $canvas.height);
     // 3. Dibujar los elementos
@@ -110,8 +115,10 @@ function update() {
 
 function generateWalls() {
   if (frames % 200 === 0) {
-    const y = Math.floor(Math.random() * 380);
-    const wall = new Wall(500, y);
+    const x = Math.floor(Math.random() * 251)+ 50;
+    console.log(x);
+    const wall = new Wall(x, 100);
+    console.log(wall);
     walls.push(wall);
   }
 }
