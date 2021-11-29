@@ -8,6 +8,7 @@ window.onload = () => {
 
   function startGame() {
     const board = new Board(ctx);
+    const car = new Car(ctx, 225, 550);
   }
 };
 
