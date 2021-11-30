@@ -5,6 +5,8 @@ window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     const game = new Game(ctx);
     game.start();
+    document.onkeydown = (event) => {
+      game.moveCar(event);
+    }
   };
 };
-
