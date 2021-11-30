@@ -3,12 +3,8 @@ const ctx = canvas.getContext('2d');
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    const game = new Game(ctx);
+    game.start();
   };
-
-  function startGame() {
-    const board = new Board(ctx);
-    const car = new Car(ctx, 225, 550);
-  }
 };
 
