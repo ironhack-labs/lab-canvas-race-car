@@ -1,0 +1,3 @@
+class Controls {
+  constructor() {}
+}
