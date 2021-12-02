@@ -112,9 +112,9 @@ class Player {
   collidesWith(obst) {
     if (
       this.x < obst.x + obst.width &&
-      this.x + this.size > obst.x &&
+      this.x + this.width > obst.x &&
       this.y < obst.y + obst.height &&
-      this.y + this.size > obst.y
+      this.y + this.height > obst.y
     ) {
       return true;
     }

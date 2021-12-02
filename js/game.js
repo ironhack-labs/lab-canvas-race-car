@@ -78,11 +78,6 @@ class Game {
   }
 
   
-
-  setupListeners(event) {
-    this.player.setupListeners(event);
-  }
-
   addObstacle() {
     const max = this.ctx.canvas.width - 100;
 
@@ -96,15 +91,17 @@ class Game {
 
 
 
+  setupListeners(event) {
+    this.player.setupListeners(event);
+  }
+
+
   checkCollissions() {
-    const condition = this.obstacleArr.some(obst => {
-      this.player.collidesWith(obst);
-      //console.log("obs x :",obst.x, "obs y:" ,obst.y);
-    });
-    console.log(condition);
+    const condition = this.obstacleArr.some(obst => this.player.collidesWith(obst));
+    //console.log(condition);
 
     if (condition) {
-    console.log(condition);
+      console.log(condition);
       this.gameOver();
     }
   }
