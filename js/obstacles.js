@@ -6,7 +6,7 @@ class Obstacle {
         this.y = 0;
         
         this.width = width;
-        this.heigth = 30;
+        this.height = 30;
     }
 
     draw() {
