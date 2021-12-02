@@ -13,7 +13,7 @@ class Obstacle {
 
     draw() {
         this.ctx.save()
-        this.ctx.fillStyle = 'red'
+        this.ctx.fillStyle = '#890000'
         this.ctx.fillRect(this.x, this.y, this.width, this.height)
         this.ctx.restore()
     }

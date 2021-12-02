@@ -2,8 +2,8 @@ class Car {
     constructor(ctx, x, y) {
         this.ctx = ctx;
 
-        this.x = x
-        this.y = y
+        this.x = x //225
+        this.y = y //550
 
         this.width = 50;
         this.height = 100;
@@ -27,8 +27,6 @@ class Car {
           }       
     }
 
-    
-
     draw() {
         this.ctx.save()
 
@@ -41,7 +39,6 @@ class Car {
                 this.height,
             )
         }
-
         this.ctx.restore()
     }
 
@@ -80,5 +77,18 @@ class Car {
         if (this.x + this.width >= this.ctx.canvas.width) {
           this.x = this.ctx.canvas.width - this.width
         }
+      }
+
+      collidesWith(obstacle) {
+        if (
+          this.y < obstacle.y + obstacle.height &&
+          this.y + this.height > obstacle.y &&
+          this.x < obstacle.x + obstacle.width &&
+          this.x + this.width > obstacle.x 
+        ) {
+          return true
+        }
+    
+        return false
       }
 }
