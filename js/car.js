@@ -10,7 +10,7 @@ class Car {
         this.img = new Image();
         this.img.src = '/images/car.png';
 
-        this.speed = 6;
+        this.speed = 5;
 
         this.vx = 0;
 
