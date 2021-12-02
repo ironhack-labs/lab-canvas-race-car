@@ -4,11 +4,10 @@ class Game {
 
         this.board = new Board(ctx);
         this.car = new Car(ctx);
+        this.obstacle = new Obstacle(ctx, 50, 200);
 
         this.intervalId = undefined;
         this.fps = 1000 / 60;
-
-        //this.obstacle = new Obstacle(ctx, 50, 200, 40);
     }
 
     start() {
@@ -31,6 +30,9 @@ class Game {
 
     draw(){
         this.board.draw();
+
+        this.obstacle.draw();
+        
         this.car.draw();
     }
 

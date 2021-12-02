@@ -37,11 +37,8 @@ class Car {
     setupListeners(event) {
         const status = event.type === 'keydown';
 
-        console.log(event);
-
         if(event.keyCode === 37) {
             this.movements.left = status;
-            console.log('left');
         }
 
         if(event.keyCode === 39) {
@@ -56,12 +53,10 @@ class Car {
 
         if (this.movements.right) {
             this.vx = this.speed;
-            console.log(this.vx); //no está entrando por aquí
           }
 
         if (this.movements.left) {
           this.vx = -this.speed;
-          console.log(this.vx); //no está entrando por aquí
         }
 
         this.x += this.vx;
