@@ -1,20 +1,28 @@
 class Car {
-    constructor(ctx, x, y) {
+    constructor(ctx, x) {
         this.ctx = ctx;
-        this.x = x;
-        this.y = y;
+        this.x = 225;
+        this.y = 550;
 
         this.width = 52;
         this.heigth = 104;
 
         this.img = new Image();
         this.img.src = '/images/car.png';
-        this.img.onload = () => {
-            this.draw();
+
+        this.speed = 6;
+
+        this.vx = 0;
+
+        this.movements = {
+            left: false,
+            right: false
         }
     }
 
     draw() {
+        this.ctx.save();
+
         this.ctx.drawImage(
             this.img,
             this.x,
@@ -22,5 +30,48 @@ class Car {
             this.width,
             this.heigth
         )
+
+        this.ctx.restore();
+    }
+
+    setupListeners(event) {
+        const status = event.type === 'keydown';
+
+        console.log(event);
+
+        if(event.keyCode === 37) {
+            this.movements.left = status;
+            console.log('left');
+        }
+
+        if(event.keyCode === 39) {
+            this.movements.right = status;
+        }
+      }
+
+    move() {
+        if (!this.movements.right && !this.movements.left) {
+            this.vx = 0;
+        }
+
+        if (this.movements.right) {
+            this.vx = this.speed;
+            console.log(this.vx); //no está entrando por aquí
+          }
+
+        if (this.movements.left) {
+          this.vx = -this.speed;
+          console.log(this.vx); //no está entrando por aquí
+        }
+
+        this.x += this.vx;
+
+        if (this.x <= 70) {
+            this.x = 70;
+        }
+
+        if(this.x >= 380) {
+            this.x = 380;
+        }
     }
 }

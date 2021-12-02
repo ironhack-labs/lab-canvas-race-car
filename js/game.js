@@ -3,31 +3,44 @@ class Game {
         this.ctx = ctx;
 
         this.board = new Board(ctx);
-        this.car = new Car(ctx, 225, 550);
+        this.car = new Car(ctx);
+
+        this.intervalId = undefined;
+        this.fps = 1000 / 60;
+
+        //this.obstacle = new Obstacle(ctx, 50, 200, 40);
     }
 
-    start(){
-        this.board;
-        this.car;
+    start() {
+        if (!this.intervalId) {
+          this.intervalId = setInterval(() => {
+
+            this.clear();
+    
+            this.move();
+    
+            this.draw();
+
+          }, this.fps)
+        }
     }
 
     clear(){
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     }
 
-    moveCar(event){
-        if (event.key === 'ArrowLeft' && this.car.x > 70) {
-            this.car.x -= 10;
-            this.clear();
-            this.board.draw();
-            this.car.draw();
-            console.log('you pushed the left key');
-        } else if(event.key === 'ArrowRight' && this.car.x < 380) {
-            this.car.x += 10;
-            this.clear();
-            this.board.draw();
-            this.car.draw();
-            console.log('you pushed the right key');
-        }
+    draw(){
+        this.board.draw();
+        this.car.draw();
     }
+
+    move() {
+        this.car.move();
+    }
+
+    setupListeners(event){
+        this.car.setupListeners(event);
+    }
+    
+
 }
