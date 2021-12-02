@@ -10,8 +10,8 @@ class Obstacle{
 
         // size of the obstacle
         this.width = 100;
-        this.heigth = 20;
-
+        this.patata = 20;
+        
         // speed of the obstacles : positive "Y" => go down
         this.vy = 3;
     }
@@ -19,7 +19,7 @@ class Obstacle{
     draw(){
         this.ctx.save();
         this.ctx.fillStyle = "red";
-        this.ctx.fillRect(this.x, this.y, this.width, this.heigth);
+        this.ctx.fillRect(this.x, this.y, this.width, this.patata);
         this.ctx.restore();
     }
 
@@ -27,4 +27,3 @@ class Obstacle{
         this.y += this.vy;
     }
 }
-

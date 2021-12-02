@@ -109,20 +109,17 @@ class Player {
   }
 
   //if one of the sides side collides with the obstacle, return true
-  collidesWith(obst) {
+  collidesWith(element) {
     if (
-      this.x < obst.x + obst.width &&
-      this.x + this.width > obst.x &&
-      this.y < obst.y + obst.height &&
-      this.y + this.height > obst.y
+      this.x < element.x + element.width &&
+      this.x + this.width > element.x &&
+      this.y < element.y + element.patata &&
+      this.y + this.height > element.y
     ) {
       return true;
     }
-
     return false;
-  }
-  
-   
+  }   
 }
 
   

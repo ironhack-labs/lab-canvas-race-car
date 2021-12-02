@@ -14,16 +14,16 @@ class Game {
     this.background = new Background(ctx);   
    
     // obstacle
-    this.obstacleArr = [];
+    this.obstaclesArr = [];
     this.obstacleFramesCount = 0;
 
     // score
-    //this.score = 0;
+    this.score = 0;
 
 
     // set the interval and the frames x sec
     this.intervalId = undefined;
-    this.fps = 1000 / 5;
+    this.fps = 1000 / 50;
   }
   
   start() { 
@@ -31,8 +31,6 @@ class Game {
     if (!this.intervalId){
       // in 1 second, repeat the functions 60 times 
       this.intervalId = setInterval(() => {
-       // console.log("interval id",this.intervalId); 
-
 
         // add an obstacle every OBSTACLE_FRAMES
         if (this.obstacleFramesCount % OBSTACLE_FRAMES === 0) {
@@ -60,36 +58,38 @@ class Game {
 
 
   clear() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+    // const previousObstaclesLength = this.obstacles.length;
+
+    // this.obstacles = this.obstacles.filter(obstacle => obstacle.y - obstacle.height < 700);
+
+    // if (this.obstacles.length < previousObstaclesLength) {
+    //   this.score++;
+    // }
   }
 
   draw() {
     this.background.draw();
     this.player.draw();
 
-    console.log("player x:",this.player.x,"y:",this.player.y)
-    this.obstacleArr.forEach(obstacle => obstacle.draw());
+    console.log("player x:",this.player.x,"y:",this.player.y);
+    this.obstaclesArr.forEach(obstacle => obstacle.draw());
   }
 
   move() {
     this.background.move();
     this.player.move();
-    this.obstacleArr.forEach(obstacle => obstacle.move());
+    this.obstaclesArr.forEach(obstacle => obstacle.move());
   }
 
-  
+
   addObstacle() {
     const max = this.ctx.canvas.width - 100;
-
     const randomX = Math.floor(Math.random() * max);
 
-    this.obstacleArr.push(
-      new Obstacle(this.ctx, randomX, 0)
-    );
-    //console.log(this.obstacleArr)
+    this.obstaclesArr.push(new Obstacle(this.ctx, randomX, 0));
   }
-
-
 
   setupListeners(event) {
     this.player.setupListeners(event);
@@ -97,11 +97,8 @@ class Game {
 
 
   checkCollissions() {
-    const condition = this.obstacleArr.some(obst => this.player.collidesWith(obst));
-    //console.log(condition);
-
+    const condition = this.obstaclesArr.some(obst => this.player.collidesWith(obst));
     if (condition) {
-      console.log(condition);
       this.gameOver();
     }
   }
@@ -110,17 +107,17 @@ class Game {
   gameOver() {
     clearInterval(this.intervalId);
 
-    // this.ctx.save()
+    this.ctx.save();
     
-    // this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
-    // this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-    // this.ctx.fillStyle = 'white'
-    // this.ctx.textAlign = 'center'
-    // this.ctx.font = 'bold 32px sans-serif'
-    // this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2)
+    this.ctx.fillStyle = 'white';
+    this.ctx.textAlign = 'center';
+    this.ctx.font = 'bold 32px sans-serif';
+    this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
 
-    // this.ctx.restore()
+    this.ctx.restore();
   }
 
 }
