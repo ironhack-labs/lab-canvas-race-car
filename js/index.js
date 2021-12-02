@@ -6,7 +6,19 @@ window.onload = () => {
     startGame();
   };
 
+  const game = new Game(ctx);
+
   function startGame() {
-    const game = new Game(ctx);
+
+    game.start()
+
   }
+
+  window.addEventListener('keydown', (event) => {
+    game.setupListeners(event)
+  })
+
+  window.addEventListener('keyup', (event) => {
+    game.setupListeners(event)
+  })
 };
