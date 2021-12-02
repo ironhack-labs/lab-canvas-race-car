@@ -39,11 +39,16 @@ class Game {
     
       move() {
         this.road.move()
+        this.car.move()
       }
     
       draw() {
         this.road.draw();
         this.car.draw()
+      }
+
+      setupListeners(event) {
+        this.car.setupListeners(event)
       }
     
   
