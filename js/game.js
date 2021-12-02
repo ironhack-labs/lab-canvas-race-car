@@ -8,37 +8,36 @@ class Game {
 
   }
 
-  startGame() {
-    this.intervalId = setInterval(() => {
-
+  startGame() { 
+    this.intervalId = setInterval(()=>{
+      
       //clear
       this.clear()
-      //draw
-      this.draw()
 
       //move
       this.move()
+      
+      //draw
+      this.draw()
 
-
-
-    }, 1000 / 60)
+    },1000/60)
   }
 
-  clear() {
+  clear(){
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
   }
-  draw() {
-    this.road.draw();
-    this.car.draw()
-  }
-  move() {
+
+  move(){
     this.road.move()
     this.car.move()
   }
 
-
+  draw(){
+    this.road.draw();
+    this.car.draw()
+  }
   // (2/3) ASIGNAMOS EL EVENTO CREADO DEL "CAR" AL "GAME"
-  setupListener(event) {
+  setupListener(event){
     this.car.setupListener(event)
   }
 }

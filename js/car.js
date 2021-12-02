@@ -5,7 +5,8 @@ class Car {
         this.y = 400;
 
         this.vx = 0;
-        this.speed = 3; 
+        //this.vy = 0;
+        this.speed = 3;
 
         this.width = 100;
         this.height = 150;
@@ -18,9 +19,8 @@ class Car {
             this.img.isReady = true;
         }
         this.movements = {
-            left = false,
-            right = false
-
+            left: false,
+            right: false
         }
 
     }
@@ -51,21 +51,25 @@ class Car {
         }
 
     }
-    move(){
-        if(!this.movements.right && !this.movements.left){
+    move() {
+        if (!this.movements.right && !this.movements.left) {
             this.vx = 0;
         }
-        if(this.movements.right && this.movements.left){
+        if (this.movements.right) {
             this.vx = this.speed
+        }
+        if (this.movements.left) {
+            this.vx = -this.speed
         }
 
         this.x += this.vx
-
-        if(this.x <= 0){
-            this.x = 0
+    
+  
+        if (this.x <= 0) {
+          this.x = 0
         }
-        if(this.x + this.size >= this.ctx.canvas.width){
-            this.x = this.ctx.canvas.width - this.size
+        if (this.x + this.size >= this.ctx.canvas.width) {
+          this.x = this.ctx.canvas.width - this.size
         }
     }
 }
