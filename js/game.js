@@ -1,31 +1,46 @@
+const OBSTACLE_FRAMES =  120
+
 class Game {
     constructor(ctx) {
         this.ctx = ctx;
-
-        this.background = new Background(ctx);
-        this.car = new Car(ctx, 225, 550);
-        this.obstacles = new Obstacle(ctx, 70, 350)
-
-        this.intervalId = undefined
-        this.fps = 1000/60
-
+  
         
+        this.car = new Car(ctx, 225, 550);
+        this.background = new Background(ctx);
+        this.obstacles = []
+
+        /* this.intervalId = undefined */
+        this.fps = 1000 / 60
+
+        this.obstacleFramesCount = 0
     }
 
     start() {
+      if (!this.intervalId) {
         this.intervalId = setInterval(() => {
 
-            this.clear()
+          if (this.obstacleFramesCount % OBSTACLE_FRAMES === 0) {
+            this.addObstacle()
 
-            this.move()
+            this.obstacleFramesCount = 0
+          }
 
-            this.draw()
+          this.clear()
+
+          this.move()
+
+          this.draw()
+
+          this.obstacleFramesCount++
       
-          }, 1000 / 60)
+          }, this.fps)
+        }
     }
 
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+
+        /* this.obstacles = this.obstacles.filter(obstacle => obstacle.y + obstacle.height > 0) */
       }
     
       move() {
@@ -34,14 +49,21 @@ class Game {
     
       draw() {
         this.background.draw();
+        this.obstacles.forEach(obstacle => obstacle.draw())
         this.car.draw()
-        this.obstacles.draw()
       }
 
       move() {
         this.car.move()
-        this.background.move()
-        this.obstacles.move()
+        this.obstacles.forEach(obstacle => obstacle.move())  
+        this.background.move()   
+      }
+
+      addObstacle() {
+        const max = this.ctx.canvas.width - 150
+        const x = Math.floor(Math.random() * max)
+
+        this.obstacles.push(new Obstacle(this.ctx, x, 0))
       }
 
       setupListeners(event) {

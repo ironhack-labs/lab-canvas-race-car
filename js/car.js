@@ -8,7 +8,7 @@ class Car {
         this.width = 50;
         this.height = 100;
 
-        this.speed = 3;
+        this.speed = 6;
         this.vx = 0;
 
         this.img = new Image();
