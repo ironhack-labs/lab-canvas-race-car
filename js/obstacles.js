@@ -3,7 +3,7 @@ class Obstacle {
         this.ctx = ctx;
 
         this.x = x;
-        this.y = 0;
+        this.y = 1;
         
         this.width = Math.floor(Math.random() * (250 - 100 + 1) + 100);
         this.height = 30;

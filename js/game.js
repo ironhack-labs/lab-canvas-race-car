@@ -8,11 +8,11 @@ class Game {
         this.car = new Car(ctx);
 
         this.obstacles = [];
-        this.obstacleFramesCount = 0;
 
         this.intervalId = undefined;
         this.fps = 1000 / 60;
 
+        this.obstacleFramesCount = 0;
         this.score = 0;
     }
 
@@ -42,14 +42,12 @@ class Game {
 
         const previousObstaclesLength = this.obstacles.length;
 
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.y + 30 > 0);
-
-        console.log(this.obstacles.length);
-        console.log(previousObstaclesLength);
-
+        this.obstacles = this.obstacles.filter(obstacle => obstacle.y < this.ctx.canvas.height);
+        
         if (this.obstacles.length < previousObstaclesLength) { 
-        this.score++;
+            this.score++;
         }
+
     }
 
     draw(){
