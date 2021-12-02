@@ -6,7 +6,7 @@ class Game {
         
         this.background = new Road(ctx)
         this.car = new Car(ctx)
-
+console.log("test")
         this.obstacles = []
 
         this.intervalId = undefined
@@ -30,9 +30,9 @@ class Game {
             this.clear()
     
             this.move()
-    
+
             this.draw()
-    
+        
             this.checkCollissions()
             this.obstacleFramesCount++
           }, this.fps)
@@ -55,6 +55,7 @@ class Game {
       draw() {
         this.obstacles.forEach(obstacle => obstacle.draw())
     
+        this.background = new Road(ctx);
         this.car.draw()
     
         this.drawScore()

@@ -7,7 +7,7 @@ class Car {
         this.img.src = './images/car.png'
         this.img.onload = () => {
             this.draw()
-
+        }
         this.speed = 3
 
         this.vx = 0
@@ -19,7 +19,7 @@ class Car {
             right : false
     
         }
-        }
+        
 
     }
     draw() {
@@ -53,13 +53,26 @@ class Car {
         if (!this.movements.right && !this.movements.left) {
             this.vx = 0
           }
-        if (this.movements.right) {
+          if (!this.movements.up && !this.movements.down) {
+            this.vy = 0
+          }
+      
+          if (this.movements.right) {
             this.vx = this.speed
           }
-        if (this.movements.left) {
+          if (this.movements.left) {
             this.vx = -this.speed
           }
+      
+          if (this.movements.up) {
+            this.vy = -this.speed
+          }
+          if (this.movements.down) {
+            this.vy = this.speed
+          }
         this.x += this.vx
+        this.y += this.vy
+
 
         if (this.x <= 0) {
             this.x = 0

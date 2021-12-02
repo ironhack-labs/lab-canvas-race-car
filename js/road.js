@@ -17,22 +17,13 @@ class Road {
     }
 
     draw(){
-        if (this.img.isReady) {
-            this.ctx.drawImage(
-              this.img,
-              0,
-              this.y,
-              this.width,
-              this.height,
-            )
-            this.ctx.drawImage(
-              this.img,
-              0,
-              this.y - this.height,
-              this.width,
-              this.height,
-            )
-          }
+        this.ctx.drawImage(
+            this.img,
+            this.x = 0,
+            this.y = 0,
+            this.ctx.canvas.width,
+            this.ctx.canvas.height,
+        )
     }
 
     move() {
