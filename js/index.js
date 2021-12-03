@@ -38,7 +38,6 @@ class Obstacle{
     this.width = this.setRandomWidth();
     this.height = 40;
     this.color = '#890000';
-    console.log(y);
   }
   setRandomWidth(){
     return Math.random() * (300 - 200) + 200;
@@ -50,7 +49,7 @@ class Obstacle{
       this.x = width*Math.random();
       this.width = this.setRandomWidth();
     }
-    console.log(this.y);
+    gameover = contains(car,this);
   }
 }
 
@@ -61,18 +60,11 @@ bgImage.src = './images/road.png';
 const car = new Car(width/2, height/1.3);
 
 function contains(a, b) {
-	return !(
-		b.x < a.x ||
-		b.y < a.y ||
-		b.x + b.width > a.x + a.width ||
-		b.y + b.height > a.y + a.height
-	);
-}
-
-function checkCollision(){
-  for(const obs of obstacles){
-    gameover = contains(obs,car);
-  }
+  return (
+    a.x < b.x + b.width &&
+    a.x + a.width > b.x &&
+    a.y < b.y + b.height &&
+    a.height + a.y > b.y);
 }
 
 function drawRoad(){
@@ -139,7 +131,6 @@ window.onload = () => {
     drawCar();
     drawObstacles();
     drawScore();
-    checkCollision();
   }
   function gameOver(){
     ctx.clearRect(0,0,width,height);
