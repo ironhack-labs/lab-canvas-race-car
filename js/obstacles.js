@@ -4,7 +4,7 @@ class Obstacle {
   
       this.x = x
       this.y = 0 
-      this.width = Math.floor(Math.random() * (300 - 100 + 1) + 100)
+      this.width = Math.floor(Math.random() * (200 - 100 + 1) + 50)
       this.height = 25
   
       this.vy = 3

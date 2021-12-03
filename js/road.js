@@ -10,7 +10,6 @@ class Road {
 
         this.img = new Image();
         this.img.src = './images/road.png';
-        this.img.isReady = false
         this.img.onload = () =>{
             this.draw()
         }

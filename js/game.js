@@ -4,9 +4,8 @@ class Game {
     constructor (ctx){
         this.ctx = ctx;
         
-        this.background = new Road(ctx)
+        this.road = new Road(ctx)
         this.car = new Car(ctx)
-        console.log("test")
         this.obstacles = []
 
         this.intervalId = undefined
@@ -14,10 +13,9 @@ class Game {
 
         this.obstacleFramesCount = 0
         this.score = 0
+    }
 
-      }
-
-      start() {
+    start() {
         if (!this.intervalId) {
           this.intervalId = setInterval(() => {
             if (this.obstacleFramesCount % OBSTACLE_FRAMES === 0) {
@@ -35,31 +33,31 @@ class Game {
             this.obstacleFramesCount++
           }, this.fps)
         }
-      }
+    }
 
-      clear() {
+    clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
     
     
-        const previousObstaclesLength = this.obstacles.length
+       /* const previousObstaclesLength = this.obstacles.length
     
         this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0)
     
         if (this.obstacles.length < previousObstaclesLength) {
           this.score++
-        }
-      }
+        }*/
+    }
 
-      draw() {
+    draw() {
 
-        this.background.draw()
+        this.road.draw()
         this.obstacles.forEach(obstacle => obstacle.draw())
         this.car.draw()
     
         this.drawScore()
-      }
+    }
 
-      drawScore() {
+    drawScore() {
         this.ctx.save()
     
         this.ctx.fillStyle = 'orange'
@@ -68,30 +66,35 @@ class Game {
         this.ctx.fillText(`Score: ${this.score} ptos`, 80, 40)
     
         this.ctx.restore()
-      }
+    }
 
-      move() {
+    move() {
+        this.road.move()
         this.obstacles.forEach(obstacle => obstacle.move())
-    
         this.car.move()
-      }
+    }
 
 
-      addObstacle() {
+    addObstacle() {
     
         this.obstacles.push(
           new Obstacle(this.ctx, Math.floor(Math.random() * (300 - 100 + 1) + 100))
         )
-      }
+    }
 
-      setUpListeners(event) {
+    setUpListeners(event) {
         this.car.setUpListeners(event)
-      }
+    }
 
-      }
+    checkCollissions() {
+        const condition = this.obstacles.some(obstacle => this.car.collidesWith(obstacle))
+    
+        if (condition) {
+          this.gameOver()
+        }
+    }
 
-
-      /*gameOver() {
+      gameOver() {
         clearInterval(this.intervalId)
     
         this.ctx.save()
@@ -105,5 +108,7 @@ class Game {
         this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2)
     
         this.ctx.restore()
-      }*/
+
+      }
+    }
     

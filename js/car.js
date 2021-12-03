@@ -2,10 +2,22 @@ class Car {
     constructor(ctx) {
 
         this.ctx = ctx;
-        this.x = 200
-        this.y = 490
+        this.x = 225
+        this.y = 530
         this.width = 45;
         this.height = 95;
+
+        this.speed = 3
+
+        this.vx = 0
+
+
+        this.movements = {
+    
+            left : false,
+            right : false
+    
+        }
 
         this.img = new Image()
         this.img.src = './images/car.png'
@@ -13,25 +25,19 @@ class Car {
             this.draw()
         }
 
-        this.speed = 3
-        this.vx = 0
     
-        this.movements = {
-    
-            left : false,
-            right : false
-    
-        }
+
         
 
     }
+
     draw() {
 
         this.ctx.save()
         this.ctx.drawImage(
             this.img,
-            this.ctx.canvas.width / 2 - this.width / 2,
-            this.ctx.canvas.height / 2 - this.height + 300,
+            this.x,
+            this.y,
             this.width,
             this.height,
         )
@@ -39,47 +45,54 @@ class Car {
     }
 
     setUpListeners(event) {
-        const status = event.type === 'keydown'
+         const status = event.type === 'keydown';
 
-        if (event.keyCode === KEY_RIGHT) {
-            this.movements.right = status
-        }
+       switch(event.keyCode) {
+           case KEY_RIGHT:
+               this.movements.right = status;
+               break;
 
-        if (event.keyCode === KEY_LEFT) {
-            this.movements.left = status
-        }
+            case KEY_LEFT:
+                this.movements.left = status;
+                break;
+
+            default:
+                break;
+       }
       }
 
     move() {
 
+        if(!this.movements.right && !this.movements.left) {
+            this.vx = 0;
+        }
 
-        if (!this.movements.right && !this.movements.left) {
-            this.vx = 0
-          }
+        if (this.movements.right) {
+          this.vx = this.speed;
+        }
+        if (this.movements.left) {
+          this.vx = -this.speed;
+        }
 
-          if (this.movements.right) {
-            this.vx = this.speed
-          }
-          if (this.movements.left) {
-            this.vx = -this.speed
-          }
+        this.x += this.vx;
 
-        this.x += this.vx
-
-
-        if (this.x <= 70) {
-            this.x = 70
-          }
-          
-        if (this.x <= 380) {
-            this.x = 380
-          }
-
+        if (this.x <= 0) {
+          this.x = 0
+        }
+        if (this.x + this.width >= this.ctx.canvas.width) {
+          this.x = this.ctx.canvas.width - this.width;
+        }
     }
 
+    collidesWith (obstacle) {
+        if (
+          this.x < obstacle.x + obstacle.width &&
+          this.x + this.width > obstacle.x &&
+          this.y < obstacle.y + obstacle.height &&
+          this.y + this.height > obstacle.y
+        ) {
+          return true
+        }
+        return false
+      }
 }
-
-    /*this.image.isready
-    this.img.onload = () => {
-        this.img.isReady = true
-    }*/
