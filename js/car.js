@@ -76,15 +76,16 @@ class Car {
 
         this.x += this.vx;
 
-        if (this.x <= 0) {
-          this.x = 0
+        if (this.x <= 50) {
+          this.x = 50
         }
-        if (this.x + this.width >= this.ctx.canvas.width) {
-          this.x = this.ctx.canvas.width - this.width;
-        }
+
+        if (this.x >= 410) {
+            this.x = 410
+          }
     }
 
-    collidesWith (obstacle) {
+      collidesWith(obstacle) {
         if (
           this.x < obstacle.x + obstacle.width &&
           this.x + this.width > obstacle.x &&
@@ -93,6 +94,7 @@ class Car {
         ) {
           return true
         }
+    
         return false
       }
 }

@@ -29,6 +29,9 @@ class Game {
             this.move()
 
             this.draw()
+
+            this.checkCollissions()
+
         
             this.obstacleFramesCount++
           }, this.fps)
@@ -39,13 +42,13 @@ class Game {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
     
     
-       /* const previousObstaclesLength = this.obstacles.length
+       const previousObstaclesLength = this.obstacles.length
     
         this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0)
     
         if (this.obstacles.length < previousObstaclesLength) {
           this.score++
-        }*/
+        }
     }
 
     draw() {
@@ -76,11 +79,14 @@ class Game {
 
 
     addObstacle() {
+        const max = this.ctx.canvas.width - 100
+    
+        const y = Math.floor(Math.random() * max)
     
         this.obstacles.push(
-          new Obstacle(this.ctx, Math.floor(Math.random() * (300 - 100 + 1) + 100))
+          new Obstacle(this.ctx, y , 0)
         )
-    }
+      }
 
     setUpListeners(event) {
         this.car.setUpListeners(event)
