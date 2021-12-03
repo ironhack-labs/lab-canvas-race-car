@@ -1,17 +1,20 @@
 class Car {
     constructor(ctx) {
+
         this.ctx = ctx;
+        this.x = 200
+        this.y = 490
         this.width = 45;
         this.height = 95;
+
         this.img = new Image()
         this.img.src = './images/car.png'
         this.img.onload = () => {
             this.draw()
         }
-        this.speed = 3
 
+        this.speed = 3
         this.vx = 0
-        this.vy = 0
     
         this.movements = {
     
@@ -23,6 +26,8 @@ class Car {
 
     }
     draw() {
+
+        this.ctx.save()
         this.ctx.drawImage(
             this.img,
             this.ctx.canvas.width / 2 - this.width / 2,
@@ -30,20 +35,18 @@ class Car {
             this.width,
             this.height,
         )
+        this.ctx.restore()
     }
 
-    setupListeners(event) {
+    setUpListeners(event) {
         const status = event.type === 'keydown'
-    
-        switch(event.keyCode) {
-          case KEY_RIGHT:
+
+        if (event.keyCode === KEY_RIGHT) {
             this.movements.right = status
-            break
-          case KEY_LEFT:
+        }
+
+        if (event.keyCode === KEY_LEFT) {
             this.movements.left = status
-            break
-          default:
-            break
         }
       }
 
@@ -53,54 +56,27 @@ class Car {
         if (!this.movements.right && !this.movements.left) {
             this.vx = 0
           }
-          if (!this.movements.up && !this.movements.down) {
-            this.vy = 0
-          }
-      
+
           if (this.movements.right) {
             this.vx = this.speed
           }
           if (this.movements.left) {
             this.vx = -this.speed
           }
-      
-          if (this.movements.up) {
-            this.vy = -this.speed
-          }
-          if (this.movements.down) {
-            this.vy = this.speed
-          }
+
         this.x += this.vx
-        this.y += this.vy
 
 
-        if (this.x <= 0) {
-            this.x = 0
-          }
-        if (this.x + this.size >= this.ctx.canvas.width) {
-            this.x = this.ctx.canvas.width - this.size
+        if (this.x <= 70) {
+            this.x = 70
           }
           
-        if (this.y <= 0) {
-            this.y = 0
+        if (this.x <= 380) {
+            this.x = 380
           }
-        if (this.y + this.size >= this.ctx.canvas.height) {
-            this.y = this.ctx.canvas.height - this.size
-          }
+
     }
-    
-    collidesWith(obstacle) {
-        if (
-          this.x < obstacle.x + obstacle.width &&
-          this.x + this.size > obstacle.x &&
-          this.y < obstacle.y + obstacle.height &&
-          this.y + this.size > obstacle.y
-        ) {
-          return true
-        }
-    
-        return false
-      }
+
 }
 
     /*this.image.isready

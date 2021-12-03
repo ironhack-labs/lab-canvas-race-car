@@ -6,14 +6,13 @@ class Game {
         
         this.background = new Road(ctx)
         this.car = new Car(ctx)
-console.log("test")
+        console.log("test")
         this.obstacles = []
 
         this.intervalId = undefined
         this.fps = 1000 / 60
 
         this.obstacleFramesCount = 0
-
         this.score = 0
 
       }
@@ -33,7 +32,6 @@ console.log("test")
 
             this.draw()
         
-            this.checkCollissions()
             this.obstacleFramesCount++
           }, this.fps)
         }
@@ -53,9 +51,9 @@ console.log("test")
       }
 
       draw() {
+
+        this.background.draw()
         this.obstacles.forEach(obstacle => obstacle.draw())
-    
-        this.background = new Road(ctx);
         this.car.draw()
     
         this.drawScore()
@@ -64,10 +62,10 @@ console.log("test")
       drawScore() {
         this.ctx.save()
     
-        this.ctx.fillStyle = 'black'
-        this.ctx.font = ' bold 24px sans-serif'
+        this.ctx.fillStyle = 'orange'
+        this.ctx.font = ' bold 20px sans-serif'
     
-        this.ctx.fillText(`Score: ${this.score} ptos`, 20, 40)
+        this.ctx.fillText(`Score: ${this.score} ptos`, 80, 40)
     
         this.ctx.restore()
       }
@@ -80,26 +78,16 @@ console.log("test")
 
 
       addObstacle() {
-        const max = this.ctx.canvas.height - 150
-    
-        const y = Math.floor(Math.random() * max)
     
         this.obstacles.push(
-          new Obstacle(this.ctx, this.ctx.canvas.width, y)
+          new Obstacle(this.ctx, Math.floor(Math.random() * (300 - 100 + 1) + 100))
         )
       }
 
-      setupListeners(event) {
-        this.car.setupListeners(event)
+      setUpListeners(event) {
+        this.car.setUpListeners(event)
       }
-     
-      checkCollissions() {
-        const condition = this.obstacles.some(obstacle => 
-            this.car.collidesWith(obstacle))
-    
-        if (condition) {
-          this.gameOver()
-        }
+
       }
 
 
@@ -119,4 +107,3 @@ console.log("test")
         this.ctx.restore()
       }*/
     
-}

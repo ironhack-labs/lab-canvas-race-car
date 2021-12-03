@@ -3,9 +3,8 @@ class Obstacle {
       this.ctx = ctx
   
       this.x = x
-      this.y = y
-  
-      this.width = 150
+      this.y = 0 
+      this.width = Math.floor(Math.random() * (300 - 100 + 1) + 100)
       this.height = 25
   
       this.vy = 3
