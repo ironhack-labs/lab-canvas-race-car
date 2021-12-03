@@ -14,7 +14,7 @@ class Game {
     this.background = new Background(ctx);   
    
     // obstacle
-    this.obstaclesArr = [];
+    this.obstacles = [];
     this.obstacleFramesCount = 0;
 
     // score
@@ -60,35 +60,41 @@ class Game {
   clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-    // const previousObstaclesLength = this.obstacles.length;
+    // to count the score : check the difference between the length of the obstacles array, before and after the filter
+    const previousObstaclesLength = this.obstacles.length;
 
-    // this.obstacles = this.obstacles.filter(obstacle => obstacle.y - obstacle.height < 700);
-
-    // if (this.obstacles.length < previousObstaclesLength) {
-    //   this.score++;
-    // }
+    // delete from the array all the obstacles after they get out of the canvas 
+    this.obstacles = this.obstacles.filter(obstacle => obstacle.y  < this.ctx.canvas.height);
+    
+    // add score : 
+    if (this.obstacles.length < previousObstaclesLength) {
+       this.score++;
+    }
   }
 
   draw() {
     this.background.draw();
     this.player.draw();
 
-    console.log("player x:",this.player.x,"y:",this.player.y);
-    this.obstaclesArr.forEach(obstacle => obstacle.draw());
+    //console.log("player x:",this.player.x,"y:",this.player.y);
+    this.obstacles.forEach(obstacle => obstacle.draw());
+
+    this.drawScore();
   }
 
   move() {
     this.background.move();
     this.player.move();
-    this.obstaclesArr.forEach(obstacle => obstacle.move());
+    this.obstacles.forEach(obstacle => obstacle.move());
   }
 
 
   addObstacle() {
     const max = this.ctx.canvas.width - 100;
     const randomX = Math.floor(Math.random() * max);
-
-    this.obstaclesArr.push(new Obstacle(this.ctx, randomX, 0));
+    
+    this.obstacles.push(new Obstacle(this.ctx, randomX, 0));
+    this.obstacles.forEach(obstacle => console.log("obs y:",obstacle.y, "arr:", this.obstacles));
   }
 
   setupListeners(event) {
@@ -97,27 +103,55 @@ class Game {
 
 
   checkCollissions() {
-    const condition = this.obstaclesArr.some(obst => this.player.collidesWith(obst));
+    const condition = this.obstacles.some(obst => this.player.collidesWith(obst));
     if (condition) {
       this.gameOver();
     }
   }
 
+  drawScore() {
+    this.ctx.save();
+
+    this.ctx.fillStyle = 'black';
+    this.ctx.font = ' bold 24px sans-serif';
+
+    this.ctx.fillText(`Score: ${this.score} ptos`, 20, 40);
+
+    this.ctx.restore();
+  }
+
+
 
   gameOver() {
-    clearInterval(this.intervalId);
+    
 
     this.ctx.save();
-    
+    // draw a black rectangle with opacity
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    // draw a text 
+    this.ctx.fillStyle = 'red';
+    this.ctx.textAlign = 'center';
+    this.ctx.font = 'bold 32px sans-serif';
+    this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, (this.ctx.canvas.height / 2) - 30);
+    this.ctx.restore();
 
+    this.ctx.save();
     this.ctx.fillStyle = 'white';
     this.ctx.textAlign = 'center';
     this.ctx.font = 'bold 32px sans-serif';
-    this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
-
+    this.ctx.fillText("Your final score", this.ctx.canvas.width / 2, this.ctx.canvas.height / 2);
     this.ctx.restore();
+
+    this.ctx.save();
+    this.ctx.fillStyle = 'white';
+    this.ctx.textAlign = 'center';
+    this.ctx.font = 'bold 32px sans-serif';
+    this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 2, (this.ctx.canvas.height / 2) + 30);
+    this.ctx.restore();
+
+
+    clearInterval(this.intervalId);
   }
 
 }
