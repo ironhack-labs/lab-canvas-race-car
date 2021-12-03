@@ -22,7 +22,7 @@ class Game {
             this.intervalId = setInterval(() => {
                 if (this.obstacleFramesCount % OBSTACLE_FRAMES === 0) {
                     this.addObstacle();
-                    this.obstacleFrameCount = 0;
+                    this.obstacleFramesCount = 0;
                 }
                 this.clear();
                 this.move();
@@ -35,26 +35,21 @@ class Game {
     }
     }
     clear() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-        const previousObstaclesLength = this.obstacles.length
+        const previousObstaclesLength = this.obstacles.length;
 
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0)
+        this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
     
         if (this.obstacles.length < previousObstaclesLength) {
-          this.score++
+          this.score++;
         }
     }
 
-    move() {
-        this.obstacles.forEach(obstacle => obstacle.move());
-        this.background.move();
-        this.car.move();
-    }
 
     draw() {
-        this.obstacles.forEach(obstacle => obstacle.draw())
         this.background.draw();
+        this.obstacles.forEach(obstacle => obstacle.draw());
         this.car.draw();
         this.drawScore();
     }
@@ -71,13 +66,19 @@ class Game {
 
     }
 
+    move() {
+        this.obstacles.forEach(obstacle => obstacle.move());
+        this.background.move();
+        this.car.move();
+    }
+
     addObstacle() {
-        const max = this.ctx.canvas.width - 80;
+        const max = this.ctx.canvas.width - 100;
 
         const x = Math.floor(Math.random() * max);
 
         this.obstacles.push(
-            new Obstacle (this.ctx, this.ctx.canvas.height, x)
+            new Obstacle (this.ctx, x, 0)
         )
     }
 

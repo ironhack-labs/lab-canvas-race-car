@@ -17,11 +17,11 @@ function startGame() {
   }
     
   window.addEventListener('keydown', (event) => {
-    game.setupListeners(event);
+    game.setUpListeners(event);
   })
 
   window.addEventListener('keyup', (event) => {
-    game.setupListeners(event);
+    game.setUpListeners(event);
   })
 }
 

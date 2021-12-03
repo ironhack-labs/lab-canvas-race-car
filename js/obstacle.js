@@ -5,15 +5,15 @@ class Obstacle {
         this.x = x;
         this.y = y;
 
-        this.width = 20;
-        this.height = 40;
+        this.width = 100;
+        this.height = 25;
 
-        this.vy = 5;
+        this.vy = 3;
     }
 
     draw() {
         this.ctx.save();
-        this.ctx.fillStyle = "blue";
+        this.ctx.fillStyle = 'rgb(41, 31, 30)';
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.restore();
     }
