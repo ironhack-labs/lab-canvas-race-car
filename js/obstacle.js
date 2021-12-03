@@ -2,14 +2,14 @@
 const OBSTACLE_FRAMES =  120;
 
 class Obstacle{
-    constructor(ctx, x, y){
+    constructor(ctx, x, y,rW){
         this.ctx = ctx;
         // coordinates of the obstacle
         this.x = x;
         this.y = y;
 
         // size of the obstacle
-        this.width = 100;
+        this.width = rW;
         this.patata = 20;
         
         // speed of the obstacles : positive "Y" => go down

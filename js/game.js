@@ -90,11 +90,13 @@ class Game {
 
 
   addObstacle() {
+    // set the random position of the obstacle
     const max = this.ctx.canvas.width - 100;
     const randomX = Math.floor(Math.random() * max);
-    
-    this.obstacles.push(new Obstacle(this.ctx, randomX, 0));
-    this.obstacles.forEach(obstacle => console.log("obs y:",obstacle.y, "arr:", this.obstacles));
+
+    // set the random size of the obstacle min 30, max 120
+    const randomWidth = Math.floor(Math.random() * 120 + 30);
+    this.obstacles.push(new Obstacle(this.ctx, randomX, 0,randomWidth));
   }
 
   setupListeners(event) {
@@ -147,7 +149,7 @@ class Game {
     this.ctx.fillStyle = 'white';
     this.ctx.textAlign = 'center';
     this.ctx.font = 'bold 32px sans-serif';
-    this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 2, (this.ctx.canvas.height / 2) + 30);
+    this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 2, (this.ctx.canvas.height / 2) + 40);
     this.ctx.restore();
 
 
