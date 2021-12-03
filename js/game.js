@@ -30,10 +30,9 @@ class Game {
 
             this.clear()
 
-            this.move()
-
             this.draw()
 
+            this.move()
 
         }, this.fps)
        } 
@@ -46,25 +45,32 @@ class Game {
         this.obstacles = this.obstacles.filter(obstacle => obstacle.y + obstacle.height > 0 )
     }
 
+    addObstacles(){
+        const max = this.ctx.canvas.width - 150;
+        const x = Math.floor(Math.random() * max);
+        this.obstacles.push(new Obstacle(this.ctx,this.canvas.height,x))
+    }
+
+    draw() {
+        
+        this.obstacles.forEach(obstacle => obstacle.draw());
+        this.road.draw()
+        this.car.draw()
+        
+
+    }
+    
     move() {
         this.obstacles.forEach(obstacle => obstacle.move());
         this.road.move();
         this.car.move();
     }
 
-    draw() {
-        
-        this.road.draw()
-        this.car.draw()
-        this.obstacles.forEach(obstacle => obstacle.draw());
-
-    }
     
-    addObstacles(){
-        const max = this.ctx.canvas.width - 150;
-        const x = Math.floor(Math.random()*max);
-        this.obstacles.push(new Obstacle(this.ctx,this.canvas.height,x))
-    }
+
+    
+    
+    
     
     setupListener(event){
         this.car.setupListener(event)
