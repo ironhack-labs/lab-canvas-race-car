@@ -31,8 +31,9 @@ class Game {
     
             this.draw();
 
-            this.obstacleFramesCount++;
+            this.checkCollisions();
 
+            this.obstacleFramesCount++;
           }, this.fps)
         }
     }
@@ -47,7 +48,6 @@ class Game {
         if (this.obstacles.length < previousObstaclesLength) { 
             this.score++;
         }
-
     }
 
     draw(){
@@ -56,6 +56,18 @@ class Game {
         this.obstacles.forEach(obstacle => obstacle.draw());
         
         this.car.draw();
+
+        this.drawScore();
+    }
+
+    drawScore(){
+        this.ctx.save();
+
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 24px sans-serif';
+        this.ctx.fillText(`Score: ${this.score}`, 85, 50);
+
+        this.ctx.restore();
     }
 
     move() {
@@ -75,5 +87,34 @@ class Game {
         this.car.setupListeners(event);
     }
     
+    checkCollisions(){
+        const condition = this.obstacles.some(obstacle => this.car.collidesWith(obstacle));
+        
+        console.log(condition);
+        if (condition){
+            this.gameOver();
+        }
+    }
+
+    gameOver(){
+        clearInterval(this.intervalId);
+
+        this.ctx.save();
+
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+
+        this.ctx.fillStyle = 'red';
+        this.ctx.textAlign = 'center';
+        this.ctx.font = 'bold 24px sans-serif';
+        this.ctx.fillText(`Game Over :(`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 - 30);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillText(`Your final score:`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 30);
+        this.ctx.font = 'bold 28px sans-serif';
+        this.ctx.fillText(`${this.score}`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 60);
+
+        this.ctx.restore();
+    }
 
 }

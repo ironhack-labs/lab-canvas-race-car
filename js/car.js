@@ -5,7 +5,7 @@ class Car {
         this.y = 550;
 
         this.width = 52;
-        this.heigth = 104;
+        this.height = 104;
 
         this.img = new Image();
         this.img.src = '/images/car.png';
@@ -28,7 +28,7 @@ class Car {
             this.x,
             this.y,
             this.width,
-            this.heigth
+            this.height
         )
 
         this.ctx.restore();
@@ -68,5 +68,18 @@ class Car {
         if(this.x >= 380) {
             this.x = 380;
         }
+    }
+
+    collidesWith(obstacle){
+        if (
+            this.x < obstacle.x + obstacle.width &&
+            this.x + this.width > obstacle.x &&
+            this.y < obstacle.y + obstacle.height &&
+            this.y + this.height > obstacle.y
+        ){
+            return true;
+        }
+
+        return false;
     }
 }
