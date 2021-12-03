@@ -14,6 +14,7 @@ class Car {
         this.vy = 0;
 
         this.movements = {
+         
            left : false,
            right : false
         }
@@ -74,13 +75,12 @@ class Car {
           }
 
           this.x += this.vx;
-          this.y += this.vy;
 
           if (this.x <= 0) {
             this.x = 0
           }
-          if (this.x + this.size >= this.ctx.canvas.width) {
-            this.x = this.ctx.canvas.width - this.size
+          if (this.x + this.width >= this.ctx.canvas.width) {
+            this.x = this.ctx.canvas.width - this.width;
           }
       }
 

@@ -1,28 +1,27 @@
+
+window.onload = () => {
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+const game = new Game(ctx);
 
-  function startGame() {}
- 
-  
-  const game = new Game(ctx);
-  game.start();
 
-  const startButton = document.getElementById('start-button')
-  startButton.onclick = () => {
+const startButton = document.getElementById('start-button')
+startButton.onclick = () => {
     game.start();
   }
+ 
+function startGame() {
 
+  }
+    
   window.addEventListener('keydown', (event) => {
-    game.setupListeners(event)
+    game.setupListeners(event);
   })
 
   window.addEventListener('keyup', (event) => {
-    game.setupListeners(event)
+    game.setupListeners(event);
   })
-};
+}
 
