@@ -93,6 +93,10 @@ class Game {
         console.log(condition);
         if (condition){
             this.gameOver();
+            this.obstacles = [];
+            this.intervalId = undefined;
+            this.car.x = 225;
+            this.score = 0;
         }
     }
 
