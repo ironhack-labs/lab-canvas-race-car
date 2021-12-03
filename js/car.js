@@ -8,7 +8,7 @@ class Car {
         this.height = 104;
 
         this.img = new Image();
-        this.img.src = '/images/car.png';
+        this.img.src = 'images/car.png';
 
         this.speed = 5;
 

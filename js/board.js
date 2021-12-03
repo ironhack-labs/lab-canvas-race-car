@@ -3,7 +3,7 @@ class Board {
       this.ctx = ctx;
   
       this.img = new Image();
-      this.img.src = '/images/road.png';
+      this.img.src = 'images/road.png';
 
     }
   
