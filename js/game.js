@@ -32,7 +32,6 @@ class Game {
 
             this.checkCollissions()
 
-        
             this.obstacleFramesCount++
           }, this.fps)
         }
@@ -44,7 +43,7 @@ class Game {
     
        const previousObstaclesLength = this.obstacles.length
     
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0)
+        this.obstacles = this.obstacles.filter(obstacle => obstacle.y + obstacle.height < 700)
     
         if (this.obstacles.length < previousObstaclesLength) {
           this.score++
@@ -105,14 +104,15 @@ class Game {
     
         this.ctx.save()
         
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.9)'
         this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
     
         this.ctx.fillStyle = 'white'
         this.ctx.textAlign = 'center'
         this.ctx.font = 'bold 32px sans-serif'
         this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2)
-    
+        this.ctx.fillText(`Your final Score ${this.score}` , this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 50)
+
         this.ctx.restore()
 
       }
