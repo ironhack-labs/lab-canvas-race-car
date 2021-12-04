@@ -10,19 +10,31 @@ class Road {
 
         this.img = new Image();
         this.img.src = './images/road.png';
+
+        this.img.isReady = false
         this.img.onload = () =>{
-            this.draw()
-        }
+            this.img.isReady = true 
+            }
     }
 
     draw(){
-        this.ctx.drawImage(
-            this.img,
-            this.x = 0,
-            this.y = 0,
-            this.ctx.canvas.width,
-            this.ctx.canvas.height,
-        )
+        if (this.img.isReady){
+            this.ctx.drawImage(
+                this.img,
+                0,
+                this.y,
+                this.width,
+                this.height,               
+            )
+            this.ctx.drawImage(
+                this.img,
+                0,
+                this.y - this.height,
+                this.width,
+                this.height,               
+            )
+        }
+
     }
 
     move() {
