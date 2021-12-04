@@ -38,7 +38,5 @@ body button {
 }
 
 canvas {
-  background-image: URL("./../images/road.png");
-  background-size: cover;
   border: red 4px solid;
 }
