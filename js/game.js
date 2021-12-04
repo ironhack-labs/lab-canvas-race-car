@@ -26,11 +26,20 @@ class Game {
 
     move(){
         this.background.move();
+        this.car.move();
     }
 
     draw(){
         this.background.draw();
         this.car.draw();
+    }
+
+    onKeyDown(keyCode){
+        this.car.onKeyDown(keyCode);
+    }
+
+    onKeyUp(keyCode){
+        this.car.onKeyUp(keyCode);
     }
 
     
