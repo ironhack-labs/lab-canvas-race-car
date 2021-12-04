@@ -21,9 +21,12 @@ class Car {
 
         this.img = new Image()
         this.img.src = './images/car.png'
-        this.img.onload = () => {
-            this.draw()
-        }
+
+        this.img.isReady = false
+        this.img.onload = () =>{
+            this.img.isReady = true 
+            }
+
 
     
 
