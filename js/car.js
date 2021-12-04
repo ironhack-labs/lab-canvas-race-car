@@ -53,4 +53,16 @@ class Car {
             this.vx = 0
         }
     }
+
+    collidesWith(obstacle) {
+        if (
+          this.x < obstacle.x + obstacle.width &&
+          this.x + this.width > obstacle.x &&
+          this.y < obstacle.y + obstacle.height &&
+          this.y + this.height > obstacle.y
+        ) {
+          return true;
+        }
+        return false
+      }
 }
