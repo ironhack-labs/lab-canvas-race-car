@@ -14,7 +14,7 @@ class Car {
 
 
       this.img = new Image();
-      this.img.src = '/images/car.png'
+      this.img.src = './images/car.png'
       this.img.onload = () => {
         this.draw()
       }
@@ -93,6 +93,19 @@ class Car {
       if (this.y + this.size >= this.ctx.canvas.height) {
         this.y = this.ctx.canvas.height - this.size
       }
+    }
+
+    collidesWith(obstacle) {
+      if (
+        this.x < obstacle.x + obstacle.width &&
+        this.x + this.size > obstacle.x &&
+        this.y < obstacle.y + obstacle.height &&
+        this.y + this.size > obstacle.y
+      ) {
+        return true
+      }
+  
+      return false
     }
 
   }
