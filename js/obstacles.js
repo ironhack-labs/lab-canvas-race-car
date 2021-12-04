@@ -15,6 +15,7 @@ class Obstacle {
       this.ctx.fillStyle = 'red'
       this.ctx.fillRect(this.x, this.y, this.width, this.height)
       this.ctx.restore()
+      this.move()
     }
   
     move() {
