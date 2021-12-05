@@ -48,13 +48,13 @@ class Player {
   // car moves
   moveRight() {
     // this.clearCanvas();
-    this.x += 30;
+    this.x += 25;
     // this.drawPlayer();
   }
 
   moveLeft() {
     // this.clearCanvas();
-    this.x -= 30;
+    this.x -= 25;
     // this.drawPlayer();
   }
 
@@ -66,7 +66,7 @@ class Player {
         }
         break;
       case "ArrowRight":
-        if (this.x < 490 - this.width) {
+        if (this.x < width - this.width) {
           this.moveRight();
         }
         break;
@@ -74,7 +74,7 @@ class Player {
   }
 }
 
-let player1 = new Player(205, 500, 75, 150);
+let player1 = new Player(210, 500, 75, 150);
 
 //player 1 moves
 document.addEventListener("keydown", (keyboardEvent) => {
