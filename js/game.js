@@ -24,12 +24,13 @@ class Game {
                     this.addObstacle();
                     this.obstacleFramesCount = 0;
                 }
+                this.obstacleFramesCount++
+
                 this.clear();
                 this.move();
                 this.draw();
 
                 this.checkCollissions()
-                this.obstacleFramesCount++
              }, this.fps)
       
     }
@@ -38,9 +39,9 @@ class Game {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         const previousObstaclesLength = this.obstacles.length;
-
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
-    
+        
+        this.obstacles = this.obstacles.filter(obstacle => obstacle.y < this.ctx.canvas.height);
+        
         if (this.obstacles.length < previousObstaclesLength) {
           this.score++;
         }

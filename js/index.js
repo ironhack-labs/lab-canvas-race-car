@@ -12,9 +12,6 @@ startButton.onclick = () => {
     game.start();
   }
  
-function startGame() {
-
-  }
     
   window.addEventListener('keydown', (event) => {
     game.setUpListeners(event);
