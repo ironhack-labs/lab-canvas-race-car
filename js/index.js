@@ -1,7 +1,18 @@
 window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
 
-  function startGame() {}
-};
+  const game = new Game(ctx)
+
+  document.getElementById('start-button').onclick = () => {
+    game.startGame();
+  }
+
+  window.addEventListener('keydown', e => {
+    game.setUpListeners(e)
+  });
+
+  window.addEventListener('keyup', e => {
+    game.setUpListeners(e)
+  })
+}
