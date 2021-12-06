@@ -2,11 +2,12 @@ class Car {
     constructor(ctx) {
         this.ctx = ctx;
         this.x = 200;
-        this.y = 400;
+        this.y = 450;
 
         this.vx = 0;
         //this.vy = 0;
-        this.speed = 3;
+        this.speed = 6;
+        this.size = 100; 
 
         this.width = 100;
         this.height = 150;
@@ -40,7 +41,7 @@ class Car {
     setupListener(event) {
         const status = event.type === 'keydown'
         switch (event.keyCode) {
-            case KEY_RIGHT:
+            case KEY_LEFT:
                 this.movements.left = status
                 break;
             case KEY_RIGHT:
@@ -64,12 +65,13 @@ class Car {
 
         this.x += this.vx
     
-  
+        // El coche se va por el lado de la derecha...
         if (this.x <= 0) {
           this.x = 0
         }
         if (this.x + this.size >= this.ctx.canvas.width) {
           this.x = this.ctx.canvas.width - this.size
         }
+        
     }
 }
