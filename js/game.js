@@ -1,3 +1,4 @@
+const OBSTACLES_FRAMES = 120
 
 class Game {
   constructor(ctx) {
@@ -6,22 +7,35 @@ class Game {
     this.road = new Road(ctx);
     this.car = new Car(ctx);
     this.obstacles = []
-    console.log(this.obstacles)
+
+    this.intervalId = undefined
+    this.fps = 1000 / 60
+
+    this.obstaclesFramesCount = 0
+
   }
 
   startGame() {
-    this.intervalId = setInterval(() => {
+    if (!this.intervalId) {
+      this.intervalId = setInterval(() => {
+        if(this.obstaclesFramesCount % OBSTACLES_FRAMES === 0){
+          this.addObstacle()
+          this.obstaclesFramesCount = 0
+        }
 
-      //clear
-      this.clear()
+        //clear
+        this.clear()
 
-      //move
-      this.move()
+        //move
+        this.move()
 
-      //draw
-      this.draw()
+        //draw
+        this.draw()
+        this.obstaclesFramesCount++
 
-    }, 1000 / 60)
+
+      }, this.fps)
+    }
   }
 
   clear() {
@@ -29,23 +43,24 @@ class Game {
   }
 
   draw() {
-    this.obstacles.forEach(obstacle => obstacle.draw())
-    this.road.draw();
+    this.road.draw()
+    this.obstacles.forEach(obstacle => obstacle.draw());
     this.car.draw()
   }
 
   move() {
-    this.obstacles.forEach(obstacle => obstacle.move())
-    this.road.move()
+    this.road.move();
+    this.obstacles.forEach(obstacle => obstacle.move());
     this.car.move()
   }
   addObstacle() {
     const max = this.ctx.canvas.width - 60
-    const x = Math.floor(Math.tandom() * max)
+    const x = Math.floor(Math.random() * max)
     this.obstacles.push(
-      new Obstacle(this.ctx, this.ctx.canvas.height, this.x)
+      new Obstacle(this.ctx, x, 0)
     )
   }
+
 
   // (2/3) ASIGNAMOS EL EVENTO CREADO DEL "CAR" AL "GAME"
   setupListener(event) {

@@ -6,8 +6,8 @@ class Obstacle {
         this.x = x
         this.y = y
 
-        this.width = 60;
-        this.height = 10;
+        this.width = Math.floor(Math.random() * (this.ctx.canvas.width - 150))
+        this.height = 25
 
         this.vy = 3
     }
