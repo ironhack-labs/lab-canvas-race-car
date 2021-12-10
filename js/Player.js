@@ -2,8 +2,8 @@ class Player {
   // CAR
   constructor(ctx, x, y, w, h) {
     this.ctx = ctx;
-    this.x = x;
-    this.y = y;
+    this.x = 210;
+    this.y = 520;
     this.width = w;
     this.height = h;
     this.img = new Image();

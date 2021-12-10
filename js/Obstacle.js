@@ -4,21 +4,19 @@ class Obstacle {
     this.x = x;
     this.y = y;
     this.width = 200;
-    this.height = 100;
-    this.velocity = -2;
+    this.height = 40;
+    this.velocity = -1.5;
   }
 
-  drawRect() {
-    console.log("drawing");
-    this.ctx.save();
-    // this.ctx.fillStyle = "red";
-    this.ctx.rect(10, 20, 150, 100);
-    this.ctx.fill();
-    this.ctx.restore();
-    console.log("drawn");
+  draw() {
+    this.ctx.fillStyle = "#4e3b02";
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 
   move() {
-    this.x += this.velocity;
+    if (this.y >= this.ctx.canvas.height) {
+      this.y = 0;
+    }
+    this.y -= this.velocity;
   }
 }

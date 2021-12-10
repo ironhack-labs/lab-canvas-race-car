@@ -5,7 +5,7 @@ window.onload = () => {
 
   document.getElementById("start-button").onclick = () => {
     game = new Game(ctx);
-    game.startGame(ctx);
+    game.startGameLoop(ctx);
   };
 
   document.addEventListener("keydown", (e) => {
