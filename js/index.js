@@ -1,15 +1,24 @@
 window.onload = () => {
+
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  var game = new Game(ctx)
+  
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    game.start()
   };
 
-  function startGame() {    
-    const game = new Game(ctx)
-    game.start()
-  }
+  window.addEventListener('keydown', (event) => {
+    game.setupListeners(event)
+  })
+  
+  window.addEventListener('keyup', (event) => {
+    game.setupListeners(event)
+  })
+
 };
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+
+
 
 
