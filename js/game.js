@@ -38,10 +38,10 @@ class Game {
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
+        
         const previousObstaclesLength = this.obstacles.length;
         
         this.obstacles = this.obstacles.filter(obstacle => obstacle.y < this.ctx.canvas.height);
-        
         if (this.obstacles.length < previousObstaclesLength) {
           this.score++;
         }
@@ -53,7 +53,7 @@ class Game {
         this.obstacles.forEach(obstacle => obstacle.draw());
         this.car.draw();
         this.drawScore();
-    }
+    }   
 
     drawScore() {
         this.ctx.save();
