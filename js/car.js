@@ -6,8 +6,8 @@ class Car {
 
         this.vx = 0;
         //this.vy = 0;
-        this.speed = 6;
-        this.size = 100; 
+        this.speed = 7;
+
 
         this.width = 100;
         this.height = 150;
@@ -64,14 +64,25 @@ class Car {
         }
 
         this.x += this.vx
-    
+
         // El coche se va por el lado de la derecha...
         if (this.x <= 0) {
-          this.x = 0
+            this.x = 0
         }
-        if (this.x + this.size >= this.ctx.canvas.width) {
-          this.x = this.ctx.canvas.width - this.size
+        if (this.x + this.width >= this.ctx.canvas.width) {
+            this.x = this.ctx.canvas.width - this.width
         }
-        
+
     }
+    collidesWith(obstacle) {
+        if (
+          this.x < obstacle.x + obstacle.width &&
+          this.x + this.width > obstacle.x &&
+          this.y < obstacle.y + obstacle.height &&
+          this.y + this.height > obstacle.y
+        ) {
+          return true;
+        }
+        return false
+      }
 }
