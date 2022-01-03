@@ -1,4 +1,4 @@
-const OBSTACLE_FRAMES = 120;
+const OBSTACLE_FRAMES = 80;
 
 
 class Game {
@@ -33,14 +33,14 @@ class Game {
     }
     }
 
-  clear() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+    clear() {
+      this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
 
         const previousObstaclesLength = this.obstacles.length;
 
-        this.obstacles = this.obstacles.filter(obstacle => obstacle.y + this.ctx.canvas.height);
+        this.obstacles = this.obstacles.filter(obstacle => obstacle.y + obstacle.height < 700);
 
-    if(this.obstacles.length < previousObstaclesLength) {
+      if(this.obstacles.length < previousObstaclesLength) {
         this.score++;
     }
   }
@@ -49,6 +49,7 @@ class Game {
     this.background.move();
     this.obstacles.forEach(obstacle => obstacle.move())
     this.car.move();
+    this.drawScore()
   }
 
   addObstacle() {
@@ -88,20 +89,26 @@ class Game {
       }
 }
 
-gameOver(){
-  clearInterval(this.intervalId);
+  gameOver(){
+    clearInterval(this.intervalId);
 
-  this.ctx.save();
+    this.ctx.save();
 
-  this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
 
-  this.ctx.fillStyle = 'red';
-  this.ctx.textAlign = 'center';
-  this.ctx.font = 'bold 24px sans-serif';
-  this.ctx.fillText(`Game Over :(`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 - 30);
-  this.ctx.fillStyle = 'white';
-}
+    this.ctx.fillStyle = 'red';
+    this.ctx.textAlign = 'center';
+    this.ctx.font = 'bold 24px sans-serif';
+    this.ctx.fillText(`Game Over!`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 - 30);
+    this.ctx.fillStyle = 'white';
+
+    this.ctx.fillText(`Your final score is:`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 30);
+    this.ctx.font = 'bold 26px sans-serif';
+    this.ctx.fillText(`${this.score} ptos`, this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 60);
+
+    this.ctx.restore();
+ }
 
 }
