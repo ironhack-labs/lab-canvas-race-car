@@ -10,7 +10,7 @@ window.onload = () => {
     let img = document.createElement("img");
     img.src = "images/road.png";
     let canvas = document.getElementById("canvas");
-    ctx.drawImage(img, 10, 10);
+    ctx.drawImage(img, 100, 50);
    
 
     startGame();
