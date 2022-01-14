@@ -11,6 +11,10 @@ window.onload = () => {
     img.src = "images/road.png";
     let canvas = document.getElementById("canvas");
     ctx.drawImage(img, 100, 50);
+
+    let imgCar = document.createElement("img");
+    imgCar.src = "images/car.png";
+    ctx.drawImage(imgCar, 165, 110);
    
 
     startGame();
