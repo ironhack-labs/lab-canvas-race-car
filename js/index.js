@@ -122,15 +122,22 @@ window.onload = () => {
       gamePoint() {
         this.ctx.font = '30px Arial';
         this.ctx.fillStyle = 'White';
-        this.ctx.fillText(`Points: ${this.points}`, 55, 30);
+        this.ctx.fillText(`Score: ${this.points}`, 55, 30);
       },
       endGame() {
         clearInterval(this.intervalId);
-        this.ctx.fillStyle = '#890000';
-        this.ctx.fillRect(30, 0, this.gameSize.w, this.gameSize.h);
-        this.ctx.font = '30px Arial';
+        this.obstacles = [];
         this.ctx.fillStyle = 'Black';
-        this.ctx.fillText(`GAME OVER!! Total Points: ${this.points}`, 55, 100);
+        this.ctx.fillRect(0, 0, this.gameSize.w, this.gameSize.h);
+        this.ctx.font = '35px Arial';
+        this.ctx.fillStyle = 'Red';
+        this.ctx.fillText('Game Over!', 100, 200);
+        this.ctx.font = '40px Arial';
+        this.ctx.fillStyle = 'White';
+        this.ctx.fillText(`Total Score: ${this.points}`, 100, 300);
+        this.ctx.font = '25px Arial';
+        this.ctx.fillStyle = 'White';
+        this.ctx.fillText('Reload the page to play again.', 100, 400);
       },
       drawAll() {
         setInterval(() => {
