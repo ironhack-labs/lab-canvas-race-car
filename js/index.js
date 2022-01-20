@@ -68,7 +68,7 @@ const carApp = {
     let width = Math.floor((Math.random()) * 400)
     let height = 100
 
-    const obstacle = new Obstacle(this.ctx, posX, -100, width, height)
+    const obstacle = new Obstacle(this.ctx, posX, 10, width, height)
     this.obstacles.push(obstacle)
 
   },
@@ -84,47 +84,32 @@ const carApp = {
       this.clearAll()
       this.createRoad()
       this.car.draw()
+      this.drawScore()
       this.obstacles.forEach(elm => {
         elm.move()
         elm.draw()
         if (elm.colision()) {
           this.obstacles = []
           this.result = confirm(`SCORE: ${carApp.frameIndex}    YOUR DRIVING SUCKS.      TRY AGAIN`)
-
-
-
         }
 
         this.result === true ? window.location.reload() : null
-
-
-
-
-
-
-
-
-
       })
 
 
       this.car.draw()
-
-
-
-
     }, 50)
+  },
 
-
-
-
+  drawScore() {
+    this.ctx.fillStyle = 'red'
+    this.ctx.font = '25px arial'
+    this.ctx.fillText(this.frameIndex, 395, 25)
   },
 
   clearAll() {
 
     this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h)
-
-
   },
 
   setEventHandlers() {
@@ -147,29 +132,8 @@ window.onload = () => {
     startGame();
   }
 
-
-
-
-
   function startGame() {
     carApp.init()
-
   }
-
-
-
 }
 
-/*
-window.onload = () => {
-
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
-
-  function startGame() {
-    carApp.init()
-    this.setEventHandlers()
-  }
-
-}*/
