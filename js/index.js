@@ -10,12 +10,14 @@ const carApp = {
   car: undefined,
   obstacles: [],
   frameIndex: 0,
+  result: false,
+
 
   init() {
     this.setContext()
 
     this.createCar()
-    this.createObstacle()
+
     this.drawAll()
     this.setEventHandlers()
 
@@ -62,14 +64,16 @@ const carApp = {
 
   createObstacle() {
 
-    let randomX = (Math.floor((Math.random()) * 4) * 100)
-    let randomW = Math.floor((Math.random()) * 400)
-    let randomH = 100
+    let posX = (Math.floor((Math.random()) * 4) * 100)
+    let width = Math.floor((Math.random()) * 400)
+    let height = 100
 
-    const obstacle = new Obstacle(this.ctx, randomX, 50, randomW, randomH)
+    const obstacle = new Obstacle(this.ctx, posX, -100, width, height)
     this.obstacles.push(obstacle)
 
   },
+
+
 
 
   drawAll() {
@@ -83,16 +87,23 @@ const carApp = {
       this.obstacles.forEach(elm => {
         elm.move()
         elm.draw()
+        if (elm.colision()) {
+          this.obstacles = []
+          this.result = confirm(`SCORE: ${carApp.frameIndex}    YOUR DRIVING SUCKS.      TRY AGAIN`)
 
-        // if (this.obstacles.elm.objPos.x < this.car.carPosX + this.obstacles.elm.objSize.w &&
-        //   this.obstacles.elm.objPos.x + this.obstacles.elm.objSize.w > this.car.carPos.x &&
-        //   this.obstacles.elm.objPos.y < this.car.carPos.y + this.car.carSize.h &&
-        //   this.obstacles.elm.objSize.h + this.obstacles.elm.objPos.y > this.car.carPos.y) {
-        //   console.log('bbbbbb')
-        //   new alert('YOU ARE A LOOSER')
 
-        // }
-        // else { console.log('aaaaa') }
+
+        }
+
+        this.result === true ? window.location.reload() : null
+
+
+
+
+
+
+
+
 
       })
 

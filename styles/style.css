@@ -35,5 +35,9 @@ body button {
 #game-board {
     float: left;
     padding: 20px 0px;
-    background-color: rgb(48, 100, 35);
+    background-color: rgb(4, 92, 9);
+    background-image: url(/images/track.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
 }
