@@ -6,14 +6,18 @@ const drivingApp = {
     gameSize: { w: undefined, h: undefined },
     ctx: undefined,
     ball: undefined,
+    framesIndex: 0,
+    obstaclesArr: [],
     init() {
         this.setContext()
         this.setSize()
         this.setEventHandlers()
         this.createCar()
         this.drawAll()
-        this.start()
+        this.createObstacle()
+        this.start()      
         
+
 
     },
     setContext() {
@@ -47,7 +51,16 @@ const drivingApp = {
     },
 
     createCar() {
-        this.car1 = new Car(this.ctx, this.gameSize.w /2 , 550, 100, 120)
+        this.car1 = new Car(this.ctx, this.gameSize.w / 2, 550, 100, 120)
+    },
+
+    createObstacle() {
+        this.obstaclesArr.push(
+            this.obstacle = new Obstacle(this.ctx, Math.floor(Math.random() * (250 - 50) + 50), 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
+            //this.obstacle = new Obstacle(this.ctx, 0, 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
+            //this.obstacle = new Obstacle(this.ctx, 0, 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
+            
+        )
     },
 
     setEventHandlers() {
@@ -61,20 +74,31 @@ const drivingApp = {
 
     drawAll() {
 
-
         this.drawRoad()
         this.drawLines()
         this.car1.draw()
-
-        console.log('reading')
+                      
+        
+     
+        
+      
     },
 
-    start() {
+    start(){
         setInterval(() => {
+            this.framesIndex++
+            this.framesIndex % 50 === 0 ? this.createObstacle() : null
             this.clearAll()
             this.drawAll()
-        }, 05)
+            this.obstaclesArr.forEach(elm => {
+                elm.move()
+                elm.draw()
+            })
+
+        }, 50)
     },
+    
+    
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h)
