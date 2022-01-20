@@ -38,7 +38,11 @@ let roadBlocks = [];
 
 let createRandomBlock = () => {
   let randomWidth = ((Math.random() * 40 + 25) / 100) * 380;
-  let randomX = Math.random() * (canvas.width - carBoundaries - randomWidth);
+  let randomX = Math.floor(
+    Math.random() * (canvas.width - carBoundaries - randomWidth) +
+      carBoundaries -
+      10
+  );
   roadBlocks.push(new RoadBlock(randomWidth, randomX));
   console.log(roadBlocks);
 };
@@ -105,7 +109,6 @@ let resetGame = () => {
   clearInterval(moveBlockInterval);
   clearInterval(createBlockInterval);
   roadBlocks = [];
-  createRandomBlock();
   score = 0;
 };
 
