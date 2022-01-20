@@ -7,11 +7,14 @@ const Kart = {
     ctx: undefined,
     car: undefined,
     obstacle: undefined,
-    // framesIndex: 0,
+    obstArray : [],
+    framesIndex: 0,
+
 
     init () {
         this.setContext()
         this.createCar()
+        this.createObst()
         this.drawAll()
         this.setEventHandlers()
 
@@ -25,9 +28,12 @@ const Kart = {
 
     drawAll() {
         setInterval(() => {
+            this.framesIndex++                                          
+            this.framesIndex % 30 === 0 ? this.drawObst() : null  
             this.clearAll()
             this.drawSquare()
             this.drawDashed()
+            this.drawObst
             this.drawCar()
         }, 5)
     },
@@ -56,7 +62,7 @@ const Kart = {
     },
 
     createCar() {
-        this.car = new Car (this.ctx, this.gameSize.w/2, this.gameSize.h - 100, 100, 100)
+        this.car = new Car (this.ctx, this.gameSize.w/2, this.gameSize.h - 100, 60, 100)
     },
 
     drawCar() {
@@ -73,9 +79,27 @@ const Kart = {
             key === 'ArrowRight' ? this.car.moveRight() : null
             key === 'ArrowLeft' ? this.car.moveLeft() : null
         })
-    }
+    },
 
-        // this.framesIndex++                                          // Extra
-        // this.framesIndex % 50 === 0 ? this.createObstacle() : null  
+    createObst() {
+        this.obstArray.push(
+            this.obstacle = new Obstacle (this.ctx, Math.floor(Math.random() * ((this.gameSize.w - 100) - 50)) + 50, 0, Math.floor(Math.random() * ((this.gameSize.w - 100) - 50)) + 50, 50, 10)
+        )
+    },
+
+    drawObst () {
+        this.obstacle.draw()
+    },
+
+    //     this.ctx.lineWidth = 10
+    //     this.ctx.strokeStyle = 'red'
+
+    //     this.ctx.beginPath()
+    //     // this.ctx.moveTo(100, 200)
+    //     // this.ctx.lineTo(this.gameSize.w - 100, 200)
+    //     this.ctx.stroke()
+    //     this.ctx.closePath()
+
+        
 
 }
