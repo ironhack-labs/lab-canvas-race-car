@@ -24,4 +24,6 @@ class Car {
     moveRight() {
         this.carPos.x += 20
     }
+
+
 }

@@ -15,8 +15,8 @@ const drivingApp = {
         this.createCar()
         this.drawAll()
         this.createObstacle()
-        this.start()      
-        
+        this.start()
+
 
 
     },
@@ -59,7 +59,7 @@ const drivingApp = {
             this.obstacle = new Obstacle(this.ctx, Math.floor(Math.random() * (250 - 50) + 50), 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
             //this.obstacle = new Obstacle(this.ctx, 0, 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
             //this.obstacle = new Obstacle(this.ctx, 0, 0, Math.floor(Math.random() * (250 - 50) + 50), 100),
-            
+
         )
     },
 
@@ -77,14 +77,14 @@ const drivingApp = {
         this.drawRoad()
         this.drawLines()
         this.car1.draw()
-                      
-        
-     
-        
-      
+
+
+
+
+
     },
 
-    start(){
+    start() {
         setInterval(() => {
             this.framesIndex++
             this.framesIndex % 50 === 0 ? this.createObstacle() : null
@@ -94,16 +94,33 @@ const drivingApp = {
                 elm.move()
                 elm.draw()
             })
+            this.detectColision()
 
         }, 50)
     },
-    
-    
+
+
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h)
+    },
+
+    detectColision() {
+
+        
+        this.obstaclesArr.forEach(elm => {
+
+            console.log(this.car1.carPos.x)
+
+            if (this.car1.carPos.x < this.elm.obsPos.x + this.elm.obsSize.width &&
+                this.car1.carPos.x + this.car1.carSize.width > this.elm.obsPos.x &&
+                this.car1.carPos.y < this.elm.obsPos.y + this.elm.obsSize.height &&
+                this.car1.carSize.height + this.car1.carPos.y > this.elm.obsPos.y) 
+                
+
+                alert(`GAME OVER`)
+            }
+        })
     }
-
-
 
 }
