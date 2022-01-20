@@ -1,7 +1,16 @@
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+// window.onload = () => {
+  drawRoad.init()
 
-  function startGame() {}
-};
+//   document.getElementById('start-button').onclick = () => {
+//     startGame();
+//   };
+
+//   function startGame() {
+//   }
+
+  
+// };
+
+
+
+
