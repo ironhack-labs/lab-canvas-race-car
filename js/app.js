@@ -85,11 +85,7 @@ const drawingApp = {
             this.drawRegularLines()
             this.drawDashedLines()
             this.car.draw()
-            console.log()
-            
-            
-            
-           
+          
         }, 40)
     },
 
