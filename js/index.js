@@ -3,5 +3,14 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    carRaceDraw.init()
+
+
+  }
+
+
+
+
+
 };
