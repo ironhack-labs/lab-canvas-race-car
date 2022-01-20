@@ -31,14 +31,33 @@ class Background {
   }
 }
 
+class Car {
+  constructor( x, y, w, h ) {
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+    this.image = new Image();
+    this.image.src = "images/car.png";
+  }
+
+  draw() {
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+  }
+}
+
+
+
 // Sección de Instancias
 const fondo = new Background();
+const carro = new Car(224, 620, 50, 80)
 
 
 function updateCanvas() {
   frames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   fondo.draw()
+  carro.draw()
 }
 
 window.onload = () => {
