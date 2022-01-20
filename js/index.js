@@ -12,8 +12,7 @@ class RoadBlock {
   }
 
   moveDown = () => {
-    this.y -= 1;
-    return this.y <= 0 ? true : false;
+    this.y += 5;
   };
 }
 
@@ -23,6 +22,9 @@ let carBoundaries = 35;
 
 let ctx = "";
 let canvas = "";
+let score = 0;
+let moveBlockInterval = "";
+let createBlockInterval = "";
 
 let car = {
   x: 100,
@@ -35,10 +37,10 @@ let car = {
 let roadBlocks = [];
 
 let createRandomBlock = () => {
-  let randomWidth = ((Math.random() * 35 + 25) / 100) * 380;
+  let randomWidth = ((Math.random() * 40 + 25) / 100) * 380;
   let randomX = Math.random() * (canvas.width - carBoundaries - randomWidth);
   roadBlocks.push(new RoadBlock(randomWidth, randomX));
-  console.log("creating new block");
+  console.log(roadBlocks);
 };
 
 window.addEventListener("keydown", (event) => {
@@ -65,9 +67,14 @@ let getCanvasAndContext = () => {
 };
 
 let moveBlocks = () => {
+  let deleteLast = false;
   roadBlocks.forEach((block) => {
-    block.y += 5;
+    block.moveDown();
   });
+  if (roadBlocks[0].y >= canvas.height) {
+    roadBlocks.splice(0, 1);
+    score++;
+  }
 };
 
 let drawBlocks = () => {
@@ -76,23 +83,54 @@ let drawBlocks = () => {
   });
 };
 
+let checkCollision = () => {
+  let collision = false;
+  for (let i = 0; i < roadBlocks.length; i++) {
+    if (
+      car.x < roadBlocks[i].x + roadBlocks[i].width &&
+      car.x + car.width > roadBlocks[i].x &&
+      car.y < roadBlocks[i].y + roadBlocks[i].height &&
+      car.y + car.height > roadBlocks[i].y
+    ) {
+      collision = true;
+      break;
+    }
+  }
+  return collision;
+};
+
+let resetGame = () => {
+  car.x = 100;
+  car.y = 550;
+  clearInterval(moveBlockInterval);
+  clearInterval(createBlockInterval);
+  roadBlocks = [];
+  createRandomBlock();
+  score = 0;
+};
+
 //game engine
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(car.img, car.x, car.y, car.width, car.height);
-
   drawBlocks();
-
-  window.requestAnimationFrame(animate);
+  if (checkCollision()) {
+    ctx.font = "30px Arial";
+    ctx.fillText(`YOU LOST ! SCORE: ${score}`, 65, canvas.height / 2);
+  } else {
+    window.requestAnimationFrame(animate);
+  }
 }
 
 function setIntervals() {
-  setInterval(moveBlocks, 100);
-  setInterval(createRandomBlock, 3250);
+  moveBlockInterval = setInterval(moveBlocks, 100);
+  createBlockInterval = setInterval(createRandomBlock, 3400);
 }
 
 function startGame() {
+  resetGame();
   getCanvasAndContext();
+  createRandomBlock();
   setIntervals();
   animate();
 }
