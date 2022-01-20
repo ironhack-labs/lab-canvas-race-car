@@ -14,6 +14,7 @@ const drawingRoad = {
         setInterval(() => {
             this.drawAll()
         }, 70);
+        this.setEventHandlers()
 
     },
 
@@ -36,7 +37,7 @@ const drawingRoad = {
 
     createCar(){
 
-        this.car = new Car(this.ctx, 200, 600, 120)
+        this.car = new Car(this.ctx, 200, 600, 155)
 
 
     },
@@ -105,5 +106,13 @@ const drawingRoad = {
         this.ctx.stroke()
         this.ctx.closePath()
 
+    },
+
+    setEventHandlers() {
+        document.addEventListener('keydown', event => {
+            const { key } = event
+            key === 'ArrowRight' ? this.car.moveRight() : null
+            key === 'ArrowLeft' ? this.car.moveLeft() : null
+        })
     }
 }

@@ -24,6 +24,14 @@ class Car {
 
     }
 
+    moveLeft() {
+        this.carPos.x -= 2
+    }
+
+    moveRight() {
+        this.carPos.x += 2
+    }
+
 
 
 
