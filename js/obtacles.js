@@ -1,4 +1,4 @@
-class estone {
+class stone {
 
     constructor(ctx, posX) {
         this.ctx = ctx
