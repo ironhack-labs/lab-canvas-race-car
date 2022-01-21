@@ -6,6 +6,22 @@ let requestId;
 
 const muros = []
 
+window.onload = () => {
+  document.getElementById('start-button').onclick = () => {
+    startGame();
+  };
+};
+
+
+function startGame() {
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // fondo.draw()
+  //if(requestId) return 
+  
+  //requestedId = setInterval(updateCanvas, 1000 / 60);
+  requestId = requestAnimationFrame(updateCanvas)
+}
+
 // Sección de clases
 class Background {
   constructor() {
@@ -62,6 +78,7 @@ class Car{
     )
 }
 }
+
 class Muro{
   constructor(x,y){
     this.x = x
@@ -109,43 +126,24 @@ function generateMuros(){
     let x = Math.floor(Math.random() * ((canvas.width-240-40)-20)) + 40
     const muro = new Muro(x,0)
     muros.push(muro)
+    console.log(muro)
 }
 }
+
 function drawMuros(){
   muros.forEach((muro,index_muros) =>{
     muro.draw()
   })
   
-  if(carro.collition(Muro)){
+  if(carro.collition(muro)){
     console.log("jeje")
-    requestId= undefined
+    requestId = undefined
     fondo.gameOver()
  }
 }
 
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
-};
-
-function startGame() {
-  // ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // fondo.draw()
-  //if(requestId) return 
-  
-  //requestedId = setInterval(updateCanvas, 1000 / 60);
-  requestId = requestAnimationFrame(updateCanvas)
-}
-
-
 addEventListener('keydown', (event) =>{
-  // if(event.keyCode === 37){
-  //   carro.x -= 20;
-  // }
-  // if(event.keyCode === 39){
-  //   carro.x += 20;
-  // }
+ 
   if(event.keyCode === 37){
     if (carro.x > 10){
       carro.x -=15  
