@@ -21,6 +21,10 @@ body {
   width: 150px;
 }
 
+button {
+  cursor: pointer;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
@@ -33,6 +37,6 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }
