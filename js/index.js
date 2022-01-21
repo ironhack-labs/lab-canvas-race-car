@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 let frames = 0;
 const muros = [];
 let requestId;
+let score = 0;
 
 // Sección de clases
 class Background {
@@ -33,6 +34,7 @@ class Background {
   }
 
   gameOver() {
+    ctx.fillStyle = "black"
     ctx.font = "80px Century Gothic";
     ctx.fillText("Chocaste!!!", 150, 150);
   }
@@ -97,12 +99,13 @@ function pintarMuros() {
   muros.forEach((muro, index) => {
     muro.draw()
     if(carro.collision(muro)) {
-      requestAnimationFrame = undefined;
+      requestId = undefined;
       fondo.gameOver()
     }
-    if(muro.x + muro.height <= 0) {
+    if(muro.y - muro.height > canvas.height) {
       muros.splice(index, 1)
-  }
+      score++;
+    }
   })
 }
 
@@ -113,10 +116,18 @@ function updateCanvas() {
   carro.draw()
   generarMuros()
   pintarMuros()
+  generarScore()
 
   if(requestId) {
     requestId = requestAnimationFrame(updateCanvas)
   }
+}
+
+function generarScore() {
+  score = Math.round(frames / 32)
+  ctx.fillStyle = "black"
+  ctx.font = '32px Century Gothic';
+  ctx.fillText(`Score: ${score}`, 20, 670);
 }
 
 window.onload = () => {
