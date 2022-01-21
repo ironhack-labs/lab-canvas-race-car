@@ -2,6 +2,9 @@ body {
   padding: 0;
   text-align: center;
 }
+canvas {
+  /* background-color: red; */
+}
 
 .game-intro {
   float: left;
@@ -10,7 +13,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -33,6 +36,6 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }
