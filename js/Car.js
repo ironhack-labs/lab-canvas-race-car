@@ -25,15 +25,16 @@ class Car {
     }
 
     moveLeft() {
-        this.carPos.x -= 2
+
+        this.carPos.x -= 7
+
     }
 
     moveRight() {
-        this.carPos.x += 2
+
+        this.carPos.x += 7
+        
     }
-
-
-
 
 
 }
