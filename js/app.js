@@ -11,10 +11,10 @@ const drawingRoad = {
         this.setSize()
         this.drawRoad()
         this.createCar()
-        this.drawAll()
+        setInterval(() => {
+            this.drawAll()
+        }, 70);
         this.setEventHandlers()
-        this.obstacles()
-        this.drawText(Score)
 
     },
 
@@ -39,6 +39,7 @@ const drawingRoad = {
 
         this.car = new Car(this.ctx, 200, 600, 155)
 
+
     },
 
     drawAll(){
@@ -46,18 +47,6 @@ const drawingRoad = {
         this.ctx.clearRect(0, 0,this.gameSize.w, this.gameSize.h) 
         this.drawRoad()
         this.car.draw()
-        this.drawText()
-        this.obstacles()
-        setInterval(() => {
-            this.framesIndex++                                          
-            this.framesIndex % 50 === 0 ? this.createObstacle() : null        
-            this.clearScreen()
-            this.obstacles.forEach(elm => {
-                elm.move()
-                elm.draw()
-            })
-        }, 40)
-        
         
     },
 
@@ -125,25 +114,5 @@ const drawingRoad = {
             key === 'ArrowRight' ? this.car.moveRight() : null
             key === 'ArrowLeft' ? this.car.moveLeft() : null
         })
-    },
-
-    obstacles() {
-
-        this.obstacles.push(
-            new Obstacles(this.ctx, 0,50, 10, 7, this.gameSize),
-            new Obstacles(this.ctx, 0, 100, 60, 10, this.gameSize),
-            new Obstacles(this.ctx, 0, 150, 70, 5, this.gameSize),
-            new Obstacles(this.ctx, 0, 200, 100, 20, this.gameSize)
-        )
-
-    },
-
-    drawText(Score) {
-        this.ctx.font = '70px arial'
-        this.ctc.strokeStyle =' blue'
-        this.ctx.fillText(Scrore, 0, 0)
     }
-
 }
-
-
