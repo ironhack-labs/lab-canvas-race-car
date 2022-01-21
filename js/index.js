@@ -26,7 +26,6 @@ window.onload = () => {
         this.setCollisionsObs();
         this.setCollisionsLines();
         this.gamePoint();
-        this.endGame();
       },
       setContext() {
         this.ctx = document.querySelector('#canvas').getContext('2d');
@@ -140,7 +139,7 @@ window.onload = () => {
         this.ctx.fillText('Reload the page to play again.', 100, 400);
       },
       drawAll() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
           this.count++;
           this.count % 60 === 0 ? this.createObstacles() : null;
           this.clearAll();
