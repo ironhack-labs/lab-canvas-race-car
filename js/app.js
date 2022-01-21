@@ -11,6 +11,7 @@ const app = {
   rndXObstacle: undefined,
   rndYObstacle: undefined,
   rndWObstacle: undefined,
+  interval: undefined,
   framesIndex: 0,
   obstacles: [],
   init() {
@@ -83,7 +84,7 @@ const app = {
     this.rndWObstacle = Math.floor(Math.random() * (200 - 50) + 50);
   },
   drawAll() {
-    setInterval(() => {
+    interval = setInterval(() => {
       this.framesIndex++; // Extra
       this.framesIndex % 20 === 0 ? this.createObstacles() : null; // Extra
       this.clearAll();
@@ -108,20 +109,19 @@ const app = {
       key === "ArrowLeft" ? this.car.moveLeft() : null;
     });
   },
+  gameOver() {
+    clearInterval(interval);
+  },
   checkCollision() {
     this.obstacles.forEach((elm) => {
       if (
-        // this.car.carPos.x < elm.obstaclePos.x + elm.obstacleSize.w &&
-        // this.car.carPos.x + this.car.carPos.w > elm.obstaclePos.x &&
-        //this.car.carPos.y <=
-        //elm.obstaclePos.y + 10 //&&
-        //this.car.carPos.h + this.car.carPos.y > elm.obstaclePos.y
-        this.car.carPos.x < elm.obstaclePos.x + elm.obstacleSize.w - 50 &&
-        this.car.carPos.x + this.car.carSize.w - 50 > elm.obstaclePos.x &&
-        this.car.carPos.y < elm.obstaclePos.y + elm.obstacleSize.h - 50 &&
-        this.car.height - 50 + this.car.carPos.y > elm.obstaclePos.y
+        this.car.carPos.x < elm.obstaclePos.x + elm.obstacleSize.w &&
+        this.car.carPos.x + this.car.carSize.w > elm.obstaclePos.x &&
+        this.car.carPos.y < elm.obstaclePos.y + elm.obstacleSize.h &&
+        this.car.carSize.h + this.car.carPos.y > elm.obstaclePos.y
       ) {
-        alert("pencaste!!");
+        this.gameOver();
+        return alert("pencaste!!");
       }
     });
   },
