@@ -135,11 +135,11 @@ function drawMuros(){
     muro.draw()
   })
   
-  if(carro.collition(muro)){
-    console.log("jeje")
-    requestId = undefined
-    fondo.gameOver()
- }
+//   if(carro.collition(muro)){
+//     console.log("jeje")
+//     requestId = undefined
+//     fondo.gameOver()
+//  }
 }
 
 addEventListener('keydown', (event) =>{
