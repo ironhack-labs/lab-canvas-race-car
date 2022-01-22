@@ -1,18 +1,15 @@
-const drawingApp = {
+const GameCar = {
   ctx: undefined,
   car: undefined,
   gameSize: { w: undefined, h: undefined },
   framesIndex: 0,
-  obstacles: [],
+  interval: null,
 
   init() {
     this.setContext();
     this.setSize();
-    this.drawRoad();
-    this.createCar();
-    this.drawAll();
     this.setEventHandlers();
-    this.createObstacle();
+    this.start();
   },
 
   setContext() {
@@ -28,22 +25,28 @@ const drawingApp = {
     document.querySelector("#canvas").setAttribute("height", this.gameSize.h);
   },
 
-  createCar() {
-    this.car = new Car(this.ctx, this.gameSize.w / 2, this.gameSize.h, 60, 100);
+  start() {
+    this.reset();
+    this.interval = setInterval(() => {
+      this.framesIndex++;
+      this.clear();
+      this.drawAll();
+      this.generateObstacle();
+      this.clearObstacles();
+      this.isCollision() ? this.gameOver() : null;
+    }, 40);
   },
 
   drawAll() {
-    setInterval(() => {
-      this.clearAll();
-      this.drawRoad();
-      this.car.draw();
-      // this.checkCollisions();
-      this.framesIndex++;
+    this.backgroundRoad.draw();
+    this.car.draw();
+    this.obstacles.forEach((obs) => obs.draw());
+  },
 
-      if (this.framesIndex % 150 === 0) {
-        this.createObstacle();
-      }
-    }, 40);
+  reset() {
+    this.backgroundRoad = new BackgroundRoad(this.ctx, this.gameSize);
+    this.car = new Car(this.ctx, this.gameSize.w / 2, this.gameSize.h, 60, 100);
+    this.obstacles = [];
   },
 
   setEventHandlers() {
@@ -58,85 +61,46 @@ const drawingApp = {
     return Math.random() * (max - min) + min;
   },
 
-  createObstacle() {
-    const width = this.getRandom(70, 200);
-    const posX = this.getRandom(70, 280);
-    const obstacle = new Obstacle(this.ctx, posX, 10, 3, width, 30);
-    this.obstacles.push(obstacle);
+  generateObstacle() {
+    if (this.framesIndex % 150 === 0) {
+      const width = this.getRandom(70, 200);
+      const posX = this.getRandom(70, 280);
+      const obstacle = new Obstacle(this.ctx, posX, 10, width, 30);
+      this.obstacles.push(obstacle);
+    }
   },
 
-  drawRoad() {
-    this.drawFilledRectangle();
-    this.drawRegularLines();
-    this.drawDashedLines();
-    this.drawObstacles();
+  clearObstacles() {
+    this.obstacles = this.obstacles.filter(
+      (obs) => obs.obstPos.y <= this.gameSize.h
+    );
   },
 
-  drawFilledRectangle() {
-    this.ctx.fillStyle = "green";
-    this.ctx.fillRect(this.gameSize.w / 2 - 250, 0, 500, this.gameSize.h);
-    this.ctx.fillStyle = "#808080";
-    this.ctx.fillRect(this.gameSize.w - 460, 0, 420, this.gameSize.h);
+  clear() {
+    this.ctx.clearRect(0, 0, this.canvasHeight, this.canvasWidth);
   },
 
-  drawRegularLines() {
-    this.ctx.lineWidth = 15;
-    this.ctx.strokeStyle = "white";
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(60, 0);
-    this.ctx.lineTo(60, this.gameSize.h);
-    this.ctx.stroke();
-    this.ctx.closePath();
-
-    this.ctx.lineWidth = 15;
-    this.ctx.strokeStyle = "white";
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(440, 0);
-    this.ctx.lineTo(440, this.gameSize.h);
-    this.ctx.stroke();
-    this.ctx.closePath();
-  },
-
-  drawDashedLines() {
-    this.ctx.lineWidth = 10;
-    this.ctx.strokeStyle = "white";
-    this.ctx.beginPath();
-    this.ctx.moveTo(250, 0);
-    this.ctx.setLineDash([50, 20]);
-    this.ctx.lineTo(250, this.gameSize.h);
-    this.ctx.stroke();
-    this.ctx.closePath();
-    this.ctx.setLineDash([0, 0]);
-  },
-
-  drawObstacles() {
-    this.obstacles.forEach((obstacle) => {
-      obstacle.draw();
+  isCollision() {
+    return this.obstacles.some((obs) => {
+      return (
+        obs.obstPos.x < this.car.carPos.x + this.car.carSize.w &&
+        obs.obstPos.x + obs.obstSize.w > this.car.carPos.x &&
+        obs.obstPos.y < this.car.carPos.y + this.car.carSize.h &&
+        obs.obstSize.h + obs.obstPos.y > this.car.carPos.y
+      );
     });
   },
 
-  clearAll() {
-    this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h);
+  gameOver() {
+    clearInterval(this.interval);
+
+    this.ctx.save();
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    this.ctx.fillRect(0, 0, this.gameSize.w, this.gameSize.h);
+
+    this.ctx.font = "40px Goblin One";
+    this.ctx.fillStyle = "#fff";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("Game Over", this.gameSize.w / 2, this.gameSize.h / 2);
   },
-
-  // gameOver() {
-  //   clearInterval(this.interval);
-
-  //   this.ctx.save();
-  //   this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-  //   this.ctx.fillRect(0, 0, this.gameSize.w, this.gameSize.h);
-
-  //   this.ctx.font = "40px Goblin One";
-  //   this.ctx.fillStyle = "#fff";
-  //   this.ctx.textAlign = "center";
-  //   this.ctx.fillText("Game Over", this.gameSize.w / 2, this.gameSize.h / 2);
-  // },
-
-  // checkCollisions() {
-  //   if (this.obstacles.some((obstacle) => this.car.collidesWith(obstacle))) {
-  //     // this.gameOver();
-  //   }
-  // },
 };

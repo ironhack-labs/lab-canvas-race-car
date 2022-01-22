@@ -1,12 +1,12 @@
 class Obstacle {
-  constructor(ctx, posX, posY, speed, width, height) {
+  constructor(ctx, posX, posY, width, height) {
     this.ctx = ctx;
     this.obstPos = { x: posX, y: posY };
     this.obstSize = { w: width, h: height };
+    this.obstSpeed = 3;
   }
 
   draw() {
-    this.obstPos.y += this.obstSpeed;
     this.ctx.fillStyle = "red";
     this.ctx.fillRect(
       this.obstPos.x,
@@ -14,20 +14,10 @@ class Obstacle {
       this.obstSize.w,
       this.obstSize.h
     );
+    this.move();
   }
 
   move() {
-    this.obstPos.y += 3;
+    this.obstPos.y += this.obstSpeed;
   }
-
-  // collidesWith() {
-  //   if (
-  //     this.obstPos.x < this.car.carPos.x + this.car.carSize.w &&
-  //     this.obstPos.x + this.obstSize.w > this.car.carPos.x &&
-  //     this.obstPos.y < this.car.carPos.y + this.car.carSize.h &&
-  //     this.obstSize.h + this.obstPos.y > this.car.carPos.y
-  //   ) {
-  //     return true;
-  //   }
-  // }
 }

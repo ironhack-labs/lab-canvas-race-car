@@ -4,6 +4,6 @@ window.onload = () => {
   };
 
   function startGame() {
-    drawingApp.init();
+    GameCar.init();
   }
 };
