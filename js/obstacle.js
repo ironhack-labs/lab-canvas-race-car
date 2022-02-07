@@ -4,18 +4,19 @@ class Obstacle {
         this.ctx = ctx;
         this.x = x;
         this.y = y;
-        this.height = 50;
-        this.width = 150;
+        this.height = 30;
+        this.width = 200;
         this.vy = 3;
 
     }
 
     draw(){
 
-        this.ctx.save();
-        this.ctx.fillStyle() = 'orange';
-        this.ctx.fillRect() = (this.x, this.y, this.width, this.height);
-        this.ctx.restore();
+        this.ctx.save()
+        this.ctx.fillStyle = 'orange'
+        this.ctx.fillRect(this.x, this.y, this.width, this.height)
+        this.ctx.restore()
+        
 
     }
 

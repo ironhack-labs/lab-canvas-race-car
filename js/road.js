@@ -6,7 +6,7 @@ constructor(ctx){
   this.img.src = '/Users/pedroalbertobanosfolcra/Desktop/Ironhack/modul1/lab-canvas-race-car/images/road.png';
 
     this.y = 0
-    this.vy = 8
+    this.vy = 6
 
     this.width = this.ctx.canvas.width
     this.height = this.ctx.canvas.height
