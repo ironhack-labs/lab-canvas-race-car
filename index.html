@@ -7,19 +7,28 @@
     <link rel="stylesheet" href="styles/style.css" />
     <title>Race Car</title>
   </head>
+
   <body>
+
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
       <button id="start-button">StartGame</button>
       <p>Use the left and right arrow to control the car!</p>
-      <img src="./images/arrows.png" alt="" class="arrows-img" />
+      <img src="./images/arrows.png" alt="" class="arrows-img" />      
     </div>
 
-    <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
+    <div class="game-board"></div>
+    <div id="points"> 10 Points </div>
+    
+    <div class="game-over">
+      <h2> - Game Over - </h2>
     </div>
 
+
+    <!-- including sound script throws an error... -->
+    <!-- <script src="path/to/p5.sound.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>
