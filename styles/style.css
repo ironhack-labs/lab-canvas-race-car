@@ -5,12 +5,12 @@ body {
 
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 0% 3%;
 }
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -32,7 +32,13 @@ body button {
   margin-bottom: 20px;
 }
 
-#game-board {
-    float: left;
-    padding: 20px 0px;
+#defaultCanvas0 {
+  float: right;
+  padding: 0% 3%;
 }
+
+/* #game-board {
+  float: left;
+  padding: 20px 0px;
+  background-color: #870007;
+} */
