@@ -3,5 +3,13 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+
+    animatedApp.init('canvas')
+  
+  }
+
+  
+
+
 };
