@@ -1,11 +1,11 @@
-class Block {
+class Dad {
     constructor(ctx, posX, posY, width, height) {
         this.ctx = ctx
-        this.blockPos = {
+        this.dadPos = {
             x: posX,
             y: posY
         }
-        this.blockSize = {
+        this.dadSize = {
             w: width,
             h: height
         }
@@ -15,19 +15,17 @@ class Block {
     }
 
     init() {
-        this.move
+        this.imageInstance = new Image()
+        this.imageInstance.src = 'images/pngwing.com.png'
         this.draw()
     }
 
     draw() {
 
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(Math.random() * this.blockSize.w, 0, Math.random() * 100 + 100, 40)
+        this.ctx.drawImage(this.imageInstance, this.dadPos.x, this.dadPos.y, this.dadSize.w, this.dadSize.h)
+
     }
 
 
 
-    move() {
-        this.blockPos.y += 100
-    }
 }

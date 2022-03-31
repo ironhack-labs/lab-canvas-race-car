@@ -32,4 +32,13 @@ class Car {
     moveRight() {
         this.carPos.x += 20
     }
+    moveUp() {
+        this.carPos.y -= 20
+    }
+
+    moveDown() {
+        this.carPos.y += 20
+    }
+
+
 }
