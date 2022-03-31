@@ -1,7 +1,7 @@
 const road = {
 
     name: 'Race Car Lab',
-    description: 'Canvas app for basic shapes animating',
+    description: 'Francescooooo Vergoliiiini',
     version: '1.0.0',
     author: 'JC',
     license: undefined,
@@ -27,7 +27,6 @@ const road = {
         setInterval(() => {
             this.clearAll()
             this.drawAll()
-
         }, 30)
     },
     createCar() {
@@ -35,15 +34,12 @@ const road = {
     },
     createBlock() {
         let lowW = 30
-        let lowH = 0
         let highW = this.gameSize.w - 50
-        let highH = this.gameSize.h / 2
         let randomWidthL = 70
         let randomWidthH = 200
         let randomHeightL = 10
         let randomHeightH = 20
         let randomPosX = Math.floor(Math.random() * ((1 + highW - lowW) + lowW))
-        let randomPosY = Math.floor(Math.random() * ((1 + highH - lowH) + lowH))
         let randomWidth = Math.floor(Math.random() * (1 + randomWidthH - randomWidthL) + randomWidthL)
         let randomHeight = Math.floor(Math.random() * (1 + randomHeightH - randomHeightL) + randomHeightL)
         this.blocks.push(new Block(this.ctx, this.gameSize, randomPosX, 0, randomWidth, randomHeight))
@@ -118,5 +114,6 @@ const road = {
         this.framesIndex++
 
     }
+
 }
 
