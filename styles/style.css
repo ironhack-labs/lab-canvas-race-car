@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   padding: 0;
   text-align: center;
@@ -33,6 +38,10 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+#canvas {
+  background-color: green;
 }
