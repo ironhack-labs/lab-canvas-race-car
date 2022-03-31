@@ -18,6 +18,7 @@ const RaceCar = {
     this.startGame
     this.createCar()
     this.createBritney()
+
     this.createDad()
     this.setEventListeners()
 
@@ -62,11 +63,11 @@ const RaceCar = {
   },
 
   createBritney() {
-    this.britney = new Britney(this.ctx, Math.random() * (this.gameSize.w - 100), Math.random() * (this.gameSize.h - 200), 160, 120)
+    this.britney = new Britney(this.ctx, 160, 160, 160, 120, 0.2)
   },
 
   createDad() {
-    this.dad = new Dad(this.ctx, Math.random() * (this.gameSize.w - 100), Math.random() * (this.gameSize.h - 200), 100, 120)
+    this.dad = new Dad(this.ctx, 50, 50, 100, 120)
   },
 
   // createBlocks() {
@@ -82,6 +83,8 @@ const RaceCar = {
     setInterval(() => {
       this.clearAll()
       this.drawAll()
+      this.britney.move()
+      this.dad.move()
       this.framesIndex++
     }, 30)
 

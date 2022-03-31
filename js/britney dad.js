@@ -20,6 +20,13 @@ class Dad {
         this.draw()
     }
 
+    move() {
+        if (this.dadPos.x <= 400 && this.dadPos.y <= 700) {
+            this.dadPos.x += 0.5
+            this.dadPos.y += 0.5
+        }
+    }
+
     draw() {
 
         this.ctx.drawImage(this.imageInstance, this.dadPos.x, this.dadPos.y, this.dadSize.w, this.dadSize.h)

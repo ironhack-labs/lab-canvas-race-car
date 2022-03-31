@@ -11,6 +11,7 @@ class Britney {
         }
 
 
+
         this.init()
     }
 
@@ -18,6 +19,16 @@ class Britney {
         this.imageInstance = new Image()
         this.imageInstance.src = 'images/pngfind.com-britney-spears-png-694721.png'
         this.draw()
+    }
+
+    move() {
+        if (this.britneyPos.x <= 400 && this.britneyPos.y <= 700) {
+            this.britneyPos.x += 0.5
+            this.britneyPos.y += 0.5
+        }
+        // if (this.britneyPos.x = 400 || this.britneyPos.y >= 700) {
+        //     this.speed = this.speed * -1
+        // }
     }
 
     draw() {
