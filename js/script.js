@@ -1,0 +1,1 @@
+controlledApp.init("myCanvas")
