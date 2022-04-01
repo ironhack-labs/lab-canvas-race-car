@@ -5,7 +5,7 @@ window.onload = () => {
 
   function startGame() {
     carRace.init("canvas")
-    
+
   }
 };
 
@@ -18,7 +18,8 @@ const carRace = {
   obstacles: [],
   obstacleSize: { w: undefined },
   obstaclePost: { x: undefined },
-  
+  framesIndex: 0,
+
 
 
 
@@ -33,7 +34,7 @@ const carRace = {
     this.drawCar()
     this.drawObstacle()
     this.start()
-    
+
   },
   setDimensions() {
     this.gameSize = {
@@ -43,14 +44,14 @@ const carRace = {
   },
   drawRoad() {
     this.ctx.fillStyle = "green"
-    this.ctx.fillRect(0,0, this.gameSize.w, this.gameSize.h)  
+    this.ctx.fillRect(0, 0, this.gameSize.w, this.gameSize.h)
 
     this.ctx.fillStyle = "grey"
     this.ctx.fillRect(20, 0, this.gameSize.w - 40, this.gameSize.h)
-    
+
     this.ctx.fillStyle = "white"
     this.ctx.fillRect(35, 0, this.gameSize.w - 485, this.gameSize.h)
-    this.ctx.fillRect(450,0, this.gameSize.w - 485, this.gameSize.h)
+    this.ctx.fillRect(450, 0, this.gameSize.w - 485, this.gameSize.h)
 
     this.ctx.lineWidth = 10
     this.ctx.strokeStyle = 'white'
@@ -59,8 +60,8 @@ const carRace = {
     this.ctx.setLineDash([60, 20])
     this.ctx.lineTo(this.gameSize.w / 2, this.gameSize.h)
     this.ctx.stroke()
-    this.ctx.closePath() 
-  
+    this.ctx.closePath()
+
 
   },
   createCar() {
@@ -70,39 +71,41 @@ const carRace = {
     this.car.draw()
   },
   width() {
-        this.obstacleSize.w = Math.floor(Math.random() * 350)
-    },
+    this.obstacleSize.w = Math.floor(Math.random() * 350)
+  },
   positionX() {
-        this.obstaclePost.x = Math.floor(Math.random() * 350)
-    },
+    this.obstaclePost.x = Math.floor(Math.random() * 350)
+  },
 
   drawObstacle() {
     this.width()
     this.positionX()
-    //this.obstacles.push(new Obstacle(this.ctx, this.obstaclePost.x, 0, this.obstacleSize.w))
+    this.obstacles.push(new Obstacle(this.ctx, this.obstaclePost.x, 0, this.obstacleSize.w))
   },
 
   drawAll() {
     this.drawRoad()
     this.drawCar()
-    this.drawObstacle()
+    //aqui creas el bloque con un intervalo
+    if (this.framesIndex % 60 === 0) this.drawObstacle()
   },
   setEventListeners() {
-        document.onkeyup = event => {
-            const { key } = event
-            if (key === 'ArrowLeft') {
-                this.car.moveLeft()
-            }
-            if (key === 'ArrowRight') {
-                this.car.moveRight()
-            }
-        }
+    document.onkeyup = event => {
+      const { key } = event
+      if (key === 'ArrowLeft') {
+        this.car.moveLeft()
+      }
+      if (key === 'ArrowRight') {
+        this.car.moveRight()
+      }
+    }
   },
   start() {
     setInterval(() => {
       this.clearAll()
       this.drawAll()
-    },30)
+      this.framesIndex++
+    }, 30)
   },
   clearAll() {
     this.ctx.clearRect(0, 0, this.gameSize.w, this.gameSize.h)
