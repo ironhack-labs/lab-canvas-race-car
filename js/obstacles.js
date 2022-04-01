@@ -10,20 +10,19 @@ class obstacles {
     }
 
     init() {
-        this.imageInstance = new Image()
-        this.imageInstance.src = 'img/ball.png'
+
     }
 
     draw() {
-        this.ctx.drawImage(this.imageInstance, this.ballPos.x, this.ballPos.y, this.ballSize.w, this.ballSize.h)
+        this.ctx.drawImage(this.imageInstance, this.obPos.x, this.obPos.y, this.obSize.w, this.obSize.h)
     }
 
     moveLeft() {
-        this.ballPos.x -= 5
+        this.obPos.x -= 5
     }
 
     moveRight() {
-        this.ballPos.x += 5
+        this.obPos.x += 5
     }
 
 }
