@@ -1,0 +1,1 @@
+canvitasGuapo.init('canvas')
