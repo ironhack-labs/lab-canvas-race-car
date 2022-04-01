@@ -1,0 +1,1 @@
+CarRace.init("canvas")
