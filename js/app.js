@@ -19,7 +19,6 @@ const animatedApp = {
         this.setDimensions();
         this.setEventListeners();
         this.createCar();
-        this.drawAll();
         this.start();
     },
 
@@ -69,7 +68,7 @@ const animatedApp = {
     },
 
     createObst() {
-        this.obst.push(new Obstacle(this.ctx, this.gameSize, 5));
+        this.obst.push(new Obstacle(this.ctx, this.gameSize, 10));
     },
 
     moveObst() {
@@ -79,7 +78,7 @@ const animatedApp = {
     },
 
     checkFames() {
-        if (this.framesIndex % 60 === 0) {
+        if (this.framesIndex % 25 === 0) {
             this.createObst();
         }
     },
