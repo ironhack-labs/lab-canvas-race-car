@@ -31,7 +31,9 @@ class DeadlyRectangle {
   bottomBorder() {
     return this.y + this.height;
   }
- 
+  isOffBottomOfCanvas() {
+    return this.y > 700;
+  }
 }
 
 
@@ -45,6 +47,7 @@ window.onload = () => {
     const canvas = document.querySelector('#canvas');
     canvas.style.border = '1px solid red';
     const ctx = canvas.getContext('2d');
+
     
     let numFrame = 0;
 
@@ -87,11 +90,11 @@ window.onload = () => {
       // calculateNewPosition:
       moveLeft: function () {
         // this.x -= this.speedX;
-          this.x -= 6;
+          this.x -= 8;
       },
       moveRight: function () {
         // this.x += this.speedX;
-          this.x += 6;
+          this.x += 8;
       },
       draw: function() {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
@@ -120,6 +123,10 @@ window.onload = () => {
 
     const newDeadlyRectangleArray = [];
 
+
+    let myScore = 0;
+
+
     function updateRoad() {
 
       if(numFrame % 250 === 0){
@@ -132,10 +139,17 @@ window.onload = () => {
       roadImageObject.move();
       roadImageObject.draw();
 
+      if(newDeadlyRectangleArray[0].isOffBottomOfCanvas()) {
+        newDeadlyRectangleArray.shift();
+        myScore++;
+        document.querySelector('h1 span').textContent = myScore;
+      }
 
       for(let i = 0; i < newDeadlyRectangleArray.length; i++) {
+        
         newDeadlyRectangleArray[i].move();
         newDeadlyRectangleArray[i].draw();
+
       }
 
 
@@ -144,8 +158,8 @@ window.onload = () => {
       for(let i = 0; i < newDeadlyRectangleArray.length; i++) {
         if(carImageObject.crashWidth(newDeadlyRectangleArray[i])) {
           alert('Game over, punk!')
+          document.getElementById('start-button').click();
         }
-        newDeadlyRectangleArray[i].draw();
       }
       
 
