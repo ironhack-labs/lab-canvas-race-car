@@ -34,10 +34,10 @@ let blueCar = new Car(cWidth / 2, cHeight / 2);
 document.addEventListener("keydown", (e) => {
   switch (e.code) {
     case "ArrowLeft":
-      blueCar.x -= 3;
+      blueCar.moveLeft();
       break;
     case "ArrowRight":
-      blueCar.x += 3;
+      blueCar.moveRight();
       break;
   }
 });

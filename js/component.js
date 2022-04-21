@@ -10,6 +10,17 @@ class Car {
     this.image.src = "../images/car.png";
   }
 
+  moveLeft() {
+    if (this.x > 0) {
+      this.x -= 3;
+    }
+  }
+  moveRight() {
+    if (this.x + this.width < cWidth) {
+      this.x += 3;
+    }
+  }
+
   left() {
     return this.x;
   }
