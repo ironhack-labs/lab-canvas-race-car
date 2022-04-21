@@ -43,6 +43,7 @@ function updateObstacles() {
 
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].y += 1;
+    obstacles[i].x += 1;
     obstacles[i].update();
   }
 
