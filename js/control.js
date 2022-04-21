@@ -1,6 +1,4 @@
 document.addEventListener('keydown', e => {
-    console.log(car)
-
     switch (e.code) {
         case 'ArrowLeft':
             car.moveLeft();
@@ -9,4 +7,5 @@ document.addEventListener('keydown', e => {
             car.moveRight();
             break;
     }
+    updateGameArea();
 })
