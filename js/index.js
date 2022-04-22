@@ -77,6 +77,7 @@ let frames = 0;
 const background = new Background();
 const raceCar = new RaceCar();
 let obstacles = [];
+let score = 0;
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
@@ -105,6 +106,7 @@ function updateGame() {
   raceCar.draw();
   generateObstacles();
   drawObstacles();
+  drawScore();
 
   if (requestId){
     requestAnimationFrame(updateGame);
@@ -129,6 +131,7 @@ function drawObstacles (){
 
     if (obstacle.y > 750){
       obstacles.splice(index_obstacle,1)
+      score++
     }
 
     obstacle.draw()
@@ -139,3 +142,8 @@ function drawObstacles (){
 
    })
 }
+
+function drawScore(){
+  ctx.font = "30px Arial";
+  ctx.fillText(`Your Score is: ${score}`, 10, 50)
+};
