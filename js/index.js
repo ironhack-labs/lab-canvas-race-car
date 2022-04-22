@@ -10,42 +10,13 @@ window.onload = () => {
     startGame();
   };
   function startGame() {
-    gameLogic.start()
-    drawRoad();
-    drawCar();
-  }
-};
-
-const gameLogic = {
-  frames : 0,
-start: function () {
-  this.interval = setInterval(this.update, 20);
-},
-clear: function () {
-  ctx.clearRect(0, 0, cWidth, cHeight);
-},
-stop: function (){
-    clearInterval(this.interval)
-},
-update: function() {
   drawRoad();
   drawCar();
-  player.newPos();
-}
-
-}
-
-
-
-const updateGameArea = () => {
-  gameLogic.clear();
-  gameLogic.score();
-  player.newPos();
-  player.update();
-  updateObstacles();
-  checkGameOver();
+  requestAnimationFrame(updateCanvas);
+  //clearCanvas();
+  //updateCanvas();
 };
-
+}
 
 const drawRoad = () => {
   const roadImg = new Image();
@@ -53,6 +24,7 @@ const drawRoad = () => {
   ctx.clearRect(0, 0, cWidth, cHeight);
   ctx.drawImage(roadImg, 0, 0, cWidth, cHeight)
 };
+
 const carImg = new Image();
 carImg.src = "/lab-canvas-race-car/images/car.png";
 
@@ -60,7 +32,13 @@ const drawCar = () => {
   ctx.drawImage(carImg, 215 , 580 , 70, 100)
 };
 
-const player = new Component(carImg, 215, 70, 100);
 
 
+/* const updateCanvas = () => {
+  clearCanvas();
+  drawCar();
+  drawRoad();
+} */
+const player1 = new Player1();
 
+startGame();
