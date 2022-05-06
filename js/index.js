@@ -5,3 +5,5 @@ window.onload = () => {
 
   function startGame() {}
 };
+
+//Start the lab
