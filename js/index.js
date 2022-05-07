@@ -29,6 +29,7 @@ window.onload = () => {
     ctx.clearRect(0, 0, bg_canvas.width, bg_canvas.height);
     backgroundImage.draw();
     auto.draw();
+    obstalucos();
     text();
     requestAnimationFrame(updateBackgroundCanvas);
   }
@@ -72,17 +73,22 @@ window.onload = () => {
 
 //------------------------------Puntaje------------------------------------/
 
-const up_score = {
-  score2: setInterval(() => {
-    score +=1;
-  },1000)
-}
-
 function text() { 
   ctx.font = "18px serif";
   ctx.fillStyle = "black";
-  ctx.fillText(`${up_score.score2}`,350,50)
-  console.log(up_score.score2);
+  setInterval(() => {
+    score +=1/1000;
+  },1000);
+  ctx.fillText(`SCORE ${Math.floor(this.score)}`,350,50)
 }
 
+
+//------------------------------Obstaculos------------------------------------/
+
+function obstalucos(){
+  ctx.fillStyle = 'red';
+  let x = Math.floor(Math.random()* (392-63)+63);
+  let y =  Math.floor(Math.random()* (200-20)+20);
+  ctx.fillRect(this.x,this.y,100,25);
+}
 
