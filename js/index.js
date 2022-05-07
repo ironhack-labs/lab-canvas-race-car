@@ -2,16 +2,24 @@ let frames = 0;
 let count = 0;
 obstaclesArray = [];
 
-const parent = document.querySelector('div')
+const audio = new Audio ();
+//vamos a colocar el audio :
 
-division = document.createElement('div')
+audio.src = "audio/topgear.mp3"
+audio.loop = true;
+
+//
+
+const parent = document.querySelector("div");
+
+division = document.createElement("div");
 division.innerHTML = `<div style="font-size:50px;color:red;margin-top: 90px;">
 Your current score is: <span>${count}</span>
-</div>`
-division.className ="resultActive"
+</div>`;
+division.className = "resultActive";
 
-document.body.appendChild(division)
-
+parent.appendChild(division)
+//document.body.appendChild(division);
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -127,18 +135,18 @@ function update() {
   car.draw();
   generateObstacles();
   drawObstacles();
-  points ()
-
+  points();
 
   if (requestId) {
     requestAnimationFrame(update);
   }
 }
 
-  //una función para iniciar el juego
-  function startGame() {
-    requestId = requestAnimationFrame(update);
-  }
+//una función para iniciar el juego
+function startGame() {
+  audio.play()
+  requestId = requestAnimationFrame(update);
+}
 
 function generateObstacles() {
   //voy a validar con los frames para que no se llene mi arrelgo desde el inicio.
@@ -161,36 +169,29 @@ function drawObstacles() {
       console.log("me está tocando");
       requestId = undefined;
       road.gameOver();
-      
     }
   });
 }
 
-function points (){
+function points() {
+  obstaclesArray.forEach((obstacle, index_obstacle) => {
+    if (obstacle.y === canvas.height) {
+      count += 10;
+    }
+  });
 
-  obstaclesArray.forEach((obstacle, index_obstacle)=>{
-if(obstacle.y === canvas.height ){
-count +=10}
-  })
-
- division.innerHTML = `<p style="font-size:50px;color:red;margin-top: 90px;">
+  division.innerHTML = `<p style="font-size:50px;color:red;margin-top: 90px;">
 Your current score is: <span>${count}</span>
-</p>`
-
-
+</p>`;
 }
-
 
 addEventListener("keydown", (event) => {
   //izq a
   if (event.keyCode === 37 && car.x >= 70) {
     car.x -= 20;
-    
   }
   //dere d
   if (event.keyCode === 39 && car.x < 350) {
     car.x += 20;
   }
 });
-
-
