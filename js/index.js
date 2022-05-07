@@ -38,6 +38,7 @@ const updateGameArea = () => {
   checkGameOver();
 }
 
+
 const updateObstacles = () => {
   /*for(let i=0; i < myObstacles.length; i++) {
     myObstacles[i].y += 3;
