@@ -7,6 +7,8 @@ const GAME_WIDTH = 500;
 const GAME_HEIGHT= 700;
 let frames=0;
 let score=0;
+const wallArray=[];
+let requestId= undefined;
 
 //CLASSES
 class Background {
@@ -37,7 +39,7 @@ class Background {
       this.width= 100;
       this.height= 150;
       this.gameWidth=gameWidth;
- 
+      //doesnt need height
 
       this.img= new Image();
       this.img.src= "images/car.png"
@@ -73,28 +75,89 @@ class Background {
     stop(){
       this.speed=this.maxSpeed;
     }
+
+    collision(item){
+      return (
+        this.position.x < item.width &&
+        this.position.x + this.width > item.x &&
+        this.position.y < item.y + item.height &&
+        this.position.y + this.height > item.y
+      )
+      }
+      gameOver(){
+        ctx.font= "70px arial";
+        ctx.fillText("GAME OVER", 50,150)
+        ctx.fillStyle = "black"
+        ctx.fillText(`SCORE: ${score}`, 50,230)
+    }
   }
 
+  class Obstacle {
+    constructor(x,y,width,height){
+      this.width= width;
+      this.height= height;
+      this.x = x,
+      this.y = y;
+      }
 
+    draw(){
+      this.y += 5;
+      ctx.beginPath();
+      ctx.fillStyle = "red";
+      ctx.rect(this.x, this.y, this.width, this.height)
+      ctx.fill();
+    }
+  }
 
 //ENTITIES
 const bg = new Background()
 const car = new User (GAME_WIDTH, GAME_HEIGHT)
 
 //GAME ENGINE
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
+//window.onload = () => {
+//  document.getElementById('start-button').onclick = () => {
+//    startGame();
+//  };
+//};
+document.getElementById("start-button").onclick = function(){
+  if(!requestId){
     startGame();
-  };
-};
+  }
+}
 
+
+  //obstacles
+function generateWalls(){
+  //limit
+  if (frames % 170 ===0 || frames % 60 ===0){
+   let width = Math.floor(Math.random() * (500-10)) + 10;
+    let x = Math.floor(Math.random() * (500-10)) + 10;
+    if ( width < 250 && x >= 65 < 300){
+      const wall = new Obstacle (x, 0, width,50);
+      wallArray.push(wall);
+    }
+  }
+}
+
+function drawWalls(){
+  wallArray.forEach((wall,index_wall)=>{
+    wall.draw();
+
+    if(car.collision(wall)){
+      requestId = undefined;
+      car.gameOver();
+    }
+  })
+}
   //TIME LOOP
 function update(){
   frames++;
   ctx.clearRect(0,0,500,700)
   bg.draw(ctx);
   car.draw(ctx);
-  
+  generateWalls();
+  drawWalls();
+  scoring();
 
   if(requestId){
     requestAnimationFrame(update)
@@ -103,7 +166,16 @@ function update(){
 
 function startGame() {
   requestId = requestAnimationFrame(update)
+}
 
+function scoring(){
+  wallArray.forEach((wall, index_wall)=>{
+    if(wall.y === canvas.height ){
+    score +=1;}
+      })
+      ctx.font= "30px arial";
+      ctx.fillStyle = "white"
+      ctx.fillText(`SCORE: ${score}`, 70,50)
 }
 
 // KEYCODES
