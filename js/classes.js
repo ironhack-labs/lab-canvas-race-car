@@ -26,9 +26,9 @@ class Background{
         )
     }
     gameOver(){
-        ctx.font = "50px Arial"
+        /*ctx.font = "50px Arial"
         
-        ctx.fillText("Game Over",150,150)
+        ctx.fillText("Game Over",150,150)*/
     }
 
 }
@@ -72,16 +72,21 @@ class Car extends Character{
     }
 }
 
-class Cono extends Character{
+class Obstacules {
     constructor (x,y,w,h){
-        super(x,y,w,h)
-        this.image=new Image ()
-        this.image.src=imgCono
+       this.x=x;
+       this.y=y;
+       this.width=w;
+       this.height=h;
     }
 
     draw(){
-        this.y += 2;
-        ctx.drawImage(this.image,this.x,this.y,this.width,this.height)
+       this.y +=2;
+       ctx.beginPath();
+       ctx.fillStyle="red"
+       ctx.rect(this.x,this.y,this.width,this.height)
+       ctx.fill()
+        
         console.log("que se dibuja")
     }
 }
