@@ -1,16 +1,24 @@
 body {
   padding: 0;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  background-image: url("/images/backg.jpg");
 }
 
 .game-intro {
   float: left;
   padding: 0% 10%;
+  width: 45%;
 }
 
 .game-intro p {
   font-size: 18px;
   font-family: "Verdana"
+}
+
+.game-board {
+  width: 45%;
 }
 
 .logo-img {
