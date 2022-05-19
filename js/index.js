@@ -56,15 +56,13 @@ class Obstacle {
   }
 
   moveDown() {
-    // if (this.yIndex < canvas.height) {
-    //   this.yIndex -= 20;
-    // }
     this.yIndex += 20;
   }
 }
 
 const car = new Car();
 const obstacles = [];
+let score = 0;
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
@@ -107,10 +105,14 @@ window.onload = () => {
   }
 
   function obstaclesMove() {
-    obstacles.forEach((obstacle) => {
-      obstacle.moveDown();
-    });
-    renderAll();
+    for (let i = 0; i < obstacles.length; i++) {
+      obstacles[i].moveDown();
+      if (obstacles[i].yIndex > canvas.height) {
+        score++;
+        obstacles.splice(i, 1);
+        console.log(score);
+      }
+    }
   }
 
   function renderAll() {
@@ -121,15 +123,24 @@ window.onload = () => {
   }
 
   function checkCollision() {
-    obstacles.forEach((obstacle) => {
+    for (let i = 0; i < obstacles.length; i++) {
       if (
-        car.xIndex > obstacle.xIndex &&
-        car.xIndex + car.width < obstacle.xIndex + obstacle.width &&
-        car.yIndex < obstacle.yIndex + obstacle.height
+        car.xIndex > obstacles[i].xIndex &&
+        car.xIndex < obstacles[i].xIndex + obstacles[i].width &&
+        car.yIndex < obstacles[i].yIndex + 2 * obstacles[i].height &&
+        car.yIndex + car.height > obstacles[i].yIndex
       ) {
         return true;
       }
-    });
+      if (
+        car.xIndex + car.width > obstacles[i].xIndex &&
+        car.xIndex + car.width < obstacles[i].xIndex + obstacles[i].width &&
+        car.yIndex < obstacles[i].yIndex + 2 * obstacles[i].height &&
+        car.yIndex + car.height > obstacles[i].yIndex
+      ) {
+        return true;
+      }
+    }
     return false;
   }
 
