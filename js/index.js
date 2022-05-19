@@ -41,6 +41,8 @@ const game = {
     window.removeEventListener(`keydown`, (event) => car.move(event));
     clearInterval(this.intervalId);
     gameOver.style.display = `block`;
+
+    document.getElementById('start-button').addEventListener(`click`, () => { game.start() }, { once: true });
   },
   refresh() {
     score.textContent = this.score;
@@ -166,4 +168,4 @@ const obstacles = {
 };
 
 
-document.getElementById('start-button').addEventListener(`click`, () => { game.start() });
+document.getElementById('start-button').addEventListener(`click`, () => { game.start() }, { once: true });
