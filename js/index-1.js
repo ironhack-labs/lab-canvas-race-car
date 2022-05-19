@@ -29,6 +29,7 @@ const randomWidth = randomIntFromInterval(30, 150)
 
 
 // OBSTACLE CLASS
+
 class Obstacle {
   constructor(x, width) {
     this.x = x
@@ -43,15 +44,15 @@ class Obstacle {
     }
   
     moveObstacle() {
-      // if (this.y>710) {
-      //   this.y = 0
-      // }
-      this.y +=3
+    //   if (this.y>710) {
+    //     this.y = 0
+    //   }
+      this.y +=10
     }
   }
 
+const newObstacle = new Obstacle(randomX, randomWidth)
 
-  const obstacle1 = new Obstacle(randomIntFromInterval(30, 270), randomIntFromInterval(30, 150))
 
 
 
@@ -63,31 +64,23 @@ window.onload = () => {
 startGame() // comment this line to use Start button
 };
 
-
 // startGame FUNCTION
-// create a frame counter to create a new Obstacle every x frames
 function startGame() {
-  let frames = 0
-  const obstacleArray =[obstacle1]
-
   setInterval(() => {
     resetCanvas()
     drawRoadImage()
-
-    if (frames === 160) {
-      frames = 0
-      obstacleArray.push(new Obstacle(randomIntFromInterval(30, 270), randomIntFromInterval(30, 150)))
-    }
-
-    for (let i = 0; i < obstacleArray.length; i++) {
-      obstacleArray[i].drawObstacle()
-      obstacleArray[i].moveObstacle()
-    }
-
+    newObstacle.drawObstacle()
     player.draw()
-    frames++
-  }, 1000/60)
+  }, 10)
+
+  setInterval(() => {
+    newObstacle.moveObstacle()
+  }, 50)
 }
+
+setInterval(() => {
+  newObstacle.drawObstacle()
+}, 1000)
 
 
 // PLAYER (CAR)
@@ -112,9 +105,11 @@ const player = {
     if (this.x < 90) {
       return
     }
-    this.x -= 70
+    this.x -=70
   },
 }
+
+
 
 
 // EVENT LISTENER

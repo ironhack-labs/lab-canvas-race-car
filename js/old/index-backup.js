@@ -28,31 +28,26 @@ const randomX = randomIntFromInterval(30, 270)
 const randomWidth = randomIntFromInterval(30, 150)
 
 
-// OBSTACLE CLASS
-class Obstacle {
-  constructor(x, width) {
-    this.x = x
-    this.y = 0
-    this.width = width
-    this.height = 30
-  }
-  
-    drawObstacle() {
-      context.fillStyle = "#8C3F02"
-      context.fillRect(this.x, this.y, this.width, this.height)
+// OBSTACLE
+const obstacle = {
+  x: randomX,
+  y: 0,
+  width: randomWidth,
+  height: 30,
+
+  drawObstacle() {
+    context.fillStyle = "#8C3F02"
+    context.fillRect(this.x, this.y, this.width, this.height)
+  },
+
+  moveObstacle() {
+    if (this.y>710) {
+      this.drawObstacle()
+      this.y = 0
     }
-  
-    moveObstacle() {
-      // if (this.y>710) {
-      //   this.y = 0
-      // }
-      this.y +=3
-    }
-  }
-
-
-  const obstacle1 = new Obstacle(randomIntFromInterval(30, 270), randomIntFromInterval(30, 150))
-
+    this.y +=10
+  },
+}
 
 
 // ON LOAD
@@ -63,32 +58,19 @@ window.onload = () => {
 startGame() // comment this line to use Start button
 };
 
-
 // startGame FUNCTION
-// create a frame counter to create a new Obstacle every x frames
 function startGame() {
-  let frames = 0
-  const obstacleArray =[obstacle1]
-
   setInterval(() => {
     resetCanvas()
     drawRoadImage()
-
-    if (frames === 160) {
-      frames = 0
-      obstacleArray.push(new Obstacle(randomIntFromInterval(30, 270), randomIntFromInterval(30, 150)))
-    }
-
-    for (let i = 0; i < obstacleArray.length; i++) {
-      obstacleArray[i].drawObstacle()
-      obstacleArray[i].moveObstacle()
-    }
-
+    obstacle.drawObstacle()
     player.draw()
-    frames++
-  }, 1000/60)
-}
+  }, 10)
 
+  setInterval(() => {
+    obstacle.moveObstacle()
+  }, 50)
+}
 
 // PLAYER (CAR)
 const player = {
@@ -112,9 +94,11 @@ const player = {
     if (this.x < 90) {
       return
     }
-    this.x -= 70
+    this.x -=70
   },
 }
+
+
 
 
 // EVENT LISTENER
@@ -149,9 +133,3 @@ document.addEventListener('keydown', (event) => {
 // if(isCollide(player, obstacle)){
 //   console.log("Bang!");
 // }
-
-
-
-
-
-
