@@ -118,7 +118,7 @@ const player = {
 
 
 // EVENT LISTENER
-document.addEventListener('keydown', (event) => {
+window.addEventListener('keydown', (event) => {
   switch (event.code) {
     case 'ArrowLeft':
       player.moveLeft()
