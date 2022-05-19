@@ -67,6 +67,8 @@ window.onload = () => {
     obstacleArray.forEach((element) => element.draw());
   }
 
+  //Make render function to draw all objects, put inside interval in update, on gameStart() only run update.
+
   //Make update function that handles all obstacle functions
   function updateObstacles() {
     let counter = 0;
