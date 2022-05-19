@@ -36,3 +36,14 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#score {
+  position: absolute;
+}
+
+#game-over {
+  font-size: 2rem;
+  font-weight: 700;
+  color: red;
+  display: none;
+}
