@@ -34,7 +34,7 @@ const game = {
       }
 
       game.refresh();
-    }, 15);
+    }, 10);
 
     window.addEventListener(`keydown`, (event) => car.move(event));
   },
