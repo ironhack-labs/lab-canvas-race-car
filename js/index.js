@@ -95,9 +95,9 @@ const road = {
 const car = {
   width: carImage.width / 3,
   height: carImage.height / 3,
-  // xPosition= canvas.width/2 - carImage.width/2
+  // xPosition= canvas.width/2 - car.width/2
   xPosition: canvas.width / 2 - carImage.width / 6,
-  // yPosition= canvas.height - carImage.height*1.05 to leave some space under the car
+  // yPosition= canvas.height - car.height*1.05 to leave some space under the car
   yPosition: canvas.height - carImage.height * 0.35,
 
   resetPosition() {
