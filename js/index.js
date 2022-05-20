@@ -5,8 +5,8 @@ const canvas = document.getElementById(`canvas`),
   score = document.querySelector(`#score span`),
   gameOver = document.getElementById(`game-over`);
 
-carImage.src = `../images/car.png`;
-roadImage.src = `../images/road.png`;
+carImage.src = `./images/car.png`;
+roadImage.src = `./images/road.png`;
 
 const game = {
   score: 0,
