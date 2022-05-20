@@ -5,8 +5,8 @@ const canvas = document.getElementById(`canvas`),
   score = document.querySelector(`#score span`),
   gameOver = document.getElementById(`game-over`);
 
-roadImage.src = `../images/road.png`;
 carImage.src = `../images/car.png`;
+roadImage.src = `../images/road.png`;
 
 const game = {
   score: 0,
@@ -25,6 +25,7 @@ const game = {
       game.loopCount++
 
       if (game.loopCount % 7 === 0) {
+        road.move();
         obstacles.move();
       }
       if (game.loopCount > 130) {
@@ -86,9 +87,18 @@ const game = {
 const road = {
   width: canvas.width * 11 / 13,
   border: canvas.width / 13,
+  yPosition: 0,
 
+  move() {
+    if (this.yPosition >= (roadImage.height * 0.95)) {
+      this.yPosition = 0;
+    }
+
+    this.yPosition += game.speed;
+  },
   draw() {
-    ctx.drawImage(roadImage, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(roadImage, 0, this.yPosition, canvas.width, canvas.height);
+    ctx.drawImage(roadImage, 0, this.yPosition - (roadImage.height * 0.97), canvas.width, canvas.height);
   }
 };
 
