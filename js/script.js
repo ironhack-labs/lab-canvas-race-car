@@ -1,0 +1,2 @@
+canvasApp.init('#app')
+
