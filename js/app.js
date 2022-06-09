@@ -15,6 +15,7 @@ const raceGameApp = {
     obstacles: [],
     lineOffset: 0,
     scoreBoard: score,
+    jumpingCoolDown: 0,
     init(canvasId) {
         this.ctx = document.querySelector(canvasId).getContext('2d');
         this.setDimensions(canvasId);
@@ -73,20 +74,22 @@ const raceGameApp = {
             console.log(this.obstacles.length);
             this.clearAll();
             this.drawRoad();
-            this.car.draw();
+
 
             this.obstacles.forEach(obstacle => {
                 obstacle.draw();
                 if (obstacle.checkForCollision(this.car.getPosition(), this.car.getSize())) {
                     alert("Game Over Score : " + this.scoreBoard.score);
+                    console.log("Game Over Score : " + this.scoreBoard.score);
                 }
             });
+            this.car.draw();
+
 
             this.obstacles = this.obstacles.filter(obstacle => {
                 if (obstacle.obstaclePos.y < this.canvasSize.h) {
                     return true;
                 } else {
-                    console.log("purge");
                     return false;
                 }
             });
@@ -95,13 +98,17 @@ const raceGameApp = {
             if (this.lineOffset > 45) {
                 this.lineOffset = 0;
             }
-
+            //35
             if (this.framesIndex % 35 === 0) {
                 this.obstacles.push(new Obstacle(this.ctx, this.carHeight, this.canvasSize));
             }
 
             if (this.framesIndex % 20 === 0) {
                 this.scoreBoard.updateScore();
+            }
+
+            if (this.jumpingCoolDown > 0) {
+                this.jumpingCoolDown--;
             }
 
             this.scoreBoard.draw();
@@ -120,6 +127,14 @@ const raceGameApp = {
                     break;
                 case 'ArrowRight':
                     this.car.moveRight()
+                    break;
+                case 'ArrowUp':
+                    if (this.jumpingCoolDown === 0) {
+                        console.log("Jump");
+                        this.jumpingCoolDown = 100;
+                        this.car.jump();
+                    }
+
                     break;
             }
         }

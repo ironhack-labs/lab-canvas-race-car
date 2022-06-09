@@ -4,12 +4,14 @@ class Obstacle {
         this.obstaclePos = { x: undefined, y: 0 };
         this.obstacleSize = { w: undefined, h: 30 };
         this.canvasSize = canvasSize;
-        this.boundary = 80;
+        this.boundary = 100;
         this.maxPlayableWidth = this.canvasSize.w - this.boundary * 2 - carHeigth * 0.5;
         this.smalestObstacle = 50;
         this.speed = 10;
+
         this.init();
     }
+
     init() {
         //create sizes for the obstacle.
         //tall is constant
@@ -36,6 +38,7 @@ class Obstacle {
         this.obstaclePos.y += this.speed;
     }
     checkForCollision(carPos, carSize) {
+        console.log(carPos, carSize)
         if (carPos.x < this.obstaclePos.x + this.obstacleSize.w &&
             carPos.x + carSize.w > this.obstaclePos.x &&
             carPos.y < this.obstaclePos.y + this.obstacleSize.h &&
