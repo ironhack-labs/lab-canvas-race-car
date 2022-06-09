@@ -3,5 +3,9 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+
+    raceGameApp.init('#canvas');
+
+  }
 };
