@@ -3,5 +3,8 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    
+    carRaceApp.init('#canvas')
+  }
 };
