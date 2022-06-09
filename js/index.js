@@ -3,5 +3,9 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    this.init('#canvas')
+  }
 };
+canvasApp.init('#canvas')
+
