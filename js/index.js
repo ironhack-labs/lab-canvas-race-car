@@ -3,5 +3,8 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    console.log('HOLA MUNDO')
+    carRaceApp.init('#canvas')
+  }
 };
