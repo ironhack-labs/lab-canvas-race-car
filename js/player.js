@@ -1,8 +1,8 @@
 class Player {
   constructor(ctx) {
     this.ctx = ctx;
-    this.h = 140;
-    this.w = 70;
+    this.h = 70;
+    this.w = 35;
     this.x = (this.ctx.canvas.width / 2) - (this.w / 2);
     this.y = 500;
     this.img = new Image();
@@ -29,13 +29,13 @@ class Player {
   _applyActions() {
     
     if (this.actions.right) {
-      if (this.x + this.w >= this.ctx.canvas.width - this.w / 2) {
+      if (this.x + this.w >= this.ctx.canvas.width - this.w) {
         this.vx = 0
       } else {
       this.vx = 4
       }
     } else if (this.actions.left) {
-      if (this.x <= this.w / 2) {
+      if (this.x <= this.w) {
         this.vx = 0
       } else {
         this.vx = -4
