@@ -12,7 +12,7 @@ class Game {
     this.intervalId = setInterval(() => {
       this.clear();
       this.draw();
-      this.move();
+      this.checkCollisions()
       this.move();
       this.tickObstacle++;
 
@@ -42,14 +42,31 @@ class Game {
     this.player.draw()
     this.obstacles.forEach(obs => obs.draw())
   }
+  checkCollisions() {
+    let playerVsObs = this.obstacles.find(obs => obs.collide(this.player))
+    
+    if (playerVsObs || this.player.y + this.player.h >= this.ctx.canvas.height)  {
+      this.gameOver()
+    }  
+
+    console.log(playerVsObs)
+  }
 
   addObstacle() {
     this.obstacles.push(new Obstacle(this.ctx))
   }
 
-  /* gameOver() {
+  gameOver() {
     clearInterval(this.intervalId);
     this.intervalId = null
-  } */
+
+    this.ctx.font = "30px Arial";
+    this.ctx.fillStyle = "black";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("GAME OVER", this.ctx.canvas.width/2, this.ctx.canvas.height/2);
+  
+  }
+
+  
 
 }

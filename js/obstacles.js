@@ -15,6 +15,13 @@ class Obstacle {
     this.y += this.vy;
   }
 
+  collide(player) {
+    const collideX = player.x + player.w > this.x && player.x < this.x + this.w
+    const collideY = player.y < this.y + this.h && player.y + player.h > this.y
+
+    return collideX && collideY
+  }
+
   draw() {
     this.ctx.beginPath();
     this.ctx.fillStyle = this.color
