@@ -1,6 +1,8 @@
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
+    this.intervalId = null;
+    this.background = new Background(this.ctx);
 
   }
 
@@ -8,13 +10,7 @@ class Game {
     this.intervalId = setInterval(() => {
       this.clear();
       this.draw();
-      this.checkCollisions()
       this.move();
-      this.tickObstacle++;
-
-      if (this.tickObstacle % 100 === 0) {
-        this.addObstacle()
-      }
     }, 1000 / 60)
   }
 
@@ -29,14 +25,10 @@ class Game {
 
   move() {
     this.background.move()
-    this.player.move()
-    this.obstacle.forEach(obs => obs.move())
   }
 
   draw() {
     this.background.draw()
-    this.player.draw()
-    this.obstacles.forEach(obs => obs.draw())
   }
 
   gameOver() {
