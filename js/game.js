@@ -47,9 +47,7 @@ class Game {
     
     if (playerVsObs || this.player.y + this.player.h >= this.ctx.canvas.height)  {
       this.gameOver()
-    }  
-
-    console.log(playerVsObs)
+    }
   }
 
   addObstacle() {
