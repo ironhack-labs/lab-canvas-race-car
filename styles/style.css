@@ -36,3 +36,17 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#game-board p {
+  position: absolute;
+  left: 50%;
+  color: white;
+  font-size: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.scoreText {
+  color: white;
+  font-size: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+}
