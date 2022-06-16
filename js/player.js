@@ -29,13 +29,13 @@ class Player {
   _applyActions() {
     
     if (this.actions.right) {
-      if (this.x + this.w >= this.ctx.canvas.width) {
+      if (this.x + this.w >= this.ctx.canvas.width - this.w / 2) {
         this.vx = 0
       } else {
       this.vx = 4
       }
     } else if (this.actions.left) {
-      if (this.x <= 0) {
+      if (this.x <= this.w / 2) {
         this.vx = 0
       } else {
         this.vx = -4
