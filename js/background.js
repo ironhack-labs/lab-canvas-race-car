@@ -3,7 +3,7 @@ class Background {
     this.ctx = ctx;
     this.x = 0;
     this.y = 0;
-    this.vy = 1;
+    this.vy = 2;
     this.img = new Image();
     this.img.src = "/images/road.png"
     this.w = this.ctx.canvas.width;
@@ -32,7 +32,7 @@ class Background {
 
   move() {
     this.y += this.vy
-    if (this.y + this.h <= 0) {
+    if (this.y - this.h >= 0) {
       this.y = 0
     }
   }

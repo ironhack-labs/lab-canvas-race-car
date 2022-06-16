@@ -3,6 +3,7 @@ class Game {
     this.ctx = ctx;
     this.intervalId = null;
     this.background = new Background(this.ctx);
+    this.player = new Player(this.ctx);
 
   }
 
@@ -25,10 +26,12 @@ class Game {
 
   move() {
     this.background.move()
+    this.player.move()
   }
 
   draw() {
     this.background.draw()
+    this.player.draw()
   }
 
   gameOver() {
