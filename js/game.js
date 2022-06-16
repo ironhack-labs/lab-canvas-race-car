@@ -16,7 +16,7 @@ class Game {
       this.move();
       this.tickObstacle++;
 
-      if (this.tickObstacle % 60 === 0) {
+      if (this.tickObstacle % 100 === 0) {
         this.addObstacle()
       }
     }, 1000 / 60)
