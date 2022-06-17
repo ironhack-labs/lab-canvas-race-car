@@ -18,8 +18,8 @@ class Car {
     }
 
     _setListeners() {
-        document.onkeydown = e => this.switchAction(e.key, true)
-        document.onkeyup = e => this.switchAction(e.key, false)
+        document.onkeydown = e => this.switchAction(e.keyCode, true)
+        document.onkeyup = e => this.switchAction(e.keyCode, false)
     }
 
 
@@ -35,10 +35,10 @@ class Car {
     }
 
     move() {
-        if (this.actions.right) {
+        if (this.actions.right && this.x + this.w <= this.ctx.canvas.width - 55 ) {
             this.x += this.vx
         }
-        if (this.actions.left ) {
+        if (this.actions.left  && this.x >= 55) {
             this.x -= this.vx
         }
 
