@@ -1,4 +1,5 @@
-const RIGHT = 68;
-const LEFT = 65;
-const CANVAS_WIDTH=500;
-const CANVAS_HEIGHT=700;
+const RIGHT = "ArrowRight";
+const LEFT = "ArrowLeft";
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 700;
+
