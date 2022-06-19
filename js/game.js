@@ -1,15 +1,17 @@
 class Game {
-    constructor(ctx){
+    constructor(ctx) {
       this.ctx = ctx;
       this.intervalId = null;
-      this.car = new Car(this.ctx);
       this.background = new Background(this.ctx);
+      this.car = new Car(this.ctx);
+      
     }
 
     start() {
-        this.intervalId = setInterval(() => {
+      this.intervalId = setInterval( () => {
          this.clear(); 
          this.draw();
+         this.move();
       }, 1000/60)
     }    
 
@@ -26,6 +28,11 @@ class Game {
         this.background.draw()
         this.car.draw()
       }
+
+    move() {
+      this.background.move()
+      this.car.move()
+    }
     
 }
 
