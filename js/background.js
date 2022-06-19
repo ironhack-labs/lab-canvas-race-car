@@ -20,12 +20,12 @@ class Background {
         )
 
         this.ctx.drawImage(
-            this.img,
-            this.x,
-            this.y - this.ctx.canvas.height,
-            this.w,
-            this.h
-           )
+         this.img,
+         this.x,
+         this.y - this.ctx.canvas.height,
+         this.w,
+         this.h
+        )
     }
 
     move() {
