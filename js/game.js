@@ -1,10 +1,11 @@
 class Game {
     constructor(ctx) {
         this.ctx = ctx;
-        this.background = new Background(this.ctx);
-        this.car = new Car(this.ctx);
-        this.obstacle = [];
-        this.tickObstacle = 0
+        this.background = new Background (this.ctx);
+        this.car = new Car (this.ctx);
+        this.obstacles = [];
+        this.intervalId = null;
+        this.tickObstacles = 0;
     }
 
     start() {
@@ -13,10 +14,10 @@ class Game {
             this.draw();
             this.checkCollisions()
             this.move()
-            this.tickObstacle++;
+            this.tickObstacles++;
 
-            if (this.tickObstacle % 100 === 0) {
-                this.addObstacle()
+            if (this.tickObstacles % 100 === 0) {
+                addObstacle()
             }
         }, 1000 / 60)
     }
@@ -33,21 +34,21 @@ class Game {
     draw() {
         this.background.draw();
         this.car.draw();
-        this.obstacle.forEach(obs => obs.draw())
+        this.obstacles.forEach(obs => obs.draw());
     }
 
     move() {
         this.background.move()
         this.car.move()
-        this.obstacles.forEach(obs => obs.move())
+        this.obstacles.forEach(obs => obs.move());
     }
 
     addObstacle() {
-        this.obstacle.push(new Obstacle(this.ctx))
+        this.obstacles.push(new Obstacle(this.ctx))
     }
-   
+
     checkCollisions() {
-        let carVsObs = this.obstacle.find(obs => obs.collide(this.car))
+        let carVsObs = this.obstacles.find(obs => obs.collide(this.car))
 
         if (carVsObs || this.car.y + this.car.h >= this.ctx.canvas.height) {
             this.gameOver()
