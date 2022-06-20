@@ -17,7 +17,7 @@ class Game {
             this.tickObstacles++;
 
             if (this.tickObstacles % 100 === 0) {
-                addObstacle()
+                this.addObstacle()
             }
         }, 1000 / 60)
     }
@@ -50,11 +50,12 @@ class Game {
     checkCollisions() {
         let carVsObs = this.obstacles.find(obs => obs.collide(this.car))
 
-        if (carVsObs || this.car.y + this.car.h >= this.ctx.canvas.height) {
+        if (carVsObs) {
             this.gameOver()
+            console.log(carVsObs)
         }
 
-        console.log(carVsObs)
+    
     }
 
     gameOver() {

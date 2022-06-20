@@ -2,9 +2,9 @@ class Car {
     constructor(ctx) {
         this.ctx = ctx;
         this.x = CANVAS_WIDTH / 2 - 35;
-        this.y = CANVAS_HEIGHT - 200;
-        this.w = 72.8;
-        this.h = 150;
+        this.y = CANVAS_HEIGHT - 160;
+        this.w = 60;
+        this.h = 120;
         this.vx = 2;
         this.img = new Image();
         this.img.src = "/images/car.png";

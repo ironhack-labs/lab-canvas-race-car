@@ -1,9 +1,9 @@
 class Obstacle {
     constructor(ctx) {
         this.ctx = ctx;
+        this.randomX = Math.random()* 200 + 30;
         this.y = 0;
-        this.randomX = Math.random()* 300 + 50;
-        this.randomW = Math.random()* 170 + 100;
+        this.randomW = Math.random()* 120 + 100;
         this.h = 30;
         this.color = 'red';
         this.vy = 2;
@@ -12,7 +12,7 @@ class Obstacle {
     
     draw() {
       this.ctx.beginPath();
-      this.ctx.fillStyle = 'red';
+      this.ctx.fillStyle = this.color;
       this.ctx.fillRect(this.randomX, this.y, this.randomW , this.h);
       this.ctx.closePath();
     }
