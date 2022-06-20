@@ -2,7 +2,9 @@ body {
   padding: 0;
   text-align: center;
 }
-
+canvas {
+  border: 1px solid red;
+}
 .game-intro {
   float: left;
   padding: 0% 10%;
