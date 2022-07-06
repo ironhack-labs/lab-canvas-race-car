@@ -1,0 +1,1 @@
+roadApp.init("#canvas")
