@@ -21,6 +21,10 @@ body {
   width: 150px;
 }
 
+.hidden {
+  display: none;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
