@@ -1,10 +1,7 @@
-let bg;
-let player;
-let obstacles = [];
-let obstacle;
+//initial declarations
+let bg, player;
 
-let gravity = 180.0;
-
+//preload & setup
 function preload() {
   player = loadImage("images/car.png");
 }
@@ -15,6 +12,8 @@ function setup() {
   bg = loadImage("images/road.png");
   player.resize(40, 80);
   speed = 4;
+  obst = new Obstacle();
+  r = random(200, 600);
 }
 
 //keys, initial coords, x&y, boundries, all kinds of things!
@@ -28,30 +27,18 @@ let y = initialY;
 let leftWall = 54;
 let rightWall = 516;
 
-let leftRectX = 0;
-let leftRectY = 20;
-
+//draw
 function draw() {
   background(bg);
   image(player, x, y);
 
   const obstaclesOn = true;
 
-  noStroke();
-  fill("brown");
+  obst.fall();
+  obst.randomize();
+  obst.show();
 
-  let leftRectLength = random(200, 250);
-  if (obstaclesOn) {
-    leftRectY = leftRectY + 1;
-  }
-
-  if (leftRectY > 660) {
-    leftRectY = 20;
-    leftRectLength = random(200, 250);
-  }
-
-  let leftRect = rect(leftRectX, leftRectY, leftRectLength, 40);
-
+  //car movement
   if (keyIsDown(A_Key)) {
     x -= speed;
     if (x < leftWall) {
@@ -66,17 +53,38 @@ function draw() {
   }
 }
 
-class Obstacle {
-  constructor() {
-    if (obstaclesOn) {
-      this.width = 5 + random(40);
-      this.height = 10 + random(40);
+function Obstacle() {
+  this.x = 0;
+  this.y = -20;
+
+  this.fall = function () {
+    this.x = this.x;
+    this.y = this.y + 1;
+
+    if (this.y > 660) {
+      this.y = -5;
     }
-  }
+  };
+
+  this.randomize = function () {
+    rLength = r;
+  };
+
+  this.show = function () {
+    rect(this.x, this.y, rLength, 40);
+    fill("brown");
+    noStroke();
+  };
 }
 
-//a keycode = 65
-//b keycode = 68
+// noStroke();
+// fill("brown");
+// let leftRectLength = random(200, 250);
+// if (obstaclesOn) {
+//   leftRectY = leftRectY + 1;
+// }
 
-//left wall = 54
-// right wall =516
+// if (leftRectY > 660) {
+//   leftRectY = 20;
+//   leftRectLength = random(200, 250);
+// }
