@@ -1,5 +1,5 @@
 //initial declarations
-let bg, player;
+let bg, player, obst;
 
 //preload & setup
 function preload() {
@@ -37,7 +37,7 @@ function draw() {
 
   obst.fall();
   // obst.randomize();
-  obst.show((rLength = r));
+  obst.show();
 
   //car movement
   if (keyIsDown(A_Key)) {
@@ -70,7 +70,7 @@ function Obstacle() {
   // this.randomize = function () {};
 
   this.show = function () {
-    rect(this.x, this.y, rLength, 40);
+    rect(this.x, this.y, r, 40);
     fill("brown");
     noStroke();
   };
