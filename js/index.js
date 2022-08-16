@@ -11,9 +11,10 @@ function setup() {
   canvas.parent("game-board");
   bg = loadImage("images/road.png");
   player.resize(40, 80);
-  speed = 4;
+  speed = 3;
   obst = new Obstacle();
   r = random(200, 600);
+  // frameRate(30);
 }
 
 //keys, initial coords, x&y, boundries, all kinds of things!
@@ -35,8 +36,8 @@ function draw() {
   const obstaclesOn = true;
 
   obst.fall();
-  obst.randomize();
-  obst.show();
+  // obst.randomize();
+  obst.show((rLength = r));
 
   //car movement
   if (keyIsDown(A_Key)) {
@@ -66,9 +67,7 @@ function Obstacle() {
     }
   };
 
-  this.randomize = function () {
-    rLength = r;
-  };
+  // this.randomize = function () {};
 
   this.show = function () {
     rect(this.x, this.y, rLength, 40);
@@ -76,15 +75,3 @@ function Obstacle() {
     noStroke();
   };
 }
-
-// noStroke();
-// fill("brown");
-// let leftRectLength = random(200, 250);
-// if (obstaclesOn) {
-//   leftRectY = leftRectY + 1;
-// }
-
-// if (leftRectY > 660) {
-//   leftRectY = 20;
-//   leftRectLength = random(200, 250);
-// }
