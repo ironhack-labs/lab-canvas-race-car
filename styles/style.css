@@ -10,7 +10,7 @@ body {
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -32,7 +32,27 @@ body button {
   margin-bottom: 20px;
 }
 
+#level-button {
+  font-size: 30px;
+  background-color: #870007;
+  color: #fff;
+  padding: 10px 25px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* body button:hover {
+  border: 1px solid #470004;
+  transform: scale(0.98);
+} */
+
+body button:active {
+  transform: scale(0.98);
+}
+
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
 }

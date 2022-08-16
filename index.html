@@ -11,15 +11,26 @@
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
-      <button id="start-button">StartGame</button>
+      <button id="start-button">Start Game</button> <br />
+      <p>
+        Start Game starts in Level 0. <br />
+        Pro-Player may choose their starting level:
+      </p>
+      <button id="level-1">1</button>
+      <button id="level-2">2</button>
+      <button id="level-3">3</button>
+      <button id="level-4">4</button>
+
       <p>Use the left and right arrow to control the car!</p>
       <img src="./images/arrows.png" alt="" class="arrows-img" />
+      <p>1 point for each obstacle passed.<br />10 points for every new level.</p>
     </div>
 
-    <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
 
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/playerAndStreet.js"></script>
+    <script type="text/javascript" src="js/gameFunctionality.js"></script>
+    <script type="text/javascript" src="js/obstacles.js"></script>
   </body>
 </html>
