@@ -1,14 +1,16 @@
 body {
+  margin: 0;
   padding: 0;
   text-align: center;
 }
 
-.game-intro {
+#game-intro {
   float: left;
   padding: 0% 10%;
+  z-index: 5;
 }
 
-.game-intro p {
+#game-intro p {
   font-size: 18px;
   font-family: "Verdana"
 }
@@ -33,6 +35,10 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+.hidden {
+  display: none;
 }

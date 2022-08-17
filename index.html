@@ -8,7 +8,7 @@
     <title>Race Car</title>
   </head>
   <body>
-    <div class="game-intro">
+    <div id="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
       <button id="start-button">StartGame</button>
@@ -16,10 +16,10 @@
       <img src="./images/arrows.png" alt="" class="arrows-img" />
     </div>
 
-    <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
+    <div id="game-board" class="hidden">      
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+    <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>
