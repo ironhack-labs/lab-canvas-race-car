@@ -30,7 +30,12 @@ class App {
         ctx.lineTo(250, 700)
         ctx.stroke()
         ctx.closePath()
+    }
 
+    updateCanvas() {
+        ctx.clearRect(0, 0, 1200, 1200);
+        app.startGame()
+        car.draw()
     }
 
 

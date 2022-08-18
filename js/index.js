@@ -25,15 +25,10 @@ window.onload = () => {
             break;
         }
         car.draw()
-        updateCanvas()
+        app.updateCanvas()
 
       })
 
-    function updateCanvas() {
-      ctx.clearRect(0, 0, 1200, 1200);
-      app.startGame()
-      car.draw()
-    }
 
   };
 
