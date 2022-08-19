@@ -39,16 +39,38 @@ window.onload = () => {
       img.src = "images/car.png";
     }
     moveUp() {
-      this.y -= 20;
+      if (this.y < 10) {
+        this.y = 0
+        alert('Learn how to drive')
+      } else {
+        this.y -= 20
+      }
     }
     moveDown() {
-      this.y += 20;
+      if (this.y > 530) {
+        this.y = 540
+        alert('Learn how to drive')
+      } else {
+        this.y += 20;
+      }
+
     }
     moveLeft() {
-      this.x -= 20;
+      if (this.x < 10) {
+        this.x = 0
+        alert('Learn how to drive')
+      } else {
+        this.x -= 20;
+      }
+
     }
     moveRight() {
-      this.x += 20;
+      if (this.x > 410) {
+        this.x = 420
+        alert('Learn how to drive')
+      } else {
+        this.x += 20
+      }
     }
     draw() {
       ctx.drawImage(this.img, this.x, this.y, 80, 160);
