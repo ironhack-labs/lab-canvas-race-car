@@ -33,6 +33,18 @@ body button {
 }
 
 #game-board {
+    position: relative;
     float: left;
     padding: 20px 0px;
+}
+
+#score {
+  position: absolute;
+  display: none;
+  top: 20px;
+  font-size: 20px;
+  background-color: #870007;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
