@@ -48,10 +48,27 @@ window.onload = () => {
   const myObstacles = [];
 
 
+  let crashed = false;
+
+  let crash = () => {
+    crashed = true
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 500, 700);
+    ctx.fillStyle = "red";
+    ctx.font = "50px sans-serif";
+    ctx.fillText("GAME OVER", 100, 100);
+    //ctx.fillStyle = "white";
+    //ctx.font = "50px sans-serif";
+    //ctx.fillText("GAME OVER", 100, 100);
+  }
+
+
+
 
 
     
     let frame = 1;
+    
     function update() {
       frame += 1;
       if (frame % 50 == 0) {
@@ -68,8 +85,8 @@ window.onload = () => {
       
       let counter = 0;
       for (let i = 0; i < myObstacles.length; i++){
-        myObstacles[i].draw();
-        myObstacles[i].y++;
+        
+       
 
       
         if (myObstacles[i].y > 700) {
@@ -84,19 +101,51 @@ window.onload = () => {
 
         //if ((((carX + 50) < myObstacles[i].x) && (carX > (myObstacles[i].x +50)))) {
 
-          if ((carY == myObstacles[i].y) && ((carX > myObstacles[i].x) || ((carX + 50) < (myObstacles + 50)))){
+
+
+          if (
+            carY == myObstacles[i].y + 10 &&
+            carX + 50 >= myObstacles[i].x &&
+            carX <= myObstacles[i].x + 50
+          ) {
+
+            crash()
+
+          }
+
+         
+/*
+          if ((carY == myObstacles[i].y) && ((carX > myObstacles[i].x) || ((carX + 50) < (myObstacles + 50))))
+          
+          {
 
           console.log('crash')
 }
 
+ */
+
 
 //((carY + 100) < myObstacles[i].y) || (carY > (myObstacles[i] + 10))
+       
+if (!crashed){
         
+  myObstacles[i].draw();
+  myObstacles[i].y++;
+}
+
+
+
+
+
       }
 
-  
       
-      requestAnimationFrame(update);
+      if (!crashed) {
+
+        requestAnimationFrame(update);
+      }
+     
+
     }
 
 
