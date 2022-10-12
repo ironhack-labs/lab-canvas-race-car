@@ -3,10 +3,27 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  addEventListener("keydown", (event) => {
+    event.preventDefault();
+    switch (event.key) {
+      case "ArrowUp":
+        break;
+      case "ArrowDown":
+        break;
+      case "ArrowLeft":
+        break;
+      case "ArrowRight":
+        break;
+    }
+  });
+
+  function startGame() {
+    isStarted = !isStarted;
+  }
 };
 
 // The Road
+let isStarted = false;
 
 const img = new Image();
 img.src = "images/road.png";
@@ -17,26 +34,42 @@ const ctx = canvas.getContext("2d");
 const backgroundImage = {
   img: img,
   y: 0,
-  speed: -1,
+  speed: 1,
 
   move: function () {
     this.y += this.speed;
-    this.y %= canvas.height;
   },
 
   draw: function () {
-    ctx.drawImage(this.img, 0, this.y);
+    ctx.drawImage(
+      this.img,
+      0,
+      this.y % canvas.height,
+      canvas.width,
+      canvas.height
+    );
 
-    if (this.speed < 0) {
-      ctx.drawImage(this.img, 0, this.y + this.img.height);
-    } else {
-      ctx.drawImage(this.img, 0, this.y - canvas.height);
-    }
+    ctx.drawImage(
+      this.img,
+      0,
+      (this.y % canvas.height) - canvas.height,
+      canvas.width,
+      canvas.height
+    );
   },
 };
 
+// moveUp: function () {
+//   this.y -= this.carSpeed;
+// },
+// moveRight: function () {
+//   this.x += this.carSpeed;
+// },
+
 function updateCanvas() {
-  backgroundImage.move();
+  if (isStarted === true) {
+    backgroundImage.move();
+  }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   backgroundImage.draw();
