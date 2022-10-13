@@ -5,22 +5,41 @@ class Component {
         this.w = w;
         this.h = h;
         this.ctx = ctx;
-    
-
-        const img = new Image;
-        img.addEventListener('load', () => {
-            this.img = img;
-            this.drawCar();
-        });
-
-        img.src = '/images/car.png'
-
-        
-        
+        this.car = new Image();
         
     }
 
-drawCar() {
-    this.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    // Drawing the car (player)
+    drawCar() {
+        this.car.src = "/images/car.png"
+        this.ctx.drawImage(this.car, this.x, this.y, this.w, this.h)
+    }
+
+    
+    
 }
+
+class Enemy {
+    constructor(x, y, w, h, color, ctx) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.color = color;
+        this.ctx = ctx;
+    }
+
+    draw() {
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
+        
+    crashWith(obstacle) {
+        return !(
+          this.bottom() < obstacle.top() ||
+          this.top() > obstacle.bottom() ||
+          this.right() < obstacle.left() ||
+          this.left() > obstacle.right()
+        );
+      }
 }
