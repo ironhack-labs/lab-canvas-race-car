@@ -1,4 +1,6 @@
 
+
+
 class Game {
     constructor(ctx, width, height, player) {
         this.ctx = ctx;
