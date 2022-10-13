@@ -22,19 +22,27 @@ class Game {
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
+    score() {
+        const points = Math.floor(this.frames / 5);
+        this.ctx.font = '22px monospace';
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillText(`Score: ${points}`, 1000, 50);
+      }
 
     update = () => {
+        this.score();
         this.frames++;
         this.drawBackground();
         this.player.draw();
         this.x;
         this.updateObstacles();
         this.clear();
+        
       };
       
     updateObstacles(){
         for (let i = 0; i < this.obstacles.length; i++){
-            this.obstacles[i].y += 1;
+            this.obstacles[i].y += 2;
             this.obstacles[i].draw();
         }
 
@@ -50,12 +58,11 @@ class Game {
     
         let gap = Math.floor (Math.random() * (maxGap - minGap + 1) + minGap);
 
+        
             
-        this.obstacles.push(new Component(0, 0, width, 50, 'yellow', this.ctx));
+        this.obstacles.push(new Component(0, 0, width, 20, 'yellow', this.ctx));
 
-            
-    
-        this.obstacles.push(new Component(y, width + gap, 50, y - width - gap, 'blue', this.ctx))
+        this.obstacles.push(new Component(400, 0, width + gap, 10, y - width - gap, 'blue', this.ctx))
     }
 
 };
