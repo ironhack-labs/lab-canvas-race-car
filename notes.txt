@@ -1,0 +1,20 @@
+  // Draw the Road on JS:
+  // COMPLETE FUNCTION CAN BE A CONDITIONAL     
+  // const canvas = document.getElementById('canvas')
+  // if(canvas.getContext){
+  //   road = canvas.getContext('2d');
+  //   let img = new Image();
+  //   img.src='/images/road.png';
+  //   img.onload = function() {
+  //   road.drawImage(img, 100, 100);
+  // }
+
+
+
+  const road = canvas.getContext('2d');
+             let img = new Image();
+             img.src='/images/road.png';
+             img.onload = function() {
+             road.drawImage(img, 25, 25, 450, 650); //position on canvas
+            }
+
