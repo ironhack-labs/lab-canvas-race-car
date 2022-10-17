@@ -1,12 +1,12 @@
 //Player Class
 
 class Player {
-    constructor(x, y, w, h, color, ctx) {
+    constructor(x, y, w, h, ctx) {
       this.x = x;
       this.y = y;
       this.w = w;
       this.h = h;
-      this.color = color;
+      this.color = "gold";
       this.ctx = ctx;
     }
 

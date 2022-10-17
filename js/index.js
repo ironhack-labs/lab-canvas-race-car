@@ -6,7 +6,7 @@ const canvas = document.getElementById("canvas")
 
 const ctx = canvas.getContext("2d");
 
-const player = new Player(225, 620, 50, 50, "gold", ctx);
+const player = new Player(225, 620, 50, 50, ctx);
 
 //Create the Game
 
