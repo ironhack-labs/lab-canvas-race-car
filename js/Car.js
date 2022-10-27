@@ -4,24 +4,43 @@ class Car {
         this.ctxWhidth= ctxWhidth
         this.ctxHeight= ctxHeight
         
-        this.width= 100
-        this.height=120
+        this.width= 70
+        this.height=100
 
-        this.posX=120
-        this.posY= ctx.height- 50 -this.ctxHeight // revisar esto
+        this.posX=215
+        this.posY= 590
 
         this.carImg = new Image()
         this.carImg.src= "../images/car.png"
+        this.setEventListeners()
     }
     draw(){
-        this.ctx.darwImage(this.carImg, this.posX,this.posY,this.width.this.height)
+       
+        this.ctx.drawImage(this.carImg, this.posX, this.posY, this.width, this.height)
     }
     setEventListeners(){
         document.addEventListener("keydown", (e) => {
-            if(e.code === "Arrowleft" ){this.posX -= 15 } 
-            if(e.code === "ArrowRigth" ){this.posX += 15 } 
-            if(e.code === "ArrowUp" ){this.posY -= 15 } 
-            if(e.code === "ArrowDown" ){this.posY += 15 } 
+            if(e.code === "ArrowLeft" ){
+                if (this.posX>50){
+                    this.posX -= 50
+                }
+              
+            } 
+            if(e.code === "ArrowRight" ){
+                if (this.posX<this.ctxWhidth-100)
+                this.posX += 50 
+            }
+
+            if(e.code === "ArrowUp" ){
+                if (this.posY>50){
+
+                    this.posY -= 50 } 
+                }
+            if(e.code === "ArrowDown" ){
+                if (this.posY<this.ctxHeight-200){
+
+                    this.posY += 50 } 
+                }
             
         })
     }

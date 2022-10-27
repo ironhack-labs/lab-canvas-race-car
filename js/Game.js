@@ -8,24 +8,24 @@ const Game = {
 
     car:undefined,
     background:undefined,
+    winImg: undefined,
 
     intervalID:undefined,
     
     Init(){
-        this.canvas = document.querySelector('#canvas')
-        this.ctx = this.canvas.getContext('2d')
+        this.canvas = document.querySelector('#canvas');
+        this.ctx = this.canvas.getContext('2d');
+       
 
-        this.winImg= new Image()
-        this.winImg.src= "../images/road.png"
-
+      
         this.setDimensions()
         this.star()
         
     },
 
     setDimensions(){
-        this.width = window.innerWidth
-        this.heigth= window.innerHeight
+        this.width = 500
+        this.heigth= 700
         
         this.canvas.width= this.width
         this.canvas.heigth= this.heigth
@@ -49,12 +49,12 @@ const Game = {
     },
 
     generateALL(){
-        this.car = new Car(this.ctx, this.width, this.heigth)
         this.background= new Background(this.ctx, this.width, this.heigth)
+        this.car = new Car(this.ctx, this.width, this.heigth)
     },
 
     clearAll(){
-        this.ctx.clearReact(0,0,this.width, this,this.heigth)
+        //this.ctx.clearRect(0, 0, this.width, this.height)
 
     },
 } 

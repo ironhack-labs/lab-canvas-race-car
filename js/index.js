@@ -1,1 +1,1 @@
-onload = () => Game.init()
+onload = () => Game.Init()
