@@ -8,6 +8,7 @@ const Game = {
 
     car:undefined,
     background:undefined,
+    
     winImg: undefined,
     obtacles:undefined,
     arrayObtacles: [],
@@ -18,12 +19,9 @@ const Game = {
     Init(){
         this.canvas = document.querySelector('#canvas');
         this.ctx = this.canvas.getContext('2d');
-       
-
       
         this.setDimensions()
         this.star()
-        
     },
 
     setDimensions(){
@@ -37,35 +35,50 @@ const Game = {
     star() {
         this.generateALL()
         
-        
-
         this.intervalID=setInterval(()=>{
             this.clearAll()
             this.drawALL()
             this.printObtacles()
             
-
         }, 1000/this.FPS)
-         this.intervalID=setInterval(()=>{
-            
+        
+        this.intervalID=setInterval(()=>{
             this.generateObtacle()
+            console.log(this.arrayObtacles)
 
-        }, 4000)
+        }, 2000)
 
     },
+
     generateObtacle(){
         this.obtacles= new Obtacles(this.ctx, this.width, this.heigth)
         this.arrayObtacles.push(this.obtacles)
+        if (this.arrayObtacles[0].posY > 500){
+            this.arrayObtacles.shift()
+        }
     },
+
     printObtacles(){
         this.arrayObtacles.forEach(element => {
             element.draw()
             
         });
     },
+
+    destroyObtacles(){
+        this.arrayObtacles.array.forEach(element, index => {
+            if (element.posY<100){
+                console.push(element[index])
+            }
+            
+        });
+
+    },
+
     drawALL(){
         this.background.draw()
         this.car.draw()
+
         
 
     },
@@ -78,7 +91,7 @@ const Game = {
     },
 
     clearAll(){
-        //this.ctx.clearRect(0, 0, this.width, this.height)
+        this.ctx.clearRect(0, 0, this.width, this.height)
 
     },
 } 

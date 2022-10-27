@@ -15,7 +15,7 @@ class Obtacles {
      
     }
     draw(){
-       this.ctx.fillRect(this.posX, this.posY++, this.width, this.height)
+       this.ctx.fillRect(this.posX, this.posY+=5, this.width, this.height)
         
     }
 
