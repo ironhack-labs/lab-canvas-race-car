@@ -4,21 +4,21 @@ class Obtacles {
         this.ctxWhidth= ctxWhidth
         this.ctxHeight= ctxHeight
         
-        this.width= 70
-        this.height=100
+        this.width= 50 + Math.floor(Math.random() * 150)
+        this.height=20
+        this.posX=Math.floor(Math.random() * 400)
+        this.posY= 0
 
-        this.posX=215
-        this.posY= 590
+        this.ctx.fillStyle = 'red'
+        
 
-        this.ctx.fillStyle = 'green'
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
-
-        this.setEventListeners()
+     
     }
     draw(){
-       this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+       this.ctx.fillRect(this.posX, this.posY++, this.width, this.height)
         
     }
+
     
 
 } 

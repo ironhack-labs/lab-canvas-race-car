@@ -4,8 +4,8 @@ class Car {
         this.ctxWhidth= ctxWhidth
         this.ctxHeight= ctxHeight
         
-        this.width= 70
-        this.height=100
+        this.width= 60
+        this.height=90
 
         this.posX=215
         this.posY= 590

@@ -9,8 +9,11 @@ const Game = {
     car:undefined,
     background:undefined,
     winImg: undefined,
+    obtacles:undefined,
+    arrayObtacles: [],
 
     intervalID:undefined,
+    intervalID2:undefined,
     
     Init(){
         this.canvas = document.querySelector('#canvas');
@@ -33,24 +36,45 @@ const Game = {
 
     star() {
         this.generateALL()
+        
+        
 
         this.intervalID=setInterval(()=>{
             this.clearAll()
             this.drawALL()
+            this.printObtacles()
+            
 
         }, 1000/this.FPS)
+         this.intervalID=setInterval(()=>{
+            
+            this.generateObtacle()
+
+        }, 4000)
 
     },
-
+    generateObtacle(){
+        this.obtacles= new Obtacles(this.ctx, this.width, this.heigth)
+        this.arrayObtacles.push(this.obtacles)
+    },
+    printObtacles(){
+        this.arrayObtacles.forEach(element => {
+            element.draw()
+            
+        });
+    },
     drawALL(){
         this.background.draw()
         this.car.draw()
+        
 
     },
 
     generateALL(){
         this.background= new Background(this.ctx, this.width, this.heigth)
         this.car = new Car(this.ctx, this.width, this.heigth)
+        
+
     },
 
     clearAll(){
