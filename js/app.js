@@ -15,13 +15,15 @@ const app = {
         carImage: 'images/car.png'
 
     },
+    framesCounter: 0,
 
     init() {
 
         this.setContext()
         this.createCar()
-        this.start()
         this.setEventHandlers()
+        this.start()
+        this.createObstacles()
     },
 
     setContext() {
@@ -66,14 +68,22 @@ const app = {
         this.ctx.setLineDash([0, 0])
     },
 
+    drawRoad() {
+        this.drawSquare()
+        this.drawLines()
+    },
+
     createCar() {
         this.carImageInstance = new Image()
         this.carImageInstance.src = this.carData.carImage
     },
-
-    drawRoad() {
-        this.drawSquare()
-        this.drawLines()
+    createObstacles() {
+        this.createObstacles.push(
+            new obstacles(this.ctx, 0, 100, 100, 100, 10, this.canvasSize),
+            new obstacles(this.ctx, 100, 600, 300, 100, 10, this.canvasSize),
+            new obstacles(this.ctx, 200, 300, 80, 30, 10, this.canvasSize),
+            new obstacles(this.ctx, 300, 500, 40, 100, 10, this.canvasSize)
+        )
     },
 
     setEventHandlers() {
@@ -85,11 +95,19 @@ const app = {
                 case 'ArrowRight':
                     this.carData.carPos.x += 10
                     break;
+                case 'ArrowUp':
+                    this.carData.carPos.y -= 10
+                    break;
+                case 'ArrowDown':
+                    this.carData.carPos.y += 10
+                    break;
             }
         }
     },
     start() {
         setInterval(() => {
+            this.framesCounter++
+
             this.clearAll()
             this.drawAll()
         }, 30)
