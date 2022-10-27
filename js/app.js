@@ -43,6 +43,12 @@ const app = {
 				case "ArrowRight":
 					this.moveRight();
 					break;
+				case "ArrowUp":
+					this.moveUp();
+					break;
+				case "ArrowDown":
+					this.moveDown();
+					break;
 			}
 		};
 	},
@@ -84,13 +90,24 @@ const app = {
 			return;
 		}
 		this.carData.pos.x -= this.carData.speed;
-		this.carData.speed += 0.5;
 	},
 	moveRight() {
 		if (this.carData.pos.x >= this.canvasSize.w - this.carData.size.w - 20) {
 			return;
 		}
 		this.carData.pos.x += this.carData.speed;
+	},
+	moveUp() {
+		if (this.carData.pos.y < this.carData.size.h - this.carData.pos.y) {
+			return;
+		}
+		this.carData.pos.y -= this.carData.speed;
+	},
+	moveDown() {
+		if (this.carData.pos.y >= this.canvasSize.h - this.carData.size.h - 20) {
+			return;
+		}
+		this.carData.pos.y += this.carData.speed;
 	},
 
 	createCar() {
@@ -112,9 +129,9 @@ const app = {
 			}
 			this.obstacles.forEach((obs) => {
 				if (
-					this.carData.pos.x < obs.obsPosx + obs.obsSizew &&
-					this.carData.pos.x + this.carData.size.w > obs.obsPosx &&
-					this.carData.pos.y < obs.obsPosy + obs.obsSizeh &&
+					this.carData.pos.x - 20 < obs.obsPosx + obs.obsSizew &&
+					this.carData.pos.x + this.carData.size.w > obs.obsPosx + 30 &&
+					this.carData.pos.y < obs.obsPosy + obs.obsSizeh + 40 &&
 					this.carData.pos.y + this.carData.size.h > obs.obsPosy
 				) {
 					this.blackScreen();

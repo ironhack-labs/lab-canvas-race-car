@@ -4,6 +4,10 @@ window.onload = () => {
 	};
 
 	function startGame() {
-		app.init();
+		if (!app.isGame) {
+			location.reload();
+		} else {
+			app.init();
+		}
 	}
 };
