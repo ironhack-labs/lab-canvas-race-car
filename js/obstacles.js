@@ -19,15 +19,11 @@ class Obstacles {
       this.obstaclesSpeed = {
          speed: 5
       }
-
-      this.init()
    }
 
-   init() {
-      this.draw()
-   }
+
    draw() {
-      this.ctx.fillStyle = 'gray',
+      this.ctx.fillStyle = '#536872',
       this.ctx.fillRect(this.obstaclesPos.x, this.obstaclesPos.y, this.obstaclesSize.w, this.obstaclesSize.h)
    }
 
