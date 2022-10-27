@@ -11,6 +11,7 @@ const app = {
         h: document.querySelector('#canvas').height
     },
     framesCounter: 0,
+    scoreCouter: 0,
     carData: {
         carSize: { w: 50, h: 100 },
         carPos: { x: 500 / 2 - 25, y: 700 - 120 },
@@ -104,10 +105,14 @@ const app = {
     start() {
         setInterval(() => {
             this.framesCounter++
-            if (this.framesCounter % 35 === 0) this.createObstacle()
+            if (this.framesCounter % 35 === 0) {
+                this.createObstacle()
+                this.scoreCouter++
+            }
             this.clearAll()
             this.moveAll()
             this.drawAll()
+            this.checkCollision()
         }, 50)
     },
     clearAll() {
@@ -125,5 +130,30 @@ const app = {
             this.carData.carSize.w,
             this.carData.carSize.h)
         this.obstacle.forEach(elem => elem.draw())
+    },
+    checkCollision() {
+        this.obstacle.forEach(elem => {
+            if (elem.obstaclePos.x < this.carData.carPos.x + this.carData.carSize.w &&
+                elem.obstaclePos.x + elem.obstacleSize.w > this.carData.carPos.x &&
+                elem.obstaclePos.y < this.carData.carPos.y + this.carData.carSize.h &&
+                elem.obstacleSize.h + elem.obstaclePos.y > this.carData.carPos.y) {
+                // Collision
+                clearInterval(1)
+                this.gameOver()
+            } else {
+                // no collision
+            }
+        })
+    },
+    gameOver() {
+        this.ctx.fillStyle = '#B7C4CF'
+        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+        this.ctx.fillStyle = '#AC7088'
+        this.ctx.font = '50px arial'
+        this.ctx.fillText('Game Over', 125, 250)
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '30px arial'
+        this.ctx.fillText(`Your PopinoPoints: ${this.scoreCouter}`, 120, 350)
     }
+
 }
