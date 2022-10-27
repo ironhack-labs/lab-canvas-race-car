@@ -20,6 +20,7 @@ const app = {
     this.setDimensions()
     this.setContext()
     this.createCar()
+    this.setEventHandlers()
     this.start()
 
 
@@ -80,7 +81,24 @@ const app = {
     this.ctx.setLineDash([0, 0])
   },
 
-
+  setEventHandlers() {
+    document.onkeydown = event => {
+      switch (event.key) {
+        case 'ArrowLeft':
+          this.carData.pos.x -= 10
+          break;
+        case 'ArrowRight':
+          this.carData.pos.x += 10
+          break;
+        case 'ArrowUp':
+          this.carData.pos.y -= 10
+          break;
+        case 'ArrowDown':
+          this.carData.pos.y += 10
+          break;
+      }
+    }
+  },
   createCar() {
     this.imageInstance = new Image()
     this.imageInstance.src = this.carData.image
