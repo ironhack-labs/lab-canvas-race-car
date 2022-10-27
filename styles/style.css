@@ -1,6 +1,7 @@
 body {
   padding: 0;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .game-intro {
@@ -36,3 +37,7 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+
+ 
+
