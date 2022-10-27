@@ -14,8 +14,8 @@ const game = {
     imageInstance: undefined,
     carData: {
 
-        pos: { x: 210 , y: 700 - 180 },
-        size: {w:80, h:160},
+        pos: { x: undefined , y: undefined },
+        size: {w:60, h:130},
         image:'images/car.png'
     },
     obstacles: [],
@@ -23,10 +23,11 @@ const game = {
     score: 0,
 
     init() {
-
+        
         this.setDimensions()
         this.setContext()
         this.createCar()
+        this.setCarPosition()
         this.setEventHandlers()
         this.createObstacle()
         this.start()
@@ -51,23 +52,37 @@ const game = {
     setEventHandlers() {
         
         document.onkeydown = event => {
-
+                // console.log(event.key)
             switch (event.key) {
                 case 'ArrowLeft':
-                    this.carData.pos.x -= 10
+                    this.carData.pos.x -= 7
+                    // if (this.carData.x === 60) this.carData.x = 0
                     // if (this.carData.pos < this.ctx.canvasSize.w + 100) {
                     //     this.carData.pos = this.ctx.canvasSize.w + 100
                     //     break
                     // }
                     break;
                 case 'ArrowRight':
-                    this.carData.pos.x += 10
+                    this.carData.pos.x += 7
                     // if (this.carData.pos > this.ctx.canvasSize.w - 100) {
                     //      this.carData.pos = this.ctx.canvasSize.w - 100
                     //     break
                     // }
                     break;
-
+                case 'ArrowUp':
+                    this.carData.pos.y -= 7
+                    // if (this.carData.pos < this.ctx.canvasSize.w + 100) {
+                    //     this.carData.pos = this.ctx.canvasSize.w + 100
+                    //     break
+                    // }
+                    break;
+                case 'ArrowDown':
+                    this.carData.pos.y += 7
+                    // if (this.carData.pos > this.ctx.canvasSize.w - 100) {
+                    //      this.carData.pos = this.ctx.canvasSize.w - 100
+                    //     break
+                    // }
+                    break;
             }
         }
     },
@@ -78,7 +93,7 @@ const game = {
 
             this.framesCounter++
             
-            if (this.framesCounter % 50 === 0) {
+            if (this.framesCounter % 40 === 0) {
                 this.createObstacle()
                 this.score++
                 // console.log(this.score)
@@ -87,6 +102,7 @@ const game = {
             this.clearAll()
             this.drawAll()
             this.checkCollision()
+            // this.setEventHandlers()
         }, 50)
     },
 
@@ -105,13 +121,13 @@ const game = {
     },
 
     drawRoad() {
-        
+        //background
         this.ctx.fillStyle = '#3a831e'
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-
+        //road
         this.ctx.fillStyle = '#808080'
         this.ctx.fillRect(40, 0, this.canvasSize.w - 80, this.canvasSize.h)
-        
+        //hard shoulder line
         this.ctx.beginPath()    
         this.ctx.setLineDash([0])
         this.ctx.strokeStyle = 'white'
@@ -204,13 +220,30 @@ const game = {
         
         this.ctx.fillStyle = 'black'
         this.ctx.font = '25px arial';
-        this.ctx.fillText('YOUR SCORE', this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 - 20);
-        
+        this.ctx.fillText('YOUR SCORE', this.canvasSize.w / 2 - 75, this.canvasSize.h / 2);       
+            
         this.ctx.fillStyle = 'black'
         this.ctx.font = '80px arial';
-        this.ctx.fillText(`${this.score}`, this.canvasSize.w / 2 -50, this.canvasSize.h / 2 + 100);
-
+        
+        if (this.score < 10) {
+            this.ctx.fillText(`0${this.score}`, this.canvasSize.w / 2 -40, this.canvasSize.h / 2 + 100);
+             
+        } else {
+            
+            this.ctx.fillText(`${this.score}`, this.canvasSize.w / 2 -40, this.canvasSize.h / 2 + 100);
+        }   
     },
-    
 
+    setCarPosition() {
+
+        this.carData.pos.x = 210
+        if (this.carData.pos.x < 60) {
+            this.carData.pos.x = 60;
+        }
+
+        this.carData.pos.y = 700 - 180
+        if (this.carData.pos.x > this.canvasSize.w - 120) {
+            this.carData.pos.x = this.canvasSize.w - 120;
+        }  
+    }
 }

@@ -3,7 +3,7 @@ class Obstacle {
     constructor(ctx) {
         this.ctx = ctx
         this.obstacleSize = {
-            w: 100 + Math.random() * 200,
+            w: 80 + Math.random() * 250,
             h: 30
         }
         this.obstaclePos = {
@@ -28,8 +28,6 @@ class Obstacle {
 
     move() {
         
-        this.obstaclePos.y += 50
+        this.obstaclePos.y += 7
     }
-
-
 }
