@@ -3,5 +3,12 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    console.log('hola')
+    app.init()
+
+
+  }
+
+
 };
