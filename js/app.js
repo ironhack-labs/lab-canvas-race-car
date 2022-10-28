@@ -108,7 +108,7 @@ const app = {
             this.drawAll()
             this.moveAll()
             this.checkColisions()
-
+            this.printScore()
             this.setEventHandlers()
 
 
@@ -169,6 +169,12 @@ const app = {
 
         clearInterval(1)
     },
+
+    printScore() {
+        this.ctx.fillStyle = 'white'
+        this.ctx.font = '20px Arial'
+        this.ctx.fillText(`Score: ${this.score}`, 100, 50)
+    }
 
 }
 
