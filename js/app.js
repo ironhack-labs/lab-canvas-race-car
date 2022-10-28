@@ -127,19 +127,7 @@ const app = {
 				this.getScore();
 				this.drawText(`Score: ${this.obsScore}`);
 			}
-			this.obstacles.forEach((obs) => {
-				if (
-					this.carData.pos.x - 20 < obs.obsPosx + obs.obsSizew &&
-					this.carData.pos.x + this.carData.size.w > obs.obsPosx + 30 &&
-					this.carData.pos.y < obs.obsPosy + obs.obsSizeh + 40 &&
-					this.carData.pos.y + this.carData.size.h > obs.obsPosy
-				) {
-					this.blackScreen();
-					this.youLost();
-					this.endscore();
-					this.isGame = false;
-				}
-			});
+			this.checkColision();
 		}, 50);
 	},
 	clearAll() {
@@ -158,6 +146,21 @@ const app = {
 	createObstacle() {
 		this.obstacles.push(new Obstacle(this.ctx, this.canvasSize));
 	},
+	checkColision() {
+		this.obstacles.forEach((obs) => {
+			if (
+				this.carData.pos.x - 20 < obs.obsPosx + obs.obsSizew &&
+				this.carData.pos.x + this.carData.size.w > obs.obsPosx + 30 &&
+				this.carData.pos.y < obs.obsPosy + obs.obsSizeh + 40 &&
+				this.carData.pos.y + this.carData.size.h > obs.obsPosy
+			) {
+				this.blackScreen();
+				this.gameOver();
+				this.endScore();
+				this.isGame = false;
+			}
+		});
+	},
 	drawText(text) {
 		this.ctx.fillStyle = "white";
 		this.ctx.font = "30px arial";
@@ -175,12 +178,12 @@ const app = {
 		this.ctx.fillStyle = "black";
 		this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h);
 	},
-	endscore() {
+	endScore() {
 		this.ctx.fillStyle = "white";
 		this.ctx.font = "45px arial";
 		this.ctx.fillText(`your score is: ${this.obsScore}`, 80, 450);
 	},
-	youLost() {
+	gameOver() {
 		this.ctx.fillStyle = "red";
 		this.ctx.font = "70px arial";
 		this.ctx.fillText("Game Over!", 60, 300);
