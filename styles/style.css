@@ -1,6 +1,11 @@
 body {
   padding: 0;
   text-align: center;
+  overflow: hidden;
+}
+
+.hero {
+  display: flex;
 }
 
 .game-intro {
@@ -21,6 +26,15 @@ body {
   width: 150px;
 }
 
+.game {
+  height: 100vh;
+  width: 100vw;
+  background-image: url(../assets/game.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin: 0 3vw;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
@@ -30,9 +44,4 @@ body button {
   box-shadow: 0;
   border-radius: 5px;
   margin-bottom: 20px;
-}
-
-#game-board {
-    float: left;
-    padding: 20px 0px;
 }
