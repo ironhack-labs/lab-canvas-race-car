@@ -24,6 +24,13 @@ class GameArea {
   stopGame() {
     clearInterval(this.interval);
   }
+
+  countScore() {
+    const points = Math.floor(this.frames / 50);
+    this.ctx.font = "18px serif";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText(`Score: ${points}`, 400, 30);
+  }
 }
 const game = new GameArea();
 
@@ -78,12 +85,10 @@ class Car extends GameObject {
 
   crashedWith(obstacle) {
     return !(
-      // this.bottom() > obstacle.top() ||
-      (
-        this.top() > obstacle.bottom() ||
-        this.left() > obstacle.right() ||
-        this.right() < obstacle.left()
-      )
+      this.bottom() < obstacle.top() ||
+      this.top() > obstacle.bottom() ||
+      this.right() < obstacle.left() ||
+      this.left() > obstacle.right()
     );
   }
 }
@@ -109,25 +114,20 @@ function updateObstacles() {
 
   if (game.frames % 180 === 0) {
     const height = 10;
-    const maxWidth = game.width - 126 - car.width;
+    const gap = car.width + 40;
+    const maxWidth = game.width - 126 - gap;
     const minWidth = car.width;
 
     const width = Math.floor(
       Math.random() * (maxWidth - minWidth + 1) + minWidth
     );
 
-    // console.log("Obstacle width: ", width);
+    const maxX = game.width - width - 63;
+    const minX = 63;
 
-    const maxXValue = game.width - width - 63;
-    const minXValue = 63;
+    const x = Math.floor(Math.random() * (maxX - minX + 1) + minX);
 
-    const xValue = Math.floor(
-      Math.random() * (maxXValue - minXValue + 1) + minXValue
-    );
-
-    // console.log("xValue: ", xValue);
-
-    obstacles.push(new Obstacle(xValue, 0, width, height));
+    obstacles.push(new Obstacle(x, 0, width, height));
   }
 
   for (let i = 0; i < obstacles.length; i++) {
@@ -138,21 +138,10 @@ function updateObstacles() {
 
 function checkGameOver() {
   const crashed = obstacles.some((obstacle) => {
-    console.log("*************************");
-    console.log("car bottom: ", car.bottom());
-    console.log("obstacle top: ", obstacle.top());
-    console.log("car top: ", car.top());
-    console.log("obstacle bottom: ", obstacle.bottom());
-    console.log("car right: ", car.right());
-    console.log("obstacle left: ", obstacle.left());
-    console.log("car left: ", car.left());
-    console.log("obstacle right: ", obstacle.right());
-    console.log("*************************");
     return car.crashedWith(obstacle);
   });
 
   if (crashed) {
-    console.log("Game over!");
     game.stopGame();
   }
 }
@@ -163,6 +152,7 @@ function drawGameArea() {
   car.updatePosition();
   car.drawCar();
   updateObstacles();
+  game.countScore();
   checkGameOver();
 }
 
