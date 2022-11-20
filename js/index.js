@@ -8,6 +8,7 @@ const board = {
   canvas: document.querySelector("#canvas"),
   frame: 0,
   image: boardImage,
+  score: 0,
   start() {
     this.context = this.canvas.getContext("2d");
     this.width = this.image.width;
@@ -15,7 +16,6 @@ const board = {
     this.canvas.width = this.image.width;
     this.canvas.height = this.image.height;
     this.interval = setInterval(updateGame, 20);
-    this.draw();
   },
   clear() {
     this.context.clearRect(0, 0, this.width, this.height);
@@ -25,7 +25,17 @@ const board = {
   },
   stop() {
     clearInterval(this.interval);
+    this.context.fillRect(0, 100, this.width, 200)
+    this.context.strokeStyle = 'yellow';
+    this.context.font = '30px sans-serif'
+    this.context.strokeText('You Crashed!!!', 30, 150)
+    this.context.strokeText('Your final score', 30, 200)
+    this.context.strokeText(`was ${this.score}`, 30, 250)
   },
+  scoreDisplay() {
+    this.context.font = '20px sans-serif'
+    this.context.fillText(`Your Score: ${this.score}`, this.width - 185, 40)
+  }
 };
 
 const car = {
@@ -80,8 +90,6 @@ const obstacleObj = {
   },
 };
 
-console.log(board);
-
 const obstaclesArray = [];
 
 const updateObstacles = () => {
@@ -105,24 +113,31 @@ const updateObstacles = () => {
     obstaclesArray.push(opositeObstacle);
   }
 
-  obstaclesArray.forEach((obstacle) => {
+  for (const obstacle of obstaclesArray) {
     obstacle.y++;
     obstacle.draw();
-    if (car.checkCrash(obstacle)) board.stop();
-  });
+    if (car.checkCrash(obstacle)) {
+      board.stop()
+      break;
+    }
+  };
 };
 
 const updateGame = () => {
   board.clear();
   board.draw();
+  board.scoreDisplay();
   car.draw();
   updateObstacles();
+  if (board.frame - 450 > 0 && board.frame % 150 === 0) board.score++;
 };
 
 const startGame = () => {
   board.start();
   car.placeCar();
+  obstaclesArray.splice(0, obstaclesArray.length)
 };
+
 
 window.addEventListener("load", () => {
   document.querySelector("#start-button").addEventListener("click", startGame);
