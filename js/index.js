@@ -7,15 +7,21 @@ class GameArea {
     this.frames = 0;
   }
 
-  startGame() {
+  drawBackground() {
     const roadImg = new Image();
     roadImg.src = "../images/road.png";
     this.ctx.drawImage(roadImg, 0, 0, this.canvasWidth, this.canvasHeight);
+  }
 
-    drawGameArea();
+  startGame() {
+    this.interval = setInterval(drawGameArea, 20);
+  }
+
+  clearGameArea() {
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 }
-const gameArea = new GameArea();
+const game = new GameArea();
 
 class GameObject {
   constructor(xPos, yPos, width, height) {
@@ -29,24 +35,47 @@ class GameObject {
 class Car extends GameObject {
   constructor(xPos, yPos, width, height) {
     super(xPos, yPos, width, height);
+    this.speed = 0;
   }
 
-  update() {
-    const ctx = gameArea.ctx;
+  drawCar() {
+    const ctx = game.ctx;
     const carImg = new Image();
     carImg.src = "../images/car.png";
     ctx.drawImage(carImg, this.xPos, this.yPos, this.width, this.height);
+  }
+
+  updatePosition() {
+    this.xPos += this.speed;
   }
 }
 
 const car = new Car(210, 610, 50, 70);
 
 function drawGameArea() {
-  car.update();
+  game.clearGameArea();
+  game.drawBackground();
+  car.updatePosition();
+  car.drawCar();
 }
+
+document.addEventListener("keydown", (event) => {
+  switch (event.keyCode) {
+    case 39:
+      car.speed += 1;
+      break;
+    case 37:
+      car.speed -= 1;
+      break;
+  }
+});
+
+document.addEventListener("keyup", () => {
+  car.speed = 0;
+});
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
-    gameArea.startGame();
+    game.startGame();
   };
 };
