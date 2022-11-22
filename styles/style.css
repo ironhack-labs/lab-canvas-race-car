@@ -3,10 +3,15 @@ body {
   text-align: center;
 }
 
+
+
 .game-intro {
-  float: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   padding: 0% 10%;
 }
+
 
 .game-intro p {
   font-size: 18px;
@@ -19,6 +24,10 @@ body {
 
 .arrows-img {
   width: 150px;
+}
+
+.road-img{
+  height: 100%;
 }
 
 body button {
