@@ -4,6 +4,7 @@ class Game {
 		this.ctx = this.canvas.getContext("2d");
         this.intervalId = null;
         this.bg = new Background(this.ctx);
+        this.car = new Car(this.ctx, this.canvas.width / 2 - 27, this.canvas.height - 120)
 	}
 
     start () {
@@ -15,6 +16,7 @@ class Game {
 
     draw () {
         this.bg.draw();
+        this.car.draw();
     }
 
     clear() {
