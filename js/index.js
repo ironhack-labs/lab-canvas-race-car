@@ -1,7 +1,6 @@
-window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+const game = new Game('canvas');
+const startBtn = document.getElementById('start-button');
 
-  function startGame() {}
-};
+startBtn.addEventListener('click', () => {
+  console.log(game.start())
+})
