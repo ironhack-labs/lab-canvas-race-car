@@ -14,7 +14,7 @@ body {
 }
 
 .logo-img {
-  width: 350px;
+  width: 200px;
 }
 
 .arrows-img {
@@ -23,7 +23,7 @@ body {
 
 body button {
   font-size: 30px;
-  background-color: #870007;
+  background-color: #3d0205;
   color: #fff;
   padding: 20px 40px;
   border: 0;

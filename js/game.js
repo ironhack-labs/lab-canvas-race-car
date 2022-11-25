@@ -3,7 +3,7 @@ class Game {
 		this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
         this.bg = new Background(this.ctx);
-        this.player = new Player(this.ctx, this.canvas.width -285, this.canvas.height - 120, 70, 110);
+        this.player = new Player(this.ctx, this.canvas.width -330, this.canvas.height -170, 150, 170);
         this.intervalId = null;
         this.obs = []
         this.tick = 0;
@@ -14,9 +14,9 @@ class Game {
     start (){
         this.intervalId = setInterval(()=>{
             this.draw ();
+            this.score();
             this.move();
             this.checkCollisions();
-            this.score();
            this.tick++;
             if (this.tick % 60 === 0){
                 this.addObs();
@@ -62,7 +62,7 @@ class Game {
 		this.ctx.fillStyle = "rgb(255, 255, 255)";
 		this.ctx.font = "40px Arial";
 		this.ctx.textAlign = "center";
-		this.ctx.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
+		this.ctx.fillText(`Game Over Score: `+ `${this.scoreboard}`, this.canvas.width / 2, this.canvas.height / 2);
 	}
 
     clear() {
@@ -74,6 +74,7 @@ class Game {
         this.ctx.font = "bold 40px Sans Serif";
         this.ctx.fillStyle = "#750C09";    
         this.ctx.fillText ("Score: " + `${this.scoreboard}`, 80, 100);
+
     }
 
     

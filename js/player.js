@@ -6,8 +6,8 @@ class Player {
     this.width = width;
     this.height = height;
     this.img = new Image();
-    this.img.src = "/images/car.png";
-    this.speed = 6;
+    this.img.src = "/images/pngwing.com (2).png";
+    this.speed = 7;
     this.directions = {
       left: false,
       right: false,

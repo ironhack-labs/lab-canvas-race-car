@@ -1,10 +1,12 @@
 const game = new Game('canvas');
-const sound = new Audio("/audio/retro-wave-style-track-59892.mp3");
+const sound = new Audio("/audio/onlymp3.to - This Life (Sons of Anarchy Theme Song) Full-Qd9ULJf2jqU-192k-1654980555263.mp3");
+const policesound = new Audio ("/audio/police-6007.mp3")
 
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     game.start();
     sound.play();
+    policesound.play();
   };
 };
 
