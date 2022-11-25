@@ -12,7 +12,6 @@ class Car {
         };
         this.speed = 4;
         this.vx = 0;
-        this.vy = 0;
         this.movements = {
             right: false,
             left: false,
@@ -50,4 +49,10 @@ class Car {
 			this.movements.left = event.type === "keydown";
 		}
     }
+
+	isCrashing(obstacle) {
+		return this.x < obstacle.x + obstacle.width
+			&& this.x + this.width > obstacle.x
+			&& this.y < obstacle.y + obstacle.height
+	}
 }
