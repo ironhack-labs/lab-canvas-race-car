@@ -3,5 +3,9 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+    const game = new Game("canvas")
+    game.draw()
+    game.callEventListeners()
+  }
 };
