@@ -4,7 +4,7 @@ class Background {
 		this.x = 0;
 		this.y = 0;
 		this.img = new Image();
-		this.img.src = "/images/road.png"
+		this.img.src = "./images/road.png";
 		this.isReady = false;
 		this.img.onload = () => {
 			this.isReady = true;

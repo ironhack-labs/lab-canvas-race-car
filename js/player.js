@@ -6,7 +6,7 @@ class Player {
          this.width = width;
         this.height = height;
          this.img = new Image();
-         this.img.src = "/images/car.png"
+         this.img.src = "./images/car.png"
         this.isReady = false;
 		this.img.onload = () => {
         this.height = this.width * this.img.height / this.img.width;
