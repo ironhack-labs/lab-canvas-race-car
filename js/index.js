@@ -6,6 +6,7 @@ window.onload = () => {
   document.getElementById('start-button').onclick = () => {
     game.start();
     sound.play();
+    policesound.volume = 0.03;
     policesound.play();
   };
 };
