@@ -3,8 +3,8 @@ class Game {
 		this.canvas = document.getElementById(canvasId);
 		this.ctx = this.canvas.getContext("2d");
         this.intervalId = null;
-        this.bg = new Background(this.ctx);
-        this.player = new Player(this.ctx, this.canvas.width / 2 - 27, this.canvas.height - 120);
+        this.bg = new Background(this.ctx, 0, 0);
+        this.player = new Player (this.ctx, this.canvas.width / 2 - 20, this.canvas.height - 100);
         this.obstacles = [];
         this.tick = 0;
 	}
@@ -31,6 +31,7 @@ class Game {
     }
 
     move () {
+        console.log ("entro")
         this.bg.move();
         this.player.move();
         this.obstacles.forEach(obstacle => {
