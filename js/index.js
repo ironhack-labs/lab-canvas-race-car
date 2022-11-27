@@ -6,3 +6,10 @@ window.onload = () => {
   };
 }
 
+document.addEventListener('keydown', (event) => {
+  game.player.directions(event);
+})
+
+document.addEventListener('keyup',(event) => {
+  game.player.directions(event);
+})

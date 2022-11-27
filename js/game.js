@@ -1,44 +1,44 @@
 class Game {
-	constructor(canvas) {
-		this.canvas = document.getElementById("canvas");
+	constructor(canvasId) {
+		this.canvas = document.getElementById(canvasId);
 		this.ctx = this.canvas.getContext("2d");
         this.intervalId = null;
         this.bg = new Background(this.ctx);
-        this.player = new Player(this.ctx, this.canvas.width / 2 , this.canvas.height - 100);
+        this.player = new Player(this.ctx, this.canvas.width / 2 - 27, this.canvas.height - 120);
         this.obstacles = [];
         this.tick = 0;
-    }
+	}
 
-    start (){
-        this.intervalId = setInterval(() => {
+    start () {
+        this.intervalId = setInterval (() => {
             this.clear();
-            this.draw();
             this.move();
-            this.tick++ ;
-                if (this.tick % 60 === 0) {
-                    this.addObstacles ();
-                }
-                this.checkingCrash();
-
-    } , 1000 / 60)
+            this.draw();
+            this.tick++;
+			if (this.tick % 60 === 0) {
+				this.addObs ();
+			}
+            this.checkCrashes();
+        }, 1000 / 60);
     }
 
-    draw (){
-        this.bg.draw();// pinto primero el background
-        this.player.draw(); // pinto después el player
+    draw () {
+        this.bg.draw();
+        this.player.draw();
         this.obstacles.forEach(obstacle => {
 			obstacle.draw();
 		});
     }
 
-    move (){
+    move () {
         this.bg.move();
         this.player.move();
         this.obstacles.forEach(obstacle => {
 			obstacle.move();
 		});
     }
-    addObstacles() {
+
+    addObs () {
         const randomWidth = Math.random() * (100) + 75;
         const randomX = Math.random() * ((this.canvas.width / 2 + randomWidth) - 50) + 50;
 
@@ -46,8 +46,8 @@ class Game {
 		this.obstacles.push(obstacle);        
     }
 
-    checkingCrash() {
-		if (this.obstacles.some(obstacle => this.car.playerColiding(obstacle))) {
+    checkCrashes() {
+		if (this.obstacles.some(obstacle => this.player.isCrashing(obstacle))) {
 			this.gameOver();
 		}
 	}
