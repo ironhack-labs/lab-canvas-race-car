@@ -53,7 +53,6 @@ window.onload = () => {
   }
 
   function gameover(){
-    console.log("entro")
     ctx.fillStyle = "#000";
     intervalId=undefined
     ctx.fillRect(0,400,canvas.width,300)
