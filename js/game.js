@@ -14,7 +14,7 @@ class Game {
             this.clear();
             this.move();
             this.draw();
-            //this.checkCollisions();
+            this.checkCollisions();
             this.tick++;
             if (this.tick % 80 === 0) {
                 this.addObstacle();
@@ -40,7 +40,7 @@ class Game {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		//this.obstacles = this.obstacles.filter(obstacle => obstacle.y < this.canvas.height);
+		this.obstacles = this.obstacles.filter(obstacle => obstacle.y < this.canvas.height);
     }
 
     addObstacle() {
@@ -53,6 +53,8 @@ class Game {
 			this.gameOver();
 		}
 	}
+
+    
 
 
 }
