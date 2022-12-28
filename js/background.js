@@ -3,6 +3,7 @@ class Background {
 		this.ctx = ctx;
 		this.x = 0;
 		this.y = 0;
+		this.vy = 5;
 		this.img = new Image();
 		this.img.src = "./images/road.png";
 		this.isReady = false;
