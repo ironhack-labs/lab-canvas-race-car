@@ -7,18 +7,25 @@ class Game {
         this.car = new Car(this.ctx, this.canvas.width / 2 - 27, this.canvas.height - 120);
         this.obstacles = [];
         this.tick = 0;
+        this.score = 0;
+        this.count = 0;
 	}
 
     start () {
         this.intervalId = setInterval (() => {
             this.clear();
             this.draw();
-            this.move();
+            this.move(); 
             this.tick++;
 			if (this.tick % 60 === 0) {
 				this.addObs ();
-			}
+			};
+            this.count++;
+            if(this.count % 60 === 0) {
+                this.score++
+            };
             this.checkCrashes();
+            this.drawScore();
         }, 1000 / 60);
     }
 
@@ -52,8 +59,26 @@ class Game {
 		}
 	}
 
+    drawScore() {
+        this.ctx.fillStyle = "#ffffff";
+        this.ctx.font = "25px Arial";
+        this.ctx.fillText("Score: " + this.score, 75, 30);
+    }
+
     gameOver() {
 		clearInterval(this.intervalId);
+        this.ctx.fillStyle = "black";
+		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillStyle = "#870107";
+		this.ctx.font = "50px Arial";
+		this.ctx.textAlign = "center";
+		this.ctx.fillText("Game Over!", this.canvas.width / 2, this.canvas.height / 2);
+        this.ctx.fillStyle = "white";
+		this.ctx.font = "35px Arial";
+		this.ctx.textAlign = "center";
+        this.ctx.fillText("Your Final Score", this.canvas.width / 2, this.canvas.height / 2 + 50);
+        this.ctx.fillText(this.score, this.canvas.width / 2, this.canvas.height / 2 + 100);
+        
 	}
 
     clear() {
