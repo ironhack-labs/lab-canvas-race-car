@@ -1,7 +1,17 @@
 window.onload = () => {
-  document.getElementById('start-button').onclick = () => {
-    startGame();
-  };
+	document.getElementById('start-button').onclick = () => {
+		startGame();
+	};
 
-  function startGame() {}
+	const canvas = document.getElementById('canvas');
+	const ctx = canvas.getContext('2d');
+
+	let img = new Image();
+	img.src = 'images/road.png';
+
+	img.onload = () => {
+		ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+	};
+
+	function startGame() {}
 };
