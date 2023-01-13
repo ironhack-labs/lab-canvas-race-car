@@ -2,7 +2,6 @@ class Game {
 	constructor() {
 		// this.road = new Road();
 		this.isGameOver = false;
-		this.score = 0
 	}
 
 	drawRoad() {
@@ -12,6 +11,7 @@ class Game {
 		this.road.onload = () => {
 			ctx.drawImage(road, 0, 0, canvas.width, canvas.height);
 		};
+
 	}
 
 	clear() {
@@ -23,11 +23,15 @@ class Game {
 
 	over() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(0, 175, canvas.width, canvas.height /2);
 		ctx.font = '30px Arial';
 		ctx.fontWeight = 'bold';
 		ctx.fillStyle = 'red';
 		ctx.fillText('Game Over', 180, 300);
-		ctx.fillText('Score: ' + score, 180, 350);
+		ctx.fillText(`Your final score:`, 140, 350);
+		ctx.fillText(`${score}`, 250, 400);
 	}
 
 

@@ -11,6 +11,11 @@ class Car {
 
 	drawCar() {
 		ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+		ctx.fillText('Score: ' + score, 10, 50);
+		ctx.font = '30px Arial';
+		ctx.fontWeight = 'bold';
+		ctx.fillStyle = 'red';
+
 	}
 
 	clear() {

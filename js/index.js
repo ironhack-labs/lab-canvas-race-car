@@ -7,15 +7,15 @@ let updateInterval;
 let blockInterval;
 let count = 0;
 let score = 0;
-const scoreBoard = document.createElement('div');
-const gameIntro = document.querySelector('.game-intro');
-scoreBoard.innerHTML = score;
-scoreBoard.style.fontSize = '30px';
-scoreBoard.style.fontWeight = 'bold';
-scoreBoard.style.color = 'red';
-scoreBoard.style.padding = '10px';
-scoreBoard.style.margin = '10px';
-gameIntro.appendChild(scoreBoard);
+// const scoreBoard = document.createElement('div');
+// const gameIntro = document.querySelector('.game-intro');
+// scoreBoard.innerHTML = score;
+// scoreBoard.style.fontSize = '30px';
+// scoreBoard.style.fontWeight = 'bold';
+// scoreBoard.style.color = 'red';
+// scoreBoard.style.padding = '10px';
+// scoreBoard.style.margin = '10px';
+// gameIntro.appendChild(scoreBoard);
 
 const myBlocks = [];
 
