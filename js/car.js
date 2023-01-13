@@ -6,7 +6,7 @@ class Car {
 		this.y = 400;
 		this.img = new Image();
 		this.img.src = 'images/car.png';
-		this.speed = 10;
+		this.speed = 15;
 	}
 
 	drawCar() {

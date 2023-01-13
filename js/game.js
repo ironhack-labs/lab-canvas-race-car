@@ -2,6 +2,7 @@ class Game {
 	constructor() {
 		// this.road = new Road();
 		this.isGameOver = false;
+		this.score = 0
 	}
 
 	drawRoad() {
@@ -16,5 +17,36 @@ class Game {
 	clear() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}
-	//add controls for the car
+
+
+
+
+	over() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.font = '30px Arial';
+		ctx.fontWeight = 'bold';
+		ctx.fillStyle = 'red';
+		ctx.fillText('Game Over', 180, 300);
+		ctx.fillText('Score: ' + score, 180, 350);
+	}
+
+
+	stop() {
+		this.isGameOver = true;
+		game.over()
+
+		myBlocks = [];
+		console.log('Game Over');
+
+	}
+
+	checkCollisions() {
+		myBlocks.forEach((block) => {
+			if (block.isCrashed(car)) {
+				this.stop();
+			}
+		});
+	}
+
+
 }
