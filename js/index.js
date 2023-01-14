@@ -58,8 +58,9 @@ class Obstacle {
 
 const player = new Player();
 const obstacle = new Obstacle();
-const obstacles = [];
+let obstacles = [];
 let gameOver = false;
+let score = 0;
 
 function rectsIntersect(rect1, rect2) {
   return (
@@ -83,30 +84,61 @@ function startGame() {
 
 function animate() {
   if (gameOver) {
+    gameOverScreen();
+    cancelAnimationFrame(animationFrameId);
     return;
   }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+
+  // score
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+  ctx.fillText("Score: " + score, 10, 30);
+
   player.draw();
+  score++;
 
   obstacles.forEach((obstacle) => {
     obstacle.update();
+
+    // if player hit the obstacle
     if (rectsIntersect(player, obstacle)) {
       gameOver = true;
-      alert("gameOver");
+      gameOverScreen();
     }
   });
-  requestAnimationFrame(animate);
+
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+function gameOverScreen() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  ctx.font = "40px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2);
+  ctx.font = "20px Arial";
+  ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 30);
 }
 
 window.onkeydown = (e) => {
   player.update(e);
 };
 
+function resetGame() {
+  obstacles = [];
+  gameOver = false;
+  score = 0;
+  player.x = canvas.width / 2;
+  player.y = canvas.height - player.height;
+}
+
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
+    resetGame();
     startGame();
     animate();
-    canvas.focus();
   };
 };
