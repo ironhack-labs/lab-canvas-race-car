@@ -59,6 +59,16 @@ class Obstacle {
 const player = new Player();
 const obstacle = new Obstacle();
 const obstacles = [];
+let gameOver = false;
+
+function rectsIntersect(rect1, rect2) {
+  return (
+    rect1.x < rect2.x + rect2.width &&
+    rect1.x + rect1.width > rect2.x &&
+    rect1.y < rect2.y + rect2.height &&
+    rect1.y + rect1.height > rect2.y
+  );
+}
 
 function startGame() {
   backgroundImg = new Image();
@@ -72,11 +82,21 @@ function startGame() {
 }
 
 function animate() {
+  if (gameOver) {
+    return;
+  }
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
   player.draw();
+
+  obstacles.forEach((obstacle) => {
+    obstacle.update();
+    if (rectsIntersect(player, obstacle)) {
+      gameOver = true;
+      alert("gameOver");
+    }
+  });
   requestAnimationFrame(animate);
-  obstacles.forEach((obstacle) => obstacle.update());
 }
 
 window.onkeydown = (e) => {
