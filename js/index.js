@@ -30,10 +30,35 @@ class Player {
         this.y += 10;
         break;
     }
+
+    this.x = Math.max(0, Math.min(this.x, canvas.width - this.width));
+    this.y = Math.max(0, Math.min(this.y, canvas.height - this.height));
+  }
+}
+
+class Obstacle {
+  constructor() {
+    this.width = Math.floor(Math.random() * (canvas.width - player.width - 100 + 1)) + 100; // Math.floor(Math.random() * (max - min + 1)) + min;
+    this.height = 20;
+    this.x = Math.floor(Math.random() * (canvas.width + 1));
+    this.y = 0;
+  }
+
+  draw() {
+    ctx.fillStyle = "dark red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+  update() {
+    ctx.fillStyle = "dark red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.y += 3;
   }
 }
 
 const player = new Player();
+const obstacle = new Obstacle();
+const obstacles = [];
 
 function startGame() {
   backgroundImg = new Image();
@@ -41,6 +66,9 @@ function startGame() {
   backgroundImg.onload = () => {
     ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
   };
+  setInterval(() => {
+    obstacles.push(new Obstacle());
+  }, 2000);
 }
 
 function animate() {
@@ -48,6 +76,7 @@ function animate() {
   ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
   player.draw();
   requestAnimationFrame(animate);
+  obstacles.forEach((obstacle) => obstacle.update());
 }
 
 window.onkeydown = (e) => {
