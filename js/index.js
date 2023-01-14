@@ -10,27 +10,54 @@ class Player {
     this.image = new Image();
     this.image.src = "images/car.png";
   }
+
   draw() {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
-  update() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+
+  update(e) {
+    switch (e.keyCode) {
+      case 37:
+        this.x -= 10;
+        break;
+      case 38:
+        this.y -= 10;
+        break;
+      case 39:
+        this.x += 10;
+        break;
+      case 40:
+        this.y += 10;
+        break;
+    }
   }
 }
 
 const player = new Player();
 
 function startGame() {
-  const backgroundImg = new Image();
+  backgroundImg = new Image();
   backgroundImg.src = "images/road.png";
   backgroundImg.onload = () => {
     ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
-    player.draw();
   };
 }
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+  player.draw();
+  requestAnimationFrame(animate);
+}
+
+window.onkeydown = (e) => {
+  player.update(e);
+};
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
     startGame();
+    animate();
+    canvas.focus();
   };
 };
