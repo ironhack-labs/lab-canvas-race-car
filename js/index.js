@@ -26,7 +26,6 @@ function startGame() {
 
 	updateInterval = setInterval(() => {
 		update();
-		game.checkCollisions();
 		count++;
 
 		if (count % 10 === 0) {
@@ -38,7 +37,7 @@ function startGame() {
 	}, 1000 / 60);
 }
 
-const update = () => {
+function update() {
 	if (!game.isGameOver) {
 		game.clear();
 		car.clear();
@@ -47,11 +46,12 @@ const update = () => {
 			block.draw();
 			block.update();
 		});
+		game.checkCollisions();
 	} else {
 		clearInterval(updateInterval);
 		game.stop();
 	}
-};
+}
 
 window.onload = () => {
 	document.getElementById('start-button').onclick = () => {
