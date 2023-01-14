@@ -65,14 +65,50 @@ class Car {
   }
 }
 
+class GameArea {
+  constructor() {
+    this.gameOver = false;
+  }
+
+  start() {
+    const road = new Image()
+    road.onload = () => {
+      this.road = road
+      this.draw()
+    }
+    this.road.src = 'images/road.png'
+  }
+
+  draw() {
+    ctx.drawImage(this.road, 0, 0, canvas.width, canvas.height)
+  }
+
+  clear() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+  }
+
+  over() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    console.log('Game Over');
+  }
+
+  stop() {
+    this.gameOver = true
+    over()
+  }
+}
+
 
 const road = new Road(canvas.width, canvas.height)
 const car = new Car()
+const game = new GameArea()
 
 let interval;
 
 let update = () => {
+  game.clear();
   car.clear();
+  road.draw();
   car.draw();
 }
 
