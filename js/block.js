@@ -26,14 +26,19 @@ class Block {
 		myBlocks.forEach((block) => {
 			block.draw();
 			block.update();
+
+			if (block.y > canvas.height) {
+				myBlocks.shift();
+			}
 		});
 	}
 
 	isCrashed(car) {
-        return (this.x < car.x + car.width
-		 && this.x + this.width > car.x
-		 && this.y < car.y + car.width
-		 && this.y + this.height > car.y)
-    }
-
+		return (
+			this.x < car.x + car.width &&
+			this.x + this.width > car.x &&
+			this.y < car.y + car.width &&
+			this.y + this.height > car.y
+		);
+	}
 }

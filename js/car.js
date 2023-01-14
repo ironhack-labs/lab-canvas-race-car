@@ -15,7 +15,6 @@ class Car {
 		ctx.font = '30px Arial';
 		ctx.fontWeight = 'bold';
 		ctx.fillStyle = 'red';
-
 	}
 
 	clear() {
@@ -24,10 +23,14 @@ class Car {
 
 	moveLeft() {
 		this.x -= this.speed;
+		if (this.x <= 0) {
+			this.x = 0;
+		}
 	}
 
 	moveRight() {
-		if (this.x >= 50) {
+		if (this.x >= 500) {
+			this.x = 500;
 		}
 		this.x += this.speed;
 	}

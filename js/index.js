@@ -26,6 +26,7 @@ function startGame() {
 
 	updateInterval = setInterval(() => {
 		update();
+		console.log(myBlocks);
 		count++;
 
 		if (count % 10 === 0) {
@@ -46,6 +47,7 @@ function update() {
 			block.draw();
 			block.update();
 		});
+
 		game.checkCollisions();
 	} else {
 		clearInterval(updateInterval);
