@@ -20,7 +20,6 @@ let score = 0;
 const myBlocks = [];
 
 function startGame() {
-
 	car.drawCar();
 	car.keyControls();
 	block.draw();
@@ -32,40 +31,26 @@ function startGame() {
 
 		if (count % 10 === 0) {
 			score++;
-			scoreBoard.innerHTML = score;
 		}
-
-
-
-
-
-
+		if (count % 100 === 0) {
+			block.add();
+		}
 	}, 1000 / 60);
-
-	blockInterval = setInterval(() => {
-		block.add();
-		;
-
-	}, 2000);
 }
 
 const update = () => {
-	if (!game.isGameOver) {;
-	game.clear();
-	car.clear();
-	car.drawCar();
-	myBlocks.forEach((block) => {
-		block.draw();
-		block.update();
-	})
-
-
+	if (!game.isGameOver) {
+		game.clear();
+		car.clear();
+		car.drawCar();
+		myBlocks.forEach((block) => {
+			block.draw();
+			block.update();
+		});
 	} else {
 		clearInterval(updateInterval);
-		clearInterval(blockInterval);
 		game.stop();
 	}
-
 };
 
 window.onload = () => {
