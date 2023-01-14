@@ -11,21 +11,16 @@ class Game {
 		this.road.onload = () => {
 			ctx.drawImage(road, 0, 0, canvas.width, canvas.height);
 		};
-
 	}
 
 	clear() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
-
-
-
 	over() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 		ctx.fillStyle = 'black';
-		ctx.fillRect(0, 175, canvas.width, canvas.height /2);
+		ctx.fillRect(0, 175, canvas.width, canvas.height / 2);
 		ctx.font = '30px Arial';
 		ctx.fontWeight = 'bold';
 		ctx.fillStyle = 'red';
@@ -34,14 +29,12 @@ class Game {
 		ctx.fillText(`${score}`, 250, 400);
 	}
 
-
 	stop() {
 		this.isGameOver = true;
-		game.over()
+		game.over();
 
 		myBlocks = [];
 		console.log('Game Over');
-
 	}
 
 	checkCollisions() {
@@ -51,6 +44,4 @@ class Game {
 			}
 		});
 	}
-
-
 }

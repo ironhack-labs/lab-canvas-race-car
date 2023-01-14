@@ -35,6 +35,22 @@ class Car {
 		this.x += this.speed;
 	}
 
+	moveUp() {
+		this.y -= this.speed;
+
+		if (this.y <= 0) {
+			this.y = 0;
+		}
+	}
+
+	moveDown() {
+		this.y += this.speed;
+
+		if (this.y >= 700) {
+			this.y = 0;
+		}
+	}
+
 	keyControls() {
 		document.addEventListener('keydown', (e) => {
 			switch (e.key) {
@@ -44,6 +60,14 @@ class Car {
 
 				case 'ArrowLeft':
 					this.moveLeft();
+					break;
+
+				case 'ArrowUp':
+					this.moveUp();
+					break;
+
+				case 'ArrowDown':
+					this.moveDown();
 					break;
 			}
 		});

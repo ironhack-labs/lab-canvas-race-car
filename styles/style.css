@@ -6,6 +6,10 @@ body {
 .game-intro {
 	float: left;
 	padding: 0% 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
 }
 
 .game-intro p {
@@ -37,4 +41,8 @@ body button {
 	padding: 20px 0px;
 	background-image: url('../images/road.png');
 	background-size: cover;
+}
+
+#restart {
+	display: none;
 }
