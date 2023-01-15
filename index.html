@@ -15,11 +15,19 @@
       <p>Use the left and right arrow to control the car!</p>
       <img src="./images/arrows.png" alt="" class="arrows-img" />
     </div>
-
     <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
+      <canvas id="canvas" width="600" height="800"></canvas>
     </div>
-
-    <script type="text/javascript" src="js/index.js"></script>
+    <div id="game-over">
+      <h1>
+          Game Over
+      </h1>
+      <h2 id="score">Your final score is</h2>
+      <button id="restart-game-over"> Play Again </button>
+  </div>
+    <script src="./js/car.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/obstacle.js"></script>
+    <script src="./js/index.js" ></script>
   </body>
 </html>
