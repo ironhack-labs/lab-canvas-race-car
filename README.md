@@ -33,7 +33,7 @@ Remember, you have the Learning Units to check any concept you might need. We ar
 
 The first thing we need is to create our board. The left side of the image is already on the HTML file, but when we click on the **Start Game** button, we need to create the canvas and display the road.
 
-The canvas HTML element is already part of the HTML starter code provided in the `index.html` file. In the `images` folder, you can find the image of the raod.
+The canvas HTML element is already part of the HTML starter code provided in the `index.html` file. In the `images` folder, you can find the image of the road.
 
 ### Iteration 2: Draw the car
 
