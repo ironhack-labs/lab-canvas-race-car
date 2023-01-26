@@ -11,6 +11,13 @@ class Game{
         this.enemies= []
     }
 
+  /*   drawbackground(){
+        const road = new Image()
+        road.src = "../images/road.png"
+        this.ctx.drawImage(road, 0, 0, canvas.width, canvas.height)
+
+    }
+ */
     start(){
         this.intervalId= setInterval(this.update, 1000/60)
     }
@@ -24,6 +31,7 @@ class Game{
         this.player.draw()
         this.updateEnemies()
         this.checkGameOver()
+        this.Score()
 
     }
 
@@ -44,7 +52,7 @@ class Game{
 
         
         if(this.frames % 120 === 0){ // vao aparecer de 2 em 2 segundos (120 frames)
-            let randomSize = Math.floor(Math.random () * 150 -10) + 30  // define the size of the Square Enemies
+            let randomSize = Math.floor(Math.random () * 200 -10) + 30  // define the size of the Square Enemies
             let randomX = + Math.floor(Math.random()* this.width - randomSize) + randomSize
 
             // create the enemies
@@ -52,6 +60,15 @@ class Game{
 
         }
     }
+
+    Score(){
+         ctx.font = '30px sans-serif';
+         ctx.fillStyle = 'black';
+         ctx.fillText(`Score: ${Math.floor(this.frames / 40)} `, 100, 50)
+         ctx.lineWidth = 1;
+         ctx.strokeStyle = 'white';
+         ctx.strokeText('Score: ', 700, 150) 
+    } 
 
     checkGameOver() {
         const crashed = this.enemies.some( (enemy) => {
@@ -61,4 +78,5 @@ class Game{
             this.stop()
         }
     }
+   
 }

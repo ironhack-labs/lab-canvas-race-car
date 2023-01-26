@@ -67,25 +67,5 @@ class Enemy{
         this.x += this.speedX
         this.y += this.speedY
     }
-    top(){
-        return this.y
-    }
-    bottom(){
-        return this.y + this.h
-    }
-    left(){
-        return this.x
-    }
-    right(){
-        return this.x + this.w
-    }
-
-    crashWith(enemy){
-        return !(
-            this.bottom() < enemy.top()  ||
-            this.top() > enemy.bottom()  ||
-            this.right() < enemy.left()  ||
-            this.left() > enemy.right() 
-        );
-    }
+   /*  */
 }
