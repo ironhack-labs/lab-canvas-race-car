@@ -82,16 +82,16 @@ class Game {
             this.stop();
 
             this.ctx.fillStyle = 'black';
-            this.ctx.fillRect(0, 100, canvas.width, 200)
+            this.ctx.fillRect(0, 0, canvas.width, 200)
             this.ctx.font = '46px sans-serif';
             this.ctx.fillStyle = 'red';
-            this.ctx.fillText(`Game Over!`, 120, 150)
+            this.ctx.fillText(`Game Over!`, 120, 50)
             this.ctx.lineWidth = 1;
             this.ctx.fillStyle = 'white';
-            this.ctx.fillText(`Your final score `, 80, 200)
+            this.ctx.fillText(`Your final score `, 80, 100)
             this.ctx.lineWidth = 1;
             this.ctx.fillStyle = 'white';
-            this.ctx.fillText(`${Math.floor(this.frames / 30)} `, 220, 250)
+            this.ctx.fillText(`${Math.floor(this.frames / 30)} `, 220, 150)
             this.ctx.lineWidth = 1;
             
             
