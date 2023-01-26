@@ -63,6 +63,8 @@ class Game {
           return this.player.crashWith(enemy);
       })
       if (crashed) {
+          alert('GAME OVER');
+          document.location.reload();
           this.stop();
       }
   }
