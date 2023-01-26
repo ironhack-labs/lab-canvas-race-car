@@ -1,7 +1,5 @@
 window.onload = () => {
   document.getElementById('start-button').onclick = () => {
-    startGame();
+    raceCarApp.init()
   };
-
-  function startGame() {}
 };
