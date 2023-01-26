@@ -163,7 +163,7 @@ const animatedApp = {
       this.car.specs.size.w,
       this.car.specs.size.h
     );
-    if (this.framesIndex % 200 === 0) {
+    if (this.framesIndex % 300 === 0) {
       this.score++;
       this.obstacles.push(new Obstacle(this.ctx));
       let lastObstacle = this.obstacles.length - 1;
