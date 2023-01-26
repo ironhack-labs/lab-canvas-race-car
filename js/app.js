@@ -109,14 +109,12 @@ const animatedApp = {
   },
   finishGame() {
     clearInterval(this.interID);
-    setInterval(() => {
       this.ctx.fillStyle = "grey";
       this.ctx.fillRect(0, 0, 500, 700);
       this.ctx.font = "20px arial";
       const text = `Game Over - Score ${this.score - 3}`;
       this.ctx.fillStyle = "black";
       this.ctx.fillText(text, 100, 300);
-    }, 10);
   },
 
   drawAll() {
