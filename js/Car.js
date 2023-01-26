@@ -19,6 +19,6 @@ class Car {
   }
   createCar(...param) {
     this.carInstance = new Image();
-    this.carInstance.src = "../images/car.png";
+    this.carInstance.src = "./images/car.png";
   }
 }
