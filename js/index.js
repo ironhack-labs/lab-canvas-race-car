@@ -3,5 +3,6 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  raceCarGame.init()
+  function startGame() { }
 };
