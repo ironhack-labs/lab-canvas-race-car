@@ -29,6 +29,7 @@ const raceCarGame = {
         this.setEventListeners()
         this.setCarPosition()
         this.createCar()
+        this.generateObstacle()
         this.start()
     },
     setContext() {
@@ -73,7 +74,13 @@ const raceCarGame = {
             this.drawAll()
 
             this.frameIndex++
-            if (this.frameIndex % 100 === 0) this.generateObstacle()
+            if (this.frameIndex % 250 === 0) {
+                this.generateObstacle()
+
+                if (this.obstaclesArray.length > 4) {
+                    this.obstaclesArray.shift()
+                }
+            }
 
 
             if (this.keyLeft) {
@@ -92,7 +99,7 @@ const raceCarGame = {
         this.drawBoard()
         this.drawLine()
         this.drawCar()
-        this.generateObstacle()
+        this.drawObstacle()
     },
     drawBoard() {
         this.ctx.fillStyle = 'green'
@@ -122,12 +129,15 @@ const raceCarGame = {
         this.ctx.drawImage(this.carInstance, this.carPosition.x, this.carPosition.y, this.carDimensions.w, this.carDimensions.h)
     },
     generateObstacle() {
+        let obstaclePosition = Math.floor(Math.random() * (this.canvasSize.w - 200))
         this.obstaclesArray.push(
-            new Obstacle(this.ctx, this.canvasSize)
+            new Obstacle(this.ctx, this.canvasSize, obstaclePosition)
         )
     },
+    drawObstacle() {
+        this.obstaclesArray.forEach(elm => elm.draw())
+    },
     clearAll() {
-        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h) //this.canvas.size.w && this.canvas.size.h en caso de tener el metodo set dimensions
-    }
-
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+    },
 }
