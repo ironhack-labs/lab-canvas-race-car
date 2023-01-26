@@ -34,7 +34,7 @@ class Game{
 
     updateEnemies(){
         for(let i = 0; i < this.enemies.length; i++){
-            this.enemies[i].y += 2
+            this.enemies[i].y += 3
             this.enemies[i].draw()
         }
 
@@ -51,6 +51,19 @@ class Game{
         })
         if(crashed) {
             this.stop()
+
+
+            function drawSquare(x, y, w, h, color) {
+                //before drawing the square, update the color
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, w, h);
+        }
+        drawSquare(0, 0, canvas.width, canvas.height, 'black');
+        ctx.font = "80px";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
         }
     }
+
 }

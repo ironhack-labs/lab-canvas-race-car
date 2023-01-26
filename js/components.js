@@ -31,6 +31,10 @@ class Component{
         return this.x
     }
 
+    bottom(){
+        return this.y + this.h
+    }
+
     right(){
         return this.x + this.w
     }
