@@ -33,6 +33,18 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+/* canvas {
+  background-color: red;
+} */
+
+.non-display {
+  display: none;
+}
+
+.grey {
+  color: grey;
 }
