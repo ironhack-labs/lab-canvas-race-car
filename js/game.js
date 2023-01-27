@@ -40,10 +40,10 @@ class Game {
         this.enemies[i].draw();
       }
       if (this.frames % 180 === 0) {
-        let x = Math.floor((Math.random() * 350 - 100) + 100);
+        let x = Math.floor((Math.random() * 250 - 100) + 100);
         //calculate the height of the columns/enemies
-        let minWidth = 15;
-        let maxWidth = 350;
+        let minWidth = 150;
+        let maxWidth = 250;
         let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
         //these variables control the size of the gap between obstacles
         let minGap = 75;
