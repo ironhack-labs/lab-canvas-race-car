@@ -21,6 +21,14 @@ body {
   width: 150px;
 }
 
+#road-img{
+  visibility: hidden;
+}
+
+#car-img{
+  visibility: hidden;
+}
+
 body button {
   font-size: 30px;
   background-color: #870007;
