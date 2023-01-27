@@ -35,6 +35,7 @@ window.onload = () => {
     gameStarted = true;
     let score = 0;
     let roadImage = document.createElement("img");
+    let keyPress = false;
 
     roadImage.src = "images/road.png";
     roadImage.addEventListener("load", ()=> {
@@ -47,13 +48,19 @@ window.onload = () => {
     })
 
     document.getElementsByTagName("body")[0].addEventListener("keydown", (event)=>{
-      switch(event.key){
-        case "ArrowLeft":
-          if(carPosx > 0) carPosx -= 10;
-          break;
-        case "ArrowRight": 
-          if(carPosx < (canvas.width - carWidth)) carPosx += 10;
-          break;
+      if(!keyPress) {
+        switch(event.key){
+          case "ArrowLeft":
+            console.log("pos antes: ", carPosx);
+            if(carPosx > 0) carPosx -= 10;
+            keyPress = true;
+            console.log("pos despues: ", carPosx);
+            break;
+          case "ArrowRight": 
+            if(carPosx < (canvas.width - carWidth)) carPosx += 10;
+            keyPress = true;
+            break;
+        }
       }
     })
 
@@ -68,8 +75,7 @@ window.onload = () => {
       ctx.fillText(`Score: ${score}`, 70, 50);
     }
     function gameOver() {
-      clearInterval(identificador);
-      obstaclesArr.splice(0, obstaclesArr.length);
+      obstaclesArr.splice(0, obstaclesArr.length);  //objects array reset
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "black";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -80,7 +86,13 @@ window.onload = () => {
       ctx.font = '52px serif';
       ctx.fillText(`Your final score`, 90, 360);
       ctx.fillText(`${score}`, 220, 420);
-      gameStarted = false;  //reset variables para reiniciar juego
+      /* console.log("antes: ", identificador); */
+      clearInterval(identificador);
+      /* console.log("despues: ", identificador); */
+      /* document.getElementsByTagName("body")[0].removeEventListener("keydown", "keydown", (event)=>{null}); */
+      //reset variables para reiniciar juego
+
+      gameStarted = false;  
       carPosx = 215;
       count = 0;
     }
@@ -88,6 +100,7 @@ window.onload = () => {
     let update = ()=>{
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       count ++;
+      keyPress = false;
   
       if (count == 70) {
         score += 5;
@@ -104,11 +117,12 @@ window.onload = () => {
             gameOver();
           }
         } 
+        if(obstaclesArr.length > 4) obstaclesArr.shift();
       });
       addScore();
     }
 
-    const identificador = setInterval(()=>{
+    let identificador = setInterval(()=>{
       update();
     }, 40);
   }
