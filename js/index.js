@@ -11,7 +11,7 @@ window.onload = () => {
 
   class Obstacles {
     constructor(color) {
-      this.x = 40 + Math.floor(Math.random() * 200);
+      this.x = 40 + Math.floor(Math.random() * 150);
       this.y = 0;
       this.width = 100 + Math.floor(Math.random() * 200);
       this.height = 30;
@@ -51,13 +51,11 @@ window.onload = () => {
       if(!keyPress) {
         switch(event.key){
           case "ArrowLeft":
-            console.log("pos antes: ", carPosx);
-            if(carPosx > 0) carPosx -= 10;
+            if(carPosx > 40) carPosx -= 10;
             keyPress = true;
-            console.log("pos despues: ", carPosx);
             break;
           case "ArrowRight": 
-            if(carPosx < (canvas.width - carWidth)) carPosx += 10;
+            if(carPosx < (canvas.width - carWidth) - 40) carPosx += 10;
             keyPress = true;
             break;
         }
