@@ -41,7 +41,7 @@ class Game{
       this.ctx.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
   }
 
-  updateObstacles(){
+  updateEnemies(){
       for(let i = 0; i < this.enemies.length; i++ ){
           this.enemies[i].y += 1;
           this.enemies[i].draw();
@@ -51,14 +51,13 @@ class Game{
       //which we only want to do every 120 frames(2 seconds)
 
       
-      if(this.frames % 120 === 0){
-          let randomSize = Math.floor(Math.random() * 150 - 10) + 10; // this is to have random squares as enemeies // the tens mean that we always have a value between 10 and 150, no less.
+      if(this.frames % 200 === 0){
+          let randomSize = Math.floor(Math.random() *  (250 - 100) + 100); // this is to have random squares as enemeies // the tens mean that we always have a value between 10 and 150, no less.
 
-          let randomX = Math.floor(Math.random() * this.height - randomSize) + randomSize; // the minus at the end makes it so that the squares are always on screen
+          let randomX = Math.floor(Math.random() * (200 - 100) + 100); // the minus at the end makes it so that the squares are always on screen
           
-          this.enemies.push(
-              new Component(new Enemy(randomX, 0, randomSize, 30, "orange", this.ctx)) //x, y, w, h, color, ctx
-              );     
+          this.enemies.push(new Enemy(randomX, 0, randomSize, 30, "orange", this.ctx)); //x, y, w, h, color, ctx
+  
 
     }
   }
@@ -73,3 +72,4 @@ class Game{
   }
 
 }
+

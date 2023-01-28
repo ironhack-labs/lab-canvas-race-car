@@ -41,7 +41,7 @@ class Component{
         return this.x + this.w; 
     }
 
-    crashWith(enemy){ // if we colide with any of the enemies sides it returns false.
+    crashWith(enemy){ // if we colide with any of the enemies sides it returns false
         return !(
             this.bottom() < enemy.top() || 
             this.top() > enemy.bottom() ||
