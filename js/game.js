@@ -10,6 +10,7 @@ class Game{
       this.intervalId = null; //We don't declare an amount here, because we don't want the game to automatically start.
       this.frames = 0; // can be used to increase score, if 60 frames pass it's 1 minute.
       this.enemies = [];
+      this.backgroundImage = new Image ();
 
   }
 
@@ -36,12 +37,13 @@ class Game{
   }
 
   clear(){
-      this.ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height); //we use this. because it's inside the object.
+      this.backgroundImage.src = "../images/road.png";
+      this.ctx.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
   }
 
   updateObstacles(){
       for(let i = 0; i < this.enemies.length; i++ ){
-          this.enemies[i].y -= 1;
+          this.enemies[i].y += 1;
           this.enemies[i].draw();
       }
       
@@ -52,10 +54,10 @@ class Game{
       if(this.frames % 120 === 0){
           let randomSize = Math.floor(Math.random() * 150 - 10) + 10; // this is to have random squares as enemeies // the tens mean that we always have a value between 10 and 150, no less.
 
-          let randomY = Math.floor(Math.random() * this.height - randomSize) + randomSize; // the minus at the end makes it so that the squares are always on screen
+          let randomX = Math.floor(Math.random() * this.height - randomSize) + randomSize; // the minus at the end makes it so that the squares are always on screen
           
           this.enemies.push(
-              new Component(new Enemy(randomX, randomSize, randomSize, "orange", this.ctx))
+              new Component(new Enemy(randomX, 0, randomSize, 30, "orange", this.ctx)) //x, y, w, h, color, ctx
               );     
 
     }
