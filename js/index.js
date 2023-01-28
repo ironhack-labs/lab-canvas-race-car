@@ -1,6 +1,13 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 
+window.onload = () => {
+  document.getElementById('start-button').onclick = () => {
+  startGame();
+  }
+};
+
+
  // Carga de imagenes
  const fondo = new Image  ();
  fondo.src = "../images/road.png"
@@ -8,7 +15,7 @@ const ctx = canvas.getContext("2d");
  const auto = new Image ()
  auto.src = "../images/car.png"
 
-//  Arreglo de Obsataculos
+//  Arreglo de Obstaculos
  const barreras = []
 
 //  Auto- Clase
@@ -44,7 +51,7 @@ const ctx = canvas.getContext("2d");
 
   }
 
-  // Obsataculos - Clase
+  // Obstaculos - Clase
   class Barrera {
     constructor(x,y){
       this.x = x;
@@ -53,27 +60,12 @@ const ctx = canvas.getContext("2d");
 
     dibujarse(){
       this.y += 1
-      ctx.fillRect (this.x, this.y, 100, 18)
+      ctx.fillRect(this.x, this.y, 150, 30)
       ctx.fillStyle = ("#FF0000")
     }
 
   }
 
-  // Instancia
-  const coche = new Auto (225 , 600 , 50, 80)
-
-
-  window.onload = () => {
-    document.getElementById('start-button').onclick = () => {
-    startGame();
-    
-    }
-  };
-
-  function startGame() {
-    animate()
-
-    }
 
   document.addEventListener('keydown', (evento) => {
     switch(evento.key){
@@ -87,35 +79,46 @@ const ctx = canvas.getContext("2d");
             break;
       }
     })
-  
 
-  function animate (){
-      ctx.clearRect(0 ,0 , canvas.width, canvas.height)
-      ctx.drawImage(fondo, 0, 0, canvas.width, canvas.height)
 
-      coche.dibujarse()
+  // Instancia
+  const coche = new Auto (225 , 600 , 50, 80)
 
-      barreras.forEach ((barrera) => {
-        barrera.dibujarse()
-      })
+  function startGame() {
+    ctx.clearRect(0 ,0 , canvas.width, canvas.height)
+    ctx.drawImage(fondo, 0, 0, canvas.width, canvas.height)
+    coche.dibujarse()
 
-      setInterval (() => {
-        const a = new Barrera (100, 0 )
-        barreras.push(a)
-      }, 1000)
+    barreras.forEach ((barrera) => {
+      barrera.dibujarse()
 
-      window.requestAnimationFrame(animate)
-    }    
+      if (barrera.x <= auto.x){
+        alert("Chocaste")
+      }
+    })
+
+
+    window.requestAnimationFrame(startGame)
+    }
+
+    // Creacion de barreras
+    setInterval (() => {
+      const posicionX = Math.floor(Math.random() * 300)
+      if (posicionX <= 650 && posicionX >= 100){
+        const barrera = new Barrera (posicionX, 0 )
+        barreras.push(barrera)
+      }
+    }, 970)
 
 
   //   function creacionObstaculos (){
-      // setInterval(() => {
-      //     const posicionX = Math.floor(Math.random() * 100)
-      //     if (posicionX <= 225 && posicionX >= 600) {
-      //       const a = new Barrera (posicionX, 0  )
-      //       barreras.push(a)
-      //     }
-      // }, 1000)
+  //     setInterval(() => {
+  //         const posicionX = Math.floor(Math.random() * 100)
+  //         if (posicionX <= 225 && posicionX >= 600) {
+  //           const barrera = new Barrera (posicionX, 0  )
+  //           barreras.push(barrera)
+  //         }
+  //     }, 1000)
   // }
 
 
