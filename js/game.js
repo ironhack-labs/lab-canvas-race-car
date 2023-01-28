@@ -11,6 +11,7 @@ class Game{
       this.frames = 0; // can be used to increase score, if 60 frames pass it's 1 minute.
       this.enemies = [];
       this.backgroundImage = new Image ();
+      this.score = 0;
 
   }
 
@@ -51,7 +52,7 @@ class Game{
       //which we only want to do every 120 frames(2 seconds)
 
       
-      if(this.frames % 200 === 0){
+      if(this.frames % 150 === 0){
           let randomSize = Math.floor(Math.random() *  (250 - 100) + 100); // this is to have random squares as enemeies // the tens mean that we always have a value between 10 and 150, no less.
 
           let randomX = Math.floor(Math.random() * (200 - 100) + 100); // the minus at the end makes it so that the squares are always on screen
@@ -61,12 +62,31 @@ class Game{
 
     }
   }
+  drawScore() {
+    ctx.font = "20px Helvetica";
+    ctx.fillStyle = "white";
+    ctx.fillText(`Score: ${this.score}`, 80, 30);
+  }
+
+  updateScore() {
+    if (this.frames % 10 === 0) {
+      this.score++;
+    }
+  }
 
   checkGameOver(){
       const crashed = this.enemies.some((enemy) => {
           return this.player.crashWith(enemy);
       });
       if(crashed){
+        ctx.fillStyle = "black";
+        ctx.fillRect(50, 200, 400, 250);
+        ctx.font = "32px Helvetica";
+        ctx.fillStyle = "red";
+        ctx.fillText(`GAME OVER`, 150, 300);
+        ctx.fillStyle = "white";
+        ctx.fillText(`Your final score`, 135, 350);
+        ctx.fillText(`${this.score}`, 230, 400);
           this.stop();
       }
   }

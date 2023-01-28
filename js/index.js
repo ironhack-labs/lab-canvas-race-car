@@ -22,6 +22,7 @@ startButton.onclick = function(){
 document.addEventListener("keydown", (e) => {
   switch(e.code){
 
+      
       case "ArrowLeft": 
       player.speedX -= 1
       break;
