@@ -34,8 +34,8 @@ window.onload = () => {
   function startGame() {
     gameStarted = true;
     let score = 0;
+    carPosx = 215;
     let roadImage = document.createElement("img");
-    let keyPress = false;
 
     roadImage.src = "images/road.png";
     roadImage.addEventListener("load", ()=> {
@@ -47,27 +47,14 @@ window.onload = () => {
       ctx.drawImage(carImage, carPosx, carPosy, carWidth, carHeight);
     })
 
-    document.getElementsByTagName("body")[0].addEventListener("keydown", (event)=>{
-      if(!keyPress) {
-        switch(event.key){
-          case "ArrowLeft":
-            if(carPosx > 40) carPosx -= 10;
-            keyPress = true;
-            break;
-          case "ArrowRight": 
-            if(carPosx < (canvas.width - carWidth) - 40) carPosx += 10;
-            keyPress = true;
-            break;
-        }
-      }
-    })
+    
 
-    function print() {
+    function printBackgroundCar() {
       ctx.drawImage(roadImage, 0, 0, canvas.width, canvas.height);
       ctx.drawImage(carImage, carPosx, carPosy, carWidth, carHeight);
     }
 
-    function addScore() {
+    function PrintScore() {
       ctx.fillStyle = "white";
       ctx.font = '40px serif';
       ctx.fillText(`Score: ${score}`, 70, 50);
@@ -84,45 +71,48 @@ window.onload = () => {
       ctx.font = '52px serif';
       ctx.fillText(`Your final score`, 90, 360);
       ctx.fillText(`${score}`, 220, 420);
-      /* console.log("antes: ", identificador); */
       clearInterval(identificador);
-      /* console.log("despues: ", identificador); */
-      /* document.getElementsByTagName("body")[0].removeEventListener("keydown", "keydown", (event)=>{null}); */
-      //reset variables para reiniciar juego
-
       gameStarted = false;  
-      carPosx = 215;
       count = 0;
     }
 
     let update = ()=>{
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      count ++;
-      keyPress = false;
-  
+      ctx.clearRect(0, 0, canvas.width, canvas.height);   //clear window
+      
+      count ++;             //add obstacles in obstaclesArr
       if (count == 70) {
         score += 5;
         count = 0;
         obstaclesArr.push(new Obstacles());
       }
 
-      print();
+      printBackgroundCar();  //print background and car images
       obstaclesArr.forEach((obstacle) => {
         obstacle.y += 3;
-        obstacle.print();
+        obstacle.print();   //print all obstacles available in obstaclesArr//
         if((carPosy) < (obstacle.y + obstacle.height) && (carPosy + carHeight) > (obstacle.y)) {  // y axis restrictions
           if((carPosx + carWidth) > (obstacle.x) && (carPosx) < (obstacle.x + obstacle.width)) {  // x axis restrictions
             gameOver();
           }
         } 
-        if(obstaclesArr.length > 4) obstaclesArr.shift();
+        if(obstaclesArr.length > 4) obstaclesArr.shift();   //delate useless obstacles 
       });
-      addScore();
+      PrintScore(); 
     }
 
     let identificador = setInterval(()=>{
       update();
     }, 40);
   }
+  document.getElementsByTagName("body")[0].addEventListener("keydown", (event)=>{
+    switch(event.key){
+      case "ArrowLeft":
+        if(carPosx > 40) carPosx -= 10;
+        break;
+      case "ArrowRight": 
+        if(carPosx < (canvas.width - carWidth) - 40) carPosx += 10;
+        break;
+    }
+  })
 };
 
