@@ -36,3 +36,14 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+.none  {
+  display: none !important;
+}
+
+#gameOver{
+  background-color: red;
+  color: white;
+}
+
+
