@@ -27,8 +27,7 @@ const fondo = new Image  ();
       this.w = w;
       this.h = h;
       this.img = auto;
-      this.velocidad = 17;
-    }
+      this.velocidad = 35}
 
     dibujarse (){
       ctx.drawImage(this.img, this.x, this.y, this. w, this.h)
