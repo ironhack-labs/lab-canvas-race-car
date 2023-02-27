@@ -105,5 +105,45 @@ window.onload = () => {
         }
         obstacleArray.push(obstacle);
       }
+      let animate; 
+      
+       function renderObstacle(){
+        //Loops trough the obstacleArray and renders each object as an obstacle
+           obstacleArray.forEach((item,index) => {
+            if(item.y < 420){
+              //Adds +1 to each obstacle Y property
+              item.y += 1;
+              raceGame.loadBackground();
+              raceCar.defaultPosition();
+              //Renders the obstacleArray's other objects as well
+              for(let i = 0; i < obstacleArray.length; i++){
+                ctx.fillStyle = 'black';
+                ctx.font = '20px serif';
+                 ctx.textRendering = raceCar.score;
+               ctx.fillText(`${raceCar.score}`, 5, 20);
+               ctx.fillStyle = '#A00917';
+                ctx.fillRect(obstacleArray[i].x, obstacleArray[i].y, obstacleArray[i].width, obstacleArray[i].height);
+              }
+           }else{
+            //If the obstacle passes besides the player it increments by +1
+            raceCar.score++;
+            console.log(raceCar.score);
+              obstacleArray.splice(index,1);
+              //Checks if the obstacle has type of 'Right'
+              if(item.type === 'Right'){
+                setTimeout(() => {
+                  generateRightObstacle();
+                }, 1300)
+                //Checks if the obstacle has type of 'Left'
+              }else if(item.type === 'Left'){
+                setTimeout(() => {
+                  generateLeftObstacle()
+                }, 1300)
+               
+              }
+           }
+          })
+          animate = requestAnimationFrame(renderObstacle);
+       }
   }
 };
