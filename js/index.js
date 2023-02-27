@@ -145,5 +145,31 @@ window.onload = () => {
           })
           animate = requestAnimationFrame(renderObstacle);
        }
+
+       setInterval(() => {
+        //Checks if the car and the obstacle is on the same Y Coordinates
+        if(raceCar.y === Math.floor(obstacleArray[0].y)){
+        
+          if(obstacleArray[0].type === 'Left'){
+            const leftEndPosition = obstacleArray[0].x + obstacleArray[0].width;
+            const rightEndPosition = obstacleArray[0].x;
+            //If the Car and the obstacle are on the same X coordinates it's crashes
+            if(raceCar.x <= leftEndPosition){
+              Crashed();
+              
+            }
+          }else if(obstacleArray[0].type === 'Right'){
+            const leftEndPosition = obstacleArray[0].x - obstacleArray[0].width;
+            const rightEndPosition = obstacleArray[0].x;
+            //If the Car and the obstacle are on the same X coordinates it's crashes
+            if(raceCar.x >= rightEndPosition - 25){
+              Crashed();
+            }else{
+              console.log(raceCar.x);
+              console.log(obstacleArray[0].x);
+            }
+          }
+        }
+       },10)
   }
 };
