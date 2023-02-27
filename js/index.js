@@ -41,6 +41,15 @@ window.onload = () => {
           raceGame.loadBackground();
           this.checkPosition()
         }
+          //Moves the car to the left & checks if car is inside the Game
+          moveLeft(){
+            const car = new Image();
+            car.src = this.img;
+            this.x -= 20;
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            raceGame.loadBackground();
+            this.checkPosition();
+          }
       }
   }
 };
