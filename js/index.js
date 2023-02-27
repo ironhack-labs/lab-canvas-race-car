@@ -80,5 +80,18 @@ window.onload = () => {
           raceCar.moveLeft();
         }
       })
+
+      //Generates Obstacles on the left side with random width
+      function generateLeftObstacle(){
+        let randomWidth = Math.floor(Math.random() * (145 - 80) + 80);
+        const obstacle = {
+            x:40,
+            y:0,
+            width: randomWidth,
+            height:20,
+            type: 'Left'
+        }
+        obstacleArray.push(obstacle);
+      }
   }
 };
