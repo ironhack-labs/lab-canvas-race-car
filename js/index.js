@@ -188,5 +188,21 @@ window.onload = () => {
        ctx.fillText(`${raceCar.score}
        `, 120, 148);
        }
+       //Loads default four obstacles for the ObstacleArray
+       function loadDefaultObstacles(){
+        generateLeftObstacle()
+        setTimeout(() => {
+          generateRightObstacle()
+        }, 2000)
+        setTimeout(() => {
+          generateLeftObstacle();
+        }, 4000)
+        setTimeout(() => {
+          generateRightObstacle()
+        }, 6000)
+        setTimeout(() => {
+          generateLeftObstacle();
+        }, 7700)
+      }
   }
 };
