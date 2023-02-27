@@ -50,6 +50,12 @@ window.onload = () => {
             raceGame.loadBackground();
             this.checkPosition();
           }
+           //Places car on the default position
+        defaultPosition(){
+          const car = new Image();
+          car.src = this.img;
+          ctx.drawImage(car, this.x, this.y, 30, 50);
+        }
       }
   }
 };
