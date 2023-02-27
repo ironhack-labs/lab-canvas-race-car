@@ -145,31 +145,48 @@ window.onload = () => {
           })
           animate = requestAnimationFrame(renderObstacle);
        }
-
-       setInterval(() => {
-        //Checks if the car and the obstacle is on the same Y Coordinates
-        if(raceCar.y === Math.floor(obstacleArray[0].y)){
-        
-          if(obstacleArray[0].type === 'Left'){
-            const leftEndPosition = obstacleArray[0].x + obstacleArray[0].width;
-            const rightEndPosition = obstacleArray[0].x;
-            //If the Car and the obstacle are on the same X coordinates it's crashes
-            if(raceCar.x <= leftEndPosition){
-              Crashed();
-              
-            }
-          }else if(obstacleArray[0].type === 'Right'){
-            const leftEndPosition = obstacleArray[0].x - obstacleArray[0].width;
-            const rightEndPosition = obstacleArray[0].x;
-            //If the Car and the obstacle are on the same X coordinates it's crashes
-            if(raceCar.x >= rightEndPosition - 25){
-              Crashed();
-            }else{
-              console.log(raceCar.x);
-              console.log(obstacleArray[0].x);
+       CheckCollision();
+       function CheckCollision(){
+         setInterval(() => {
+          //Checks if the car and the obstacle is on the same Y Coordinates
+          if(raceCar.y === Math.floor(obstacleArray[0].y)){
+          
+            if(obstacleArray[0].type === 'Left'){
+              const leftEndPosition = obstacleArray[0].x + obstacleArray[0].width;
+              const rightEndPosition = obstacleArray[0].x;
+              //If the Car and the obstacle are on the same X coordinates it's crashes
+              if(raceCar.x <= leftEndPosition){
+                Crashed();
+                
+              }
+            }else if(obstacleArray[0].type === 'Right'){
+              const leftEndPosition = obstacleArray[0].x - obstacleArray[0].width;
+              const rightEndPosition = obstacleArray[0].x;
+              //If the Car and the obstacle are on the same X coordinates it's crashes
+              if(raceCar.x >= rightEndPosition - 25){
+                Crashed();
+              }else{
+                console.log(raceCar.x);
+                console.log(obstacleArray[0].x);
+              }
             }
           }
-        }
-       },10)
+         },10)
+       }
+       function Crashed(){
+        ctx.renderText = raceCar.score;
+       cancelAnimationFrame(animate);
+       ctx.clearRect(0,0, 282, 441);
+       ctx.fillStyle = 'black';
+       ctx.fillRect(0,0, 282, 441);
+       ctx.fillStyle = 'red';
+       ctx.font = '20px serif';
+       ctx.fillText('Game Over!', 80, 100);
+       ctx.fillStyle = 'white';
+       ctx.fillText(`Your Final Score,
+       `, 65, 125);
+       ctx.fillText(`${raceCar.score}
+       `, 120, 148);
+       }
   }
 };
