@@ -71,5 +71,14 @@ window.onload = () => {
           }
         }
       }
+
+      //Check for Keypresses Left Arrow/Right Arrow
+      document.addEventListener("keydown", (event) => {
+        if(event.keyCode === 39){
+          raceCar.moveRight();
+        }else if(event.keyCode === 37){
+          raceCar.moveLeft();
+        }
+      })
   }
 };
