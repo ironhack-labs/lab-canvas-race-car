@@ -10,5 +10,18 @@ window.onload = () => {
       
       const canvasBg = new Image();
       canvasBg.src = "../images/road.png";
+
+      class gameArea {
+        constructor(player){
+          this.player = player;
+          this.y = 0;
+          this.img = canvasBg;
+        }
+        //Loads the Background for The Game
+        loadBackground(){
+          ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+          ctx.drawImage(this.img, 0, 0);
+        }
+      }
   }
 };
