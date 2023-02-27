@@ -93,5 +93,17 @@ window.onload = () => {
         }
         obstacleArray.push(obstacle);
       }
+      //Generates Obstacles on the right side with random width
+      function generateRightObstacle(){
+        let randomWidth = Math.floor(Math.random() * (145 - 80) + 80);
+        const obstacle = {
+            x:140,
+            y:0,
+            width: randomWidth,
+            height:20,
+            type: 'Right'
+        }
+        obstacleArray.push(obstacle);
+      }
   }
 };
