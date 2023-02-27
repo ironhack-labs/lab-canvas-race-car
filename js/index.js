@@ -204,5 +204,16 @@ window.onload = () => {
           generateLeftObstacle();
         }, 7700)
       }
+      const raceCar = new Car(120,360);
+        const raceGame = new gameArea(raceCar);
+        //Generates game on onclick event
+        function generateGame(){         
+          raceGame.loadBackground();
+          raceCar.defaultPosition();
+           loadDefaultObstacles();
+           renderObstacle()
+        }
+
+        generateGame();
   }
 };
