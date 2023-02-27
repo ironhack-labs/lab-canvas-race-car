@@ -56,6 +56,20 @@ window.onload = () => {
           car.src = this.img;
           ctx.drawImage(car, this.x, this.y, 30, 50);
         }
+         //Checks if the car remains inside the set Coordinates
+         checkPosition(){
+          const car = new Image();
+          car.src = this.img;
+          if(this.x < 220 && this.x > 35){
+            ctx.drawImage(car, this.x, this.y, 30, 50);
+          }else if(this.x > 190){
+            this.x = 210;
+            ctx.drawImage(car, this.x, this.y, 30, 50);
+          }else if(this.x < 36){
+            this.x = 35;
+            ctx.drawImage(car, this.x, this.y, 30, 50);
+          }
+        }
       }
   }
 };
