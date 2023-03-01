@@ -36,3 +36,16 @@ body button {
     float: left;
     padding: 20px 0px;
 }
+
+#game-board img{
+  width: 500px;
+  height: 700px;
+  right: 100px;
+ 
+}
+
+canvas{
+  border:1px solid black;
+  position: absolute;
+  
+}
