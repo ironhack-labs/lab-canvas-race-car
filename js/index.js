@@ -3,32 +3,34 @@ class obstacle {
   fill color, x and y coordinates that
   will be used to initialize class properties.
   */
-  constructor(cColor, x, y) {
-    this.color = cColor;
-    this.x = x;
+  constructor(color, y) {
+    this.color = color;
+    this.x = random(50, 250);
     this.y = y;
+    this.w = random(100, 230);
+    this.initialY = y;
     this.speed = 0;
   }
 
   start(speed) {
-    // method expects parameter!
     this.speed = speed;
   }
 
   display() {
     // method!
     fill(this.color);
-    rect(this.x, this.y, 100, 20);
+    rect(this.x, this.y, this.w, 20);
   }
 
   move() {
-    //animates the shapes in a straight line
+    // animates the shapes in a straight line
     this.y += this.speed;
 
-    //moves rect randomly back when they move off the canvas
+    // moves rect back when it moves off the canvas
     if (this.y > 700) {
-      this.y = random(-500, -100) + random(100, 500);
-      this.x = random(50, 700);
+      this.y = -100;
+      this.x = random(50, 250);
+      this.w = random(100, 230);
     }
   }
 }
@@ -36,9 +38,8 @@ class obstacle {
 let img;
 let car;
 let carX = 0;
-const initialX = 200;
 
-////obstacles
+// obstacles
 
 let obs1;
 let obs2;
@@ -52,10 +53,10 @@ function preload() {
 
 function setup() {
   createCanvas(480, 740);
-  obs1 = new obstacle("#cf2558", 70, 300);
-  obs2 = new obstacle("#cf2558", 70, 300);
-  obs3 = new obstacle("#cf2558", 70, 300);
-  obs4 = new obstacle("#cf2558", 70, 300);
+  obs1 = new obstacle("#cf2558", -150);
+  obs2 = new obstacle("#cf2558", -350);
+  obs3 = new obstacle("#cf2558", -550);
+  obs4 = new obstacle("#cf2558", -750);
 
   obs1.start(1);
   obs2.start(1);
@@ -84,7 +85,8 @@ function draw() {
   obs3.move();
   obs4.move();
 }
-//keybord movement
+
+//keyboard movement
 function keyPressed() {
   console.log("Hello some key was pressed!");
   console.log(keyCode);
