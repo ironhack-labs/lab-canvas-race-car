@@ -24,43 +24,8 @@ function setup(){
     car = new Car() 
 }
 
-
-class Car {
-    constructor() {
-        this.x = 218;
-        this.y = 570;
-        this.w = 60;
-        this.h = 90
-    }
-
-    draw(){
-   
-        image(imgCar, this.x, this.y,this.w ,this.h,0 ,0);
-    }
-    
-    moveRight() {
-        this.x += 15;
-    }
-    
-    moveLeft() {
-        this.x -= 15;
-    }
-    
-}
-
-function keyPressed(){
-    if (keyCode === LEFT_ARROW) {
-        car.moveLeft()
-    } 
-    
-    if (keyCode === RIGHT_ARROW) {
-        car.moveRight()
-    }
-}
-
 function draw(){
     image(imgRoad,0,0,500,690);
-    // image(imgCar, carX, carY,carW,carH,0,0)
     car.draw();
     
     obstacle.draw();
@@ -68,8 +33,6 @@ function draw(){
     collisionDetection(car, obstacle)
    
 }
-
-
  
 function collisionDetection(rect1, rect2) {
 
