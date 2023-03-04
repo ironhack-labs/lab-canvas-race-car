@@ -64,6 +64,21 @@ function setup() {
   obs4.start(1);
 }
 
+function collisionDetection(car, obstacle) {
+  if (
+    rect1.x < rect2.x + rect2.w &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
+    rect1.h + rect1.y > rect2.y
+  ) {
+    // Collision detected!
+    console.log("Boom");
+  } else {
+    // No collision
+    this.color("blue");
+  }
+}
+
 function draw() {
   background(220);
   image(img, 0, 0, 482, 741);
@@ -84,6 +99,11 @@ function draw() {
   obs2.move();
   obs3.move();
   obs4.move();
+
+  textSize(40);
+  strokeWeight(0);
+  text("Score:", 40, 40);
+  console.log(text);
 }
 
 //keyboard movement
