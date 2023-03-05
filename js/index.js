@@ -18,9 +18,10 @@ window.onload = () => {
       let carY = canvas.height - carHeight - 10;
   
       const obstacles = [];
-      const obstacleWidth = 25;
-      const obstacleHeight = 60;
+      const obstacleWidth = 75;
+      const obstacleHeight = 25;
       const obstacleSpeed = 5;
+
   
       let score=0;
       
@@ -49,7 +50,8 @@ window.onload = () => {
          // Draw and update the obstacle
         for (let i = 0; i < obstacles.length; i++) {
           const obstacle = obstacles[i];
-          obstacle.y += obstacleSpeed;
+         obstacle.y += obstacleSpeed;
+        
           
           ctx.fillStyle = "red";
           ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
@@ -60,8 +62,14 @@ window.onload = () => {
               carY < obstacle.y + obstacle.height &&
               carY + carHeight > obstacle.y) {
             
-                // GO alert
-            alert(`Game over! Your score is ${score}`);
+                // Game over alert
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = "25px Arial";
+                ctx.fillStyle = "white";
+                ctx.textAlign = "center";
+                ctx.fillText(`Game Over! Your score is ${score}`, canvas.width/2, canvas.height/2);
+                return;
         
           }
   
@@ -78,8 +86,8 @@ window.onload = () => {
         ctx.fillText(`Score: ${score}`, 10, 50);
   
         // Update the positions of the road images
-        roadY1 += 5;
-        roadY2 += 5;
+        roadY1 += 10;
+        roadY2 += 10;
   
         // If the first road image has moved out of the canvas, resetting its position above the second image
         if (roadY1 > canvas.height) {
