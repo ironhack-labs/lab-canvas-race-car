@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="styles/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.js"></script>
+    <script src="js/index.js"></script>
     <title>Race Car</title>
   </head>
   <body>
     <div class="game-intro">
       <img src="./images/logo.png" alt="" class="logo-img" />
       <br />
-      <button id="start-button">StartGame</button>
+      <button id="start-button">Start Game</button>
       <p>Use the left and right arrow to control the car!</p>
       <img src="./images/arrows.png" alt="" class="arrows-img" />
     </div>
 
     <div id="game-board">
-      <canvas id="canvas" width="500" height="700"></canvas>
+      <div id="game-startscreen">
+        <div class="text">
+          <strong>LET’S RACE!</strong>
+          <p>Click the button on the left <br>to start the game</p>
+        </div>
+      </div>
     </div>
 
     <script type="text/javascript" src="js/index.js"></script>
