@@ -2,7 +2,9 @@ body {
   padding: 0;
   text-align: center;
 }
-
+.background-image{
+  src: "./images/logo.png";
+}
 .game-intro {
   float: left;
   padding: 0% 10%;
