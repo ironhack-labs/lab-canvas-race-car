@@ -71,7 +71,7 @@ class Obstacle {
   }
   
   move() {
-    this.y += 2.5;
+    this.y += 1.5;
   }
   
   collide() {
