@@ -2,6 +2,30 @@
 
 # LAB | Canvas Race Car
 
+<details>
+  <summary>
+   <h2>Learning Goals</h2>
+  </summary>
+
+  This exercise is designed to allow you practice and apply the concepts and techniques taught in class. 
+
+  Upon completion of this exercise, you will be able to:
+
+  - Use Canvas API to create a simple 2d game,
+  - Implement game logic and UI using HTML, CSS, and JavaScript, including start, game, and end game screens.
+  - Draw shapes using Canvas API methods,
+  - Change the style and color of the Canvas shapes,
+  - Create animations in Canvas, using a game loop that continuously updates the screen.
+  - Load and display images of different formats on canvas,
+  - Display text on canvas,
+  - Handle user input and events to control game elements,
+  - Create and display randomly generated obstacles to add complexity to the game.
+
+  <br>
+  <hr> 
+
+</details>
+
 ## Introduction
 
 We are ready to start making some games with `canvas` help, so in this first exercise, we will a **Car Race** using some basic animations we learned today.
