@@ -8,32 +8,51 @@
 
 let imgRoad;
 let imgCar;
-let obstacle;
 let car;
+let obstacles = [];
+let score = 0;
 
 
 function preload(){
-    imgRoad = loadImage('/images/road.png');
-    imgCar = loadImage('/images/car.png');
-    
+  imgRoad = loadImage('/images/road.png');
+  imgCar = loadImage('/images/car.png');
+  
 }
 
 function setup(){
-    createCanvas(500,690);
-    obstacle = new Obstacles();
-    car = new Car() 
+  createCanvas(500,690);
+  car = new Car() 
 }
 
 function draw(){
-    image(imgRoad,0,0,500,690);
-    car.draw();
-    
-    obstacle.draw();
 
-    collisionDetection(car, obstacle)
-   
+  image(imgRoad,0,0,500,690);
+  fill('#FFFFFF')
+  text(`Score: ${score}`, 70 ,30);
+  textSize(24)
+  car.draw();
+  obstacles.forEach((obstacle) => {
+    obstacle.y += 2;
+    obstacle.draw()
+    if (collisionDetection(car, obstacle)) { 
+      noLoop()
+      return; 
+   }
+  }) 
 }
- 
+
+function createObstacle () {
+  let obstacle = new Obstacles()
+  obstacles.push(obstacle);
+    }
+  setInterval(createObstacle, 2000); 
+
+    
+function increaseScore () {
+      score++;
+    }
+    setInterval(increaseScore, 500);
+
 function collisionDetection(rect1, rect2) {
 
   if (
@@ -42,10 +61,14 @@ function collisionDetection(rect1, rect2) {
     rect1.y < rect2.y + rect2.h &&
     rect1.h + rect1.y > rect2.y
   ) {
-    console.log(alert("Game Over"));
-
-    // let gameOverH1 = document.createElement("h1");
-    // gameOverH1.innerHMTL = "Game Over"
+    
+    background('black')
+    textSize(42)
+    text('Game Over', 150, 345)
+    textSize(36)
+    text(`Score: ${score}`, 180, 450)
+    textAlign(CENTER, CENTER)^
+    noLoop()
   } 
 }
 

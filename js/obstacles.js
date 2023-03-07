@@ -10,7 +10,8 @@ class Obstacles {
         fill('#990000')
         rect(this.x, this.y, this.w, this.h)
         this.y ++;
-    }
+ }
+
 }
 
 
