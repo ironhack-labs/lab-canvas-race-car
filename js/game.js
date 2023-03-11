@@ -39,18 +39,30 @@ const Game = {
       this.clear();
       this.drawAll();
     }, 1000 / this.FPS);
+    this.generateObstacles();
+    this.clearObstacles();
   },
 
   reset() {
     this.background = new Road(this.ctx, this.width, this.height);
     this.player = new Car(this.ctx, this.width, this.height, this.keys);
+    this.obstacles = [];
   },
 
   drawAll() {
     this.background.draw();
     this.player.draw();
+    this.obstacles.forEach(function (obs) {
+      obs.draw(); // es un array de obstaculos, tiene que recorrerlo y pintar 1 a 1
+    });
   },
   clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
+
+  generateObstacles() { // utilizar framesCounter
+
+  },
+
+  clearObstacles() {},
 };
