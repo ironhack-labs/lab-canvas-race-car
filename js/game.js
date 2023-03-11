@@ -39,9 +39,11 @@ const Game = {
 
     reset(){
         this.background = new Background (this.ctx, this.width, this.height)
+        this.player = new Player (this.ctx, this.width, this.height, this.keys)
     },
 
     drawAll(){
         this.background.draw();
+        this.player.draw();
     }
 }
