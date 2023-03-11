@@ -11,7 +11,13 @@ class Road {
   }
   draw() {
     if (!this.image) return;
-    ctx.drawImage(this.image, this.x, this.y, myGameArea.canvas.width, myGameArea.canvas.height);
+    ctx.drawImage(
+      this.image,
+      this.x,
+      this.y,
+      myGameArea.canvas.width,
+      myGameArea.canvas.height
+    );
   }
 }
 
@@ -34,23 +40,61 @@ class Car {
   newPos() {
     this.x += this.speedX;
   }
+  top() {
+    return this.y;
+  }
+  right() {
+    return this.x + this.width;
+  }
+  left() {
+    return this.x;
+  }
+  bottom() {
+    return this.height + this.y;
+  }
+  checkCrashWith(obstacle) {
+    return false;
+  }
+}
+class Obstacle {
+  constructor(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.x = x;
+    this.y = y;
+  }
+
+  draw() {
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillStyle = this.color;
+  }
+  top() {
+    return this.y;
+  }
+
+  right() {
+    return this.x + this.width;
+  }
+  left() {
+    return this.x;
+  }
+  bottom() {
+    return this.height + this.y;
+  }
 }
 
-window.onload = () => {
-  document.getElementById("start-button").onclick = () => {
-    startGame();
-  };
-};
-
 const myGameArea = {
-  canvas: document.querySelector('#canvas'),
+  canvas: document.querySelector("#canvas"),
   frames: 0,
+  gameOver: false,
 };
 
 const ctx = myGameArea.canvas.getContext("2d");
 
 const car = new Car(230, 580);
 const road = new Road(0, 0);
+const obstacles = [];
 
 function startGame() {
   updateGame();
@@ -61,9 +105,41 @@ function updateGame() {
   road.draw();
   car.draw();
   car.newPos();
-  requestAnimationFrame(updateGame);
-  updateObstacles()
+  updateObstacles();
+  checkGameOver();
+  if (!myGameArea.gameOver) requestAnimationFrame(updateGame);
 }
+
+function updateObstacles() {
+  myGameArea.frames += 1;
+  if (myGameArea.frames % 150 === 0) {
+    let minWidth = 20;
+    let maxWidth = 200;
+    let width = Math.floor(
+      Math.random() * (maxWidth - minWidth + 1) + minWidth
+    );
+    obstacles.push(
+      new Obstacle(width, 20, "red", 40 + Math.floor(Math.random() * 420), 0)
+    );
+  }
+
+  obstacles.forEach((obstacle) => {
+    obstacle.draw();
+    obstacle.y += 1;
+  });
+}
+
+function checkGameOver() {
+  myGameArea.gameOver = obstacles.some((obstacle) =>
+    car.checkCrashWith(obstacle)
+  );
+}
+
+window.onload = () => {
+  document.getElementById("start-button").onclick = () => {
+    startGame();
+  };
+};
 
 document.addEventListener("keydown", function (event) {
   switch (event.code) {
@@ -85,41 +161,3 @@ document.addEventListener("keyup", function (event) {
       break;
   }
 });
-
-
-class Obstacle {
-  constructor(width, height, color, x, y) {
-    this.width = width;
-    this.height = height;
-    this.color = color;
-    this.x = x;
-    this.y = y;
-  }
-
-  draw() {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-    ctx.fillStyle = this.color
-  }
-}
-
-const obstacles = []
-
-function updateObstacles() {
-  myGameArea.frames += 1;
-  if (myGameArea.frames % 120 === 0) {
-    
-    let minWidth = 20;
-    let maxWidth = 200;
-    let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
-    
-    
-    obstacles.push(new Obstacle(width, 10, 'red', 40+Math.floor(Math.random()*420), 0));
-
-  
-  }
-  for (i = 0; i < obstacles.length; i++) {
-    obstacles[i].y -= -1;
-    obstacles[i].draw();
-  }
-
-}
