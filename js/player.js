@@ -5,16 +5,18 @@ class Player {
     this.gameWidth = gameW;
     this.gameHeight = gameH;
 
-    this.width = 5;
-    this.height = 5;
-
     this.image = new Image();
     this.image.src = "../images/car.png";
 
-    this.posX = 0;
-    this.posY = 0;
+    this.width = 50;
+    this.height = 100;
+    this.image.frames = 1;
+    this.image.framesIndex = 0;
 
-    this.velX = 1;
+    this.posX = 224;
+    this.posY = 550;
+
+    this.velX = 20;
 
     this.keys = keys;
 
@@ -22,21 +24,18 @@ class Player {
   }
 
   draw() {
-    this.ctx.drawImage(this.image, this.posX, this.posY);
+    this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
+
 
   setListeners() {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
-        case this.keys.TOP:
-          // Check if its on the floor 👀
-          if (this.posY >= this.posY0) {
-            this.jump();
-          }
+        case this.keys.RIGHT:
+          this.posX += this.velX;
           break;
-        case this.keys.SPACE:
-          // .shoot
-          this.shoot();
+        case this.keys.LEFT:
+          this.posX -= this.velX;
           break;
       }
     });
