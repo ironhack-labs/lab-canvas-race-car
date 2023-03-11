@@ -16,7 +16,7 @@ class Road {
 draw() {
     this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
     this.ctx.drawImage(this.image, this.posX, this.posY - this.height, this.width, this.height); 
-    // this.move()
+    this.move()
 
 }
 
