@@ -11,7 +11,7 @@ class Road {
   }
   draw() {
     if (!this.image) return;
-    ctx.drawImage(this.image, this.x, this.y, canvas.width, canvas.height);
+    ctx.drawImage(this.image, this.x, this.y, myGameArea.canvas.width, myGameArea.canvas.height);
   }
 }
 
@@ -41,8 +41,13 @@ window.onload = () => {
     startGame();
   };
 };
-const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
+
+const myGameArea = {
+  canvas: document.querySelector('#canvas'),
+  frames: 0,
+};
+
+const ctx = myGameArea.canvas.getContext("2d");
 
 const car = new Car(230, 580);
 const road = new Road(0, 0);
@@ -52,11 +57,12 @@ function startGame() {
 }
 
 function updateGame() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, myGameArea.canvas.width, myGameArea.canvas.height);
   road.draw();
   car.draw();
   car.newPos();
   requestAnimationFrame(updateGame);
+  updateObstacles()
 }
 
 document.addEventListener("keydown", function (event) {
@@ -65,7 +71,7 @@ document.addEventListener("keydown", function (event) {
       if (car.x > 40) car.speedX -= 1;
       break;
     case "ArrowRight":
-      if (car.x < canvas.width - 80) car.speedX += 1;
+      if (car.x < myGameArea.canvas.width - 80) car.speedX += 1;
       break;
   }
 });
@@ -79,3 +85,41 @@ document.addEventListener("keyup", function (event) {
       break;
   }
 });
+
+
+class Obstacle {
+  constructor(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.x = x;
+    this.y = y;
+  }
+
+  draw() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+    ctx.fillStyle = this.color
+  }
+}
+
+const obstacles = []
+
+function updateObstacles() {
+  myGameArea.frames += 1;
+  if (myGameArea.frames % 120 === 0) {
+    
+    let minWidth = 20;
+    let maxWidth = 200;
+    let width = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
+    
+    
+    obstacles.push(new Obstacle(width, 10, 'red', 40+Math.floor(Math.random()*420), 0));
+
+  
+  }
+  for (i = 0; i < obstacles.length; i++) {
+    obstacles[i].y -= -1;
+    obstacles[i].draw();
+  }
+
+}
