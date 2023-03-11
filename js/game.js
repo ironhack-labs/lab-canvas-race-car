@@ -36,11 +36,15 @@ const Game = {
   start() {
     this.reset();
     this.interval = setInterval(() => {
+      this.framesCounter++; // cuenta frames  y reinicia despues de 30000, se utiliza para generar obstaculos
+      if (this.framesCounter > 3000) {
+        this.framesCounter = 0;
+      }
       this.clear();
       this.drawAll();
+      this.generateObstacles();
+      this.clearObstacles();
     }, 1000 / this.FPS);
-    this.generateObstacles();
-    this.clearObstacles();
   },
 
   reset() {
@@ -60,9 +64,15 @@ const Game = {
     this.ctx.clearRect(0, 0, this.width, this.height);
   },
 
-  generateObstacles() { // utilizar framesCounter
-
+  generateObstacles() {
+      if(this.framesCounter % 300 === 0) { // mas pequeño = menos frecuencia, por lo tanto, mas rapido se generan
+        this.obstacles.push(new Obstacle(this.ctx))
+      }
   },
 
-  clearObstacles() {},
+  clearObstacles() {
+    this.obstacles = this.obstacles.filter(function(obs){
+        return obs.posY >= 0;
+      })
+  },
 };

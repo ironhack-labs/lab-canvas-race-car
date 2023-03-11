@@ -3,22 +3,22 @@ class Obstacle {
     this.ctx = ctx;
 
     // para que el width sea Random
-    this.minWidth = 70;
-    this.maxWidth = 200;
+    this.minWidth = 80;
+    this.maxWidth = 250;
     this.width = Math.floor(
       Math.random() * (this.maxWidth - this.minWidth + 1) + this.minWidth
     );
-    this.height = 10;
+    this.height = 30;
 
    // para que la posición en el eje x sea Random 
     this.minPosX = 80
-    this.maxPosX = gameWidth - 80;
+    this.maxPosX = 500 - 80;
     this.posX = Math.floor (
-        Math.random() * (maxPosX - this.minPosX + 1) + this.minPosX
+        Math.random() * (this.maxPosX - this.minPosX + 1) + this.minPosX
     );
-    this.posY = 0;
+    this.posY = 700 - 20;
 
-    this.velY = 10;
+    this.velY = 1;
   }
   draw() {
 
