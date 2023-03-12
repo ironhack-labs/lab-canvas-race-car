@@ -5,6 +5,7 @@ document.getElementById('start-button').onclick = () => {
 
 let carWidth = 50 ;
 let roadWidth = 425 ;
+let carHeight = 80 ;
 let limitRoadLeft = 40 ;
 let limitRoadRight = 465 ;
 
@@ -23,7 +24,7 @@ class Car {
     this.img.src = '../images/car.png';
   }
   draw(){
-    ctx.drawImage(this.img, this.x , this.y, carWidth, 80);
+    ctx.drawImage(this.img, this.x , this.y, carWidth, carHeight);
   }
 }
 
@@ -69,20 +70,27 @@ function clear () {
 }
 
 document.addEventListener('keydown', (e) => {
+  e.preventDefault();
   switch (e.keyCode) {
     case 38: // up arrow
+      if(car.y>=5){ 
       car.y -= 5;
-      console.log("up");
+      }
       break;
     case 40: // down arrow
+      if(car.y<=695-carHeight){
       car.y += 5;
+      }
       break;
     case 37: // left arrow
+      if(car.x >= limitRoadLeft+5){
       car.x -= 5;
-      console.log("left");
+      }
       break;
     case 39: // right arrow
+      if(car.x<=limitRoadRight-5-carWidth){
       car.x += 5;
+      }
       break;
   }
 });
@@ -91,7 +99,7 @@ function updateGameArea(){
   clear();
   //ctx.drawImage(road, 0, 0, 500, 700);
   car.draw();
-  if(frame % 120 === 0){
+  if(frame % 180 === 0){
     createObstacle();
   }
   frame+=1;
