@@ -10,7 +10,7 @@ class Background {
     this.posX = 0;
     this.posY = 0;
 
-    this.velY = 2;
+    this.velY = 5;
   }
   draw() {
     this.ctx.drawImage(this.image, this.posX, this.posY, this.w, this.h);

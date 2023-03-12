@@ -1,13 +1,13 @@
 class Obstacle {
   constructor(ctx, gameWidth) {
     this.ctx = ctx;
-    this.width = Math.floor(Math.random() * gameWidth - 100);
-    this.height = 5;
+    this.width = Math.floor(Math.random() * 200);
+    this.height = 20;
 
-    this.posX = gameWidth / 2;
+    this.posX = Math.floor(Math.random() * 187) + 60;
     this.posY = 0;
 
-    this.velY = 10;
+    this.velY = 5;
   }
 
   draw() {

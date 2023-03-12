@@ -46,11 +46,15 @@ const Game = {
     //create background
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
+    this.obstacles = [];
   },
 
   drawAll() {
     this.background.draw();
     this.player.draw();
+    this.obstacles.forEach((obs) => {
+      obs.draw();
+    });
   },
 
   clear() {

@@ -34,11 +34,17 @@ class Player {
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case this.keys.LEFT:
-          this.posX -= this.velX;
+          console.log(this.posX);
+          if (this.posX > 60) {
+            this.posX -= this.velX;
+          }
           break;
 
         case this.keys.RIGHT:
-          this.posX += this.velX;
+          if (this.posX < this.gameWidth - 120) {
+            this.posX += this.velX;
+          }
+
           break;
       }
     });
