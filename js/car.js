@@ -4,8 +4,8 @@ class Car {
     this.gameWidth = gameW;
     this.gameHeight = gameH;
 
-    this.width = 76;
-    this.height = 160;
+    this.width = 60;
+    this.height = 140;
 
     this.image = new Image();
     this.image.src = "./images/car.png";

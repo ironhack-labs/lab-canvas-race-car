@@ -16,19 +16,19 @@ class Obstacle {
     this.posX = Math.floor (
         Math.random() * (this.maxPosX - this.minPosX + 1) + this.minPosX
     );
-    this.posY = 700 - 20;
+    this.posY = 0;
 
     this.velY = 1;
   }
   draw() {
 
     this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
-    // falta definir aquí el color de los obstáculos
+    this.ctx.fillStyle = '#881011';
     this.move();
     }
     
     move() {
-        this.posY -= this.velY
+        this.posY += this.velY
     }
     
 }
