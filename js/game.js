@@ -44,6 +44,9 @@ const Game = {
       this.drawAll();
       this.generateObstacles();
       this.clearObstacles();
+    //   if (this.isCollision()) {
+    //     this.gameOver();
+    //   }
     }, 1000 / this.FPS);
   },
 
@@ -65,14 +68,28 @@ const Game = {
   },
 
   generateObstacles() {
-      if(this.framesCounter % 300 === 0) { // mas pequeño = menos frecuencia, por lo tanto, mas rapido se generan
-        this.obstacles.push(new Obstacle(this.ctx))
-      }
+    if (this.framesCounter % 300 === 0) {
+      // mas pequeño = menos frecuencia, por lo tanto, mas rapido se generan
+      this.obstacles.push(new Obstacle(this.ctx));
+    }
   },
 
-  clearObstacles() {
-    this.obstacles = this.obstacles.filter(function(obs){
-        return obs.posY >= 0;
-      })
+  clearObstacles() { // no sé si está bien
+    this.obstacles = this.obstacles.filter(function (obs) {
+      return obs.posY >= 0;
+    });
   },
+
+//   isCollision() {
+//     return this.obstacles.some((obs) => {
+//       return (
+//         this.player.posX >= obs.posY &&
+//         this.player.posX + this.player.width >= obs.posY + obs.width
+//       );
+//     });
+//   },
+
+//   gameOver() {
+//     clearInterval(this.interval);
+//   },
 };
