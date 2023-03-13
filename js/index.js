@@ -68,6 +68,7 @@ const myGameArea = {
   car: null,
   road: null,
   obstacles: [],
+  animationFrameid: undefined,
   clear: function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.car = new Car(230, 580, "../images/car.png", 40, 100);
@@ -86,6 +87,10 @@ const myGameArea = {
 };
 
 function startGame() {
+  //Pour gérer le cas d'un nouvel appui sur start pendant la partie
+  if (myGameArea.animationFrameid) {
+    cancelAnimationFrame(myGameArea.animationFrameid);
+  }
   myGameArea.clear();
   updateGame();
 }
@@ -95,7 +100,9 @@ function updateGame() {
   updateObstacles();
   printScore();
   checkGameOver();
-  if (!myGameArea.gameOver) requestAnimationFrame(updateGame);
+  if (!myGameArea.gameOver) {
+    myGameArea.animationFrameid = requestAnimationFrame(updateGame);
+  }
 }
 
 function updateRoadAndCar() {
