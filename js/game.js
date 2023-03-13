@@ -36,14 +36,11 @@ const Game = {
 
     this.interval = setInterval(() => {
       this.framesCounter++;
-      if (this.framesCounter % 30 === 0) {
-        this.score++;
-      }
 
       this.clear();
       this.drawAll();
-      this.getScore();
       this.generateObstacles();
+      this.getScore();
       this.clearObstacles();
       if (this.isCollision()) {
         this.gameOver();
@@ -95,21 +92,22 @@ const Game = {
           this.player.posX + this.player.width >= obs.posX &&
           this.player.posX <= obs.posX + obs.width) ||
         this.player.posX <= 64 ||
-        this.player.posX + this.player.width >= 420
+        this.player.posX + this.player.width >= 440
       );
     });
   },
 
   gameOver() {
     clearInterval(this.interval);
+    this.overScreen();
   },
 
   getScore() {
-    for (let i = 0; i <= this.obstacles.length; i++) {
-      if (this.obstacles[i].posY >= Game.height) {
-        this.score++;
+    this.obstacles.forEach (obs => {
+      if (obs.posY >= Game.height) {
+        this.score++
       }
-    }
+    })
   },
 
   drawScore() {
@@ -117,4 +115,14 @@ const Game = {
     this.ctx.font = "20px Arial";
     this.ctx.fillText(`Score: ${this.score}`, 100, 50);
   },
+
+  overScreen(){
+    this.ctx.background = "black"
+    this.ctx.fillStyle = "red";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`Game Over`, 150, 350);
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "40px Arial";
+    this.ctx.fillText(`Score: ${this.score}`, 180, 450);
+  }
 };
