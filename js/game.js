@@ -117,11 +117,12 @@ const Game = {
   },
 
   overScreen(){
-    this.ctx.background = "black"
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0,0,Game.width,Game.height)
     this.ctx.fillStyle = "red";
     this.ctx.font = "40px Arial";
     this.ctx.fillText(`Game Over`, 150, 350);
-    this.ctx.fillStyle = "black";
+    this.ctx.fillStyle = "white";
     this.ctx.font = "40px Arial";
     this.ctx.fillText(`Score: ${this.score}`, 180, 450);
   }
