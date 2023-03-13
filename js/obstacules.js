@@ -18,7 +18,7 @@ class Obstacle {
     );
     this.posY = 0;
 
-    this.velY = 1;
+    this.velY = 2;
   }
   draw() {
 

@@ -22,7 +22,7 @@ draw() {
 
 move(){
     this.posY += this.velY
-    if(this.posY <= -this.height){
+    if(this.posY >= this.height){
         this.posY = 0;
     }
 }

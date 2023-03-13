@@ -33,12 +33,12 @@ class Car {
       switch (e.keyCode) {
         case this.keys.LEFT:
           if (this.posX >= 80) {
-            this.posX -= 80;
+            this.posX -= 20;
           }
           break;
         case this.keys.RIGHT:
           if (this.posX + this.width <= this.gameWidth - 80) {
-            this.posX += 80;
+            this.posX += 20;
           }
           break;
       }

@@ -80,16 +80,18 @@ const Game = {
     });
   },
 
-//   isCollision() {
-//     return this.obstacles.some((obs) => {
-//       return (
-//         this.player.posX >= obs.posY &&
-//         this.player.posX + this.player.width >= obs.posY + obs.width
-//       );
-//     });
-//   },
+  isCollision() {
+    return this.obstacles.some((obs) => {
+      return (
+        this.player.posX < obs.posY + obs.width &&
+        this.player.posX + this.player.width > obs.posX &&
+        this.player.posY < obs.posY + obs.height &&
+        this.player.height + this.player.posY > obs.posY
+      );
+    });
+  },
 
-//   gameOver() {
-//     clearInterval(this.interval);
-//   },
+  gameOver() {
+    clearInterval(this.interval);
+  },
 };
