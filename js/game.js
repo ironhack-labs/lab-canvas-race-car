@@ -58,10 +58,10 @@ const Game = {
   drawAll() {
     this.background.draw();
     this.player.draw();
+    this.printScore();
     this.obstacles.forEach((obs) => {
       obs.draw();
     });
-    this.printScore();
   },
 
   clear() {
