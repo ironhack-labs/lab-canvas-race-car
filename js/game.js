@@ -8,7 +8,7 @@ const Game = {
   background: undefined,
   player: undefined,
   obstacles: [],
-  totalScore: 0,
+  score: 0,
 
   keys: {
     RIGHT: 39,
@@ -18,7 +18,6 @@ const Game = {
   init() {
     this.setContext();
     this.setDimensions();
-    this.reset();
     this.start();
   },
 
@@ -33,18 +32,18 @@ const Game = {
   },
 
   start() {
+    this.reset();
 
     this.interval = setInterval(() => {
       this.framesCounter++;
-      if (this.framesCounter > 3000) {
-        this.framesCounter = 0;
+      if (this.framesCounter % 30 === 0) {
+        this.score++;
       }
 
       this.clear();
       this.drawAll();
-      this.generateObstacles();
       this.getScore();
-      this.drawScore();
+      this.generateObstacles();
       this.clearObstacles();
       if (this.isCollision()) {
         this.gameOver();
@@ -55,13 +54,12 @@ const Game = {
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
     this.player = new Player(this.ctx, this.width, this.height, this.keys);
-    this.score = new Score (this.ctx, this.width, this.height, this.score)
   },
 
   drawAll() {
     this.background.draw();
     this.player.draw();
-    // this.score.draw();
+    this.drawScore();
     this.obstacles.forEach(function (obs) {
       obs.draw();
     });
@@ -87,31 +85,36 @@ const Game = {
     });
   },
 
-  getScore(){
-    if (this.obstacles.some.posY >= this.height) {
-      this.totalScore++;
-  }},
-
-  drawScore() {
-    this.ctx.font = "16px Arial";
-    this.ctx.fillStyle = "#FFFFFF";
-    this.ctx.fillText(`Score: ${this.totalScore}`, 100, 50);
-  },
-
   isCollision() {
     return this.obstacles.some((obs) => {
       return (
+        // this.player.posY <= obs.posY &&
+        // this.player.posX + this.player.width >= obs.posX &&
+        // this.player.posY <= obs.posX + obs.width
         (this.player.posY - 20 <= obs.posY &&
           this.player.posX + this.player.width >= obs.posX &&
           this.player.posX <= obs.posX + obs.width) ||
-        this.player.posX <= 44 ||
-        this.player.posX + this.player.width >= 474
+        this.player.posX <= 64 ||
+        this.player.posX + this.player.width >= 420
       );
     });
   },
 
   gameOver() {
     clearInterval(this.interval);
-    this.obstacles=[];
+  },
+
+  getScore() {
+    for (let i = 0; i <= this.obstacles.length; i++) {
+      if (this.obstacles[i].posY >= Game.height) {
+        this.score++;
+      }
+    }
+  },
+
+  drawScore() {
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(`Score: ${this.score}`, 100, 50);
   },
 };

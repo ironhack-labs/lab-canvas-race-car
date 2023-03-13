@@ -6,6 +6,7 @@ class Obstacle {
       // this.height = this.width * 5;
   
       this.ctx = ctx;
+
       this.width = Math.floor(Math.random()*(270-50) + 50);
       this.height = 20;
   
