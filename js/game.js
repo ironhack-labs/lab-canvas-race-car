@@ -61,6 +61,7 @@ const Game = {
     this.obstacles.forEach((obs) => {
       obs.draw();
     });
+    this.printScore();
   },
 
   clear() {
@@ -84,11 +85,10 @@ const Game = {
   isCollision() {
     return this.obstacles.some((obs) => {
       return (
-        this.player.posY <= obs.posY + 20 &&
-        this.width - this.player.posX + this.player.width >
-          this.width - obs.posX - obs.width
-
-        //this.player.posX <= obs.posX + obs.width
+        this.player.posX + this.player.width < this.obstacles.posX ||
+        this.player.posX > this.obstacles.posX + this.obstacles.width ||
+        this.player.posY > this.obstacles.posY + this.obstacles.height ||
+        this.player.posY + this.player.height < this.obstacles.posY
       );
     });
   },
@@ -96,5 +96,11 @@ const Game = {
   gameOver() {
     // .clearInterval
     clearInterval(this.interval);
+  },
+
+  printScore() {
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "40px serif";
+    this.ctx.fillText(`Score: ${this.score}`, 70, 50);
   },
 };
