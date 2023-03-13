@@ -44,9 +44,9 @@ const Game = {
       this.drawAll();
       this.generateObstacles();
       this.clearObstacles();
-    //   if (this.isCollision()) {
-    //     this.gameOver();
-    //   }
+      if (this.isCollision()) {
+        this.gameOver();
+      }
     }, 1000 / this.FPS);
   },
 
@@ -83,10 +83,10 @@ const Game = {
   isCollision() {
     return this.obstacles.some((obs) => {
       return (
-        this.player.posX < obs.posY + obs.width &&
-        this.player.posX + this.player.width > obs.posX &&
-        this.player.posY < obs.posY + obs.height &&
-        this.player.height + this.player.posY > obs.posY
+        this.player.posX <= obs.posY + obs.width &&
+        this.player.posX + this.player.width >= obs.posX &&
+        this.player.posY <= obs.posY + obs.height &&
+        this.player.height + this.player.posY >= obs.posY
       );
     });
   },
