@@ -85,10 +85,14 @@ const Game = {
   isCollision() {
     return this.obstacles.some((obs) => {
       return (
-        this.player.posX + this.player.width < this.obstacles.posX ||
-        this.player.posX > this.obstacles.posX + this.obstacles.width ||
-        this.player.posY > this.obstacles.posY + this.obstacles.height ||
-        this.player.posY + this.player.height < this.obstacles.posY
+        ((this.player.posX >= obs.posX &&
+          obs.posX + obs.width >= this.player.posX) ||
+          (this.player.posX + this.player.width > obs.posX &&
+            obs.posX + obs.width >= this.player.posX + this.player.width)) &&
+        ((this.player.posY > obs.posY &&
+          obs.posY + obs.height > this.player.posY) ||
+          (this.player.posY + this.player.height > obs.posY &&
+            obs.posY + obs.height > this.player.posY + this.player.height))
       );
     });
   },
@@ -96,11 +100,33 @@ const Game = {
   gameOver() {
     // .clearInterval
     clearInterval(this.interval);
+    this.drawGameOver();
   },
 
   printScore() {
     this.ctx.fillStyle = "white";
     this.ctx.font = "40px serif";
     this.ctx.fillText(`Score: ${this.score}`, 70, 50);
+  },
+  drawGameOver() {
+    this.ctx.fillStyle = "rgba(0,0,0,0.5)";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.textAlign = "center";
+    this.ctx.fillStyle = "red";
+    this.ctx.font = "50px Arial";
+    this.ctx.fillText(
+      `Game Over LOSER`,
+      this.canvas.width / 2,
+      this.canvas.height / 2 - 50
+    );
+
+    this.ctx.fillStyle = "white";
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(
+      `Try again`,
+      this.canvas.width / 2,
+      this.canvas.height / 2
+    );
   },
 };
