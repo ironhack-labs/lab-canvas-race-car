@@ -32,12 +32,12 @@ class Car {
     const movement = 20;
     switch (direction) {
       case "left":
-        if (this.x > 0) {
+        if (this.x > 10) {
           this.x -= movement;
         }
         break;
       case "right":
-        if (this.x < this.canvasWidth - this.width) {
+        if (this.x < this.canvasWidth - (this.width + 10)) {
           this.x += movement;
         }
         break;
@@ -46,17 +46,22 @@ class Car {
 }
 
 class Obstacle {
-  constructor(ctx, x, y, width, height) {
+  constructor(ctx, canvasWidth, canvasHeight) {
     this.ctx = ctx;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    this.width = Math.floor(Math.random() * (canvasWidth * 0.6 - 50) + 50);
+    this.height = 20;
+    this.x = Math.floor(Math.random() * (canvasWidth - this.width));
+    this.y = 0;
+    this.color = "red";
   }
 
   draw() {
-    this.ctx.fillStyle = "#FF0000";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height); // Draw a rectangle
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+
+  move(speed) {
+    this.y += speed;
   }
 }
 
@@ -76,7 +81,12 @@ class Game {
       canvas.width,
       canvas.height
     );
-    this.obstacle = new Obstacle(this.ctx, 200, 200, 50, 50); // Create a new obstacle
+
+    this.obstacles = [];
+    this.obstacleTimer = 0;
+    this.maxObstacles = 3;
+    this.obstacleSpeed = 1;
+
     this.initKeyListeners();
   }
 
@@ -94,19 +104,49 @@ class Game {
     });
   }
 
+  spawnObstacle() {
+    const obstacle = new Obstacle(
+      this.ctx,
+      this.canvas.width,
+      this.canvas.height
+    );
+    this.obstacles.push(obstacle);
+  }
+
   updateCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.road.draw();
     this.car.draw();
-    this.obstacle.draw();
 
-    requestAnimationFrame(() => {
-      this.updateCanvas();
-    });
+    this.obstacleTimer++;
+    if (
+      this.obstacleTimer % 200 === 0 &&
+      this.obstacles.length < this.maxObstacles
+    ) {
+      this.spawnObstacle();
+    }
+
+    for (const obstacle of this.obstacles) {
+      obstacle.move(this.obstacleSpeed);
+      obstacle.draw();
+    }
+
+    // Remove obstacles that have moved off the screen
+    this.obstacles = this.obstacles.filter(
+      (obstacle) => obstacle.y <= this.canvas.height
+    );
   }
 
   start() {
     this.updateCanvas();
+    this.animationLoop();
+  }
+
+  animationLoop() {
+    requestAnimationFrame(() => {
+      this.updateCanvas();
+      this.animationLoop();
+    });
   }
 }
 
