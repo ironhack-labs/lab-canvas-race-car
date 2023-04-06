@@ -45,6 +45,21 @@ class Car {
   }
 }
 
+class Obstacle {
+  constructor(ctx, x, y, width, height) {
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  draw() {
+    this.ctx.fillStyle = "#FF0000";
+    this.ctx.fillRect(this.x, this.y, this.width, this.height); // Draw a rectangle
+  }
+}
+
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
@@ -61,6 +76,7 @@ class Game {
       canvas.width,
       canvas.height
     );
+    this.obstacle = new Obstacle(this.ctx, 200, 200, 50, 50); // Create a new obstacle
     this.initKeyListeners();
   }
 
@@ -82,6 +98,7 @@ class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.road.draw();
     this.car.draw();
+    this.obstacle.draw();
 
     requestAnimationFrame(() => {
       this.updateCanvas();
