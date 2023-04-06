@@ -112,7 +112,7 @@ class Score {
   }
 
   draw(ctx) {
-    ctx.font = "20px Sans-Serif";
+    ctx.font = "30px Sans-Serif";
     ctx.fillStyle = "Black";
     ctx.fillText(`Score: ${this.value}`, 10, 30);
   }
@@ -261,7 +261,7 @@ class Game {
     this.obstacles = [];
     this.obstacleTimer = 0;
     this.score.value = 0;
-    this.car.x = this.canvas.width / 2 - this.car.width / 2;
+    this.car.x = this.canvas.width / 2 - this.car.width / 2; // Resets the car position
     this.car.y = this.canvas.height - this.car.height - 20;
     if (this.animationId) {
       cancelAnimationFrame(this.animationId); // Cancel the previous game loop
