@@ -48,21 +48,18 @@ window.onload = () => {
       }else if(isMovingRight){
         carX += carSpeedX
       }
-    
   
       requestAnimationFrame(animate)
     }
 
-    // const update = () => {
-    //   ctx.fillStyle = myObstacles.color;
-    //   ctx.fillRect(myObstacles.x, myObstacles.y, myObstacles.width, myObstacles.height);
-    // }
 
     const addObstacles = () => {
-      // for (i = 0; i < myObstacles.length; i++) {
-      //   myObstacles[i].y += -1
-      //   myObstacles[i].update()
-      // }
+      myObstacles.forEach((obstacle) => {
+        // console.log(obstacle)
+        ctx.fillStyle = obstacle.color
+        ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height)
+      })
+
 
       let y = canvas.height
       let minWidth = 20
