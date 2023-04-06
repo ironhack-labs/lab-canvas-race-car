@@ -15,6 +15,8 @@ window.onload = () => {
 
     let animateId
 
+    const myObstacles = []
+
     const drawImages = () => {
       const roadImg = new Image()
       roadImg.src = "../images/road.png"
@@ -24,6 +26,7 @@ window.onload = () => {
       
       ctx.drawImage(roadImg, 0, 0, canvas.width ,canvas.height)
       ctx.drawImage(carImg, carX, carY, 50 ,100)
+
     }
 
 
@@ -31,14 +34,14 @@ window.onload = () => {
       drawImages()
 
       // Left wall
-      if (carX < 50) {
-        carX *= -1
-      }
+      // if (carX < 50) {
+      //   carX *= -1
+      // }
 
       // Right wall
-      if(carX > canvas.width-100){
-        carX *= -1
-      }
+      // if(carX > canvas.width-100){
+      //   carX *= -1
+      // }
 
       if(isMovingLeft){
         carX -= carSpeedX
@@ -50,6 +53,46 @@ window.onload = () => {
       requestAnimationFrame(animate)
     }
 
+    // const update = () => {
+    //   ctx.fillStyle = myObstacles.color;
+    //   ctx.fillRect(myObstacles.x, myObstacles.y, myObstacles.width, myObstacles.height);
+    // }
+
+    const addObstacles = () => {
+      // for (i = 0; i < myObstacles.length; i++) {
+      //   myObstacles[i].y += -1
+      //   myObstacles[i].update()
+      // }
+
+      let y = canvas.height
+      let minWidth = 20
+      let maxWidth = 200
+      let width = Math.floor(
+        Math.random() * (maxWidth - minWidth + 1) + minWidth
+      )
+
+      let minGap = 50
+      let maxGap = 200
+      let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap)
+      
+      myObstacles.push({
+        width : width, 
+        height : 10 , 
+        color : 'red', 
+        x : 0, 
+        y : y
+      })
+
+      myObstacles.push({
+        width : `${y-width-gap}`, 
+        height :  10, 
+        color : 'red', 
+        x : `${width + gap}`, 
+        y : y
+      })
+
+    }
+
 
   function startGame() {
     // startScreen.style.display = "none";
@@ -57,6 +100,11 @@ window.onload = () => {
 
     animate()
 
+    setInterval(() => {
+      addObstacles()
+    }, 3000)
+
+    // console.log(myObstacles)
   }
 
   document.addEventListener('keydown' , event => {
