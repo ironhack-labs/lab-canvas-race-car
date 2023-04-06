@@ -29,7 +29,7 @@ class Car {
   }
 
   move(direction) {
-    const movement = 20;
+    const movement = 5;
     switch (direction) {
       case "left":
         if (this.x > 10) {
@@ -65,10 +65,63 @@ class Obstacle {
   }
 }
 
+class CollisionHandler {
+  constructor(car) {
+    this.car = car;
+  }
+
+  checkCollision(obstacle) {
+    const carRect = {
+      x: this.car.x,
+      y: this.car.y,
+      width: this.car.width,
+      height: this.car.height,
+    };
+    const obstacleRect = {
+      x: obstacle.x,
+      y: obstacle.y,
+      width: obstacle.width,
+      height: obstacle.height,
+    };
+
+    return (
+      carRect.x < obstacleRect.x + obstacleRect.width &&
+      carRect.x + carRect.width > obstacleRect.x &&
+      carRect.y < obstacleRect.y + obstacleRect.height &&
+      carRect.y + carRect.height > obstacleRect.y
+    );
+  }
+}
+
+class Score {
+  constructor() {
+    this.value = 0;
+  }
+
+  increase() {
+    this.value++;
+  }
+
+  draw(ctx) {
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText(`Score: ${this.value}`, 10, 30);
+  }
+}
+
+class GameOver {
+  draw(ctx, canvasWidth, canvasHeight) {
+    ctx.font = "40px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("Game Over!", canvasWidth / 2 - 100, canvasHeight / 2);
+  }
+}
+
 class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
+    this.animationId = null;
     this.road = new Road(
       this.ctx,
       "./images/road.png",
@@ -81,11 +134,17 @@ class Game {
       canvas.width,
       canvas.height
     );
+    this.carMoving = null;
 
     this.obstacles = [];
     this.obstacleTimer = 0;
     this.maxObstacles = 3;
     this.obstacleSpeed = 1;
+
+    this.collisionHandler = new CollisionHandler(this.car);
+    this.score = new Score();
+    this.gameOver = new GameOver();
+    this.isGameOver = false;
 
     this.initKeyListeners();
   }
@@ -94,13 +153,20 @@ class Game {
     document.addEventListener("keydown", (e) => {
       switch (e.key) {
         case "ArrowLeft":
-          this.car.move("left");
+          this.carMoving = "left";
           break;
         case "ArrowRight":
-          this.car.move("right");
+          this.carMoving = "right";
           break;
       }
-      this.updateCanvas();
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.key === "ArrowLeft" && this.carMoving === "left") {
+        this.carMoving = null;
+      } else if (e.key === "ArrowRight" && this.carMoving === "right") {
+        this.carMoving = null;
+      }
     });
   }
 
@@ -114,39 +180,77 @@ class Game {
   }
 
   updateCanvas() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.road.draw();
-    this.car.draw();
+    const update = () => {
+      if (this.isGameOver) {
+        this.gameOver.draw(this.ctx, this.canvas.width, this.canvas.height);
+        return;
+      }
 
-    this.obstacleTimer++;
-    if (
-      this.obstacleTimer % 200 === 0 &&
-      this.obstacles.length < this.maxObstacles
-    ) {
-      this.spawnObstacle();
-    }
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.road.draw();
+      this.car.draw();
 
-    for (const obstacle of this.obstacles) {
-      obstacle.move(this.obstacleSpeed);
-      obstacle.draw();
-    }
+      this.obstacleTimer++;
+      if (
+        this.obstacleTimer % 200 === 0 &&
+        this.obstacles.length < this.maxObstacles
+      ) {
+        this.spawnObstacle();
+      }
 
-    // Remove obstacles that have moved off the screen
-    this.obstacles = this.obstacles.filter(
-      (obstacle) => obstacle.y <= this.canvas.height
-    );
+      for (const obstacle of this.obstacles) {
+        obstacle.move(this.obstacleSpeed);
+        obstacle.draw();
+
+        if (this.collisionHandler.checkCollision(obstacle)) {
+          this.isGameOver = true;
+          break;
+        }
+      }
+
+      if (this.carMoving) {
+        this.car.move(this.carMoving);
+      }
+
+      // Remove obstacles that have moved off the screen
+      this.obstacles = this.obstacles.filter(
+        (obstacle) => obstacle.y < this.canvas.height
+      );
+
+      if (!this.isGameOver) {
+        if (this.obstacleTimer % 60 === 0) {
+          this.score.increase();
+        }
+        this.score.draw(this.ctx);
+      }
+
+      this.animationId = requestAnimationFrame(update);
+    };
+
+    update();
   }
 
   start() {
     this.updateCanvas();
-    this.animationLoop();
   }
 
   animationLoop() {
     requestAnimationFrame(() => {
-      this.updateCanvas();
       this.animationLoop();
     });
+  }
+
+  restart() {
+    this.isGameOver = false;
+    this.obstacles = [];
+    this.obstacleTimer = 0;
+    this.score.value = 0;
+    this.car.x = this.canvas.width / 2 - this.car.width / 2;
+    this.car.y = this.canvas.height - this.car.height - 20;
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId); // Cancel the previous game loop
+    }
+    this.updateCanvas(); // Restart the game loop
   }
 }
 
@@ -156,8 +260,15 @@ window.onload = () => {
 
   game.road.img.onload = () => {
     game.car.img.onload = () => {
-      document.getElementById("start-button").onclick = () => {
-        game.start();
+      const startButton = document.getElementById("start-button");
+      startButton.onclick = () => {
+        if (game.isStarted) {
+          game.restart();
+        } else {
+          game.start();
+          game.isStarted = true;
+        }
+        startButton.textContent = "Restart";
       };
     };
   };
