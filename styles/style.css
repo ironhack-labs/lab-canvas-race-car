@@ -4,13 +4,14 @@ body {
 }
 
 .game-intro {
-  float: left;
+  display: inline-block;
+  vertical-align: top;
   padding: 0% 10%;
 }
 
 .game-intro p {
   font-size: 18px;
-  font-family: "Verdana"
+  font-family: "Verdana";
 }
 
 .logo-img {
@@ -33,6 +34,44 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 20px 0px;
+  position: relative;
 }
+
+#canvas {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#car {
+  position: absolute;
+  bottom: 0;
+  left: 225px;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.obstacle {
+  background-color: #870007;
+  position: absolute;
+  height: 1px;
+  width: calc(50px + 15px * var(--width));
+}
+
+
+#score {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
