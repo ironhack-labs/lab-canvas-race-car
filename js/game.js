@@ -6,6 +6,7 @@ class Game {
       this.width = width;
       this.height = height;
       this.car = car;
+      this.points = 0;
       this.intervalId = null;
       this.frames = 0;
       this.enemies = [];
@@ -14,14 +15,23 @@ class Game {
     start() {
       this.intervalId = setInterval(this.update, 10);
     }
-    update = () => {
+    update =() => {
       this.frames++;
-      this.car.newPos();
-      this.car.draw();
+      
+      enemies.drawE();
       this.updateEnemies();
-      this.checkGameOver();
+      this.getPoints();
+      //this.checkGameOver();
     }
-
+    getPoints () {
+        this.points ++ 
+        console.log(this.points)
+        let score= Math.floor(this.points/100)
+        this.ctx.fillStyle='blue';
+        this.ctx.font='14px Arial';
+        this.ctx.fillText(`score:${score}`,0,0)
+        console.log(score)
+    }
     // Stops the Game
     stop(){
         clearInterval(this.intervalId)
@@ -30,45 +40,47 @@ class Game {
     // Clears Canvas
     clear() {
       this.ctx.clearRect(0, 0, this.width, this.height);
+      backg.drawB();
     }
   
     // Updates Enemies
     updateEnemies () {
         
         for (let i=0;i<this.enemies.length;i++){
-            this.enemies[i].x -= 1; // Enemy goes more to the right
-            this.enemies[i].draw(); // Contiune to draw enemy
+            this.enemies[i].y += 1; // Enemy goes down
+            this.enemies[i].drawE(); // Contiune to draw enemy
         }
         if(this.frames % 200 === 0){
-            let x = 1200;
-            let minHeight = 20; // at least 20px of min Height
-            let maxHeight = 400; // max height of 400px
+            let x = 50;
+            let minWidth = 20; // at least 20px of min Width
+            let maxWidth = 200; // max Width of 400px
         
-            let height = Math.floor(Math.random() * (maxHeight - minHeight +1)+minHeight);
+            let width = Math.floor(Math.random() * (maxWidth - minWidth +1)+minWidth);
 
-            let minGap = 95;
-            let maxGap = 200;
+            let minGap = 0;
+            let maxGap = 350;
 
             let gap = Math.floor(Math.random()*(maxGap - minGap + 1) + minGap)
 
             //Top Obstacle
-            this.enemies.push(new Component(x,0,50, height, 'green', this.ctx));
+            this.enemies.push(new Enemy(x+gap,0 ,width, 40, 'green'));
 
            
         }
         console.log('updateenemy')
     }
-
+/*
     checkGameOver(){
         const crashed = this.enemies.some((enemy) =>{
-        return this.player.crashWith(enemy);}
+        return this.car.crashWith(enemy);}
         );
     
         if (crashed) {
             this.stop ();
-            this.ctx.fillStyle='red';
-            this.ctx.font='72px Arial';
-            this.ctx.fillText('Game Over',0,this.height/2)
+            ctx.fillStyle='red';
+            ctx.font='72px Arial';
+            ctx.fillText('Game Over',this.width/2,this.height/2)
         }
-    }
+    }*/
 }
+const game = new Game(ctx, canvas.width, canvas.height, car)
