@@ -22,7 +22,6 @@ const game = {
         this.setContext()
         this.setEventListeners()
         this.setImageInstance()
-        this.createObstacule()
         this.drawAll()
         this.start()
     },
@@ -36,6 +35,10 @@ const game = {
             this.clearAll()
             this.drawAll()
             this.frameIndex++
+            this.drawObstacule()
+            if (this.isColision()) {
+                console.warn("tas chocado")
+            }
         }, 50)
     },
 
@@ -43,7 +46,6 @@ const game = {
     drawAll() {
         this.drawRoad()
         this.drawCar()
-        this.drawObstacule()
 
     },
     //elimando todo
@@ -100,19 +102,24 @@ const game = {
     },
 
     //obstaculos
-    createObstacule() {
-        console.log("paso por aqui")
-        this.obstacule.push(new Obstacule(this.ctx, this.canvasSize, 0))
-
+    createObstacle() {
+        let posX = Math.floor(Math.random() * (270 - 50) + 50)
+        this.obstacule.push(new Obstacule(this.ctx, this.canvasSize, posX, 5))
     },
 
     drawObstacule() {
         this.obstacule.forEach(e => e.draw())
-        if (this.framesIndex % 20 === 0) {
-            this.createObstacule()
-        }
+        if (this.frameIndex % 50 === 0) this.createObstacle()
+    },
+    isColision() {
+        return this.obstacule.some((e) => {
+            if (this.carSpects.x < Obstacule.x + Obstacule.w &&
+                this.carSpects.x + this.carSpects.w > Obstacule.x &&
+                this.carSpects.y < Obstacule.y + Obstacule.h &&
+                this.carSpects.h + this.carSpects.y > Obstacule.y) {
 
+            }
+        })
     }
-
 
 }

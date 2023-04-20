@@ -1,10 +1,11 @@
 class Obstacule {
-    constructor(ctx, canvasSize, posY) {
+    constructor(ctx, canvasSize, posX) {
         this.ctx = ctx,
             this.canvasSize = canvasSize
         this.obstaculeSpects = {
-            //size: { w: size, h: size },
-            pos: { x: 90, y: posY }
+            size: { w: 150, h: 20 },
+            pos: { x: posX, y: 0 },
+            speed: 10
         }
         this.draw()
     }
@@ -12,15 +13,11 @@ class Obstacule {
         this.draw()
     }
     draw() {
-        console.log("dibujo el cuadrado")
-
         this.move()
         this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(90, this.obstaculeSpects.pos.y, 140, 20)
-        this.ctx.fillRect(270, this.obstaculeSpects.pos.y, 140, 20)
+        this.ctx.fillRect(this.obstaculeSpects.pos.x, this.obstaculeSpects.pos.y, this.obstaculeSpects.size.w, this.obstaculeSpects.size.h)
     }
     move() {
-        this.obstaculeSpects.pos.y += 10
+        this.obstaculeSpects.pos.y += this.obstaculeSpects.speed
     }
-
 }
