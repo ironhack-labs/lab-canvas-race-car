@@ -33,6 +33,12 @@ body button {
 }
 
 #game-board {
-    float: left;
-    padding: 20px 0px;
+  float: left;
+  padding: 20px 0px;
+}
+
+#canvas {
+  background-image: url("../images/captura.png");
+  background-position: center;
+  background-size: cover;
 }
