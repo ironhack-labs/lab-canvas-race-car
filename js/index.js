@@ -3,5 +3,14 @@ window.onload = () => {
     startGame();
   };
 
-  function startGame() {}
+  function startGame() {
+
+    basicGame.init()
+    basicGame.setContext()
+    basicGame.setDimensions()
+    basicGame.setCarInstances()
+    basicGame.start()
+    basicGame.setEvents()
+    
+  }
 };
