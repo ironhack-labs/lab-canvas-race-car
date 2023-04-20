@@ -31,7 +31,7 @@ const carGame = {
     start() {
         const loop = () => {
             this.framesIndex++
-            if (this.framesIndex % 200 === 0) {
+            if (this.framesIndex % 100 === 0) {
                 this.createObstacle();
             }
             this.update()

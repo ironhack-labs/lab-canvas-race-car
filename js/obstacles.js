@@ -22,7 +22,7 @@ class Obstacle {
             this.obstacle.pos.y, this.obstacle.size.w, this.obstacle.size.h)
     }
     move() {
-        this.obstacle.pos.y++
+        this.obstacle.pos.y += 10
     }
 
 }
