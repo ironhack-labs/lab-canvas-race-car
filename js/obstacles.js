@@ -1,11 +1,11 @@
 class Obstacle {
-    constructor(ctx, canvasSize, posY) {
+    constructor(ctx, canvasSize) {
+        console.log(canvasSize);
         this.ctx = ctx
         this.canvasSize = canvasSize
-        this.posY = posY
         this.obstacle = {
-            size: { w: 180, h: 30 },
-            pos: { x: 0, y: posY }
+            size: { w: 80, h: 80 },
+            pos: { x: randomIntFromInterval(0, canvasSize.w), y: -30 }
 
         }
         this.init()
@@ -14,15 +14,18 @@ class Obstacle {
     }
     init() {
         this.imageInstance = new Image()
-        this.imageInstance.src = './img/jager.png'
+        this.imageInstance.src = './images/jager.png'
     }
     draw() {
-
         this.ctx.drawImage(this.imageInstance,
             this.obstacle.pos.x,
-            this.obstacle.pos.y)
+            this.obstacle.pos.y, this.obstacle.size.w, this.obstacle.size.h)
     }
     move() {
         this.obstacle.pos.y++
     }
+
+}
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
