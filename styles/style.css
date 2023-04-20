@@ -5,7 +5,7 @@ body {
 
 .game-intro {
   float: left;
-  padding: 0% 10%;
+  padding: 5% 15%;
 }
 
 .game-intro p {
@@ -34,5 +34,5 @@ body button {
 
 #game-board {
     float: left;
-    padding: 20px 0px;
+    padding: 8% 0px;
 }
