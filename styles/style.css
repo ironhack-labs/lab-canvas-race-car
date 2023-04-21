@@ -1,6 +1,10 @@
+#canvas {
+  border: 1px solid #870007;
+}
 body {
   padding: 0;
   text-align: center;
+
 }
 
 .game-intro {
