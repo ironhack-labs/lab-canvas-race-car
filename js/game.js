@@ -15,7 +15,7 @@ const game = {
     carInstance: undefined,
     carSpecs: {
         pos: { x: 300, y: 600 },
-        size: { w: 100, h: 100 }
+        size: { w: 50, h: 100 }
     },
 
     obstacles: [],
@@ -37,6 +37,8 @@ const game = {
         document.onkeyup = event => {
 
             const { key } = event
+            console.log(key)
+            //para ver la tecla
 
             if (key == 'ArrowLeft') {
                 this.carSpecs.pos.x -= 40
@@ -45,6 +47,15 @@ const game = {
             if (key == 'ArrowRight') {
                 this.carSpecs.pos.x += 40
             }
+
+            if (key == 'ArrowUp') {
+                this.carSpecs.pos.y -= 40
+            }
+
+            if (key == 'ArrowDown') {
+                this.carSpecs.pos.y += 40
+            }
+
         }
     },
 
@@ -53,7 +64,7 @@ const game = {
         this.carInstance.src = './images/car.png'
     },
     createObstacle() {
-        const posX = Math.floor(Math.random() * 500)
+        const posX = Math.floor(Math.random() * 5000)
         this.obstacles.push(
             new Obstacle(this.ctx, this.canvasSize, posX)
         )

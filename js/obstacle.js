@@ -6,13 +6,13 @@ class Obstacle {
         this.obstacleSpecs = {
             pos: { x: posX, y: 30 },
             size: { w: 100, h: 10 },
-            speed: 5
+            speed: 10
         }
     }
 
     drawObstacle() {
 
-        this.ctx.fillStyle = 'red'
+        this.ctx.fillStyle = '#870007'
         this.ctx.fillRect(
             this.obstacleSpecs.pos.x,
             this.obstacleSpecs.pos.y,
