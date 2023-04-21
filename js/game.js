@@ -28,7 +28,7 @@ const raceGame = {
         this.drawRoad()
         this.drawCar()
         this.drawObstacles()
-        this.detectCollision()
+
     },
 
     drawRoad() {
@@ -37,8 +37,7 @@ const raceGame = {
         this.ctx.fillRect(this.canvasSize.w / 2 - 250, 0, 500, this.canvasSize.h)
         this.ctx.fillStyle = 'grey'
         this.ctx.fillRect(this.canvasSize.w / 2 - 225, 0, 450, this.canvasSize.h)
-        this.ctx.fillStyle = '#fff'
-        this.ctx.fillRect(10, 10, 150, 50)
+
 
         this.ctx.strokeStyle = '#fff'
         this.ctx.lineWidth = 20
@@ -62,6 +61,12 @@ const raceGame = {
         this.ctx.lineTo(this.canvasSize.w / 2, this.canvasSize.h)
         this.ctx.stroke()
         this.ctx.closePath()
+
+        this.ctx.fillStyle = '#D3D3D3'
+        this.ctx.fillRect(10, 10, 200, 50)
+        this.ctx.font = 'bold 30px Courier';
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillText(`Score: ${this.framesIndex}`, 20, 40);
 
     },
 
@@ -93,6 +98,13 @@ const raceGame = {
         this.obstacles.push(
             new Obstacle(this.ctx, this.canvasSize)
         )
+
+        this.obstacles = this.obstacles.filter((obstacle) => {
+            if (obstacle.obstacleSpecs.pos.y < this.canvasSize.h) {
+                return obstacle
+            }
+        })
+
     },
 
     detectCollision() {
@@ -105,16 +117,20 @@ const raceGame = {
             ) {
                 elm.obstacleSpecs.collision = true
                 this.gameOver()
+                clearInterval(1)
             }
         })
     },
 
     gameOver() {
         this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 2 - 50, 200, 100);
-        this.ctx.font = 'bold 30px Courier';
+        this.ctx.fillRect(this.canvasSize.w / 2 - 100, this.canvasSize.h / 2 - 50, 230, 100);
+        this.ctx.font = 'bold 35px Courier';
         this.ctx.fillStyle = 'red';
-        this.ctx.fillText('Game Over', this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 + 15);
+        this.ctx.fillText(`Game Over`, this.canvasSize.w / 2 - 85, this.canvasSize.h / 2 + 5);
+        this.ctx.fillStyle = '#FF8D14'
+        this.ctx.font = 'bold 18px Courier';
+        this.ctx.fillText(`Your score is ${this.framesIndex}`, this.canvasSize.w / 2 - 75, this.canvasSize.h / 2 + 25);
 
     },
 
@@ -123,14 +139,17 @@ const raceGame = {
     },
 
     start() {
-        setInterval(() => {
+        const intervalId = setInterval(() => {
+            console.log(intervalId)
             this.clearAll()
             this.drawAll()
+            this.detectCollision()
 
             this.framesIndex++
 
-            document.querySelector('p span').innerText = this.framesIndex
         }, 50)
+
+
     },
 
     setEventListeners() {
@@ -146,7 +165,6 @@ const raceGame = {
                     this.carSpecs.pos.x -= 10
                 }
 
-
             }
 
             if (key == 'ArrowRight') {
@@ -156,7 +174,6 @@ const raceGame = {
                 } else {
                     this.carSpecs.pos.x += 10
                 }
-
             }
         }
     }
