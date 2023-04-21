@@ -15,10 +15,9 @@ const gameRules = {
     init() {
         this.setContext()
         this.setDimensions()
-        this.drawRoad()
-        this.drawAll()
         this.setImageInstances()
         this.start()
+        // this.drawCar()
     },
 
     setContext() {
@@ -37,7 +36,8 @@ const gameRules = {
     start() {
         setInterval(() => {
             this.clearAll()
-            this.drawAll()
+            this.drawRoad()
+            this.drawCar()
         }, 50)
     },
 
@@ -61,13 +61,12 @@ const gameRules = {
         this.ctx.closePath()
     },
 
-    drawAll() {
-        this.drawCar()
-        this.drawCar()
+    setImageInstances() {
+        this.carInstance = new Image()
+        this.carInstance.src = './images/car.png'
     },
 
     drawCar() {
-        console.log()
         this.ctx.drawImage(
             this.carInstance,
             this.carSpecs.pos.x,
@@ -77,10 +76,9 @@ const gameRules = {
         )
     },
 
-    setImageInstances() {
-        this.carInstace = new Image()
-        this.carInstace.src = './images/car.png'
-    },
+    clearAll() {
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+    }
 
 
 
@@ -88,7 +86,8 @@ const gameRules = {
 
 
 
-    //No vale porque no va la imagen
+
+}
 
     // setEventListeners() {
     //     document.onkeyup = event => {
@@ -104,9 +103,4 @@ const gameRules = {
     // },
 
 
-    // clearAll() {
-    //     this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-    // }
-
-}
 // gameRules.init();
