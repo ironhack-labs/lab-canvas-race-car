@@ -1,13 +1,13 @@
 const controlsApp = {
     ctx: undefined,
     carInstance: undefined,
-    carSpecs: {
-        pos: { x: 232, y: 628 },
-        size: { w: 36, h: 72 }
-    },
     canvasSize: {
         w: 500,
         h: 700
+    },
+    carSpecs: {
+        size: { w: 36, h: 72 },
+        pos: undefined
     },
     framesIndex: 0,
 
@@ -17,29 +17,30 @@ const controlsApp = {
         this.setContext()
         this.setImageInstances()
         this.setEventListeners()
-        this.createObstacle()
         this.start()
     },
     setContext() {
         this.ctx = document.querySelector("#canvas").getContext("2d")
+        this.carSpecs.pos = { x: this.canvasSize.w / 2 - this.carSpecs.size.w / 2, y: this.canvasSize.h - this.carSpecs.size.h }
     },
     setEventListeners() {
-        document.onkeyup = event => {
+        document.onkeydown = event => {
             const { key } = event
 
-            if (key == 'ArrowLeft') {
+            if (key == 'ArrowLeft' && this.carSpecs.pos.x >= 55) {
                 this.carSpecs.pos.x -= 30
             }
 
-            if (key == 'ArrowRight') {
+            if (key == 'ArrowRight' && this.carSpecs.pos.x <= 400) {
                 this.carSpecs.pos.x += 30
             }
         }
     },
     start() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.clearAll()
             this.drawAll()
+            this.Collision() ? this.gamerOver() : null
             this.framesIndex++
         }, 50)
     },
@@ -53,7 +54,7 @@ const controlsApp = {
         this.ctx.fillStyle = "green"
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
         //centro gris
-        this.ctx.fillStyle = "gray"
+        this.ctx.fillStyle = "black"
         this.ctx.fillRect(30, 0, this.canvasSize.w - 60, this.canvasSize.h)
         //lineas blancas
         this.ctx.fillStyle = "white"
@@ -102,5 +103,21 @@ const controlsApp = {
         this.obstacles.push(
             new Obstacles(this.ctx, this.canvasSize, obstaclesWidth[randomIndexwidth], obstaclesXposition[randomIndexPosition]),
         )
+    },
+
+    Collision() {
+        return this.obstacles.some((obs) => {
+            return this.carSpecs.pos.x + this.carSpecs.size.w >= obs.obstaclesSpecs.xPosition &&
+                this.carSpecs.pos.x <= obs.obstaclesSpecs.xPosition + obs.obstaclesSpecs.width &&
+                this.carSpecs.pos.y + this.carSpecs.size.h >= obs.obstaclesSpecs.yPosition &&
+                this.carSpecs.pos.y <= obs.obstaclesSpecs.yPosition + 50
+        })
+    },
+
+    gamerOver() {
+        clearInterval(this.intervalId)
+        setTimeout(() => {
+            location.reload()
+        }, 1500)
     }
 }
