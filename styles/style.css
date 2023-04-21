@@ -32,6 +32,11 @@ body button {
   margin-bottom: 20px;
 }
 
+body {
+  display: flex;
+  flex: ;
+}
+
 #game-board {
     float: left;
     padding: 20px 0px;
