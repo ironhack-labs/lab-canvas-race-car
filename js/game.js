@@ -53,7 +53,7 @@ const game = {
         this.carInstance.src = './images/car.png'
     },
     createObstacle() {
-        const posX = Math.floor(Math.random() * 300)
+        const posX = Math.floor(Math.random() * 500)
         this.obstacles.push(
             new Obstacle(this.ctx, this.canvasSize, posX)
         )
@@ -62,12 +62,14 @@ const game = {
     drawAll() {
         this.drawRoad()
         this.drawCar()
+        this.createObstacle()
+
 
 
         this.obstacles.forEach((elm) => {
             elm.moveObstacle()
             elm.drawObstacle()
-            if (this.framesIndex % 80 === 0) this.createObstacle()
+            if (this.framesIndex % 300 === 0) this.createObstacle()
         })
     },
 

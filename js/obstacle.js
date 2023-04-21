@@ -4,8 +4,8 @@ class Obstacle {
         this.canvasSize = canvasSize
 
         this.obstacleSpecs = {
-            pos: { x: posX, y: 0 },
-            size: { w: 50, h: 10 },
+            pos: { x: posX, y: 30 },
+            size: { w: 100, h: 10 },
             speed: 5
         }
     }
