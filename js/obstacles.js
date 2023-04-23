@@ -1,9 +1,11 @@
 class Obstacles {
-    constructor(ctx, canvasSize, width, xPosition) {
+    constructor(ctx, canvasSize, obsInstance, width, xPosition) {
         this.ctx = ctx
         this.canvasSize = canvasSize
+        this.obsInstance = obsInstance
         this.obstaclesSpecs = {
             width: width,
+            height: 50,
             xPosition: xPosition,
             yPosition: -50
         }
@@ -11,8 +13,12 @@ class Obstacles {
 
     draw() {
         this.move()
-        this.ctx.fillStyle = "brown"
-        this.ctx.fillRect(this.obstaclesSpecs.xPosition, this.obstaclesSpecs.yPosition, this.obstaclesSpecs.width, 50)
+        this.ctx.drawImage(
+            this.obsInstance,
+            this.obstaclesSpecs.xPosition,
+            this.obstaclesSpecs.yPosition,
+            this.obstaclesSpecs.width,
+            this.obstaclesSpecs.height)
     }
 
     move() {

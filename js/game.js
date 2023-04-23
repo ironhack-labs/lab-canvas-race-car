@@ -47,11 +47,14 @@ const controlsApp = {
 
     setImageInstances() {
         this.carInstance = new Image()
-        this.carInstance.src = "./images/car.png"
+        this.carInstance.src = "./images/car2.svg"
+        //obstáculos
+        this.obsInstance = new Image
+        this.obsInstance.src = "./images/vaya.svg"
     },
 
     drawRoad() {
-        this.ctx.fillStyle = "green"
+        this.ctx.fillStyle = "#5BB318"
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
         //centro gris
         this.ctx.fillStyle = "black"
@@ -100,9 +103,7 @@ const controlsApp = {
         const obstaclesXposition = [50, 150, 250, 200]
         const randomIndexwidth = Math.floor(Math.random() * obstaclesWidth.length)
         const randomIndexPosition = Math.floor(Math.random() * obstaclesWidth.length)
-        this.obstacles.push(
-            new Obstacles(this.ctx, this.canvasSize, obstaclesWidth[randomIndexwidth], obstaclesXposition[randomIndexPosition]),
-        )
+        this.obstacles.push(new Obstacles(this.ctx, this.canvasSize, this.obsInstance, obstaclesWidth[randomIndexwidth], obstaclesXposition[randomIndexPosition]));
     },
 
     Collision() {

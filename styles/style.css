@@ -1,6 +1,9 @@
 body {
   padding: 0;
   text-align: center;
+  background-image: url("../images/fondo.jpg");
+  background-position: center;
+  background-size: cover;
 }
 
 .game-intro {
@@ -13,6 +16,10 @@ body {
   font-family: "Verdana"
 }
 
+.game-intro p{
+color: white;
+}
+
 .logo-img {
   width: 350px;
 }
@@ -23,7 +30,7 @@ body {
 
 body button {
   font-size: 30px;
-  background-color: #c50a13;
+  background-color: black;
   color: #fff;
   padding: 20px 40px;
   border: 0;
