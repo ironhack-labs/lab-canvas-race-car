@@ -29,10 +29,16 @@ const controlsApp = {
 
             if (key == 'ArrowLeft' && this.carSpecs.pos.x >= 55) {
                 this.carSpecs.pos.x -= 30
+                if (this.carSpecs.pos.x < 0) {
+                    this.carSpecs.pos.x = 0
+                }
             }
 
-            if (key == 'ArrowRight' && this.carSpecs.pos.x <= 400) {
+            if (key == 'ArrowRight' && this.carSpecs.pos.x < 500) {
                 this.carSpecs.pos.x += 30
+                if (this.carSpecs.pos.x > 413) {
+                    this.carSpecs.pos.x = 412
+                }
             }
         }
     },
@@ -88,7 +94,9 @@ const controlsApp = {
     drawAll() {
         this.drawRoad()
         this.drawCar()
-        this.obstacles.forEach(elm => elm.draw())
+        //Determinar número total de obstáculos
+        this.obstacles.slice(0, 8).forEach(elm =>
+            elm.draw())
         if (this.framesIndex % 20 === 0) {
             this.createObstacle()
         }
@@ -102,7 +110,7 @@ const controlsApp = {
         const obstaclesWidth = [100, 180, 150, 120]
         const obstaclesXposition = [50, 150, 250, 200]
         const randomIndexwidth = Math.floor(Math.random() * obstaclesWidth.length)
-        const randomIndexPosition = Math.floor(Math.random() * obstaclesWidth.length)
+        const randomIndexPosition = Math.floor(Math.random() * obstaclesXposition.length)
         this.obstacles.push(new Obstacles(this.ctx, this.canvasSize, this.obsInstance, obstaclesWidth[randomIndexwidth], obstaclesXposition[randomIndexPosition]));
     },
 
