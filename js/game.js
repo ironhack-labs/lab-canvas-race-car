@@ -37,8 +37,9 @@ const game = {
             this.frameIndex++
             this.drawObstacule()
             if (this.isColision()) {
-                console.warn("tas chocado")
+                console.alert("tas chocado")
             }
+            console.log(this.isColision())
         }, 50)
     },
 
@@ -113,10 +114,12 @@ const game = {
     },
     isColision() {
         return this.obstacule.some((e) => {
-            if (this.carSpects.x < Obstacule.x + Obstacule.w &&
-                this.carSpects.x + this.carSpects.w > Obstacule.x &&
-                this.carSpects.y < Obstacule.y + Obstacule.h &&
-                this.carSpects.h + this.carSpects.y > Obstacule.y) {
+
+            if (this.carSpects.x < e.obstaculeSpects.pos.x + e.obstaculeSpects.size.w &&
+                this.carSpects.x + this.carSpects.w > e.obstaculeSpects.pos.x &&
+                this.carSpects.y < e.obstaculeSpects.pos.y + e.obstaculeSpects.size.h &&
+                this.carSpects.h + this.carSpects.y > e.obstaculeSpects.pos.y) {
+                return true
 
             }
         })
