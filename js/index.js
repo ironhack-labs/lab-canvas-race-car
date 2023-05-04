@@ -21,58 +21,56 @@ window.onload = () => {
     let carX = 145;
     let carY = 410;
     let carSpeed = 10;
+    let intervalId = null;
       
 
   function startGame() {
 
-    clear ();
-    draw ();
-    updateObstacles();
-
     
   
-    requestAnimationFrame(startGame)
+    intervalId = setInterval(gameArea, 20);
+  }
+
+  function stop () {
+    clearInterval(intervalId);
   }
 
   class Component {
-    constructor(width, height, color, x, y) {
-      this.width = width;
-      this.height = height;
+    constructor(color) {
+      this.maxWidth = 200;
+      this.minWidth = 50;
+      this.width = Math.floor(Math.random() * (this.maxWidth - this.minWidth));
+      this.height = 20;
       this.color = color;
-      this.x = x;
-      this.y = y;
-      this.speedX = 0;
-      this.speedY = 0;
+      this.x = Math.floor(Math.random() * 100) + 75;
+      this.y = 0;
+    
     }
    
     update() {
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+  }
 
-    newPos() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-    }
+  function gameArea () {
+    clear ();
+    draw ();
+    updateObstacles ();
+    
   }
 
   function updateObstacles() {
-
+    
     for (i = 0; i < obstacles.length; i++) {
-      obstacles[i].x += -1;
+      obstacles[i].y += 1
       obstacles[i].update();
     }
     frames += 1;
     if (frames % 120 === 0) {
-      let x = widthCanvas;
-      let minHeight = 20;
-      let maxHeight = 200;
-      let height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-      let minGap = 50;
-      let maxGap = 200;
-      let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-      obstacles.push(new Component(10, height, 'green', x, 0));
-      obstacles.push(new Component(10, x - height - gap, 'green', x, height + gap));
+
+      obstacles.push(new Component(this.x, this.height, this.color, this.x, this.y));
+    
     }
   }
 
