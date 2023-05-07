@@ -25,6 +25,25 @@ class Background {
   }
 }
 
+class Car {
+  constructor() {
+    this.x = canvas.width / 2 - 30;
+    this.y = canvas.height - 120;
+    this.width = 60;
+    this.height = 100;
+    this.img = new Image();
+    this.img.src = "../images/car.png";
+    this.img.onload = () => {
+      this.draw();
+    };
+  }
+
+  draw() {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+}
+
 function startGame() {
-  new Background
+  new Background;
+  new Car;
 }
