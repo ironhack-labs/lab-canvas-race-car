@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let gameFrames=0
+let gameFrames = 0;
+let obstacles = []
+let obstacleInterval = 160
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
@@ -44,21 +46,38 @@ class Car {
   }
 
   moveLeft() {
-    if(this.x>45){
-    this.x -= 7;
+    if (this.x > 45) {
+      this.x -= 7;
     }
   }
   moveRight() {
-    if(this.x<400){
-    this.x += 7;
+    if (this.x < 400) {
+      this.x += 7;
     }
+  }
+}
+
+class Obstacle {
+  constructor(x, width) {
+    this.x = x;
+    this.y = 0;
+    this.width = width;
+    this.height = 20;
+  }
+
+  draw() {
+    ctx.fillstyle = "red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
+  update(){
+    this.y += 2
   }
 }
 
 function startGame() {
   gameArea = new Background();
   playerCar = new Car();
-  gameLoop()
+  gameLoop();
 }
 
 function gameLoop() {
@@ -66,12 +85,28 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   gameArea.draw();
   playerCar.draw();
-  playerCar.x
-  console.log(playerCar.x)
-  requestAnimationFrame(gameLoop)
+  if (gameFrames % obstacleInterval === 0) {
+    const width = 200;
+    const leftBoundary = 45;
+    const rightBoundary = 460;
+    const maxObstacleX = rightBoundary - width;
+    const x = Math.floor(Math.random() * (maxObstacleX - leftBoundary) + leftBoundary);
+    const obstacle = new Obstacle(x, width);
+    obstacles.push(obstacle);
+  }
+  for (let i = 0; i < obstacles.length; i++) {
+    obstacles[i].update();
+    obstacles[i].draw();
+    if (obstacles[i].y > canvas.height) {
+      obstacles.splice(i, 1);
+      i--;
+    }
+  }
+  
+  requestAnimationFrame(gameLoop);
 }
 
-document.addEventListener("keydown", function(e) {
+document.addEventListener("keydown", function (e) {
   if (e.key == "ArrowLeft") {
     playerCar.moveLeft();
   }
