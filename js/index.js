@@ -42,6 +42,12 @@ window.onload = () => {
       speed: -1,
       draw: function(){
           this.y--; //Esto le resta un pixel cada segundo 
+
+          if(this.y < -canvas.width) {
+            this.y=0;
+
+          }
+
           ctx.drawImage(this.img, 0, this.y, canvas.width, canvas.height) //Aqui pintamos la img que se sale 
           ctx.drawImage(this.img, 0, this.y + canvas.width, canvas.width, canvas.height)            //Acaba en el min 1:07                                                     //aquí pintamos la 'posición de una segunda imagen, que entra conforme sale la priemra
   
@@ -55,10 +61,7 @@ window.onload = () => {
         roadImageMove.draw();
       // roadImageMove.draw();                                                         //min25  && en el 54 otra vez
       //Ahora hay que hacer el "loop infinito"                                  // minuto 1:02
-      //movemos la imagen a la izquierda, restándole a x(y) un px cada invocación de draw. 
-      //   roadImageMove.draw()
-      // })
-  
+
             }
 
 
