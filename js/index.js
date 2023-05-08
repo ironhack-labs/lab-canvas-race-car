@@ -16,6 +16,7 @@ class Background {
     this.y = 0;
     this.width = canvas.width;
     this.height = canvas.height;
+    this.speed = 2;
     this.img = new Image();
     this.img.src = "../images/road.png";
     this.img.onload = () => {
@@ -25,6 +26,14 @@ class Background {
 
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img, this.x, this.y - this.height, this.width, this.height);
+  }
+
+  update(){
+    this.y += this.speed;
+    if (this.y > canvas.height) {
+      this.y = 0;
+    }
   }
 }
 
@@ -83,6 +92,7 @@ function startGame() {
 function gameLoop() {
   gameFrames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  gameArea.update()
   gameArea.draw();
   playerCar.draw();
   if (gameFrames % obstacleInterval === 0) {
