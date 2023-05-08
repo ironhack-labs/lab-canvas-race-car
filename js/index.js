@@ -82,7 +82,7 @@ class Obstacle {
   }
 
   draw() {
-    ctx.fillstyle = "red";
+    ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
   update() {
@@ -91,8 +91,11 @@ class Obstacle {
 }
 
 function startGame() {
+  gameFrames = 0;
+  obstacles = [];
   gameArea = new Background();
   playerCar = new Car();
+  isGameOver = false;
   gameLoop();
 }
 
@@ -106,7 +109,7 @@ function checkCollision(rect1, rect2) {
 }
 
 function gameOver() {
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "black";
   ctx.font = "48px Arial";
   ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
 }
