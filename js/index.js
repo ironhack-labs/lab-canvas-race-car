@@ -1,8 +1,9 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 let gameFrames = 0;
-let obstacles = []
-let obstacleInterval = 160
+let obstacles = [];
+let obstacleInterval = 160;
+let isGameOver = false;
 
 window.onload = () => {
   document.getElementById("start-button").onclick = () => {
@@ -26,10 +27,16 @@ class Background {
 
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    ctx.drawImage(this.img, this.x, this.y - this.height, this.width, this.height);
+    ctx.drawImage(
+      this.img,
+      this.x,
+      this.y - this.height,
+      this.width,
+      this.height
+    );
   }
 
-  update(){
+  update() {
     this.y += this.speed;
     if (this.y > canvas.height) {
       this.y = 0;
@@ -78,8 +85,8 @@ class Obstacle {
     ctx.fillstyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
-  update(){
-    this.y += 2
+  update() {
+    this.y += 2;
   }
 }
 
@@ -89,21 +96,44 @@ function startGame() {
   gameLoop();
 }
 
+function checkCollision(rect1, rect2) {
+  return (
+    rect1.x < rect2.x + rect2.width &&
+    rect1.x + rect1.width > rect2.x &&
+    rect1.y < rect2.y + rect2.height &&
+    rect1.y + rect1.height > rect2.y
+  );
+}
+
+function gameOver() {
+  ctx.fillStyle = "red";
+  ctx.font = "48px Arial";
+  ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+}
+
 function gameLoop() {
+  if (isGameOver) {
+    return;
+  }
+
   gameFrames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  gameArea.update()
+  gameArea.update();
   gameArea.draw();
   playerCar.draw();
+
   if (gameFrames % obstacleInterval === 0) {
     const width = 200;
     const leftBoundary = 45;
     const rightBoundary = 460;
     const maxObstacleX = rightBoundary - width;
-    const x = Math.floor(Math.random() * (maxObstacleX - leftBoundary) + leftBoundary);
+    const x = Math.floor(
+      Math.random() * (maxObstacleX - leftBoundary) + leftBoundary
+    );
     const obstacle = new Obstacle(x, width);
     obstacles.push(obstacle);
   }
+
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].update();
     obstacles[i].draw();
@@ -112,7 +142,14 @@ function gameLoop() {
       i--;
     }
   }
-  
+
+  for (const obstacle of obstacles) {
+    if (checkCollision(playerCar, obstacle)) {
+      isGameOver = true;
+      gameOver();
+      break;
+    }
+  }
   requestAnimationFrame(gameLoop);
 }
 
