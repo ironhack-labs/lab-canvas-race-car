@@ -3,118 +3,154 @@ window.onload = () => {
     startGame();
   };
 
+  document.addEventListener('keydown', e => { 
+    switch (e.keyCode) {
+      case 37:
+          car.left()
+          return;
+      case 39:
+          car.right()
+          return;
+    }
+  }) ;
+  
+  const canvas = document.querySelector('canvas');
+  const ctx = canvas.getContext('2d');
+  console.log(ctx);
+
+  let requestId;
+  let gameFrames = 0;
+
+  let imgBoard = new Image();
+  imgBoard.src = 'images/road.png';
+
+  let imgCar = new Image();
+  imgCar.src = 'images/car.png'
+
+  let points = 0;
+  let score = 0;
+
+  const backgroudBoard = {
+    img: imgBoard,
+    y: 0,
+    //speed: -1,
+    draw: function() {
+      this.y += 4;
+      if(this.y > canvas.height) {
+        this.y = 0;
+      }
+      ctx.drawImage(this.img, 0, this.y, canvas.width, canvas.height);
+      ctx.drawImage(this.img, 0, this.y - canvas.height, canvas.width, canvas.height);
+    }
+  };
+
+  const car = {
+    img: imgCar,
+    y: 560,
+    x: 225,
+    width: 50,
+    height: 80,
+    draw: function() {
+      ctx.drawImage(this.img, this.x, this.y, 50, 80);
+    },
+    left: function(){
+      this.x -= 20;
+
+    },
+    right: function(){
+      this.x += 20;
+    },
+
+    isCrashing: function(obs){
+      console.log('obstaculo en x: ', obs.x);
+      console.log('obstaculo en x: ', obs.width );
+      console.log('position x carro',this.x)
+      return (
+        this.x < obs.x + obs.width && this.x + this.width > obs.x &&
+        this.y < obs.y + obs.height && this.y + this.height > obs.y
+      )
+
+    }
+
+  };
+
+  const obstacles = [];
+
+  function generateObstacles(){
+   
+  const obstacle = {
+    x: Math.floor(Math.random() * (400 - 50) + 50),
+    y: 0,
+    width: Math.floor(Math.random() * (250 - 100) + 100),
+    height: 40,
+    draw: function() {
+      this.y += 2;
+      console.log(this.x);
+      ctx.fillStyle = "red";
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+    },
+
+  }
+      if(gameFrames % 100 === 0){
+
+        obstacles.push(obstacle);
+      }
+
+  }
+
+  function drawObstacles() {
+    obstacles.forEach(rect => rect.draw())
+  }
+
+  function checkCollisions(){
+    obstacles.forEach((obs) => {
+      if(car.isCrashing(obs)){
+          requestId = cancelAnimationFrame(requestId);
+          ctx.font = '40px Arial';
+           ctx.fillStyle = 'white';
+           ctx.fillText(`GAME OVER`, 60, 170);
+            ctx.fillText(`SCORE FINAL: ${points.toFixed(1)}`, 60, 200);
+      }
+      points += 0.9
+    });
+
+  }
+  
+  function drawInfo() {
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'white';
+    ctx.fillText(`Score: ${points.toFixed(1)}`, 300, 30);
+  }
+
+  function limitsBoard(){
+    if(car.x <= 50 ){
+      car.x = 50;
+    }else if(car.x >= 400){
+      car.x = 400;
+    }
+  }
+
+  function updateGame(){
+
+    gameFrames++
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    backgroudBoard.draw();
+    car.draw();
+    limitsBoard();
+    generateObstacles();
+    drawObstacles();
+    drawInfo();
+    checkCollisions();
+    if(requestId){
+      requestId = requestAnimationFrame(updateGame);
+    }
+  }
+  
   function startGame() {
-    let canvas = document.querySelector('#canvas');
-    let ctx = canvas.getContext('2d');
-
-    let fondo = document.createElement('img');
-    fondo.src = './images/road.png'
-
-    let car = document.createElement('img');
-    car.src = './images/car.png'
-    let carX = canvas.width / 2 - car.width / 2;
-    let carY = canvas.height - car.height - 10;
-    let carSpeed = 5; 
-    let leftPressed = false; 
-    let rightPressed = false;
-
-    const myObstacles =[];
-    let frames = 0;
-    let minX = 10;
-    let maxX = canvas.width - 100;
-
-
-    class Obstacle {
-      constructor(x, y, width, height, color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-      }
-    
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
+    if(!requestId){
+      requestId = requestAnimationFrame(updateGame);
     }
     
 
-
-    function draw() {
-      ctx.drawImage(fondo, 0, 0, canvas.width, canvas.height);
-      ctx.drawImage(car, carX, carY);
-
-      for (let i = 0; i < myObstacles.length; i++) {
-        myObstacles[i].draw();
-      }
-
-    }
-
-    function update() {
-      if (leftPressed) {
-        carX -= carSpeed;
-      } else if (rightPressed) {
-        carX += carSpeed;
-      }
-
-      if (carX < 0) {
-        carX = 0;
-      } else if (carX > canvas.width - car.width) {
-        carX = canvas.width - car.width;
-      }
-
-      for (let i = 0; i < myObstacles.length; i++) {
-        myObstacles[i].y += carSpeed; // aumentar la posición y según la velocidad del coche
-      }
-    }
-
-    function gameLoop() {
-      draw();
-      update();  
-
-      frames++; 
-      if (frames % 100 === 0) {
-        createObstacle();
-      }
-
-
-      requestAnimationFrame(gameLoop);
-    }
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') {
-        leftPressed = true;
-      } else if (event.key === 'ArrowRight') {
-        rightPressed = true;
-      }
-    });
-
-    document.addEventListener('keyup', (event) => {
-      if (event.key === 'ArrowLeft') {
-        leftPressed = false;
-      } else if (event.key === 'ArrowRight') {
-        rightPressed = false;
-      }
-    });
-
-    //obstacles
-
-    function createObstacle() {
-
-      let randomX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
-    
-      let randomWidth = Math.floor(Math.random() * (150 - 50 + 1) + 50);
-        
-      let obstacle = new Obstacle(randomX, 10, randomWidth, 30, 'red');
-    
-      myObstacles.push(obstacle);
-    }
-
-
-
-
-    // iniciar el juego
-    gameLoop();
   }
 };
