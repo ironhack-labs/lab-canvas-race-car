@@ -2,11 +2,11 @@ class Player {
     constructor(ctx) {
         this.ctx = ctx;
         this.image = new Image();
-        this.image.src = 'images/car.png'
-        this.x = 210;
-        this.y = 500;
-        this.width = this.image.width / 2;
-        this.height = this.image.height / 2;
+        this.image.src = 'images/halcon.png'
+        this.x = 150;
+        this.y = 450;
+        this.width = this.image.width;
+        this.height = this.image.height;
 
         this.isReady = false;
         this.image.onload = () => {

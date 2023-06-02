@@ -2,7 +2,7 @@ class Background {
     constructor(ctx) {
         this.ctx = ctx;
         this.image = new Image();
-        this.image.src = 'images/road-2.png';
+        this.image.src = 'images/space.png';
         this.whidth = this.ctx.canvas.width;
         this.height = this.ctx.canvas.height;
         this.x = 0;
@@ -28,7 +28,7 @@ class Background {
                 this.y - this.height,
                 this.whidth,
                 this.height
-                
+
             )
         }
     }

@@ -18,7 +18,7 @@ class Game {
             this.checkCollisions();
             this.counter++;
 
-            if (this.counter % 190 === 0) {
+            if (this.counter % 250 === 0) {
                 this.addObstacle();
             }
 
@@ -54,11 +54,12 @@ class Game {
     }
 
     addObstacle() {
-        const randomWidth = Math.floor(Math.random() * 250) + 50;
+        const randomWidth = Math.floor(Math.random() * 250) + 10;
         const height = 30;
         const randomX = Math.floor(Math.random() * (this.ctx.canvas.width - randomWidth));
-        const color = "brown";
-        const newObstacle = new Obstacle(this.ctx, randomX, 0, randomWidth, height, color);
+        const color = 'rgba(250,250,250,0.1)';
+        const stroke = 'rgba(250,250,250,0.5)';
+        const newObstacle = new Obstacle(this.ctx, randomX, 0, randomWidth, height, color, stroke);
         this.obstacles.push(newObstacle);
     }
 
@@ -78,15 +79,16 @@ class Game {
         clearInterval(this.intervalId);
         setTimeout(() => {
             this.clear();
-            this.ctx.font = "40px Arial";
+            this.ctx.font = "bolder 30px Arial";
             this.ctx.fillStyle = "black";
             this.ctx.fillText(
-                "Game Over",
-                this.ctx.canvas.width / 2 - 100,
-                this.ctx.canvas.height / 2 - 100);
+                "El Impero ha vencido",
+                this.ctx.canvas.width / 2 - 60,
+                this.ctx.canvas.height / 2 - 100,
+                400);
             this.ctx.font = "18px Arial";
             this.ctx.fillText(
-                `Your final socre: ${this.score}`,
+                `Los rebeldes han acabado con: ${this.score} cazas imperiales`,
                 this.ctx.canvas.width / 2 - 80,
                 this.ctx.canvas.height / 2 - 50);
 
@@ -94,7 +96,7 @@ class Game {
     }
     drawScore() {
         this.ctx.font = "22px Arial";
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = "white";
         this.ctx.fillText(`Score: ${this.score}`, 10, 30);
 
     }
