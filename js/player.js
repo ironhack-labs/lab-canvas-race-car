@@ -1,21 +1,26 @@
 class Player {
-  constructor(ctx) {
+  constructor(ctx, x, y) {
     this.ctx = ctx;
-    this.image = new Image();
-    this.image.src = "images/car.png";
-    this.width = 35;
-    this.height = (this.width * this.image.height) / this.image.width;
-    this.image.onload = () => {
+    this.x = x;
+    this.y = y;
+    this.player = new Image();
+    this.player.src = "images/car.png";
+    this.width = 0;
+    this.height = 100,
+    this.isReady = false;
+
+    this.player.onload = () => {
+      this.width = (this.height * this.player.width) / this.player.height;
       this.isReady = true;
     };
 
-    this.speedX = 232;
+    this.speedX = 0;
     //this.speedY = 0;
   }
 
   draw() {
     if (this.isReady) {
-      this.ctx.drawImage(this.image, 232, 600, this.width, this.height);
+      this.ctx.drawImage(this.player, this.x, this.y, this.width, this.height);
     }
   }
 
@@ -31,13 +36,13 @@ class Player {
       this.x = this.ctx.canvas.width - this.width;
     }
 
-//      if (this.y <= 0) {
-//        this.y = 0;
-//      }
+      // if (this.y <= 0) {
+      //    this.y = 0;
+      //  }
 
-//      if (this.y >= this.ctx.canvas.height - this.height) {
-//        this.y = this.ctx.canvas.height - this.height;
-//      }
+      //  if (this.y >= this.ctx.canvas.height - this.height) {
+      //    this.y = this.ctx.canvas.height - this.height;
+      //  }
     }
 }
 

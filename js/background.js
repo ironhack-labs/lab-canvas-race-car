@@ -2,7 +2,7 @@ class Background {
   constructor(ctx) {
     this.ctx = ctx;
     this.image = new Image();
-    this.image.src = "images/road.png";
+    this.image.src = "images/road2.png";
     this.width = this.ctx.canvas.width;
     this.height = this.ctx.canvas.height;
     this.x = 0;
@@ -25,7 +25,7 @@ class Background {
       this.ctx.drawImage(
         this.image,
         this.x,
-        this.y + this.height,
+        this.y - this.height,
         this.width,
         this.height
       );
@@ -33,9 +33,9 @@ class Background {
   }
 
    move() {
-     this.y -= 1;
+     this.y += 1;
 
-      if (this.y < -this.height) {
+      if (this.y > this.height) {
         this.y = 0;
       }
   }
