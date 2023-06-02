@@ -7,6 +7,7 @@ class Game {
 
         this.intervalId = null;
         this.counter = 0;
+        this.score = 0;
     }
 
     start() {
@@ -21,6 +22,10 @@ class Game {
                 this.addObstacle();
             }
 
+            if (this.counter % 10 === 0) {
+                this.score++;
+            }
+
 
         }, 1000 / 60)
     }
@@ -32,6 +37,7 @@ class Game {
             obs.draw();
         });
         this.player.draw();
+        this.drawScore();
     }
 
     move() {
@@ -68,8 +74,28 @@ class Game {
 
     }
 
-    gameOver(){
+    gameOver() {
         clearInterval(this.intervalId);
-    }
+        setTimeout(() => {
+            this.clear();
+            this.ctx.font = "40px Arial";
+            this.ctx.fillStyle = "black";
+            this.ctx.fillText(
+                "Game Over",
+                this.ctx.canvas.width / 2 - 100,
+                this.ctx.canvas.height / 2 - 100);
+            this.ctx.font = "18px Arial";
+            this.ctx.fillText(
+                `Your final socre: ${this.score}`,
+                this.ctx.canvas.width / 2 - 80,
+                this.ctx.canvas.height / 2 - 50);
 
+        }, 0);
+    }
+    drawScore() {
+        this.ctx.font = "22px Arial";
+        this.ctx.fillStyle = "black";
+        this.ctx.fillText(`Score: ${this.score}`, 10, 30);
+
+    }
 }
