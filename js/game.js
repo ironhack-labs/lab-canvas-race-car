@@ -1,20 +1,29 @@
 class Game {
-    constructor(ctx){
+    constructor(ctx) {
         this.ctx = ctx,
-        this.car = new Car(this.ctx, this.ctx.canva.wdith/2,100,2,20)
+        this.background = new Background(this.ctx)
+        this.lines = new Lines(this.ctx)
+        this.car = new Car
+            (
+                this.ctx,
+                this.ctx.canvas.width / 2 - 10,
+                this.ctx.canvas.height - 40,
+                20,
+                20
+            )
     }
-    start(){
+    start() {
         this.draw();
-        
-    }
-    draw(){
-        this.car.draw();
-        
-    }
-    move(){
 
     }
-    colition(){
+    draw() {
+        this.car.draw();
+        this.background.draw();
+    }
+    move() {
+
+    }
+    colition() {
 
     }
 }
