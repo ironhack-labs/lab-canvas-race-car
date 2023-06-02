@@ -14,7 +14,7 @@ class Player {
 
         };
 
-        this.speedX = 0.5;
+        this.vx = 0;
     }
 
     draw() {
@@ -30,7 +30,7 @@ class Player {
     }
 
     move() {
-
+            this.x += this.vx
         /*if (this.x + this.width > 450) {
             this.x = this.ctx.canvas.width - 450;
           }*/

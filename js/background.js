@@ -28,6 +28,7 @@ class Background {
                 this.y - this.height,
                 this.whidth,
                 this.height
+                
             )
         }
     }

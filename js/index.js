@@ -8,10 +8,16 @@ window.onload = () => {
   };
   document.addEventListener('keydown', event => {
     if (event.code === 'ArrowRight') {
-      game.player.x += 10;
+      game.player.vx += 0.5;
     }
     if (event.code === 'ArrowLeft') {
-      game.player.x -= 10;
+      game.player.vx -= 0.5;
+    }
+  });
+
+  document.addEventListener('keyup', event => {
+    if (event.code === 'ArrowRight' || event.code === 'ArrowLeft') {
+      game.player.vx = 0;
     }
   })
 
