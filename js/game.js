@@ -122,10 +122,15 @@ class Game {
             this.clear();
             this.move();
             this.draw();
+            this.checkCollisions();
             this.counter++
 
-            if (this.counter % 60 === 0) {
+            if (this.counter % 100 === 0) {
                 this.addObstacles();
+            }
+
+            if (this.counter % 10 === 0) {
+              this.score++;
             }
 
             if (this.counter === 200){
@@ -135,7 +140,7 @@ class Game {
               })
               this.counter = 0;
             }
-        }, 1000 / 60)
+        }, 1000 / 90)
     }
 
     draw() {
@@ -143,7 +148,8 @@ class Game {
         this.obstacles.forEach(obstacle => {
             obstacle.draw();
         });
-        this.player.draw();   
+        this.player.draw();
+        this.drawScore();   
     }
 
     move() {
@@ -163,7 +169,7 @@ class Game {
 
     addObstacles(){
         const height = 30;
-        const randomWidth = Math.floor(Math.random() * 150) + 50;
+        const randomWidth = Math.floor(Math.random() * 120) + 50;
         const randomX = Math.floor(Math.random() * (this.ctx.canvas.width - randomWidth));
         const color = "red";
         const speed = this.levelSpeed;
@@ -172,7 +178,39 @@ class Game {
     }
 
     checkCollisions(){
-      
+        this.obstacles.forEach((obstacle) => {
+          if (this.player.x + this.player.width >= obstacle.x &&
+            this.player.x <= obstacle.x + obstacle.width &&
+            this.player.y + this.player.height >= obstacle.y &&
+            this.player.y <= obstacle.y + obstacle.height) {
+            this.gameOver();
+          }
+        });
+    }
+
+    gameOver() {
+      clearInterval(this.intervalId);
+      setTimeout(() => {
+        this.clear();
+        this.ctx.font = "42px Impact";
+        this.ctx.fillStyle = "black";
+        this.ctx.fillText(
+          "Game Over",
+          this.ctx.canvas.width / 2 - 100,
+          this.ctx.canvas.height / 2,
+          200);
+        this.ctx.font = "18px Impact";
+        this.ctx.fillText(
+          `Your final score: ${this.score}`,
+          this.ctx.canvas.width / 2 - 80,
+          this.ctx.canvas.height / 2 + 50);
+      }, 0);
+    }
+
+    drawScore() {
+      this.ctx.font = "22px Arial";
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(`Score: ${this.score}`, 70, 30);
     }
 
 }     
