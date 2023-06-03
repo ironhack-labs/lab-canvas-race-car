@@ -1,4 +1,4 @@
-class Game {
+/*class Game {
     constructor(ctx) {
       this.ctx = ctx;
       this.background = new Background(ctx);
@@ -41,7 +41,6 @@ class Game {
         obstacle.draw();
       });
       this.player.draw();
-      this.drawScore();
     }
   
     move() {
@@ -97,40 +96,19 @@ class Game {
       }, 0);
     }
   
-    handleKeyDown(event) {
-        if (!event.repeat) {
-            if(event.code === "ArrowLeft") {
-                    this.player.speedX = -3;
-                }
-                else if (event.code === "ArrowRight") {
-                    this.player.speedX = 3;
-                }
-            }
-        }
-    
-
-    handleKeyUp(event) {
-      if (event.code === "ArrowLeft" || event.code === "ArrowRight") {
-        this.player.speedX = 0;
-      }
-    }
+      
   
-    drawScore() {
-      this.ctx.font = "22px Arial";
-      this.ctx.fillStyle = "black";
-      this.ctx.fillText(`Score: ${this.score}`, 10, 30);
-    }
-  }
+  }*/
 
 
 
 
-/*class Game {
+class Game {
     constructor(ctx) {
         this.ctx = ctx;
         this.background = new Background(this.ctx);
         this.player = new Player(this.ctx);
-        this.obstacles = []
+        this.obstacles = [];
 
         this.levelSpeed = 2;
         this.counter = 0;
@@ -144,10 +122,18 @@ class Game {
             this.clear();
             this.move();
             this.draw();
-            
+            this.counter++
 
-            if (this.counter % 100 === 0) {
-                this.addObstacle();
+            if (this.counter % 60 === 0) {
+                this.addObstacles();
+            }
+
+            if (this.counter === 200){
+              this.levelSpeed += 1;
+              this.obstacles.forEach((obstacle) => {
+                obstacle.speed = this.levelSpeed;
+              })
+              this.counter = 0;
             }
         }, 1000 / 60)
     }
@@ -156,7 +142,7 @@ class Game {
         this.background.draw();
         this.obstacles.forEach(obstacle => {
             obstacle.draw();
-        })
+        });
         this.player.draw();   
     }
 
@@ -164,45 +150,29 @@ class Game {
         this.background.move();
         this.obstacles.forEach(obstacle => {
             obstacle.move();
-        this.player.move();    
         })
+        this.player.move(); 
     }
 
 
     clear() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.obstacles = this.obstacles.filter(obstacle => { obstacle.y > obstacle.height;
-
-        })
+        this.obstacles = this.obstacles.filter(obstacle =>  obstacle.y < this.ctx.canvas.height);
     }
 
 
-    addObstacle(){
+    addObstacles(){
         const height = 30;
         const randomWidth = Math.floor(Math.random() * 150) + 50;
         const randomX = Math.floor(Math.random() * (this.ctx.canvas.width - randomWidth));
         const color = "red";
         const speed = this.levelSpeed;
-        const newObstacle = new Obstacle(this.ctx, randomX, this.ctx.canvas.height, randomWidth, height, color, speed);
+        const newObstacle = new Obstacle(this.ctx, randomX, -height, randomWidth, height, color, speed);
         this.obstacles.push(newObstacle);
     }
 
-    handleKeyDown(event) {
-        if (!event.repeat) {
-          switch (event.code) {
-            case "ArrowLeft":
-              this.player.speedX = -5;
-              break;
-            case "ArrowRight":
-              this.player.speedX = 5;
-              break;
-            }
-        }
-    }     
-
-    handleKeyUp(event) {
-        if (event.code === "ArrowLeft" || event.code === "ArrowRight") {
-          this.player.speedX = 0;
-        }
+    checkCollisions(){
+      
     }
-} */      
+
+}     
