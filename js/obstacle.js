@@ -1,8 +1,8 @@
 class Obstacle {
     constructor(ctx, x, y, width, height, color, speed) {
       this.ctx = ctx;
-      this.x = x;
-      this.y = y;
+      this.x = 65;
+      this.y = 0;
       this.width = width;
       this.height = height;
       this.color = color;
