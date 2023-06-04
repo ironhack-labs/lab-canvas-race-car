@@ -17,7 +17,11 @@ class Game {
       this.clear();
       this.move();
       this.draw();
+<<<<<<< HEAD
       this.checkCollisions();
+=======
+      //this.checkCollisions();
+>>>>>>> 27de3e18a80c3b3639180886fda5bc533e91c7c9
       this.counter++;
 
       if (this.counter % 100 === 0) {
@@ -38,11 +42,18 @@ class Game {
 
   draw() {
     this.background.draw();
+<<<<<<< HEAD
     this.obstacles.forEach((obstacle) => {
       obstacle.draw();
     });
     this.car.draw();
     
+=======
+    this.car.draw();
+    this.obstacles.forEach((obstacle) => {
+      obstacle.draw();
+    });
+>>>>>>> 27de3e18a80c3b3639180886fda5bc533e91c7c9
   }
 
   move() {
@@ -81,6 +92,7 @@ class Game {
     this.obstacles.push(newObstacle);
   }
 
+<<<<<<< HEAD
   checkCollisions() {
     const collision = this.obstacles.some((obstacle) => obstacle.collidesWith(this.car));
     if (collision) {
@@ -103,6 +115,8 @@ class Game {
 
 
 
+=======
+>>>>>>> 27de3e18a80c3b3639180886fda5bc533e91c7c9
   handleKeyDown(event) {
     if (event.key === "ArrowUp") {
       this.car.speedY = -1;

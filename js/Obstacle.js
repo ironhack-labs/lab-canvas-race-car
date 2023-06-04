@@ -17,6 +17,7 @@ class Obstacle {
       move() {
         this.y += this.speed;
       }
+<<<<<<< HEAD
 
       collidesWith(car) {
         return car.y + car.height >= this.y &&
@@ -24,4 +25,6 @@ class Obstacle {
             car.x + car.width >= this.x &&
             car.x <= this.x + this.width;
     }
+=======
+>>>>>>> 27de3e18a80c3b3639180886fda5bc533e91c7c9
 }
